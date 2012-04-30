@@ -105,18 +105,23 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 		assertEquals(strokeWidthBar.getProgress(), 25);
 		int newStrokeWidth = 80;
 		int paintStrokeWidth = -1;
+		Log.v("BrushPicker", "1");
 
 		mSolo.setProgressBar(0, newStrokeWidth);
 		assertTrue("Waiting for set stroke width ", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
+		Log.v("BrushPicker", "1");
 
 		mSolo.clickOnImageButton(0);
 		assertTrue("Waiting for set cap SQUARE", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
+		Log.v("BrushPicker", "1");
 
 		mSolo.goBack();
 		assertTrue("Waiting for Tool to be ready", mSolo.waitForActivity("MainActivity", TIMEOUT));
+		Log.v("BrushPicker", "1");
 
 		Paint strokePaint = (Paint) PrivateAccess.getMemberValue(BaseTool.class, PaintroidApplication.CURRENT_TOOL,
 				"canvasPaint");
+		Log.v("BrushPicker", "1");
 		paintStrokeWidth = (int) strokePaint.getStrokeWidth();
 		assertEquals(paintStrokeWidth, newStrokeWidth);
 		assertEquals(strokePaint.getStrokeCap(), Cap.SQUARE);

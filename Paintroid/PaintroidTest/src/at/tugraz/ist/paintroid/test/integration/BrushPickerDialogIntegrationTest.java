@@ -122,7 +122,7 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 	}
 
 	@Test
-	public void testBrushPickerDialogKeepStrokeOnToolChange() throws SecurityException, IllegalArgumentException,
+	public void testBrushPickerDialogYKeepStrokeOnToolChange() throws SecurityException, IllegalArgumentException,
 			NoSuchFieldException, IllegalAccessException {
 		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
 		mSolo.clickOnView(mToolBarButtonTwo);

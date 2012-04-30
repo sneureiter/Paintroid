@@ -32,7 +32,6 @@ import org.junit.Test;
 import android.graphics.Paint;
 import android.graphics.Paint.Cap;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -105,23 +104,18 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 		assertEquals(strokeWidthBar.getProgress(), 25);
 		int newStrokeWidth = 80;
 		int paintStrokeWidth = -1;
-		Log.v("BrushPicker", "1");
 
 		mSolo.setProgressBar(0, newStrokeWidth);
 		assertTrue("Waiting for set stroke width ", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
-		Log.v("BrushPicker", "1");
 
 		mSolo.clickOnImageButton(0);
 		assertTrue("Waiting for set cap SQUARE", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
-		Log.v("BrushPicker", "1");
 
 		mSolo.goBack();
 		assertTrue("Waiting for Tool to be ready", mSolo.waitForActivity("MainActivity", TIMEOUT));
-		Log.v("BrushPicker", "1");
 
 		Paint strokePaint = (Paint) PrivateAccess.getMemberValue(BaseTool.class, PaintroidApplication.CURRENT_TOOL,
 				"canvasPaint");
-		Log.v("BrushPicker", "1");
 		paintStrokeWidth = (int) strokePaint.getStrokeWidth();
 		assertEquals(paintStrokeWidth, newStrokeWidth);
 		assertEquals(strokePaint.getStrokeCap(), Cap.SQUARE);
@@ -135,31 +129,23 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 		assertTrue("Waiting for Brush Picker Dialog", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
 		int newStrokeWidth = 80;
 
-		Log.v("BrushPicker", "1");
-
 		mSolo.setProgressBar(0, newStrokeWidth);
 		assertTrue("Waiting for set stroke width ", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
-		Log.v("BrushPicker", "2");
 
 		mSolo.clickOnImageButton(0);
 		assertTrue("Waiting for set cap SQUARE", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
-		Log.v("BrushPicker", "3");
 
 		mSolo.clickOnButton(mMainActivity.getString(R.string.button_accept));
 		assertTrue("Waiting for Tool to be ready", mSolo.waitForActivity("MainActivity", TIMEOUT));
-		Log.v("BrushPicker", "4");
 
 		mSolo.clickOnView(mToolBarButtonMain);
 		assertTrue("Waiting for the ToolMenu to open", mSolo.waitForView(GridView.class, 1, TIMEOUT));
-		Log.v("BrushPicker", "5");
 
 		mSolo.clickOnText(mMainActivity.getString(R.string.button_cursor));
 		assertTrue("Waiting for Tool to Change -> MainActivity", mSolo.waitForActivity("MainActivity", TIMEOUT));
-		Log.v("BrushPicker", "6");
 
 		mSolo.clickOnView(mToolBarButtonTwo);
 		assertTrue("Waiting for Brush Picker Dialog", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
-		Log.v("BrushPicker", "7");
 
 		ArrayList<ProgressBar> progressBars = mSolo.getCurrentProgressBars();
 		assertEquals(progressBars.size(), 1);

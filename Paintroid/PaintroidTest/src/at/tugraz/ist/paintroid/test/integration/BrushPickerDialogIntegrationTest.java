@@ -25,7 +25,12 @@
  */
 package at.tugraz.ist.paintroid.test.integration;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+
+import android.widget.LinearLayout;
+import at.tugraz.ist.paintroid.ui.implementation.DrawingSurfaceImplementation;
 
 public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 
@@ -33,13 +38,25 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 		super();
 	}
 
+	@Override
+	@Before
+	protected void setUp() throws Exception {
+		super.setUp();
+	}
+
+	@Override
+	@After
+	protected void tearDown() throws Exception {
+		super.tearDown();
+	}
+
 	@Test
 	public void testBrushPickerDialog() throws SecurityException, IllegalArgumentException, NoSuchFieldException,
 			IllegalAccessException {
-		//
-		// assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
-		// mSolo.clickOnView(mToolBarButtonTwo);
-		// assertTrue("Waiting for Brush Picker Dialog", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
+
+		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
+		mSolo.clickOnView(mToolBarButtonTwo);
+		assertTrue("Waiting for Brush Picker Dialog", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
 		// TextView brushWidthTextView = mSolo.getText("25");
 		// String brushWidthText = (String) brushWidthTextView.getText();
 		// assertEquals("Wrong brush width displayed", new Integer(brushWidthText), new Integer(25));
@@ -80,9 +97,9 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 	@Test
 	public void testBrushPickerDialogOnBackPressed() throws SecurityException, IllegalArgumentException,
 			NoSuchFieldException, IllegalAccessException {
-		// assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
-		// mSolo.clickOnView(mToolBarButtonTwo);
-		// assertTrue("Waiting for Brush Picker Dialog", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
+		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
+		mSolo.clickOnView(mToolBarButtonTwo);
+		assertTrue("Waiting for Brush Picker Dialog", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
 		// ArrayList<ProgressBar> progressBars = mSolo.getCurrentProgressBars();
 		// assertEquals(progressBars.size(), 1);
 		// SeekBar strokeWidthBar = (SeekBar) progressBars.get(0);
@@ -109,9 +126,9 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 	@Test
 	public void testBrushPickerDialogKeepStrokeOnToolChange() throws SecurityException, IllegalArgumentException,
 			NoSuchFieldException, IllegalAccessException {
-		// assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
-		// mSolo.clickOnView(mToolBarButtonTwo);
-		// assertTrue("Waiting for Brush Picker Dialog", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
+		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
+		mSolo.clickOnView(mToolBarButtonTwo);
+		assertTrue("Waiting for Brush Picker Dialog", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
 		// int newStrokeWidth = 80;
 		//
 		// mSolo.setProgressBar(0, newStrokeWidth);
@@ -149,9 +166,9 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 	@Test
 	public void testBrushPickerDialogTestMinimumBrushWidth() throws SecurityException, IllegalArgumentException,
 			NoSuchFieldException, IllegalAccessException {
-		// assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
-		// mSolo.clickOnView(mToolBarButtonTwo);
-		// assertTrue("Waiting for Brush Picker Dialog", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
+		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
+		mSolo.clickOnView(mToolBarButtonTwo);
+		assertTrue("Waiting for Brush Picker Dialog", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
 		// int newStrokeWidth = 0;
 		// int minStrokeWidth = 1;
 		//

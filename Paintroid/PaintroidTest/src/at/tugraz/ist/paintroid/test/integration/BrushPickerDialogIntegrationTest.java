@@ -25,11 +25,15 @@
  */
 package at.tugraz.ist.paintroid.test.integration;
 
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import at.tugraz.ist.paintroid.ui.implementation.DrawingSurfaceImplementation;
 
 public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
@@ -57,12 +61,12 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
 		mSolo.clickOnView(mToolBarButtonTwo);
 		assertTrue("Waiting for Brush Picker Dialog", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
-		// TextView brushWidthTextView = mSolo.getText("25");
-		// String brushWidthText = (String) brushWidthTextView.getText();
-		// assertEquals("Wrong brush width displayed", new Integer(brushWidthText), new Integer(25));
-		//
-		// ArrayList<ProgressBar> progressBars = mSolo.getCurrentProgressBars();
-		// assertEquals(progressBars.size(), 1);
+		TextView brushWidthTextView = mSolo.getText("25");
+		String brushWidthText = (String) brushWidthTextView.getText();
+		assertEquals("Wrong brush width displayed", new Integer(brushWidthText), new Integer(25));
+
+		ArrayList<ProgressBar> progressBars = mSolo.getCurrentProgressBars();
+		assertEquals(progressBars.size(), 1);
 		// SeekBar strokeWidthBar = (SeekBar) progressBars.get(0);
 		// assertEquals(strokeWidthBar.getProgress(), 25);
 		// int newStrokeWidth = 80;
@@ -100,8 +104,8 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
 		mSolo.clickOnView(mToolBarButtonTwo);
 		assertTrue("Waiting for Brush Picker Dialog", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
-		// ArrayList<ProgressBar> progressBars = mSolo.getCurrentProgressBars();
-		// assertEquals(progressBars.size(), 1);
+		ArrayList<ProgressBar> progressBars = mSolo.getCurrentProgressBars();
+		assertEquals(progressBars.size(), 1);
 		// SeekBar strokeWidthBar = (SeekBar) progressBars.get(0);
 		// assertEquals(strokeWidthBar.getProgress(), 25);
 		// int newStrokeWidth = 80;

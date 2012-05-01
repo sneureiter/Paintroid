@@ -29,6 +29,7 @@ import org.junit.After;
 import org.junit.Before;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 import android.widget.TextView;
 import at.tugraz.ist.paintroid.MainActivity;
 import at.tugraz.ist.paintroid.R;
@@ -55,6 +56,7 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 	@Before
 	protected void setUp() throws Exception {
 		super.setUp();
+		Log.i("PAINTROID", "<setUp>: " + this.getName());
 
 		mSolo = new Solo(getInstrumentation(), getActivity());
 		mMainActivity = (MainActivity) mSolo.getCurrentActivity();
@@ -63,27 +65,26 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 		mToolBarButtonTwo = (TextView) getActivity().findViewById(R.id.btn_Parameter2);
 		mScreenWidth = mSolo.getCurrentActivity().getWindowManager().getDefaultDisplay().getWidth();
 		mScreenHeight = mSolo.getCurrentActivity().getWindowManager().getDefaultDisplay().getHeight();
-		mSolo.sleep(100);
+		Log.i("PAINTROID", "</setUp:> " + this.getName());
 	}
 
 	@Override
 	@After
 	protected void tearDown() throws Exception {
-
-		// try {
-		// mSolo.finalize();
-		// } catch (Throwable e) {
-		// e.printStackTrace();
-		// }
-		// getActivity().finish();
-		// mSolo = null;
-		// mMainActivity.finish();
-		// mMainActivity = null;
-		// mToolBarButtonMain = null;
-		// mToolBarButtonOne = null;
-		// mToolBarButtonTwo = null;
+		Log.i("PAINTROID", "<tearDown: " + this.getName());
+		try {
+			mSolo.finalize();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		mSolo = null;
+		mMainActivity = null;
+		mToolBarButtonMain = null;
+		mToolBarButtonOne = null;
+		mToolBarButtonTwo = null;
 		super.tearDown();
-		// System.gc();
+		System.gc();
+		Log.i("PAINTROID", "</tearDown>: " + this.getName());
 	}
 
 }

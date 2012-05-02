@@ -57,8 +57,9 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 	protected void setUp() throws Exception {
 		super.setUp();
 		Log.i("PAINTROID", "<setUp>: " + this.getName());
-		Thread.sleep(500);
+
 		try {
+			Thread.sleep(500);
 			int activityCount = 0;
 			while (getActivity() == null && activityCount++ < 100) {
 				Log.i("PAINTROID", "Activity counter " + activityCount);
@@ -89,16 +90,18 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 	protected void tearDown() throws Exception {
 		Log.i("PAINTROID", "<tearDown: " + this.getName());
 		try {
+			mMainActivity.finish();
 			mSolo.finalize();
+			// mSolo = null;
+			// mMainActivity = null;
+			// mToolBarButtonMain = null;
+			// mToolBarButtonOne = null;
+			// mToolBarButtonTwo = null;
+			System.gc();
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
-		mSolo = null;
-		mMainActivity = null;
-		mToolBarButtonMain = null;
-		mToolBarButtonOne = null;
-		mToolBarButtonTwo = null;
-		System.gc();
+
 		super.tearDown();
 		Log.i("PAINTROID", "</tearDown>: " + this.getName());
 	}

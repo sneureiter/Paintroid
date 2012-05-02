@@ -168,6 +168,7 @@ public class BrushPickerDialog extends BaseDialog implements OnClickListener {
 
 	@Override
 	public void onBackPressed() {
+		this.cancel();
 		super.onBackPressed();
 	}
 }

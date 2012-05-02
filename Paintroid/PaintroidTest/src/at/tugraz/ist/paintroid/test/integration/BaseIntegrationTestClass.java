@@ -57,15 +57,31 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 	protected void setUp() throws Exception {
 		super.setUp();
 		Log.i("PAINTROID", "<setUp>: " + this.getName());
+		Thread.sleep(500);
+		try {
+			int activityCount = 0;
+			while (getActivity() == null && activityCount++ < 100) {
+				Log.i("PAINTROID", "Activity counter " + activityCount);
+				getActivity();
+			}
 
-		mSolo = new Solo(getInstrumentation(), getActivity());
-		mMainActivity = (MainActivity) mSolo.getCurrentActivity();
-		mToolBarButtonMain = (TextView) getActivity().findViewById(R.id.btn_Tool);
-		mToolBarButtonOne = (TextView) getActivity().findViewById(R.id.btn_Parameter1);
-		mToolBarButtonTwo = (TextView) getActivity().findViewById(R.id.btn_Parameter2);
-		mScreenWidth = mSolo.getCurrentActivity().getWindowManager().getDefaultDisplay().getWidth();
-		mScreenHeight = mSolo.getCurrentActivity().getWindowManager().getDefaultDisplay().getHeight();
-		Log.i("PAINTROID", "</setUp:> " + this.getName());
+			mSolo = new Solo(getInstrumentation(), getActivity());
+			Log.i("PAINTROID", "<setUp>: 0  " + this.getName());
+			mMainActivity = (MainActivity) mSolo.getCurrentActivity();
+			Log.i("PAINTROID", "<setUp>: 1  " + this.getName());
+			mToolBarButtonMain = (TextView) getActivity().findViewById(R.id.btn_Tool);
+			Log.i("PAINTROID", "<setUp>: 2  " + this.getName());
+			mToolBarButtonOne = (TextView) getActivity().findViewById(R.id.btn_Parameter1);
+			Log.i("PAINTROID", "<setUp>: 3  " + this.getName());
+			mToolBarButtonTwo = (TextView) getActivity().findViewById(R.id.btn_Parameter2);
+			Log.i("PAINTROID", "<setUp>: 4  " + this.getName());
+			mScreenWidth = mSolo.getCurrentActivity().getWindowManager().getDefaultDisplay().getWidth();
+			Log.i("PAINTROID", "<setUp>: 5  " + this.getName());
+			mScreenHeight = mSolo.getCurrentActivity().getWindowManager().getDefaultDisplay().getHeight();
+			Log.i("PAINTROID", "</setUp:> " + this.getName());
+		} catch (Exception e) {
+			fail(this.getName() + ": " + e.getMessage());
+		}
 	}
 
 	@Override
@@ -82,8 +98,8 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 		mToolBarButtonMain = null;
 		mToolBarButtonOne = null;
 		mToolBarButtonTwo = null;
-		super.tearDown();
 		System.gc();
+		super.tearDown();
 		Log.i("PAINTROID", "</tearDown>: " + this.getName());
 	}
 

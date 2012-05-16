@@ -34,6 +34,7 @@ import org.junit.Test;
 import android.graphics.Paint;
 import android.graphics.Paint.Cap;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -54,15 +55,17 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 	@Override
 	@Before
 	protected void setUp() throws Exception {
+		Log.v("setup", "1");
 		super.setUp();
+		Log.v("setup", "5");
 	}
 
 	@Override
 	@After
 	protected void tearDown() throws Exception {
-		mSolo.finishInactiveActivities();
-		mSolo.finishOpenedActivities();
+		Log.v("teardown", "1");
 		super.tearDown();
+		Log.v("teardown", "6");
 	}
 
 	@Test

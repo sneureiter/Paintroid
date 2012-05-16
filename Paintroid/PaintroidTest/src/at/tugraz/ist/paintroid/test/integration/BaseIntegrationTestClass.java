@@ -55,57 +55,29 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 	@Override
 	@Before
 	protected void setUp() throws Exception {
+		Log.v("setup", "2");
 		super.setUp();
-		Log.i("PAINTROID", "<setUp>: " + this.getName());
+		Log.v("setup", "3");
+		mSolo = new Solo(getInstrumentation(), getActivity());
+		mMainActivity = (MainActivity) mSolo.getCurrentActivity();
+		mToolBarButtonMain = (TextView) getActivity().findViewById(R.id.btn_Tool);
+		mToolBarButtonOne = (TextView) getActivity().findViewById(R.id.btn_Parameter1);
+		mToolBarButtonTwo = (TextView) getActivity().findViewById(R.id.btn_Parameter2);
+		mScreenWidth = mSolo.getCurrentActivity().getWindowManager().getDefaultDisplay().getWidth();
+		mScreenHeight = mSolo.getCurrentActivity().getWindowManager().getDefaultDisplay().getHeight();
 
-		try {
-			Log.i("PAINTROID", this.getName() + " sleeping for a while");
-			Thread.sleep(4000);
-			Log.i("PAINTROID", this.getName() + " waking up");
-			int activityCount = 0;
-			while (getActivity() == null && activityCount++ < 100) {
-				Log.i("PAINTROID", "Activity counter " + activityCount);
-				getActivity();
-			}
-
-			mSolo = new Solo(getInstrumentation(), getActivity());
-			Log.i("PAINTROID", "<setUp>: 0  " + this.getName());
-			mMainActivity = (MainActivity) mSolo.getCurrentActivity();
-			Log.i("PAINTROID", "<setUp>: 1  " + this.getName());
-			mToolBarButtonMain = (TextView) getActivity().findViewById(R.id.btn_Tool);
-			Log.i("PAINTROID", "<setUp>: 2  " + this.getName());
-			mToolBarButtonOne = (TextView) getActivity().findViewById(R.id.btn_Parameter1);
-			Log.i("PAINTROID", "<setUp>: 3  " + this.getName());
-			mToolBarButtonTwo = (TextView) getActivity().findViewById(R.id.btn_Parameter2);
-			Log.i("PAINTROID", "<setUp>: 4  " + this.getName());
-			mScreenWidth = mSolo.getCurrentActivity().getWindowManager().getDefaultDisplay().getWidth();
-			Log.i("PAINTROID", "<setUp>: 5  " + this.getName());
-			mScreenHeight = mSolo.getCurrentActivity().getWindowManager().getDefaultDisplay().getHeight();
-			Log.i("PAINTROID", "</setUp:> " + this.getName());
-		} catch (Exception e) {
-			fail(this.getName() + ": " + e.getMessage());
-		}
+		Log.v("setup", "4");
 	}
 
 	@Override
 	@After
 	protected void tearDown() throws Exception {
-		Log.i("PAINTROID", "<tearDown: " + this.getName());
-		try {
-			// mMainActivity.finish();
-			// mSolo.finalize();
-			// mSolo = null;
-			// mMainActivity = null;
-			// mToolBarButtonMain = null;
-			// mToolBarButtonOne = null;
-			// mToolBarButtonTwo = null;
-			// System.gc();
-			super.tearDown();
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-
-		Log.i("PAINTROID", "</tearDown>: " + this.getName());
+		Log.v("teardown", "2");
+		mSolo.finishInactiveActivities();
+		Log.v("teardown", "3");
+		mSolo.finishOpenedActivities();
+		Log.v("teardown", "4");
+		super.tearDown();
+		Log.v("teardown", "5");
 	}
-
 }

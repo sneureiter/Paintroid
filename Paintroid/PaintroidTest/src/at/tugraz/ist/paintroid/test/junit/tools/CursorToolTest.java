@@ -65,6 +65,11 @@ public class CursorToolTest extends ActivityInstrumentationTestCase2<MainActivit
 	@Override
 	public void setUp() throws SecurityException, IllegalArgumentException, NoSuchFieldException,
 			IllegalAccessException {
+		try {
+			Thread.sleep(500);
+		} catch (Exception e) {
+			fail("interrupt exception");
+		}
 		this.commandManagerStub = new CommandManagerStub();
 		this.tool = new CursorTool(this.getActivity(), Tool.ToolType.CURSOR);
 		this.paint = new Paint();

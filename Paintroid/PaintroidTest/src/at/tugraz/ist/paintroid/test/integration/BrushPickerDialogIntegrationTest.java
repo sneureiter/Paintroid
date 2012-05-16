@@ -27,6 +27,8 @@ package at.tugraz.ist.paintroid.test.integration;
 
 import java.util.ArrayList;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import android.graphics.Paint;
@@ -49,9 +51,22 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 		super();
 	}
 
+	@Override
+	@Before
+	protected void setUp() throws Exception {
+		super.setUp();
+	}
+
+	@Override
+	@After
+	protected void tearDown() throws Exception {
+		super.tearDown();
+	}
+
 	@Test
 	public void testBrushPickerDialog() throws SecurityException, IllegalArgumentException, NoSuchFieldException,
 			IllegalAccessException {
+
 		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
 		mSolo.clickOnView(mToolBarButtonTwo);
 		assertTrue("Waiting for Brush Picker Dialog", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));

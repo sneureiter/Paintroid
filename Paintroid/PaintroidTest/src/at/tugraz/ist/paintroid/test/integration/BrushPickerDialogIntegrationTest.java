@@ -60,6 +60,8 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 	@Override
 	@After
 	protected void tearDown() throws Exception {
+		// mSolo.finishInactiveActivities();
+		mSolo.finishOpenedActivities();
 		super.tearDown();
 	}
 

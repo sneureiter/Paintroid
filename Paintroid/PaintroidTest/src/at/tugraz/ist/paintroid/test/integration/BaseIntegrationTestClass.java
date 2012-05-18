@@ -45,7 +45,7 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 	protected int mScreenWidth;
 	protected int mScreenHeight;
 	protected final int TIMEOUT = 2000;
-	protected MainActivity mMainActivity;
+	// protected MainActivity mMainActivity;
 	protected final int VERSION_HONEYCOMB = 11;
 
 	public BaseIntegrationTestClass() throws Exception {
@@ -59,7 +59,7 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 		super.setUp();
 		Log.v("setup", "3");
 		mSolo = new Solo(getInstrumentation(), getActivity());
-		mMainActivity = (MainActivity) mSolo.getCurrentActivity();
+		// mMainActivity = (MainActivity) mSolo.getCurrentActivity();
 		mToolBarButtonMain = (TextView) getActivity().findViewById(R.id.btn_Tool);
 		mToolBarButtonOne = (TextView) getActivity().findViewById(R.id.btn_Parameter1);
 		mToolBarButtonTwo = (TextView) getActivity().findViewById(R.id.btn_Parameter2);

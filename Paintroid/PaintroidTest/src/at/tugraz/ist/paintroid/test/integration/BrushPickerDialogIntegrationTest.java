@@ -155,13 +155,13 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 		mSolo.clickOnImageButton(0);
 		assertTrue("Waiting for set cap SQUARE", mSolo.waitForView(LinearLayout.class, 1, TIMEOUT));
 
-		mSolo.clickOnButton(mMainActivity.getString(R.string.button_accept));
+		mSolo.clickOnButton(mSolo.getString(R.string.button_accept));
 		assertTrue("Waiting for Tool to be ready", mSolo.waitForActivity("MainActivity", TIMEOUT));
 
 		mSolo.clickOnView(mToolBarButtonMain);
 		assertTrue("Waiting for the ToolMenu to open", mSolo.waitForView(GridView.class, 1, TIMEOUT));
 
-		mSolo.clickOnText(mMainActivity.getString(R.string.button_cursor));
+		mSolo.clickOnText(mSolo.getString(R.string.button_cursor));
 		assertTrue("Waiting for Tool to Change -> MainActivity", mSolo.waitForActivity("MainActivity", TIMEOUT));
 
 		mSolo.clickOnView(mToolBarButtonTwo);

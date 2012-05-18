@@ -73,7 +73,7 @@ public class ToolOnBackPressedTests extends BaseIntegrationTestClass {
 		mSolo.clickOnView(mToolBarButtonMain);
 		assertTrue("Waiting for the ToolMenu to open", mSolo.waitForView(GridView.class, 1, TIMEOUT));
 
-		mSolo.clickOnText(mMainActivity.getString(R.string.button_cursor));
+		mSolo.clickOnText(mSolo.getString(R.string.button_cursor));
 		assertTrue("Waiting for Tool to Change -> MainActivity", mSolo.waitForActivity("MainActivity", TIMEOUT));
 		assertEquals("Switching to another tool", PaintroidApplication.CURRENT_TOOL.getToolType(), ToolType.CURSOR);
 
@@ -85,7 +85,8 @@ public class ToolOnBackPressedTests extends BaseIntegrationTestClass {
 	@Test
 	public void testBrushToolBackPressedFromCatroidAndUsePicture() {
 		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
-		String pathToFile = mMainActivity.getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+		String pathToFile = mSolo.getCurrentActivity().getApplicationContext()
+				.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
 				+ "/" + mSolo.getString(R.string.temp_picture_name) + ".png";
 
 		File fileToReturnToCatroid = new File(pathToFile);
@@ -93,7 +94,7 @@ public class ToolOnBackPressedTests extends BaseIntegrationTestClass {
 			fileToReturnToCatroid.delete();
 
 		try {
-			PrivateAccess.setMemberValue(MainActivity.class, mMainActivity, "mOpenedWithCatroid", true);
+			PrivateAccess.setMemberValue(MainActivity.class, mSolo.getCurrentActivity(), "mOpenedWithCatroid", true);
 		} catch (Exception e) {
 			fail("Could not set member variable: " + e.toString());
 		}
@@ -129,7 +130,8 @@ public class ToolOnBackPressedTests extends BaseIntegrationTestClass {
 	@Test
 	public void testBrushToolBackPressedFromCatroidAndDiscardPicture() {
 		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
-		String pathToFile = mMainActivity.getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+		String pathToFile = mSolo.getCurrentActivity().getApplicationContext()
+				.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
 				+ "/" + mSolo.getString(R.string.temp_picture_name) + ".png";
 
 		File fileToReturnToCatroid = new File(pathToFile);
@@ -137,7 +139,7 @@ public class ToolOnBackPressedTests extends BaseIntegrationTestClass {
 			fileToReturnToCatroid.delete();
 
 		try {
-			PrivateAccess.setMemberValue(MainActivity.class, mMainActivity, "mOpenedWithCatroid", true);
+			PrivateAccess.setMemberValue(MainActivity.class, mSolo.getCurrentActivity(), "mOpenedWithCatroid", true);
 		} catch (Exception e) {
 			fail("Could not set member variable: " + e.toString());
 		}

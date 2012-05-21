@@ -73,7 +73,7 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 	@After
 	protected void tearDown() throws Exception {
 		Log.v("teardown", "2");
-		mSolo.finishInactiveActivities();
+		// mSolo.finishInactiveActivities();
 		Log.v("teardown", "3");
 		mSolo.finishOpenedActivities();
 		Log.v("teardown", "4");

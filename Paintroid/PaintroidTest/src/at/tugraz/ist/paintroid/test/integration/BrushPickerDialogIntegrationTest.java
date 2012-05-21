@@ -179,6 +179,7 @@ public class BrushPickerDialogIntegrationTest extends BaseIntegrationTestClass {
 		int paintStrokeWidth = (int) strokePaint.getStrokeWidth();
 		assertEquals(paintStrokeWidth, newStrokeWidth);
 		assertEquals(strokePaint.getStrokeCap(), Cap.SQUARE);
+		mSolo.finishInactiveActivities();
 	}
 
 	// @Test

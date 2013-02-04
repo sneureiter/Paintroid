@@ -37,6 +37,7 @@ public class MagicCommand extends BaseCommand {
 
 	public MagicCommand(Paint paint, PointF coordinate) {
 		super(paint);
+		Log.i("PAINTROID", "magic command with color " + paint.getColor());
 		if (coordinate != null) {
 			mColorPixel = new Point((int) coordinate.x, (int) coordinate.y);
 		} else {
@@ -53,7 +54,8 @@ public class MagicCommand extends BaseCommand {
 		int bitmapHeight = bitmap.getHeight();
 		if ((bitmapWidth <= mColorPixel.x)
 				|| (bitmapHeight <= mColorPixel.y || (0 > mColorPixel.x) || (0 > mColorPixel.y))) {
-			Log.w(PaintroidApplication.TAG, "Point is out of range " + this.toString());
+			Log.w(PaintroidApplication.TAG,
+					"Point is out of range " + this.toString());
 			return;
 		}
 
@@ -66,7 +68,8 @@ public class MagicCommand extends BaseCommand {
 		}
 		int[] pixelArray = new int[bitmapPixels];
 
-		bitmap.getPixels(pixelArray, 0, bitmapWidth, 0, 0, bitmapWidth, bitmapHeight);
+		bitmap.getPixels(pixelArray, 0, bitmapWidth, 0, 0, bitmapWidth,
+				bitmapHeight);
 
 		for (int index = 0; index < bitmapPixels; index++) {
 			if (pixelColor == pixelArray[index]) {
@@ -74,6 +77,7 @@ public class MagicCommand extends BaseCommand {
 			}
 		}
 
-		bitmap.setPixels(pixelArray, 0, bitmapWidth, 0, 0, bitmapWidth, bitmapHeight);
+		bitmap.setPixels(pixelArray, 0, bitmapWidth, 0, 0, bitmapWidth,
+				bitmapHeight);
 	}
 }

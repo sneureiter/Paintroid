@@ -24,7 +24,6 @@
 package org.catrobat.paintroid.tools.implementation;
 
 import org.catrobat.paintroid.PaintroidApplication;
-import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.command.Command;
 import org.catrobat.paintroid.command.implementation.MagicCommand;
 import org.catrobat.paintroid.ui.button.ToolbarButton.ToolButtonIDs;
@@ -34,10 +33,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PointF;
 
-public class MagicTool extends BaseTool {
+public class ColorToTransparencyTool extends BaseTool {
 
-	public MagicTool(Context context, ToolType toolType) {
+	public ColorToTransparencyTool(Context context, ToolType toolType) {
 		super(context, toolType);
+		changePaintColor(Color.RED);
 	}
 
 	@Override
@@ -65,28 +65,15 @@ public class MagicTool extends BaseTool {
 		if (coordinate == null) {
 			return false;
 		}
+
 		Command command = new MagicCommand(mBitmapPaint, coordinate);
 		PaintroidApplication.COMMAND_MANAGER.commitCommand(command);
 		return true;
 	}
 
 	@Override
-	public int getAttributeButtonColor(ToolButtonIDs buttonNumber) {
-
-		switch (buttonNumber) {
-		case BUTTON_ID_PARAMETER_BOTTOM_1:
-			return Color.TRANSPARENT;
-
-		default:
-			return super.getAttributeButtonColor(buttonNumber);
-		}
-	}
-
-	@Override
 	public int getAttributeButtonResource(ToolButtonIDs buttonNumber) {
 		switch (buttonNumber) {
-		case BUTTON_ID_PARAMETER_BOTTOM_2:
-			return R.drawable.icon_menu_color_palette;
 		case BUTTON_ID_PARAMETER_TOP:
 			return getStrokeColorResource();
 		default:
@@ -96,14 +83,7 @@ public class MagicTool extends BaseTool {
 
 	@Override
 	public void attributeButtonClick(ToolButtonIDs buttonNumber) {
-		switch (buttonNumber) {
-		case BUTTON_ID_PARAMETER_BOTTOM_2:
-		case BUTTON_ID_PARAMETER_TOP:
-			showColorPicker();
-			break;
-		default:
-			break;
-		}
+
 	}
 
 	@Override

@@ -27,12 +27,12 @@ import java.io.File;
 
 import org.catrobat.paintroid.tools.Tool;
 import org.catrobat.paintroid.tools.Tool.ToolType;
+import org.catrobat.paintroid.tools.implementation.ColorToTransparencyTool;
 import org.catrobat.paintroid.tools.implementation.CropTool;
 import org.catrobat.paintroid.tools.implementation.CursorTool;
 import org.catrobat.paintroid.tools.implementation.DrawTool;
 import org.catrobat.paintroid.tools.implementation.EraserTool;
 import org.catrobat.paintroid.tools.implementation.FlipTool;
-import org.catrobat.paintroid.tools.implementation.MagicTool;
 import org.catrobat.paintroid.tools.implementation.MoveZoomTool;
 import org.catrobat.paintroid.tools.implementation.PipetteTool;
 import org.catrobat.paintroid.tools.implementation.RectangleFillTool;
@@ -63,8 +63,8 @@ public class Utils {
 			return new StampTool(context, toolType);
 		case PIPETTE:
 			return new PipetteTool(context, toolType);
-		case MAGIC:
-			return new MagicTool(context, toolType);
+		case TO_TRANSPARENCY:
+			return new ColorToTransparencyTool(context, toolType);
 		case CROP:
 			return new CropTool(context, toolType);
 		case RECT:

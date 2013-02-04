@@ -52,6 +52,7 @@ import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader;
+import android.util.Log;
 
 public abstract class BaseTool extends Observable implements Tool, Observer {
 	// TODO maybe move to PaintroidApplication.
@@ -147,6 +148,7 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 
 	@Override
 	public void changePaintColor(int color) {
+
 		mBitmapPaint.setColor(color);
 		if (Color.alpha(color) == 0x00) {
 			mBitmapPaint.setXfermode(eraseXfermode);
@@ -163,6 +165,8 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 			mBitmapPaint.setXfermode(null);
 			mCanvasPaint.set(mBitmapPaint);
 		}
+		Log.i("PAINTROID", "change color called to " + color + " bmp: "
+				+ mBitmapPaint.getColor());
 		super.setChanged();
 		super.notifyObservers();
 	}
@@ -235,7 +239,7 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 				return R.drawable.icon_menu_crop;
 			case CURSOR:
 				return R.drawable.icon_menu_cursor;
-			case MAGIC:
+			case TO_TRANSPARENCY:
 				return R.drawable.icon_menu_magic;
 			case PIPETTE:
 				return R.drawable.icon_menu_pipette;

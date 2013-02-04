@@ -86,8 +86,8 @@ public class DialogHelp extends BaseDialog implements OnClickListener {
 		switch (id_) {
 		case R.id.btn_status_tool:
 			switch (toolType_) {
-			case MAGIC:
-				text.setText(R.string.help_content_wand);
+			case TO_TRANSPARENCY:
+				text.setText(R.string.help_content_to_transparency);
 				break;
 			case CURSOR:
 				text.setText(R.string.help_content_cursor);
@@ -133,7 +133,7 @@ public class DialogHelp extends BaseDialog implements OnClickListener {
 
 		case R.id.btn_status_parameter:
 			switch (toolType_) {
-			case MAGIC:
+			case TO_TRANSPARENCY:
 			case CURSOR:
 			case BRUSH:
 			case PIPETTE:
@@ -172,8 +172,8 @@ public class DialogHelp extends BaseDialog implements OnClickListener {
 		case R.string.button_pipette:
 			text.setText(R.string.help_content_eyedropper);
 			break;
-		case R.string.button_magic:
-			text.setText(R.string.help_content_wand);
+		case R.string.button_transparency:
+			text.setText(R.string.help_content_to_transparency);
 			break;
 		case R.string.button_undo:
 			text.setText(R.string.help_content_undo);

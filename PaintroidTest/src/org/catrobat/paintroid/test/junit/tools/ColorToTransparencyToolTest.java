@@ -9,7 +9,7 @@ import org.catrobat.paintroid.command.implementation.MagicCommand;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.catrobat.paintroid.tools.Tool;
 import org.catrobat.paintroid.tools.Tool.ToolType;
-import org.catrobat.paintroid.tools.implementation.MagicTool;
+import org.catrobat.paintroid.tools.implementation.ColorToTransparencyTool;
 import org.catrobat.paintroid.ui.button.ToolbarButton.ToolButtonIDs;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,16 +19,16 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
 
-public class MagicToolTest extends BaseToolTest {
+public class ColorToTransparencyToolTest extends BaseToolTest {
 
-	public MagicToolTest() {
+	public ColorToTransparencyToolTest() {
 		super();
 	}
 
 	@Override
 	@Before
 	protected void setUp() throws Exception {
-		mToolToTest = new MagicTool(getActivity(), Tool.ToolType.MAGIC);
+		mToolToTest = new ColorToTransparencyTool(getActivity(), Tool.ToolType.TO_TRANSPARENCY);
 		super.setUp();
 	}
 
@@ -63,7 +63,7 @@ public class MagicToolTest extends BaseToolTest {
 	public void testShouldReturnCorrectToolType() {
 		ToolType toolType = mToolToTest.getToolType();
 
-		assertEquals(ToolType.MAGIC, toolType);
+		assertEquals(ToolType.TO_TRANSPARENCY, toolType);
 	}
 
 	@Test

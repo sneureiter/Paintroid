@@ -44,8 +44,8 @@
             android:defaultValue="true"/>
     	<CheckBoxPreference 
             android:icon="@drawable/icon_menu_magic"
-            android:key="@string/button_magic"
-            android:title="@string/button_magic"
+            android:key="@string/button_transparency"
+            android:title="@string/button_transparency"
             android:defaultValue="true"/>
     	<CheckBoxPreference 
             android:icon="@drawable/icon_menu_stamp"

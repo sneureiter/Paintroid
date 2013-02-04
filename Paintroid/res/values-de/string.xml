@@ -33,7 +33,7 @@
   <string name="button_choose">Hand</string>
   <string name="button_zoom">Zoom</string>
   <string name="button_pipette">Pipette</string>
-  <string name="button_magic">Magie</string>
+  <string name="button_transparency">Farbe zu Transparenz</string>
   <string name="button_undo">rückgängig</string>
   <string name="button_redo">wiederholen</string>
   <string name="button_stamp">Stempel</string>
@@ -109,7 +109,7 @@
   <string name="help_content_zoom">Ich bin das Vergrößerungsglas.\n\n Ich helfe euch beim vergrößern des Bildes.\n\n Ziehe einfach deinen Finger über das Bild.</string>
   <string name="help_content_brush">Ich bin der Pinsel.\n\n Ich helfe dir zu malen.</string>
   <string name="help_content_eyedropper">Ich bin die Pippete.\n\n Ich kann dir die Farbe eines Punktes im Bild sagen.</string>
-  <string name="help_content_wand">Ich bin der Zauberstab.\n\n Ich kann eine ausgewählte Farbe im Bild durch eine von dir gewählte Farbe ersetzen.</string>
+  <string name="help_content_to_transparency">Ich bin das Farbe zu Transparenz Werkzeug.\n\n Ich kann eine ausgewählte Farbe im Bild durch Transparenz ersetzen.</string>
   <string name="help_content_undo">Ich bin der Undo Pfeil.\n\n Ich mache eine änderung rückgängig.</string>
   <string name="help_content_redo">Ich bin der Redo Pfeil. \n\n Ich stelle eine änderung von dir wieder her.</string>
   <string name="help_content_file">Ich bin der Daten Manager. \n\n Ich helfe dir Bilder zu laden/speichern und ein neues zu erstellen.</string>

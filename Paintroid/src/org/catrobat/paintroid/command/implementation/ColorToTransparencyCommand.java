@@ -27,17 +27,20 @@ import org.catrobat.paintroid.PaintroidApplication;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.util.Log;
 
-public class MagicCommand extends BaseCommand {
+public class ColorToTransparencyCommand extends BaseCommand {
+
+	private static final double THRESHOLD = 10.0;
+
 	protected Point mColorPixel;
 
-	public MagicCommand(Paint paint, PointF coordinate) {
+	public ColorToTransparencyCommand(Paint paint, PointF coordinate) {
 		super(paint);
-		Log.i("PAINTROID", "magic command with color " + paint.getColor());
 		if (coordinate != null) {
 			mColorPixel = new Point((int) coordinate.x, (int) coordinate.y);
 		} else {
@@ -56,6 +59,8 @@ public class MagicCommand extends BaseCommand {
 				|| (bitmapHeight <= mColorPixel.y || (0 > mColorPixel.x) || (0 > mColorPixel.y))) {
 			Log.w(PaintroidApplication.TAG,
 					"Point is out of range " + this.toString());
+			setChanged();
+			notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
 			return;
 		}
 
@@ -64,6 +69,8 @@ public class MagicCommand extends BaseCommand {
 		int colorToReplaceWith = mPaint.getColor();
 		if (colorToReplaceWith == pixelColor) {
 			Log.i(PaintroidApplication.TAG, "Same colour nothing to replace");
+			setChanged();
+			notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
 			return;
 		}
 		int[] pixelArray = new int[bitmapPixels];
@@ -72,12 +79,32 @@ public class MagicCommand extends BaseCommand {
 				bitmapHeight);
 
 		for (int index = 0; index < bitmapPixels; index++) {
-			if (pixelColor == pixelArray[index]) {
+			if (isSimilarColor(pixelColor, pixelArray[index])) {
 				pixelArray[index] = colorToReplaceWith;
 			}
 		}
 
 		bitmap.setPixels(pixelArray, 0, bitmapWidth, 0, 0, bitmapWidth,
 				bitmapHeight);
+		setChanged();
+		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
 	}
+
+	private boolean isSimilarColor(int color1, int color2) {
+
+		int red1 = Color.red(color1);
+		int red2 = Color.red(color2);
+		int green1 = Color.red(color1);
+		int green2 = Color.red(color2);
+		int blue1 = Color.red(color1);
+		int blue2 = Color.red(color2);
+
+		double diff = Math
+				.sqrt(Math.pow((red2 - red1), 2)
+						+ Math.pow((green2 - green1), 2)
+						+ Math.pow((blue2 - blue1), 2));
+
+		return diff < THRESHOLD;
+	}
+
 }

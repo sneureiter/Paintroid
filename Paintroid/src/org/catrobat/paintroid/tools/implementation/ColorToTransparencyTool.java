@@ -25,7 +25,7 @@ package org.catrobat.paintroid.tools.implementation;
 
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.command.Command;
-import org.catrobat.paintroid.command.implementation.MagicCommand;
+import org.catrobat.paintroid.command.implementation.ColorToTransparencyCommand;
 import org.catrobat.paintroid.ui.button.ToolbarButton.ToolButtonIDs;
 
 import android.content.Context;
@@ -37,7 +37,7 @@ public class ColorToTransparencyTool extends BaseTool {
 
 	public ColorToTransparencyTool(Context context, ToolType toolType) {
 		super(context, toolType);
-		changePaintColor(Color.RED);
+		changePaintColor(Color.TRANSPARENT);
 	}
 
 	@Override
@@ -66,7 +66,10 @@ public class ColorToTransparencyTool extends BaseTool {
 			return false;
 		}
 
-		Command command = new MagicCommand(mBitmapPaint, coordinate);
+		mProgressDialog.show();
+		Command command = new ColorToTransparencyCommand(mBitmapPaint,
+				coordinate);
+		((ColorToTransparencyCommand) command).addObserver(this);
 		PaintroidApplication.COMMAND_MANAGER.commitCommand(command);
 		return true;
 	}
@@ -79,11 +82,6 @@ public class ColorToTransparencyTool extends BaseTool {
 		default:
 			return super.getAttributeButtonResource(buttonNumber);
 		}
-	}
-
-	@Override
-	public void attributeButtonClick(ToolButtonIDs buttonNumber) {
-
 	}
 
 	@Override

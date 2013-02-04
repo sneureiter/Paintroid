@@ -165,8 +165,6 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 			mBitmapPaint.setXfermode(null);
 			mCanvasPaint.set(mBitmapPaint);
 		}
-		Log.i("PAINTROID", "change color called to " + color + " bmp: "
-				+ mBitmapPaint.getColor());
 		super.setChanged();
 		super.notifyObservers();
 	}
@@ -189,6 +187,7 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 
 	@Override
 	public void setDrawPaint(Paint paint) {
+		Log.i("PAINTROID", "set draw paint" + mBitmapPaint.getColor());
 		mBitmapPaint.set(paint);
 		mCanvasPaint.set(paint);
 		super.setChanged();

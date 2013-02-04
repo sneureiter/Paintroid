@@ -49,7 +49,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
-import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -65,7 +64,6 @@ import android.view.LayoutInflater.Factory;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -371,13 +369,10 @@ public class MainActivity extends MenuFileActivity {
 	}
 
 	private synchronized void switchTool(ToolType changeToToolType) {
-		Paint tempPaint = new Paint(
-				PaintroidApplication.CURRENT_TOOL.getDrawPaint());
 		Tool tool = Utils.createTool(changeToToolType, this);
 		if (tool != null) {
 			mToolbar.setTool(tool);
 			PaintroidApplication.CURRENT_TOOL = tool;
-			PaintroidApplication.CURRENT_TOOL.setDrawPaint(tempPaint);
 			MenuItem primaryAttributeItem = mMenu
 					.findItem(R.id.menu_item_primary_tool_attribute_button);
 			MenuItem secondaryAttributeItem = mMenu

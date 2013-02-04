@@ -5,7 +5,7 @@ import static org.catrobat.paintroid.test.utils.PaintroidAsserts.assertPaintEqua
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.command.Command;
 import org.catrobat.paintroid.command.implementation.BaseCommand;
-import org.catrobat.paintroid.command.implementation.MagicCommand;
+import org.catrobat.paintroid.command.implementation.ColorToTransparencyCommand;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.catrobat.paintroid.tools.Tool;
 import org.catrobat.paintroid.tools.Tool.ToolType;
@@ -53,8 +53,8 @@ public class ColorToTransparencyToolTest extends BaseToolTest {
 		assertTrue(mToolToTest.handleUp(new PointF(handleUpPoint)));
 		assertEquals("No MagicCommand committed", 1, mCommandManagerStub.getCallCount("commitCommand"));
 		Command command = (Command) mCommandManagerStub.getCall("commitCommand", 0).get(0);
-		assertTrue(command instanceof MagicCommand);
-		Point point = (Point) PrivateAccess.getMemberValue(MagicCommand.class, command, "mColorPixel");
+		assertTrue(command instanceof ColorToTransparencyCommand);
+		Point point = (Point) PrivateAccess.getMemberValue(ColorToTransparencyCommand.class, command, "mColorPixel");
 		assertTrue("Wrong replace coordinate of commited command", handleUpPoint.equals(point.x, point.y));
 		Paint paint = (Paint) PrivateAccess.getMemberValue(BaseCommand.class, command, "mPaint");
 		assertPaintEquals(mPaint, paint);

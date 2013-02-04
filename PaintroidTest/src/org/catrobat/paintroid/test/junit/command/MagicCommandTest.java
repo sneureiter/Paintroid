@@ -23,7 +23,7 @@
 
 package org.catrobat.paintroid.test.junit.command;
 
-import org.catrobat.paintroid.command.implementation.MagicCommand;
+import org.catrobat.paintroid.command.implementation.ColorToTransparencyCommand;
 import org.catrobat.paintroid.test.utils.PaintroidAsserts;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.junit.After;
@@ -43,8 +43,8 @@ public class MagicCommandTest extends CommandTestSetup {
 		super.setUp();
 		mCanvasUnderTest = null;
 		mBitmapUnderTest.eraseColor(BITMAP_BASE_COLOR - 1);
-		mCommandUnderTest = new MagicCommand(mPaintUnderTest, mPointUnderTest);
-		mCommandUnderTestNull = new MagicCommand(null, null);
+		mCommandUnderTest = new ColorToTransparencyCommand(mPaintUnderTest, mPointUnderTest);
+		mCommandUnderTestNull = new ColorToTransparencyCommand(null, null);
 	}
 
 	@Override
@@ -71,16 +71,16 @@ public class MagicCommandTest extends CommandTestSetup {
 	public void testRunPointOutOfBitmapBounds() {
 		int testCase = 0;
 		try {
-			mCommandUnderTest = new MagicCommand(mPaintUnderTest, new PointF(-1, 0));
+			mCommandUnderTest = new ColorToTransparencyCommand(mPaintUnderTest, new PointF(-1, 0));
 			mCommandUnderTest.run(mCanvasUnderTest, mBitmapUnderTest);
 			testCase++;
-			mCommandUnderTest = new MagicCommand(mPaintUnderTest, new PointF(0, -1));
+			mCommandUnderTest = new ColorToTransparencyCommand(mPaintUnderTest, new PointF(0, -1));
 			mCommandUnderTest.run(mCanvasUnderTest, mBitmapUnderTest);
 			testCase++;
-			mCommandUnderTest = new MagicCommand(mPaintUnderTest, new PointF(mBitmapUnderTest.getWidth(), 0));
+			mCommandUnderTest = new ColorToTransparencyCommand(mPaintUnderTest, new PointF(mBitmapUnderTest.getWidth(), 0));
 			mCommandUnderTest.run(mCanvasUnderTest, mBitmapUnderTest);
 			testCase++;
-			mCommandUnderTest = new MagicCommand(mPaintUnderTest, new PointF(0, mBitmapUnderTest.getHeight()));
+			mCommandUnderTest = new ColorToTransparencyCommand(mPaintUnderTest, new PointF(0, mBitmapUnderTest.getHeight()));
 			mCommandUnderTest.run(mCanvasUnderTest, mBitmapUnderTest);
 			testCase++;
 		} catch (Exception e) {
@@ -102,13 +102,13 @@ public class MagicCommandTest extends CommandTestSetup {
 	@Test
 	public void testMagicCommand() {
 		try {
-			Point pointToTest = new Point((Point) PrivateAccess.getMemberValue(MagicCommand.class, mCommandUnderTest,
+			Point pointToTest = new Point((Point) PrivateAccess.getMemberValue(ColorToTransparencyCommand.class, mCommandUnderTest,
 					"mColorPixel"));
 			assertNotNull("Point initialisation failed", pointToTest);
 			assertEquals((int) mPointUnderTest.x, pointToTest.x);
 			assertEquals((int) mPointUnderTest.y, pointToTest.y);
 			assertNotNull("Pixel (that was 'clicked') initailisation failed",
-					PrivateAccess.getMemberValue(MagicCommand.class, mCommandUnderTestNull, "mColorPixel"));
+					PrivateAccess.getMemberValue(ColorToTransparencyCommand.class, mCommandUnderTestNull, "mColorPixel"));
 		} catch (Exception e) {
 			fail("Failed with exception:" + e.toString());
 		}

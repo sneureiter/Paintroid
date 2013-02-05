@@ -33,7 +33,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Point;
 import android.util.Log;
 
@@ -66,65 +65,85 @@ public class StampTool extends BaseToolWithRectangleShape {
 	}
 
 	protected void createAndSetBitmap(DrawingSurface drawingSurface) {
-
-		Log.d(PaintroidApplication.TAG, "clip bitmap");
-		Point left_top_box_bitmapcoordinates = new Point((int) mToolPosition.x
+		Point leftTopBoxCoord = new Point((int) mToolPosition.x
 				- (int) mBoxWidth / 2, (int) mToolPosition.y - (int) mBoxHeight
 				/ 2);
-		Point right_bottom_box_bitmapcoordinates = new Point(
-				(int) mToolPosition.x + (int) mBoxWidth / 2,
-				(int) mToolPosition.y + (int) mBoxHeight / 2);
+		Point rightBottomBoxCoord = new Point((int) mToolPosition.x
+				+ (int) mBoxWidth / 2, (int) mToolPosition.y + (int) mBoxHeight
+				/ 2);
 		try {
+			// create bitmap out of actual bitmap area
 			Bitmap drawingSurfaceBitmap = drawingSurface.getBitmap();
 
-			double outerRectHeight1 = (Math.sin(Math.toRadians(Math
+			double outerRectWidth1 = (Math.sin(Math.toRadians(Math
 					.abs(mBoxRotation))) * drawingSurfaceBitmap.getWidth());
-			double outerRectHeight2 = (Math.sin(Math.toRadians(90.0d - Math
+			double outerRectWidth2 = (Math.sin(Math.toRadians(90.0d - Math
 					.abs(mBoxRotation))) * drawingSurfaceBitmap.getHeight());
-			float outerRectHeight = (float) outerRectHeight1
-					+ (float) outerRectHeight2;
-
-			double rectangleRelation = outerRectHeight
-					/ drawingSurfaceBitmap.getHeight();
-
-			double outerRectWidth1 = Math.sin(Math.toRadians(90.0d - Math
-					.abs(mBoxRotation))) * drawingSurfaceBitmap.getWidth();
-			double outerRectWidth2 = Math.sin(Math.toRadians(Math
-					.abs(mBoxRotation))) * drawingSurfaceBitmap.getHeight();
 			float outerRectWidth = (float) outerRectWidth1
 					+ (float) outerRectWidth2;
 
+			double outerRectHeight1 = Math.sin(Math.toRadians(90.0d - Math
+					.abs(mBoxRotation))) * drawingSurfaceBitmap.getWidth();
+			double outerRectHeight2 = Math.sin(Math.toRadians(Math
+					.abs(mBoxRotation))) * drawingSurfaceBitmap.getHeight();
+			float outerRectHeight = (float) outerRectHeight1
+					+ (float) outerRectHeight2;
+
+			Bitmap largeDrawingSurfaceBitmap = Bitmap.createBitmap(
+					(int) outerRectWidth, (int) outerRectHeight,
+					Bitmap.Config.ARGB_8888);
+			Canvas largeDrawingSurfaceCanvas = new Canvas(
+					largeDrawingSurfaceBitmap);
+
+			largeDrawingSurfaceCanvas.rotate(-mBoxRotation,
+					(int) outerRectWidth / 2, (int) outerRectHeight / 2);
+			largeDrawingSurfaceCanvas.drawBitmap(drawingSurfaceBitmap,
+					(float) outerRectWidth1, 0, mBitmapPaint);
+			largeDrawingSurfaceCanvas.rotate(mBoxRotation,
+					(int) outerRectWidth / 2, (int) outerRectHeight / 2);
+
+			// consider StampCommand translation/rotation!!!, look at old code
+
+			float deltaX = mToolPosition.x
+					- (drawingSurfaceBitmap.getWidth() / 2.0f);
+			float deltaY = mToolPosition.y
+					- (drawingSurfaceBitmap.getHeight() / 2.0f);
+			drawingSurfaceCanvas.translate(deltaX, deltaY);
+
+			mDrawingBitmap = Bitmap.createBitmap(drawingSurfaceBitmap, 0, 0,
+					(int) mBoxWidth, (int) mBoxHeight);
+			// transMatrix.preTranslate(deltaX, deltaY);
+			// transMatrix.postRotate(-mBoxRotation);
+
+			// Bitmap largerDrawingSurfaceBitmap = Bitmap
+			// .createBitmap(;
 			// Matrix scaleMatrix = new Matrix();
 			// scaleMatrix.postScale((float) rectangleRelation,
 			// (float) rectangleRelation);
 			// Bitmap scaledDrawingSurfaceBitmap = Bitmap.createBitmap(
 			// drawingSurfaceBitmap, 0, 0, (int) outerRectWidth,
-			Bitmap scaledDrawingSurfaceBitmap = Bitmap.createScaledBitmap(
-					drawingSurfaceBitmap, (int) outerRectWidth,
-					(int) outerRectHeight, true);
+			// Bitmap scaledDrawingSurfaceBitmap = Bitmap.createScaledBitmap(
+			// drawingSurfaceBitmap, (int) outerRectWidth,
+			// (int) outerRectHeight);
 			// (int) outerRectHeight, scaleMatrix, false);
 			// Canvas drawingSurfaceCanvas = new Canvas(drawingSurfaceBitmap);
 			// drawingSurfaceCanvas.rotate(-mBoxRotation);
-			Matrix transMatrix = new Matrix();
-			transMatrix.postRotate(-mBoxRotation);
 
-			mDrawingBitmap = Bitmap.createBitmap(scaledDrawingSurfaceBitmap,
-					left_top_box_bitmapcoordinates.x,
-					left_top_box_bitmapcoordinates.y,
-					right_bottom_box_bitmapcoordinates.x
-							- left_top_box_bitmapcoordinates.x,
-					right_bottom_box_bitmapcoordinates.y
-							- left_top_box_bitmapcoordinates.y, transMatrix,
-					true);
-			Log.d(PaintroidApplication.TAG, "created bitmap");
+			// transMatrix.postTranslate(dx, dy)
+
+			// mDrawingBitmap = Bitmap.createBitmap(scaledDrawingSurfaceBitmap,
+			// leftTopBoxCoord.x, leftTopBoxCoord.y, rightBottomBoxCoord.x
+			// - leftTopBoxCoord.x, rightBottomBoxCoord.y
+			// - leftTopBoxCoord.y, transMatrix, true);
+			// Log.d(PaintroidApplication.TAG, "created bitmap");
 		} catch (IllegalArgumentException e) {
 			// floatingBox is outside of image
 			Log.e(PaintroidApplication.TAG,
 					"error clip bitmap " + e.getMessage());
 			Log.e(PaintroidApplication.TAG, "left top box coord : "
-					+ left_top_box_bitmapcoordinates.toString());
+					+ leftTopBoxCoord.toString());
 			Log.e(PaintroidApplication.TAG, "right bottom box coord : "
-					+ right_bottom_box_bitmapcoordinates.toString());
+					+ rightBottomBoxCoord.toString());
 			Log.e(PaintroidApplication.TAG,
 					"drawing surface bitmap size : "
 							+ drawingSurface.getBitmapHeight() + " x "

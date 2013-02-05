@@ -33,6 +33,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Point;
 import android.util.Log;
 
@@ -74,13 +75,47 @@ public class StampTool extends BaseToolWithRectangleShape {
 				(int) mToolPosition.x + (int) mBoxWidth / 2,
 				(int) mToolPosition.y + (int) mBoxHeight / 2);
 		try {
-			mDrawingBitmap = Bitmap.createBitmap(drawingSurface.getBitmap(),
+			Bitmap drawingSurfaceBitmap = drawingSurface.getBitmap();
+
+			double outerRectHeight1 = (Math.sin(Math.toRadians(Math
+					.abs(mBoxRotation))) * drawingSurfaceBitmap.getWidth());
+			double outerRectHeight2 = (Math.sin(Math.toRadians(90.0d - Math
+					.abs(mBoxRotation))) * drawingSurfaceBitmap.getHeight());
+			float outerRectHeight = (float) outerRectHeight1
+					+ (float) outerRectHeight2;
+
+			double rectangleRelation = outerRectHeight
+					/ drawingSurfaceBitmap.getHeight();
+
+			double outerRectWidth1 = Math.sin(Math.toRadians(90.0d - Math
+					.abs(mBoxRotation))) * drawingSurfaceBitmap.getWidth();
+			double outerRectWidth2 = Math.sin(Math.toRadians(Math
+					.abs(mBoxRotation))) * drawingSurfaceBitmap.getHeight();
+			float outerRectWidth = (float) outerRectWidth1
+					+ (float) outerRectWidth2;
+
+			// Matrix scaleMatrix = new Matrix();
+			// scaleMatrix.postScale((float) rectangleRelation,
+			// (float) rectangleRelation);
+			// Bitmap scaledDrawingSurfaceBitmap = Bitmap.createBitmap(
+			// drawingSurfaceBitmap, 0, 0, (int) outerRectWidth,
+			Bitmap scaledDrawingSurfaceBitmap = Bitmap.createScaledBitmap(
+					drawingSurfaceBitmap, (int) outerRectWidth,
+					(int) outerRectHeight, true);
+			// (int) outerRectHeight, scaleMatrix, false);
+			// Canvas drawingSurfaceCanvas = new Canvas(drawingSurfaceBitmap);
+			// drawingSurfaceCanvas.rotate(-mBoxRotation);
+			Matrix transMatrix = new Matrix();
+			transMatrix.postRotate(-mBoxRotation);
+
+			mDrawingBitmap = Bitmap.createBitmap(scaledDrawingSurfaceBitmap,
 					left_top_box_bitmapcoordinates.x,
 					left_top_box_bitmapcoordinates.y,
 					right_bottom_box_bitmapcoordinates.x
 							- left_top_box_bitmapcoordinates.x,
 					right_bottom_box_bitmapcoordinates.y
-							- left_top_box_bitmapcoordinates.y);
+							- left_top_box_bitmapcoordinates.y, transMatrix,
+					true);
 			Log.d(PaintroidApplication.TAG, "created bitmap");
 		} catch (IllegalArgumentException e) {
 			// floatingBox is outside of image

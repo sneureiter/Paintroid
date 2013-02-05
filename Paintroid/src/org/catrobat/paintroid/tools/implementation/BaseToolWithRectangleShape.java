@@ -216,7 +216,7 @@ public abstract class BaseToolWithRectangleShape extends BaseToolWithShape {
 			drawResizePoints(canvas);
 		}
 
-		if (mDrawingBitmap != null && mRotationEnabled) {
+		if (mRotationEnabled) {
 			drawRotationArrows(canvas);
 		}
 
@@ -278,7 +278,6 @@ public abstract class BaseToolWithRectangleShape extends BaseToolWithShape {
 	}
 
 	private void drawRotationArrows(Canvas canvas) {
-
 		Paint bitmapPaint = new Paint(Paint.DITHER_FLAG);
 		Bitmap arrowBitmap = BitmapFactory.decodeResource(
 				PaintroidApplication.APPLICATION_CONTEXT.getResources(),
@@ -304,13 +303,11 @@ public abstract class BaseToolWithRectangleShape extends BaseToolWithShape {
 	}
 
 	private void drawBitmap(Canvas canvas) {
-
 		Paint bitmapPaint = new Paint(Paint.DITHER_FLAG);
 		canvas.clipRect(new RectF(-mBoxWidth / 2, -mBoxHeight / 2,
 				mBoxWidth / 2, mBoxHeight / 2), Op.UNION);
 		canvas.drawBitmap(mDrawingBitmap, null, new RectF(-mBoxWidth / 2,
 				-mBoxHeight / 2, mBoxWidth / 2, mBoxHeight / 2), bitmapPaint);
-
 	}
 
 	private void drawRectangle(Canvas canvas) {
@@ -385,9 +382,9 @@ public abstract class BaseToolWithRectangleShape extends BaseToolWithShape {
 	}
 
 	private void rotate(float deltaX, float deltaY) {
-		if (mDrawingBitmap == null) {
-			return;
-		}
+		/*
+		 * if (mDrawingBitmap == null) { return; }
+		 */
 		double rotationRadiant = mBoxRotation * Math.PI / 180;
 		double deltaXCcorrected = Math.cos(-rotationRadiant) * (deltaX)
 				- Math.sin(-rotationRadiant) * (deltaY);
@@ -441,7 +438,7 @@ public abstract class BaseToolWithRectangleShape extends BaseToolWithShape {
 		}
 
 		// Only allow rotation if an image is present
-		if ((mDrawingBitmap != null) && mRotationEnabled) {
+		if (mRotationEnabled) {
 
 			// rotate everywhere outside the box with the distance of the
 			// rotation symbol

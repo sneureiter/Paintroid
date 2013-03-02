@@ -20,7 +20,7 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.paintroid.test.integration;
+package org.catrobat.paintroid.test.integration.overflow;
 
 import java.io.File;
 import java.util.Vector;
@@ -30,6 +30,7 @@ import junit.framework.AssertionFailedError;
 import org.catrobat.paintroid.FileIO;
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.test.integration.BaseIntegrationTestClass;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.catrobat.paintroid.ui.implementation.DrawingSurfaceImplementation;
 

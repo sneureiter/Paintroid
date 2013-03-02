@@ -20,12 +20,14 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.paintroid.test.integration;
+package org.catrobat.paintroid.test.integration.overflow;
 
 import junit.framework.AssertionFailedError;
 
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.test.integration.BaseIntegrationTestClass;
+import org.catrobat.paintroid.test.integration.Utils;
 import org.catrobat.paintroid.ui.implementation.DrawingSurfaceImplementation;
 
 import android.graphics.Color;
@@ -33,11 +35,11 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.view.KeyEvent;
 
-public class HideToolbarIntegrationTest extends BaseIntegrationTestClass {
+public class FullscreenIntegrationTest extends BaseIntegrationTestClass {
 
 	private static final int TOOLBAR_BOTTOM_OFFSET = 20;
 
-	public HideToolbarIntegrationTest() throws Exception {
+	public FullscreenIntegrationTest() throws Exception {
 		super();
 	}
 

@@ -20,12 +20,13 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.paintroid.test.integration;
+package org.catrobat.paintroid.test.integration.overflow;
 
 import java.util.ArrayList;
 
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.test.integration.BaseIntegrationTestClass;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.catrobat.paintroid.tools.ToolType;
 import org.catrobat.paintroid.ui.button.ToolsAdapter;
@@ -38,11 +39,11 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
-public class PreferencesIntegrationTest extends BaseIntegrationTestClass {
+public class SettingsIntegrationTest extends BaseIntegrationTestClass {
 	private int mNotActivatedTools = 2;
 	private Activity mActivity;
 
-	public PreferencesIntegrationTest() throws Exception {
+	public SettingsIntegrationTest() throws Exception {
 		super();
 	}
 
@@ -59,12 +60,12 @@ public class PreferencesIntegrationTest extends BaseIntegrationTestClass {
 	@Override
 	@After
 	protected void tearDown() throws Exception {
-		activateAllToolsInPreferences();
+		activateAllToolsInSettings();
 		super.tearDown();
 	}
 
 	@Test
-	public void testIfToolsPreferenceScreenIsAvailable() throws SecurityException, IllegalArgumentException,
+	public void testIfToolsSettingsScreenIsAvailable() throws SecurityException, IllegalArgumentException,
 			NoSuchFieldException, IllegalAccessException {
 		assertEquals("No Tools at startup", getToolsNames().length - mNotActivatedTools, currentNumberOfActiveTools());
 		mSolo.clickOnMenuItem(mSolo.getString(R.string.menu_preferences), true);
@@ -95,7 +96,7 @@ public class PreferencesIntegrationTest extends BaseIntegrationTestClass {
 	}
 
 	@Test
-	public void testIfToolsDoNotAppearInToolsMenuIfPreferenceIsNotCheckedAndReactivateAgain() throws SecurityException,
+	public void testIfToolsDoNotAppearInToolsMenuIfSettingIsNotCheckedAndReactivateAgain() throws SecurityException,
 			IllegalArgumentException, NoSuchFieldException, IllegalAccessException {
 		SharedPreferences preferenceManager = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		int originalNumberOfActiveTools = currentNumberOfActiveTools();
@@ -155,7 +156,7 @@ public class PreferencesIntegrationTest extends BaseIntegrationTestClass {
 		return allTools;
 	}
 
-	private void activateAllToolsInPreferences() {
+	private void activateAllToolsInSettings() {
 		SharedPreferences preferenceManager = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		Editor editor = preferenceManager.edit();
 		final String[] allToolsNames = getToolsNames();

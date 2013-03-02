@@ -25,7 +25,7 @@ package org.catrobat.paintroid.test.junit.command;
 
 import org.catrobat.paintroid.command.implementation.BaseCommand;
 import org.catrobat.paintroid.command.implementation.StampCommand;
-import org.catrobat.paintroid.test.utils.PaintroidAsserts;
+import org.catrobat.paintroid.test.utils.PaintroidAssert;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.junit.After;
 import org.junit.Before;
@@ -61,7 +61,7 @@ public class StampCommandTest extends CommandTestSetup {
 	@Test
 	public void testRun() {
 		mCommandUnderTest.run(mCanvasUnderTest, null);
-		PaintroidAsserts.assertBitmapEquals(mStampBitmapUnderTest, mCanvasBitmapUnderTest);
+		PaintroidAssert.assertBitmapEquals(mStampBitmapUnderTest, mCanvasBitmapUnderTest);
 
 		try {
 			assertNull("Stamp bitmap not recycled.",
@@ -72,7 +72,7 @@ public class StampCommandTest extends CommandTestSetup {
 			fail("Failed with exception " + e.toString());
 		}
 		mCommandUnderTest.run(mCanvasUnderTest, null);
-		PaintroidAsserts.assertBitmapEquals(mStampBitmapUnderTest, mCanvasBitmapUnderTest);
+		PaintroidAssert.assertBitmapEquals(mStampBitmapUnderTest, mCanvasBitmapUnderTest);
 	}
 
 	@Test
@@ -84,7 +84,7 @@ public class StampCommandTest extends CommandTestSetup {
 		mStampBitmapUnderTest.setPixel(0, 0, Color.CYAN);
 		mStampBitmapUnderTest.setPixel(mStampBitmapUnderTest.getWidth() - 1, mStampBitmapUnderTest.getHeight() - 1,
 				Color.GREEN);
-		PaintroidAsserts.assertBitmapEquals(mStampBitmapUnderTest, mCanvasBitmapUnderTest);
+		PaintroidAssert.assertBitmapEquals(mStampBitmapUnderTest, mCanvasBitmapUnderTest);
 		try {
 			assertNull("Stamp bitmap not recycled.",
 					PrivateAccess.getMemberValue(BaseCommand.class, mCommandUnderTest, "mBitmap"));

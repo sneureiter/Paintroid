@@ -1,42 +1,24 @@
-package org.catrobat.paintroid.test.integration;
-
-import java.util.ArrayList;
+package org.catrobat.paintroid.test.integration.statusbar;
 
 import org.catrobat.paintroid.MainActivity;
 import org.catrobat.paintroid.PaintroidApplication;
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.test.integration.BaseIntegrationTestClass;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.catrobat.paintroid.tools.ToolType;
 import org.catrobat.paintroid.ui.Statusbar;
 import org.catrobat.paintroid.ui.implementation.StatusbarImplementation;
 
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class StatusbarIntegrationTest extends BaseIntegrationTestClass {
+public class SwitchToolIntegrationTest extends BaseIntegrationTestClass {
 
 	private static final String PRIVATE_ACCESS_STATUSBAR_NAME = "mStatusbar";
 	private static final String PRIVATE_ACCESS_TOOL_NAME_TOAST_NAME = "mToolNameToast";
 
-	public StatusbarIntegrationTest() throws Exception {
+	public SwitchToolIntegrationTest() throws Exception {
 		super();
-	}
-
-	public void testAllButtonsAreVisible() {
-		ArrayList<Integer> expectedButtons = new ArrayList<Integer>();
-		expectedButtons.add(R.id.btn_status_undo);
-		expectedButtons.add(R.id.btn_status_redo);
-		expectedButtons.add(R.id.btn_status_color);
-		expectedButtons.add(R.id.btn_status_tool);
-
-		ArrayList<ImageButton> imageButtons = mSolo.getCurrentImageButtons();
-		for (ImageButton button : imageButtons) {
-			expectedButtons.remove((Object) button.getId());
-		}
-
-		assertEquals("all buttons should be found", 0, expectedButtons.size());
 	}
 
 	public void testSwitchToMoveOnSwitchToolIconClicked() {

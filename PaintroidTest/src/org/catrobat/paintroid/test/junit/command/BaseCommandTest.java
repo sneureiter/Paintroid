@@ -29,7 +29,7 @@ import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.command.Command;
 import org.catrobat.paintroid.command.implementation.BaseCommand;
 import org.catrobat.paintroid.test.junit.stubs.BaseCommandStub;
-import org.catrobat.paintroid.test.utils.PaintroidAsserts;
+import org.catrobat.paintroid.test.utils.PaintroidAssert;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.junit.After;
 import org.junit.Before;
@@ -121,7 +121,7 @@ public class BaseCommandTest extends AndroidTestCase {
 			assertNotNull(storedBitmap);
 			assertNotNull(storedBitmap.getAbsolutePath());
 			Bitmap restoredBitmap = BitmapFactory.decodeFile(storedBitmap.getAbsolutePath());
-			PaintroidAsserts.assertBitmapEquals(restoredBitmap, mBitmap);
+			PaintroidAssert.assertBitmapEquals(restoredBitmap, mBitmap);
 
 		} catch (Exception e) {
 			fail("EXCEPTION: " + e.toString());

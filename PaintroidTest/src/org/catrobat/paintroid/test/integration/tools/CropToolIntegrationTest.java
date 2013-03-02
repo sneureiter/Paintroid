@@ -44,7 +44,6 @@ public class CropToolIntegrationTest extends BaseIntegrationTestClass {
 	private final int CROPPING_SLEEP_BETWEEN_FINISH_CHECK = 500;
 	private final int MAXIMUM_CROPPING_TIMEOUT_COUNTS = 300;
 	private int mLineLength;
-	private Bitmap mCurrentDrawingSurfaceBitmap;
 
 	public CropToolIntegrationTest() throws Exception {
 		super();
@@ -54,13 +53,6 @@ public class CropToolIntegrationTest extends BaseIntegrationTestClass {
 	@Before
 	protected void setUp() {
 		super.setUp();
-		try {
-			mCurrentDrawingSurfaceBitmap = (Bitmap) PrivateAccess.getMemberValue(DrawingSurfaceImplementation.class,
-					PaintroidApplication.DRAWING_SURFACE, "mWorkingBitmap");
-		} catch (Exception whatever) {
-			whatever.printStackTrace();
-			fail(whatever.toString());
-		}
 
 		mLineLength = (mCurrentDrawingSurfaceBitmap.getWidth() / 2);
 	}

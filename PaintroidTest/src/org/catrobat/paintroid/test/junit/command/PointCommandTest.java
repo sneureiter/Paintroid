@@ -24,7 +24,7 @@
 package org.catrobat.paintroid.test.junit.command;
 
 import org.catrobat.paintroid.command.implementation.PointCommand;
-import org.catrobat.paintroid.test.utils.PaintroidAsserts;
+import org.catrobat.paintroid.test.utils.PaintroidAssert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,7 +51,7 @@ public class PointCommandTest extends CommandTestSetup {
 	public void testRun() {
 		mBitmapUnderTest.setPixel((int) mPointUnderTest.x, (int) mPointUnderTest.y, mPaintUnderTest.getColor());
 		mCommandUnderTest.run(mCanvasUnderTest, null);
-		PaintroidAsserts.assertBitmapEquals(mBitmapUnderTest, mCanvasBitmapUnderTest);
+		PaintroidAssert.assertBitmapEquals(mBitmapUnderTest, mCanvasBitmapUnderTest);
 	}
 
 	@Test
@@ -59,6 +59,6 @@ public class PointCommandTest extends CommandTestSetup {
 		mPointUnderTest = new PointF(mCanvasBitmapUnderTest.getHeight() + 1, mCanvasBitmapUnderTest.getWidth() + 1);
 		mCommandUnderTest = new PointCommand(mPaintUnderTest, mPointUnderTest);
 		mCommandUnderTest.run(mCanvasUnderTest, null);
-		PaintroidAsserts.assertBitmapEquals(mBitmapUnderTest, mCanvasBitmapUnderTest);
+		PaintroidAssert.assertBitmapEquals(mBitmapUnderTest, mCanvasBitmapUnderTest);
 	}
 }

@@ -33,8 +33,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 
-public class PaintroidAsserts extends Assert {
-	protected PaintroidAsserts() {
+public class PaintroidAssert extends Assert {
+	protected PaintroidAssert() {
 
 	}
 

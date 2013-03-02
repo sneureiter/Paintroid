@@ -31,7 +31,7 @@ import java.util.TreeMap;
 
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.tools.ToolType;
-import org.junit.Test;
+import org.junit.Ignore;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.MemoryInfo;
@@ -39,18 +39,18 @@ import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.Context;
 import android.util.Log;
 
-public class StressTest extends BaseIntegrationTestClass {
+public class StressIntegrationTest extends BaseIntegrationTestClass {
 
-	public StressTest() throws Exception {
+	public StressIntegrationTest() throws Exception {
 		super();
 	}
 
-	@Test
+	@Ignore
 	public void testPaintroidStressTest1() {
 		stressTest("stress test 1:");
 	}
 
-	@Test
+	@Ignore
 	public void testSwitchTool() {
 		selectTool(ToolType.CURSOR);
 		selectTool(ToolType.BRUSH);

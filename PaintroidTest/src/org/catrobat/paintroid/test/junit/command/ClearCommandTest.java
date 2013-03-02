@@ -24,7 +24,7 @@
 package org.catrobat.paintroid.test.junit.command;
 
 import org.catrobat.paintroid.command.implementation.ClearCommand;
-import org.catrobat.paintroid.test.utils.PaintroidAsserts;
+import org.catrobat.paintroid.test.utils.PaintroidAssert;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.junit.After;
 import org.junit.Before;
@@ -63,7 +63,7 @@ public class ClearCommandTest extends CommandTestSetup {
 		Bitmap bitmapUnderTest = bitmapToCompare.copy(Config.ARGB_8888, true);
 		bitmapUnderTest.eraseColor(BITMAP_REPLACE_COLOR - 1);
 		mClearCommandUnderTestColored.run(null, bitmapUnderTest);
-		PaintroidAsserts.assertBitmapEquals(bitmapToCompare, bitmapUnderTest);
+		PaintroidAssert.assertBitmapEquals(bitmapToCompare, bitmapUnderTest);
 
 		bitmapToCompare.recycle();
 		bitmapUnderTest.recycle();
@@ -78,7 +78,7 @@ public class ClearCommandTest extends CommandTestSetup {
 		Bitmap bitmapUnderTest = Bitmap.createBitmap(10, 10, Config.ARGB_8888);
 		bitmapUnderTest.eraseColor(BITMAP_REPLACE_COLOR);
 		mClearCommandUnderTestTransparent.run(null, bitmapUnderTest);
-		PaintroidAsserts.assertBitmapEquals(bitmapToCompare, bitmapUnderTest);
+		PaintroidAssert.assertBitmapEquals(bitmapToCompare, bitmapUnderTest);
 
 		bitmapToCompare.recycle();
 		bitmapUnderTest.recycle();

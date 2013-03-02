@@ -38,11 +38,11 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
-public class PreferencesTests extends BaseIntegrationTestClass {
+public class PreferencesIntegrationTest extends BaseIntegrationTestClass {
 	private int mNotActivatedTools = 2;
 	private Activity mActivity;
 
-	public PreferencesTests() throws Exception {
+	public PreferencesIntegrationTest() throws Exception {
 		super();
 	}
 

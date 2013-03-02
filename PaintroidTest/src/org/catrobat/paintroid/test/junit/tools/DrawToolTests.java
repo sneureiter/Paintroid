@@ -23,8 +23,8 @@
 
 package org.catrobat.paintroid.test.junit.tools;
 
-import static org.catrobat.paintroid.test.utils.PaintroidAsserts.assertPaintEquals;
-import static org.catrobat.paintroid.test.utils.PaintroidAsserts.assertPathEquals;
+import static org.catrobat.paintroid.test.utils.PaintroidAssert.assertPaintEquals;
+import static org.catrobat.paintroid.test.utils.PaintroidAssert.assertPathEquals;
 
 import java.util.ArrayList;
 import java.util.List;

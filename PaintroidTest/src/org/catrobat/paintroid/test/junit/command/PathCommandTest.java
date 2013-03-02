@@ -24,7 +24,7 @@
 package org.catrobat.paintroid.test.junit.command;
 
 import org.catrobat.paintroid.command.implementation.PathCommand;
-import org.catrobat.paintroid.test.utils.PaintroidAsserts;
+import org.catrobat.paintroid.test.utils.PaintroidAssert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -64,6 +64,6 @@ public class PathCommandTest extends CommandTestSetup {
 			mBitmapUnderTest.setPixel(0, heightIndex, color);
 		}
 		mCommandUnderTest.run(mCanvasUnderTest, null);
-		PaintroidAsserts.assertBitmapEquals(mBitmapUnderTest, mCanvasBitmapUnderTest);
+		PaintroidAssert.assertBitmapEquals(mBitmapUnderTest, mCanvasBitmapUnderTest);
 	}
 }

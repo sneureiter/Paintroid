@@ -38,9 +38,9 @@ import android.app.Activity;
 import android.os.Environment;
 import android.widget.TextView;
 
-public class ToolOnBackPressedTests extends BaseIntegrationTestClass {
+public class ToolOnBackPressedIntegrationTest extends BaseIntegrationTestClass {
 
-	public ToolOnBackPressedTests() throws Exception {
+	public ToolOnBackPressedIntegrationTest() throws Exception {
 		super();
 	}
 

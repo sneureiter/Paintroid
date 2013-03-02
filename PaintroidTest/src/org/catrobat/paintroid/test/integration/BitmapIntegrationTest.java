@@ -50,7 +50,7 @@ public class BitmapIntegrationTest extends BaseIntegrationTestClass {
 
 			@Override
 			public void run() {
-				PaintroidApplication.COMMAND_MANAGER.commitCommand(new BitmapCommand(widthOverflowedBitmap, true));
+				PaintroidApplication.COMMAND_MANAGER.commitCommand(new BitmapCommand(widthOverflowedBitmap));
 			}
 		});
 

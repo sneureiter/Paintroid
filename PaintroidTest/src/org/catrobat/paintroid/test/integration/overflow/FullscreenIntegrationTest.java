@@ -22,17 +22,16 @@
  */
 package org.catrobat.paintroid.test.integration.overflow;
 
-import junit.framework.AssertionFailedError;
-
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.test.integration.BaseIntegrationTestClass;
 import org.catrobat.paintroid.test.integration.Utils;
-import org.catrobat.paintroid.ui.implementation.DrawingSurfaceImplementation;
+import org.catrobat.paintroid.ui.DrawingSurface;
 
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.test.AssertionFailedError;
 import android.view.KeyEvent;
 
 public class FullscreenIntegrationTest extends BaseIntegrationTestClass {
@@ -47,11 +46,11 @@ public class FullscreenIntegrationTest extends BaseIntegrationTestClass {
 	public void setUp() {
 		super.setUp();
 		// resetBrush();
-		PaintroidApplication.CURRENT_TOOL.changePaintStrokeWidth(500);
+		PaintroidApplication.currentTool.changePaintStrokeWidth(500);
 	}
 
 	public void testHideToolbar() {
-		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
+		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 		switchToFullscreen();
 
 		int clickPointX = mScreenWidth / 2;
@@ -59,19 +58,19 @@ public class FullscreenIntegrationTest extends BaseIntegrationTestClass {
 		Point bitmapPixelPosition = new Point();
 		try {
 			bitmapPixelPosition = org.catrobat.paintroid.test.utils.Utils.convertFromCanvasToScreen(new Point(
-					clickPointX, clickPointY), PaintroidApplication.CURRENT_PERSPECTIVE);
+					clickPointX, clickPointY), PaintroidApplication.perspective);
 		} catch (Exception whatever) {
 			// TODO Auto-generated catch block
 			whatever.printStackTrace();
 		}
 		mSolo.clickOnScreen(clickPointX, clickPointY);
-		int pixel = PaintroidApplication.DRAWING_SURFACE.getBitmap().getPixel(bitmapPixelPosition.x,
+		int pixel = PaintroidApplication.drawingSurface.getBitmap().getPixel(bitmapPixelPosition.x,
 				bitmapPixelPosition.y - (int) Utils.getStatusbarHeigt(getActivity()) * 2);
 		assertEquals("pixel should be black", Color.BLACK, pixel);
 	}
 
 	public void testHideStatusbarOnHideToolbar() {
-		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
+		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 		switchToFullscreen();
 
 		int clickPointX = mScreenWidth / 2;
@@ -81,18 +80,18 @@ public class FullscreenIntegrationTest extends BaseIntegrationTestClass {
 		Point bitmapPixelPosition = new Point();
 		try {
 			bitmapPixelPosition = org.catrobat.paintroid.test.utils.Utils.convertFromCanvasToScreen(new Point(
-					clickPointX, clickPointY), PaintroidApplication.CURRENT_PERSPECTIVE);
+					clickPointX, clickPointY), PaintroidApplication.perspective);
 		} catch (Exception whatever) {
 			// TODO Auto-generated catch block
 			whatever.printStackTrace();
 		}
-		int pixel = PaintroidApplication.DRAWING_SURFACE.getBitmap().getPixel(bitmapPixelPosition.x,
+		int pixel = PaintroidApplication.drawingSurface.getBitmap().getPixel(bitmapPixelPosition.x,
 				bitmapPixelPosition.y);
 		assertEquals("pixel should be black", Color.BLACK, pixel);
 	}
 
 	public void testShowToolbarOnBackPressed() {
-		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
+		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 		switchToFullscreen();
 
 		int clickPointX = mScreenWidth / 2;
@@ -101,14 +100,14 @@ public class FullscreenIntegrationTest extends BaseIntegrationTestClass {
 		mSolo.sleep(1000);
 		mSolo.clickOnScreen(clickPointX, clickPointY);
 		mSolo.sleep(1000);
-		int pixel = PaintroidApplication.DRAWING_SURFACE.getBitmap().getPixel(clickPointX,
+		int pixel = PaintroidApplication.drawingSurface.getBitmap().getPixel(clickPointX,
 				clickPointY - (int) Utils.getStatusbarHeigt(getActivity()) * 2);
 		assertEquals("pixel should be transparent", Color.TRANSPARENT, pixel);
 		mSolo.goBack();
 	}
 
 	public void testShowStatusbarOnBackPressed() {
-		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
+		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 		switchToFullscreen();
 		mSolo.goBack();
 		mSolo.sleep(1000);
@@ -128,7 +127,7 @@ public class FullscreenIntegrationTest extends BaseIntegrationTestClass {
 	}
 
 	public void testShowToolbarOnMenuPressed() {
-		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
+		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 		switchToFullscreen();
 		mSolo.sendKey(KeyEvent.KEYCODE_MENU);
 		mSolo.sleep(500);
@@ -145,12 +144,12 @@ public class FullscreenIntegrationTest extends BaseIntegrationTestClass {
 		}
 		mSolo.clickOnScreen(clickPointX, clickPointY);
 		mSolo.sleep(1000);
-		int pixel = PaintroidApplication.DRAWING_SURFACE.getBitmapColor(new PointF(clickPointX, clickPointY));
+		int pixel = PaintroidApplication.drawingSurface.getBitmapColor(new PointF(clickPointX, clickPointY));
 		assertEquals("pixel should be transparent", Color.TRANSPARENT, pixel);
 	}
 
 	public void testShowStatusbarOnMenuPressed() {
-		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
+		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 		switchToFullscreen();
 		mSolo.sendKey(KeyEvent.KEYCODE_MENU);
 		mSolo.sleep(500);
@@ -176,7 +175,7 @@ public class FullscreenIntegrationTest extends BaseIntegrationTestClass {
 			mSolo.clickOnMenuItem(mSolo.getString(R.string.menu_hide_menu_condensed), true);
 		}
 		mSolo.sleep(2000);
-		PaintroidApplication.CURRENT_PERSPECTIVE.resetScaleAndTranslation();
+		PaintroidApplication.perspective.resetScaleAndTranslation();
 		assertFalse("SupportActionBarStillVisible", getActivity().getSupportActionBar().isShowing());
 	}
 

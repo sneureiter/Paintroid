@@ -7,9 +7,8 @@ import org.catrobat.paintroid.test.integration.BaseIntegrationTestClass;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.catrobat.paintroid.tools.ToolType;
 import org.catrobat.paintroid.ui.DrawingSurface;
+import org.catrobat.paintroid.ui.Perspective;
 import org.catrobat.paintroid.ui.Statusbar;
-import org.catrobat.paintroid.ui.implementation.DrawingSurfaceImplementation;
-import org.catrobat.paintroid.ui.implementation.PerspectiveImplementation;
 import org.junit.Before;
 
 import android.graphics.Bitmap;
@@ -95,10 +94,9 @@ public class UndoRedoIntegrationTest extends BaseIntegrationTestClass {
 
 	public void testPreserveZoomAndMoveAfterUndo() throws SecurityException, IllegalArgumentException,
 			NoSuchFieldException, IllegalAccessException {
-		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
+		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 
-		DrawingSurface drawingSurface = (DrawingSurfaceImplementation) getActivity().findViewById(
-				R.id.drawingSurfaceView);
+		DrawingSurface drawingSurface = (DrawingSurface) getActivity().findViewById(R.id.drawingSurfaceView);
 		int xCoord = 100;
 		int yCoord = 200;
 		PointF pointOnBitmap = new PointF(xCoord, yCoord);
@@ -109,21 +107,21 @@ public class UndoRedoIntegrationTest extends BaseIntegrationTestClass {
 		int colorToFill = mStatusbar.getCurrentTool().getDrawPaint().getColor();
 
 		PointF pointOnScreen = new PointF(pointOnBitmap.x, pointOnBitmap.y);
-		PaintroidApplication.CURRENT_PERSPECTIVE.convertFromScreenToCanvas(pointOnScreen);
+		PaintroidApplication.perspective.convertFromScreenToCanvas(pointOnScreen);
 		mSolo.clickOnScreen(pointOnScreen.x, pointOnScreen.y);
 		mSolo.sleep(4000);
 
 		// move & zoom
 		float scale = 0.5f;
-		PaintroidApplication.CURRENT_PERSPECTIVE.setScale(scale); // done this way since robotium does not support > 1
-																	// touch event
+		PaintroidApplication.perspective.setScale(scale); // done this way since robotium does not support > 1
+															// touch event
 		mSolo.clickOnView(mButtonTopTool); // switch to move-tool
 		mSolo.drag(pointOnScreen.x, pointOnScreen.x + 20, pointOnScreen.y, pointOnScreen.y + 20, 1);
 
-		float translationXBeforeUndo = (Float) PrivateAccess.getMemberValue(PerspectiveImplementation.class,
-				PaintroidApplication.CURRENT_PERSPECTIVE, PRIVATE_ACCESS_TRANSLATION_X);
-		float translationYBeforeUndo = (Float) PrivateAccess.getMemberValue(PerspectiveImplementation.class,
-				PaintroidApplication.CURRENT_PERSPECTIVE, PRIVATE_ACCESS_TRANSLATION_X);
+		float translationXBeforeUndo = (Float) PrivateAccess.getMemberValue(Perspective.class,
+				PaintroidApplication.perspective, PRIVATE_ACCESS_TRANSLATION_X);
+		float translationYBeforeUndo = (Float) PrivateAccess.getMemberValue(Perspective.class,
+				PaintroidApplication.perspective, PRIVATE_ACCESS_TRANSLATION_X);
 
 		// press undo
 		mSolo.clickOnView(mButtonTopUndo);
@@ -133,23 +131,21 @@ public class UndoRedoIntegrationTest extends BaseIntegrationTestClass {
 		int colorAfterFill = drawingSurface.getBitmapColor(pointOnBitmap);
 		assertEquals("Pixel color should be the same", colorOriginal, colorAfterFill);
 
-		float translationXAfterUndo = (Float) PrivateAccess.getMemberValue(PerspectiveImplementation.class,
-				PaintroidApplication.CURRENT_PERSPECTIVE, PRIVATE_ACCESS_TRANSLATION_X);
+		float translationXAfterUndo = (Float) PrivateAccess.getMemberValue(Perspective.class,
+				PaintroidApplication.perspective, PRIVATE_ACCESS_TRANSLATION_X);
 		assertEquals("X-Translation should stay the same after undo", translationXBeforeUndo, translationXAfterUndo);
 
-		float translationYAfterUndo = (Float) PrivateAccess.getMemberValue(PerspectiveImplementation.class,
-				PaintroidApplication.CURRENT_PERSPECTIVE, PRIVATE_ACCESS_TRANSLATION_X);
+		float translationYAfterUndo = (Float) PrivateAccess.getMemberValue(Perspective.class,
+				PaintroidApplication.perspective, PRIVATE_ACCESS_TRANSLATION_X);
 		assertEquals("Y-Translation should stay the same after undo", translationYBeforeUndo, translationYAfterUndo);
-		assertEquals("Scale should stay the same after undo", PaintroidApplication.CURRENT_PERSPECTIVE.getScale(),
-				scale);
+		assertEquals("Scale should stay the same after undo", PaintroidApplication.perspective.getScale(), scale);
 	}
 
 	public void testPreserveZoomAndMoveAfterRedo() throws SecurityException, IllegalArgumentException,
 			NoSuchFieldException, IllegalAccessException {
-		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
+		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 
-		DrawingSurface drawingSurface = (DrawingSurfaceImplementation) getActivity().findViewById(
-				R.id.drawingSurfaceView);
+		DrawingSurface drawingSurface = (DrawingSurface) getActivity().findViewById(R.id.drawingSurfaceView);
 		int xCoord = 100;
 		int yCoord = 200;
 		PointF pointOnBitmap = new PointF(xCoord, yCoord);
@@ -160,7 +156,7 @@ public class UndoRedoIntegrationTest extends BaseIntegrationTestClass {
 		int colorToFill = mStatusbar.getCurrentTool().getDrawPaint().getColor();
 
 		PointF pointOnScreen = new PointF(pointOnBitmap.x, pointOnBitmap.y);
-		PaintroidApplication.CURRENT_PERSPECTIVE.convertFromScreenToCanvas(pointOnScreen);
+		PaintroidApplication.perspective.convertFromScreenToCanvas(pointOnScreen);
 		mSolo.clickOnScreen(pointOnScreen.x, pointOnScreen.y);
 		mSolo.sleep(4000);
 
@@ -176,15 +172,15 @@ public class UndoRedoIntegrationTest extends BaseIntegrationTestClass {
 
 		// move & zoom
 		float scale = 0.5f;
-		PaintroidApplication.CURRENT_PERSPECTIVE.setScale(scale); // done this way since robotium does not support > 1
-																	// touch event
+		PaintroidApplication.perspective.setScale(scale); // done this way since robotium does not support > 1
+															// touch event
 		mSolo.clickOnView(mButtonTopTool); // switch to move-tool
 		mSolo.drag(pointOnScreen.x, pointOnScreen.x + 20, pointOnScreen.y, pointOnScreen.y + 20, 1);
 
-		float translationXBeforeUndo = (Float) PrivateAccess.getMemberValue(PerspectiveImplementation.class,
-				PaintroidApplication.CURRENT_PERSPECTIVE, PRIVATE_ACCESS_TRANSLATION_X);
-		float translationYBeforeUndo = (Float) PrivateAccess.getMemberValue(PerspectiveImplementation.class,
-				PaintroidApplication.CURRENT_PERSPECTIVE, PRIVATE_ACCESS_TRANSLATION_X);
+		float translationXBeforeUndo = (Float) PrivateAccess.getMemberValue(Perspective.class,
+				PaintroidApplication.perspective, PRIVATE_ACCESS_TRANSLATION_X);
+		float translationYBeforeUndo = (Float) PrivateAccess.getMemberValue(Perspective.class,
+				PaintroidApplication.perspective, PRIVATE_ACCESS_TRANSLATION_X);
 
 		// press redo
 		mSolo.clickOnView(mButtonTopRedo);
@@ -194,14 +190,13 @@ public class UndoRedoIntegrationTest extends BaseIntegrationTestClass {
 		int colorAfterRedo = drawingSurface.getBitmapColor(pointOnBitmap);
 		assertEquals("Pixel color should be the same", colorToFill, colorAfterRedo);
 
-		float translationXAfterUndo = (Float) PrivateAccess.getMemberValue(PerspectiveImplementation.class,
-				PaintroidApplication.CURRENT_PERSPECTIVE, PRIVATE_ACCESS_TRANSLATION_X);
+		float translationXAfterUndo = (Float) PrivateAccess.getMemberValue(Perspective.class,
+				PaintroidApplication.perspective, PRIVATE_ACCESS_TRANSLATION_X);
 		assertEquals("X-Translation should stay the same after undo", translationXBeforeUndo, translationXAfterUndo);
 
-		float translationYAfterUndo = (Float) PrivateAccess.getMemberValue(PerspectiveImplementation.class,
-				PaintroidApplication.CURRENT_PERSPECTIVE, PRIVATE_ACCESS_TRANSLATION_X);
+		float translationYAfterUndo = (Float) PrivateAccess.getMemberValue(Perspective.class,
+				PaintroidApplication.perspective, PRIVATE_ACCESS_TRANSLATION_X);
 		assertEquals("Y-Translation should stay the same after undo", translationYBeforeUndo, translationYAfterUndo);
-		assertEquals("Scale should stay the same after undo", PaintroidApplication.CURRENT_PERSPECTIVE.getScale(),
-				scale);
+		assertEquals("Scale should stay the same after undo", PaintroidApplication.perspective.getScale(), scale);
 	}
 }

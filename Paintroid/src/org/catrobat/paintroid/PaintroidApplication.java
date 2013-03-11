@@ -31,32 +31,39 @@ import org.catrobat.paintroid.ui.Perspective;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.util.Log;
 
 public class PaintroidApplication extends Application {
 	public static final String TAG = "PAINTROID";
-	public static final float MOVE_TOLLERANCE = 5;
 
-	public static Context APPLICATION_CONTEXT;
-	public static DrawingSurface DRAWING_SURFACE;
-	public static CommandManager COMMAND_MANAGER;
-	public volatile static Tool CURRENT_TOOL;
-	public static Perspective CURRENT_PERSPECTIVE;
-	public static boolean IS_OPENED_FROM_CATROID = false;
-
-	// public static DisplayMetrics DISPLAY_METRICS;
+	public static Context applicationContext;
+	public static DrawingSurface drawingSurface;
+	public static CommandManager commandManager;
+	public static Tool currentTool;
+	public static Perspective perspective;
+	public static boolean openedFromCatroid = false;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		applicationContext = getApplicationContext();
+		commandManager = new CommandManagerImplementation(applicationContext);
+	}
 
-		APPLICATION_CONTEXT = getApplicationContext();
-		COMMAND_MANAGER = new CommandManagerImplementation(APPLICATION_CONTEXT);
-		// DISPLAY_METRICS = APPLICATION_CONTEXT.getResources()
-		// .getDisplayMetrics();
-
-		// mDisplay = ((WindowManager)
-		// getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-		// int width = display.getWidth();
-		// int height = display.getHeight();
+	public static String getVersionName(Context context) {
+		String versionName = "unknown";
+		try {
+			PackageInfo packageInfo = context.getPackageManager()
+					.getPackageInfo(context.getPackageName(),
+							PackageManager.GET_META_DATA);
+			versionName = packageInfo.versionName;
+		} catch (NameNotFoundException nameNotFoundException) {
+			Log.e(PaintroidApplication.TAG, "Name not found",
+					nameNotFoundException);
+		}
+		return versionName;
 	}
 }

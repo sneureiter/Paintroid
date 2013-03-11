@@ -23,8 +23,8 @@
 
 package org.catrobat.paintroid.command.implementation;
 
+import org.catrobat.paintroid.FileIO;
 import org.catrobat.paintroid.PaintroidApplication;
-import org.catrobat.paintroid.Utils;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -49,19 +49,18 @@ public class BitmapCommand extends BaseCommand {
 	@Override
 	public void run(Canvas canvas, Bitmap bitmap) {
 		if (mBitmap == null && mFileToStoredBitmap != null) {
-			mBitmap = Utils.getBitmapFromFile(mFileToStoredBitmap);
+			mBitmap = FileIO.getBitmapFromFile(mFileToStoredBitmap);
 		}
 		if (mBitmap != null) {
 			if (bitmap != null) {
 				bitmap.eraseColor(Color.TRANSPARENT);
 			}
-			PaintroidApplication.DRAWING_SURFACE.setBitmap(mBitmap.copy(
+			PaintroidApplication.drawingSurface.setBitmap(mBitmap.copy(
 					Config.ARGB_8888, true));
 
 			if (mResetScaleAndTranslation
-					&& PaintroidApplication.CURRENT_PERSPECTIVE != null) {
-				PaintroidApplication.CURRENT_PERSPECTIVE
-						.resetScaleAndTranslation();
+					&& PaintroidApplication.perspective != null) {
+				PaintroidApplication.perspective.resetScaleAndTranslation();
 			}
 
 			if (mFileToStoredBitmap == null) {

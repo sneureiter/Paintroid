@@ -29,7 +29,7 @@ import org.catrobat.paintroid.command.Command;
 import org.catrobat.paintroid.command.implementation.PathCommand;
 import org.catrobat.paintroid.command.implementation.PointCommand;
 import org.catrobat.paintroid.tools.ToolType;
-import org.catrobat.paintroid.ui.implementation.StatusbarImplementation.ToolButtonIDs;
+import org.catrobat.paintroid.ui.Statusbar.ToolButtonIDs;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -46,11 +46,10 @@ public class CursorTool extends BaseToolWithShape {
 	private static final float DEFAULT_TOOL_STROKE_WIDTH = 5f;
 	private static final float MINIMAL_TOOL_STROKE_WIDTH = 1f;
 	private static final float MAXIMAL_TOOL_STROKE_WIDTH = 10f;
-	private static final int COLOR_TRESHOLD = 50;
 	private static final int CURSOR_LINES = 4;
 
 	protected Path pathToDraw;
-	private int mPrimaryShapeColor_deactive;
+	private Paint mPrimaryShapeColor_deactive;
 	private Paint mSecondaryShapeColor;
 
 	private boolean toolInDrawMode = false;
@@ -60,9 +59,11 @@ public class CursorTool extends BaseToolWithShape {
 
 		pathToDraw = new Path();
 		pathToDraw.incReserve(1);
-		mPrimaryShapeColor_deactive = PaintroidApplication.APPLICATION_CONTEXT
-				.getResources().getColor(
-						R.color.cursor_tool_deactive_primary_color);
+		mPrimaryShapeColor_deactive = new Paint();
+		mPrimaryShapeColor_deactive
+				.setColor(PaintroidApplication.applicationContext
+						.getResources().getColor(
+								R.color.cursor_tool_deactive_primary_color));
 		mSecondaryShapeColor = new Paint();
 	}
 
@@ -112,16 +113,16 @@ public class CursorTool extends BaseToolWithShape {
 						+ Math.abs(coordinate.y - mPreviousEventCoordinate.y));
 
 		if (toolInDrawMode) {
-			if (PaintroidApplication.MOVE_TOLLERANCE < mMovedDistance.x
-					|| PaintroidApplication.MOVE_TOLLERANCE < mMovedDistance.y) {
+			if (MOVE_TOLERANCE < mMovedDistance.x
+					|| MOVE_TOLERANCE < mMovedDistance.y) {
 				addPathCommand(this.mToolPosition);
 			} else {
 				toolInDrawMode = false;
 				mSecondaryShapeColor.setColor(Color.LTGRAY);
 			}
 		} else {
-			if (PaintroidApplication.MOVE_TOLLERANCE >= mMovedDistance.x
-					&& PaintroidApplication.MOVE_TOLLERANCE >= mMovedDistance.y) {
+			if (MOVE_TOLERANCE >= mMovedDistance.x
+					&& MOVE_TOLERANCE >= mMovedDistance.y) {
 				toolInDrawMode = true;
 				addPointCommand(mToolPosition);
 			}
@@ -148,7 +149,7 @@ public class CursorTool extends BaseToolWithShape {
 
 		mSecondaryShapeColor.setColor(Color.LTGRAY);
 
-		mLinePaint.setColor(mPrimaryShapeColor_deactive);
+		mLinePaint.setColor(mPrimaryShapeColor_deactive.getColor());
 		mLinePaint.setStyle(Style.STROKE);
 		mLinePaint.setStrokeWidth(strokeWidth);
 		Cap strokeCap = mBitmapPaint.getStrokeCap();
@@ -254,12 +255,12 @@ public class CursorTool extends BaseToolWithShape {
 	protected boolean addPathCommand(PointF coordinate) {
 		pathToDraw.lineTo(coordinate.x, coordinate.y);
 		Command command = new PathCommand(mBitmapPaint, pathToDraw);
-		return PaintroidApplication.COMMAND_MANAGER.commitCommand(command);
+		return PaintroidApplication.commandManager.commitCommand(command);
 	}
 
 	protected boolean addPointCommand(PointF coordinate) {
 		Command command = new PointCommand(mBitmapPaint, coordinate);
-		return PaintroidApplication.COMMAND_MANAGER.commitCommand(command);
+		return PaintroidApplication.commandManager.commitCommand(command);
 	}
 
 	@Override

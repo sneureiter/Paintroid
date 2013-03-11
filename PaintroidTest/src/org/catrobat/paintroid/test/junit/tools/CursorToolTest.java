@@ -220,7 +220,6 @@ public class CursorToolTest extends BaseToolTest {
 		testmSecondaryShapeColor = (Paint) (PrivateAccess.getMemberValue(CursorTool.class, this.mToolToTest,
 				"mSecondaryShapeColor"));
 		assertTrue(testmBitmapPaint.getColor() != testmSecondaryShapeColor.getColor());
-
 	}
 
 }

@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.tools.ToolType;
-import org.catrobat.paintroid.ui.implementation.DrawingSurfaceImplementation;
+import org.catrobat.paintroid.ui.DrawingSurface;
 
 import android.widget.TextView;
 
@@ -37,19 +37,15 @@ public class MainActivityIntegrationTest extends BaseIntegrationTestClass {
 	}
 
 	public void testMenuAbout() {
-		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
+		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 		String buttonAbout = getActivity().getString(R.string.menu_about);
 		mSolo.clickOnMenuItem(buttonAbout, true);
 		mSolo.sleep(500);
-
-		ArrayList<TextView> textViewList = mSolo.getCurrentTextViews(null);
 
 		String aboutTextExpected = getActivity().getString(R.string.about_content);
 		String licenseText = getActivity().getString(R.string.licence_type_paintroid);
 		aboutTextExpected = String.format(aboutTextExpected, licenseText);
 		String aboutTextFirstHalf = aboutTextExpected.substring(0, aboutTextExpected.length() / 2);
-		String aboutTextSecondHalf = aboutTextExpected.substring(aboutTextExpected.length() / 2,
-				aboutTextExpected.length());
 
 		assertTrue("About text first half not correct, maybe Dialog not started as expected",
 				mSolo.waitForText(aboutTextFirstHalf, 1, TIMEOUT, true, false));
@@ -60,7 +56,7 @@ public class MainActivityIntegrationTest extends BaseIntegrationTestClass {
 	}
 
 	public void testQuitProgramButtonInMenuWithNo() {
-		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
+		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 		String captionQuit = getActivity().getString(R.string.menu_quit);
 		mSolo.clickOnMenuItem(captionQuit, true);
 		mSolo.sleep(500);
@@ -83,7 +79,7 @@ public class MainActivityIntegrationTest extends BaseIntegrationTestClass {
 
 	public void testQuitProgramButtonInMenuWithYes() {
 		mTestCaseWithActivityFinished = true;
-		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
+		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 		String captionQuit = getActivity().getString(R.string.menu_quit);
 		mSolo.clickOnMenuItem(captionQuit, true);
 		mSolo.sleep(500);
@@ -121,12 +117,40 @@ public class MainActivityIntegrationTest extends BaseIntegrationTestClass {
 		toolHelpTest(ToolType.STAMP, R.string.help_content_stamp);
 	}
 
-	public void testHelpDialogForImportPng() {
+	public void testHelpDialogForBucket() {
+		toolHelpTest(ToolType.FILL, R.string.help_content_fill);
+	}
+
+	public void testHelpDialogForRectangle() {
+		toolHelpTest(ToolType.RECT, R.string.help_content_rectangle);
+	}
+
+	public void testHelpDialogForCrop() {
+		toolHelpTest(ToolType.CROP, R.string.help_content_crop);
+	}
+
+	public void testHelpDialogForEraser() {
+		toolHelpTest(ToolType.ERASER, R.string.help_content_eraser);
+	}
+
+	public void testHelpDialogForFlip() {
+		toolHelpTest(ToolType.FLIP, R.string.help_content_flip);
+	}
+
+	public void testHelpDialogForMove() {
+		toolHelpTest(ToolType.MOVE, R.string.help_content_move);
+	}
+
+	public void testHelpDialogForZoom() {
+		toolHelpTest(ToolType.ZOOM, R.string.help_content_zoom);
+	}
+
+	public void testHelpDialogForImportImage() {
 		toolHelpTest(ToolType.IMPORTPNG, R.string.help_content_import_png);
 	}
 
 	private void toolHelpTest(ToolType toolToClick, int idExpectedHelptext) {
-		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
+		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 
 		clickLongOnTool(toolToClick);
 		mSolo.sleep(100);
@@ -136,7 +160,7 @@ public class MainActivityIntegrationTest extends BaseIntegrationTestClass {
 		assertEquals("There should be exactly 5 views in the Help dialog", 5, viewList.size());
 
 		String helpTextExpected = mSolo.getString(idExpectedHelptext);
-		String buttonDoneTextExpected = mSolo.getString(R.string.done);
+		String buttonDoneTextExpected = mSolo.getString(android.R.string.ok);
 
 		assertTrue("Help text not found", mSolo.searchText(helpTextExpected, true));
 		assertTrue("Done button not found", mSolo.searchButton(buttonDoneTextExpected, true));

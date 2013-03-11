@@ -8,7 +8,6 @@ import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.catrobat.paintroid.tools.ToolType;
 import org.catrobat.paintroid.ui.DrawingSurface;
 import org.catrobat.paintroid.ui.Statusbar;
-import org.catrobat.paintroid.ui.implementation.DrawingSurfaceImplementation;
 import org.junit.Before;
 
 import android.graphics.PointF;
@@ -45,19 +44,18 @@ public class FillToolIntegrationTest extends BaseIntegrationTestClass {
 	}
 
 	public void testBitmapIsFilled() throws InterruptedException {
-		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
+		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 
 		selectTool(ToolType.FILL);
 
 		int colorToFill = mStatusbar.getCurrentTool().getDrawPaint().getColor();
-		DrawingSurface drawingSurface = (DrawingSurfaceImplementation) getActivity().findViewById(
-				R.id.drawingSurfaceView);
+		DrawingSurface drawingSurface = (DrawingSurface) getActivity().findViewById(R.id.drawingSurfaceView);
 		int xCoord = 100;
 		int yCoord = 200;
 		PointF pointOnBitmap = new PointF(xCoord, yCoord);
 
 		PointF pointOnScreen = new PointF(pointOnBitmap.x, pointOnBitmap.y);
-		PaintroidApplication.CURRENT_PERSPECTIVE.convertFromScreenToCanvas(pointOnScreen);
+		PaintroidApplication.perspective.convertFromScreenToCanvas(pointOnScreen);
 
 		mSolo.clickOnScreen(pointOnScreen.x, pointOnScreen.y); // to fill the bitmap
 		mSolo.sleep(5000);
@@ -66,10 +64,9 @@ public class FillToolIntegrationTest extends BaseIntegrationTestClass {
 	}
 
 	public void testOnlyFillInnerArea() {
-		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurfaceImplementation.class, 1, TIMEOUT));
+		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 
-		DrawingSurface drawingSurface = (DrawingSurfaceImplementation) getActivity().findViewById(
-				R.id.drawingSurfaceView);
+		DrawingSurface drawingSurface = (DrawingSurface) getActivity().findViewById(R.id.drawingSurfaceView);
 
 		assertEquals("BrushTool should be selected", ToolType.BRUSH, mStatusbar.getCurrentTool().getToolType());
 		int colorToDrawBorder = mStatusbar.getCurrentTool().getDrawPaint().getColor();
@@ -81,7 +78,7 @@ public class FillToolIntegrationTest extends BaseIntegrationTestClass {
 		assertFalse(colorToDrawBorder == checkPointStartColor);
 
 		PointF pointOnScreen = new PointF(pointOnBitmap.x, pointOnBitmap.y);
-		PaintroidApplication.CURRENT_PERSPECTIVE.convertFromScreenToCanvas(pointOnScreen);
+		PaintroidApplication.perspective.convertFromScreenToCanvas(pointOnScreen);
 
 		PointF leftPointOnBitmap = new PointF(checkPointXCoord - 150, checkPointYCoord);
 		PointF leftPointOnScreen = new PointF(leftPointOnBitmap.x, leftPointOnBitmap.y);
@@ -89,10 +86,10 @@ public class FillToolIntegrationTest extends BaseIntegrationTestClass {
 		PointF rightPointOnScreen = new PointF(checkPointXCoord + 150, checkPointYCoord);
 		PointF bottomPointOnScreen = new PointF(checkPointXCoord, checkPointYCoord + 150);
 
-		PaintroidApplication.CURRENT_PERSPECTIVE.convertFromScreenToCanvas(leftPointOnScreen);
-		PaintroidApplication.CURRENT_PERSPECTIVE.convertFromScreenToCanvas(upperPointOnScreen);
-		PaintroidApplication.CURRENT_PERSPECTIVE.convertFromScreenToCanvas(rightPointOnScreen);
-		PaintroidApplication.CURRENT_PERSPECTIVE.convertFromScreenToCanvas(bottomPointOnScreen);
+		PaintroidApplication.perspective.convertFromScreenToCanvas(leftPointOnScreen);
+		PaintroidApplication.perspective.convertFromScreenToCanvas(upperPointOnScreen);
+		PaintroidApplication.perspective.convertFromScreenToCanvas(rightPointOnScreen);
+		PaintroidApplication.perspective.convertFromScreenToCanvas(bottomPointOnScreen);
 
 		mSolo.drag(leftPointOnScreen.x, upperPointOnScreen.x, leftPointOnScreen.y, upperPointOnScreen.y, 1);
 		mSolo.drag(upperPointOnScreen.x, rightPointOnScreen.x, upperPointOnScreen.y, rightPointOnScreen.y, 1);

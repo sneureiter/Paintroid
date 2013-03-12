@@ -134,6 +134,8 @@ Institute for Software Technology (IST) at Graz University of Technology, Austri
   <string name="dialog_unallowed_chars_title">Unallowed Character(s)</string>
   <string name="dialog_unallowed_chars_text">Only letters, numbers and \'_\' allowed.</string>
   <string name="dialog_shape_text">Shape</string>
+  <!--  Autosave -->
+  <string name="dialog_autosave_image">AUTOSAVE detected an image. Do you want to resume working?</string>
 
 
 </resources>

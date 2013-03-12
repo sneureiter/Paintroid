@@ -141,8 +141,7 @@ public class DialogSaveFile extends DialogFragment implements OnClickListener {
 		}
 		final String filename = editTextFilename.length() < 1 ? mDefaultFileName
 				: editTextFilename;
-		File testfile = FileIO.createNewEmptyPictureFile(mContext, filename
-				+ ".png");
+		File testfile = FileIO.createNewEmptyPictureFile(filename + ".png");
 
 		if (testfile == null) {
 			Log.e(PaintroidApplication.TAG, "Cannot save file!");

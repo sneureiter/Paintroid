@@ -121,6 +121,11 @@ public class MainActivity extends MenuFileActivity {
 		}
 
 		PaintroidApplication.drawingSurface = (DrawingSurface) findViewById(R.id.drawingSurfaceView);
+
+		if (AutoSave.autoSaveImageExists(catroidPicturePath, this)) {
+			AutoSave.takeAutoSaveImageOption();
+		}
+
 		PaintroidApplication.perspective = new Perspective(
 				((SurfaceView) PaintroidApplication.drawingSurface).getHolder());
 		mDrawingSurfaceListener = new DrawingSurfaceListener();
@@ -136,9 +141,10 @@ public class MainActivity extends MenuFileActivity {
 		if (PaintroidApplication.openedFromCatroid && isMainActivityPhoto) {
 			takePhoto();
 		}
-		if (PaintroidApplication.openedFromCatroid
-				&& catroidPicturePath != null
-				&& catroidPicturePath.length() > 0) {
+
+		if ((PaintroidApplication.openedFromCatroid
+				&& catroidPicturePath != null && catroidPicturePath.length() > 0)
+				|| catroidPicturePath != null) {
 			loadBitmapFromFileAndRun(new File(catroidPicturePath),
 					new RunnableWithBitmap() {
 						@Override
@@ -175,6 +181,12 @@ public class MainActivity extends MenuFileActivity {
 		PaintroidApplication.commandManager.resetAndClear();
 		PaintroidApplication.drawingSurface.recycleBitmap();
 		super.onDestroy();
+	}
+
+	@Override
+	public void finish() {
+		AutoSave.clear();
+		super.finish();
 	}
 
 	@Override

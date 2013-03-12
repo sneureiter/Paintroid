@@ -47,7 +47,8 @@ public abstract class FileIO {
 	private FileIO() {
 	}
 
-	public static File saveBitmap(Context context, Bitmap bitmap, String name) {
+	public static File saveBitmap(final Activity activity, Bitmap bitmap,
+			String name) {
 		if (initialisePaintroidMediaDirectory() == false) {
 			return null;
 		}
@@ -61,21 +62,29 @@ public abstract class FileIO {
 				|| name.length() < 1) {
 			Log.e(PaintroidApplication.TAG, "ERROR saving bitmap " + name);
 		} else {
-			file = createNewEmptyPictureFile(context, name + ENDING);
+			file = createNewEmptyPictureFile(name + ENDING);
 		}
 
 		if (file != null) {
 			try {
 				if (file.exists() == false) {
-					// new File(file.getParent()).mkdirs();
 					file.createNewFile();
 				}
 				bitmap.compress(FORMAT, QUALITY, new FileOutputStream(file));
 				String[] paths = new String[] { file.getAbsolutePath() };
-				MediaScannerConnection.scanFile(context, paths, null, null);
-				Toast.makeText(context,
-						"saved file to: " + file.getAbsolutePath(),
-						Toast.LENGTH_LONG).show();
+
+				MediaScannerConnection.scanFile(activity, paths, null, null);
+
+				final File finalFile = new File(file.getAbsolutePath());
+				activity.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(
+								activity,
+								"saved file to: " + finalFile.getAbsolutePath(),
+								Toast.LENGTH_LONG).show();
+					}
+				});
 			} catch (Exception e) {
 				Log.e(PaintroidApplication.TAG, "ERROR writing " + file, e);
 			}
@@ -84,8 +93,7 @@ public abstract class FileIO {
 		return file;
 	}
 
-	public static File createNewEmptyPictureFile(Context context,
-			String filename) {
+	public static File createNewEmptyPictureFile(String filename) {
 		if (initialisePaintroidMediaDirectory() == true) {
 			return new File(PAINTROID_MEDIA_FILE, filename);
 		} else {
@@ -123,6 +131,7 @@ public abstract class FileIO {
 					"/"
 							+ PaintroidApplication.applicationContext
 									.getString(R.string.app_name) + "/");
+
 		} else {
 			return false;
 		}

@@ -60,7 +60,7 @@ public class AutoSave {
 
 		if (mAutoSaveCounter % 10 == 0) {
 			FileIO.saveBitmap(mActivity,
-					PaintroidApplication.drawingSurface.getBitmap(),
+					PaintroidApplication.drawingSurface.getBitmapCopy(),
 					"autosave/" + fileName);
 			// TODO: Autosave Commands
 		}

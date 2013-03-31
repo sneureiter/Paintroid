@@ -1,9 +1,9 @@
 package org.catrobat.paintroid.test.junit.main;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.catrobat.paintroid.AutoSave;
+import org.catrobat.paintroid.FileIO;
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.catrobat.paintroid.utils.Utils;
@@ -11,44 +11,31 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import android.app.Activity;
 import android.test.AndroidTestCase;
 import android.util.Log;
 
 public class AutoSaveTest extends AndroidTestCase {
-
-	String mAutoSave = "AutoSave";
-	String mAutoSaveDirectory;
-	File AutoSaveDir;
-	File mTestFile1;
-	File mTestFile2;
-	File mTestFile3;
-	File mAutoSaveFile;
+	private File autoSaveFile;
+	private File autoSaveDirectory;
 
 	@Override
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
+		super.setUp();
 		int setup = 0;
 		Log.d("AutoSaveTest test", "setup " + setup++);
-		try {
-			mAutoSaveDirectory = (String) PrivateAccess.getMemberValue(AutoSave.class, null, "mAutoSaveDirectory");
-		} catch (Exception exception) {
-			fail("XXX"); // TODO
-		}
+
+		File autoSaveRelativeFile = new File("autosavetest" + File.separator + "autosavetest");
+		autoSaveFile = new File(FileIO.createNewEmptyPictureFile(""), autoSaveRelativeFile.getPath());
+		autoSaveDirectory = autoSaveFile.getParentFile();
+
+		autoSaveDirectory.mkdir();
+
+		PrivateAccess.setMemberValue(AutoSave.class, null, "mAutoSaveFile", autoSaveFile);
+		PrivateAccess.setMemberValue(AutoSave.class, null, "mAutoSaveRelativeFile", autoSaveRelativeFile);
+
 		Log.d("AutoSaveTest test", "setup" + setup++);
-		AutoSaveDir = new File(mAutoSaveDirectory);
-		Log.d("AutoSaveTest test", "setup" + setup++);
-		if (AutoSaveDir != null && AutoSaveDir.listFiles() != null) {
-			for (File f : AutoSaveDir.listFiles()) {
-				f.delete();
-			}
-		}
-		Log.d("AutoSaveTest test", "setup " + setup++);
-		mTestFile1 = new File(mAutoSaveDirectory + "f1" + ".png");
-		mTestFile2 = new File(mAutoSaveDirectory + "f2" + ".png");
-		mTestFile3 = new File(mAutoSaveDirectory + "f3" + ".png");
-		Log.d("AutoSaveTest test", "setup" + setup++);
-		mAutoSaveFile = new File(mAutoSaveDirectory + mAutoSave + ".png");
+		AutoSave.deleteAllAutoSaveImages();
 		Log.d(PaintroidApplication.TAG, "set up end");
 	}
 
@@ -57,93 +44,91 @@ public class AutoSaveTest extends AndroidTestCase {
 	public void tearDown() throws Exception {
 		int step = 0;
 		Log.i(PaintroidApplication.TAG, "td " + step++);
-		PrivateAccess.setMemberValue(AutoSave.class, null, "mAutoSaveCounter", 0);
+		PrivateAccess.setMemberValue(AutoSave.class, null, "mExecutedCommandsCounter", 0);
+
 		Log.i(PaintroidApplication.TAG, "td " + step++);
-		if (AutoSaveDir != null && AutoSaveDir.listFiles() != null) {
-			for (File f : AutoSaveDir.listFiles()) {
-				f.delete();
+		File[] autoSaveFiles = autoSaveDirectory.listFiles();
+		if (autoSaveFiles != null) {
+			for (File file : autoSaveFiles) {
+				file.delete();
 			}
 		}
-		Log.i(PaintroidApplication.TAG, "td finish " + step++);
+		autoSaveDirectory.delete();
+		Log.i(PaintroidApplication.TAG, "td " + step++);
 		super.tearDown();
 		Log.i(PaintroidApplication.TAG, "td finish " + step++);
 	}
 
 	@Test
-	public void testTrigger() {
-		try {
-			int mAutoSaveCounter = (Integer) PrivateAccess.getMemberValue(AutoSave.class, null, "mAutoSaveCounter");
-			assertEquals(0, mAutoSaveCounter);
+	public void testDefaultSettings() throws Exception {
+		String autoSaveDefaultFileName = (String) PrivateAccess.getMemberValue(AutoSave.class, null,
+				"AUTOSAVE_DEFAULT_FILE_NAME");
+		String autoSaveDirectoryName = (String) PrivateAccess.getMemberValue(AutoSave.class, null,
+				"AUTOSAVE_DIRECTORY_NAME");
+
+		assertEquals("autosave", autoSaveDefaultFileName);
+		assertEquals("autosave", autoSaveDirectoryName);
+		assertEquals(10, PrivateAccess.getMemberValue(AutoSave.class, null, "AUTOSAVE_EVERY_X_STEPS"));
+	}
+
+	@Test
+	public void testDefaultAutoSavePath() throws Exception {
+		String autoSaveDefaultFileName = (String) PrivateAccess.getMemberValue(AutoSave.class, null,
+				"AUTOSAVE_DEFAULT_FILE_NAME");
+		checkAutoSavePath(null, autoSaveDefaultFileName);
+	}
+
+	@Test
+	public void testCatroidAutoSavePath() throws Exception {
+		String catroidPicturePath = "some/non/existing/image.png";
+		String expectedAutoSaveFileName = Utils.md5Checksum(catroidPicturePath);
+		checkAutoSavePath(catroidPicturePath, expectedAutoSaveFileName);
+	}
+
+	private void checkAutoSavePath(String catroidPicturePath, String expectedAutoSaveFileName) throws Exception {
+		String autoSaveDirectoryName = (String) PrivateAccess.getMemberValue(AutoSave.class, null,
+				"AUTOSAVE_DIRECTORY_NAME");
+
+		AutoSave.existsAutoSaveImage(catroidPicturePath, null);
+		File expectedAutoSaveRelativeFile = new File(autoSaveDirectoryName + File.separator + expectedAutoSaveFileName);
+		File expectedAutoSaveFile = new File(FileIO.createNewEmptyPictureFile(""),
+				expectedAutoSaveRelativeFile.getPath());
+
+		assertEquals(expectedAutoSaveRelativeFile,
+				PrivateAccess.getMemberValue(AutoSave.class, null, "mAutoSaveRelativeFile"));
+		assertEquals(expectedAutoSaveFile, PrivateAccess.getMemberValue(AutoSave.class, null, "mAutoSaveFile"));
+	}
+
+	@Test
+	public void testExistsAutoSaveImage() throws Exception {
+		assertFalse(AutoSave.existsAutoSaveImage(null, null));
+		File autoSaveFile = (File) PrivateAccess.getMemberValue(AutoSave.class, null, "mAutoSaveFile");
+
+		autoSaveFile.getParentFile().mkdirs();
+		autoSaveFile.createNewFile();
+		assertTrue(AutoSave.existsAutoSaveImage(null, null));
+
+		assertTrue(autoSaveFile.delete());
+		assertTrue(autoSaveFile.getParentFile().delete());
+	}
+
+	@Test
+	public void testTriggerCounter() throws Exception {
+		for (int commandCounter = 0; commandCounter < 9; commandCounter++) {
+			int executedCommandCounter = (Integer) PrivateAccess.getMemberValue(AutoSave.class, null,
+					"mExecutedCommandsCounter");
+			assertEquals("Wrong executedCommandsCounter", commandCounter, executedCommandCounter);
 			AutoSave.trigger();
-			mAutoSaveCounter = (Integer) PrivateAccess.getMemberValue(AutoSave.class, null, "mAutoSaveCounter");
-			assertEquals(1, mAutoSaveCounter);
-			AutoSave.trigger();
-			mAutoSaveCounter = (Integer) PrivateAccess.getMemberValue(AutoSave.class, null, "mAutoSaveCounter");
-			assertEquals(2, mAutoSaveCounter);
-			AutoSave.trigger();
-			mAutoSaveCounter = (Integer) PrivateAccess.getMemberValue(AutoSave.class, null, "mAutoSaveCounter");
-			assertEquals(3, mAutoSaveCounter);
-		} catch (Exception exception) {
-			fail("Couln't access private member");
 		}
 	}
 
 	@Test
-	public void testClear() {
-		try {
-			mTestFile1.createNewFile();
-			mTestFile2.createNewFile();
-			mTestFile3.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		assertEquals(3, AutoSaveDir.listFiles().length);
-		AutoSave.clear(mTestFile1);
-		assertEquals(1, AutoSaveDir.listFiles().length);
-		try {
-			mTestFile2.createNewFile();
-			mTestFile3.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		assertEquals(3, AutoSaveDir.listFiles().length);
-		AutoSave.clear();
-		assertEquals(0, AutoSaveDir.listFiles().length);
-	}
+	public void testDeleteAllAutoSaveImages() throws Exception {
+		new File(autoSaveDirectory, "somefile.png").createNewFile();
+		new File(autoSaveDirectory, "someotherfile.png").createNewFile();
 
-	public void testautoSaveImageExists() {
-		Activity a = null;
-		String location = null;
-
-		assertFalse(AutoSave.autoSaveImageExists(location, a));
-		try {
-			mAutoSaveFile.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		assertTrue(AutoSave.autoSaveImageExists(location, a));
-
-		for (File f : AutoSaveDir.listFiles()) {
-			f.delete();
-		}
-
-		String pngPath = "TestPath/for/Image";
-		String checksum = Utils.md5Checksum(pngPath);
-		String AutoSaveFile = mAutoSaveDirectory + checksum;
-
-		assertFalse(AutoSave.autoSaveImageExists(pngPath, a));
-
-		File hashNameAutoSavePicture = new File(AutoSaveFile + ".png");
-		try {
-			hashNameAutoSavePicture.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		assertTrue(AutoSave.autoSaveImageExists(pngPath, a));
-
-		for (File f : AutoSaveDir.listFiles()) {
-			f.delete();
-		}
-		assertFalse(AutoSave.autoSaveImageExists(pngPath, a));
+		assertEquals(2, autoSaveDirectory.listFiles().length);
+		AutoSave.deleteAllAutoSaveImages();
+		assertEquals(0, autoSaveDirectory.listFiles().length);
 	}
 }

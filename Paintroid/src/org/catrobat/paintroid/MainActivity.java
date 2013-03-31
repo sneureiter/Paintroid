@@ -67,7 +67,6 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class MainActivity extends MenuFileActivity {
-
 	public static final String EXTRA_INSTANCE_FROM_CATROBAT = "EXTRA_INSTANCE_FROM_CATROBAT";
 	public static final String EXTRA_ACTION_BAR_HEIGHT = "EXTRA_ACTION_BAR_HEIGHT";
 	protected DrawingSurfaceListener mDrawingSurfaceListener;
@@ -121,7 +120,7 @@ public class MainActivity extends MenuFileActivity {
 
 		PaintroidApplication.drawingSurface = (DrawingSurface) findViewById(R.id.drawingSurfaceView);
 
-		if (AutoSave.autoSaveImageExists(catroidPicturePath, this)) {
+		if (AutoSave.existsAutoSaveImage(catroidPicturePath, this)) {
 			AutoSave.takeAutoSaveImageOption();
 		}
 
@@ -184,7 +183,7 @@ public class MainActivity extends MenuFileActivity {
 
 	@Override
 	public void finish() {
-		AutoSave.clear();
+		AutoSave.deleteAllAutoSaveImages();
 		super.finish();
 	}
 

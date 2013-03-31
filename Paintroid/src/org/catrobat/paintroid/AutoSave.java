@@ -10,64 +10,53 @@ import android.content.DialogInterface;
 import android.graphics.Bitmap;
 
 public class AutoSave {
-	private static String fileName;
-	private static int mAutoSaveCounter;
-	private static String mAutoSaveDirectory = FileIO
-			.createNewEmptyPictureFile("autosave").getAbsolutePath()
-			+ File.separator;
-	private static Activity mActivity = null;
-	static {
-		new File(mAutoSaveDirectory).mkdir();
-	}
+	private final static String AUTOSAVE_DEFAULT_FILE_NAME = "autosave";
+	private final static String AUTOSAVE_DIRECTORY_NAME = "autosave";
+	private final static int AUTOSAVE_EVERY_X_STEPS = 10;
 
-	public static void clear() {
-		clear(new File(""));
-	}
+	private static Activity mActivity;
+	private static File mAutoSaveFile;
+	private static File mAutoSaveRelativeFile;
+	private static int mExecutedCommandsCounter;
 
-	public static void clear(File currentFile) {
-		File file = new File(mAutoSaveDirectory);
-		if (file.listFiles() != null) {
-			for (File f : file.listFiles()) {
-				if (!f.equals(currentFile)) {
-					f.delete();
-				}
+	public static void deleteAllAutoSaveImages() {
+		File[] autoSaveFiles = mAutoSaveFile.getParentFile().listFiles();
+		if (autoSaveFiles != null) {
+			for (File file : autoSaveFiles) {
+				file.delete();
 			}
 		}
 	}
 
-	public static boolean autoSaveImageExists(String catroidPicturePath,
+	public static boolean existsAutoSaveImage(String catroidPicturePath,
 			Activity activity) {
 		mActivity = activity;
-		if (catroidPicturePath == null || catroidPicturePath.length() < 4) {
-			fileName = "autosave";
+
+		String mAutoSaveFileName;
+		if (catroidPicturePath == null) {
+			mAutoSaveFileName = AUTOSAVE_DEFAULT_FILE_NAME;
 		} else {
-			fileName = Utils.md5Checksum(catroidPicturePath);
+			mAutoSaveFileName = Utils.md5Checksum(catroidPicturePath);
 		}
 
-		File file = new File(mAutoSaveDirectory + fileName + ".png");
-		if (file.exists()) {
-			return true;
-		}
-		return false;
+		mAutoSaveRelativeFile = new File(AUTOSAVE_DIRECTORY_NAME
+				+ File.separator + mAutoSaveFileName);
+		mAutoSaveFile = new File(FileIO.createNewEmptyPictureFile(""),
+				mAutoSaveRelativeFile.getPath());
+
+		return mAutoSaveFile.exists();
 	}
 
 	public static void trigger() {
-		handleBitmap();
-	}
+		mExecutedCommandsCounter++;
 
-	private static void handleBitmap() {
-		mAutoSaveCounter++;
-
-		if (mAutoSaveCounter % 10 == 0) {
+		if (mExecutedCommandsCounter % AUTOSAVE_EVERY_X_STEPS == 0) {
+			mAutoSaveFile.getParentFile().mkdirs();
 			FileIO.saveBitmap(mActivity,
 					PaintroidApplication.drawingSurface.getBitmapCopy(),
-					"autosave/" + fileName);
+					mAutoSaveRelativeFile.getPath());
 			// TODO: Autosave Commands
 		}
-	}
-
-	public static void incrementCounter() {
-		mAutoSaveCounter--;
 	}
 
 	public static void takeAutoSaveImageOption() {
@@ -94,9 +83,8 @@ public class AutoSave {
 		autoSaveDialog.show();
 	}
 
-	public static void setDrawingSurface() {
-		Bitmap bitmap = FileIO.getBitmapFromFile(new File(mAutoSaveDirectory
-				+ fileName + ".png"));
+	private static void setDrawingSurface() {
+		Bitmap bitmap = FileIO.getBitmapFromFile(mAutoSaveFile);
 		PaintroidApplication.drawingSurface.setBitmap(bitmap);
 	}
 }

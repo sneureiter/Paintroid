@@ -128,7 +128,7 @@ public class CommandManagerImplementation implements CommandManager {
 						UndoRedoManager.StatusMode.DISABLE_UNDO);
 			}
 		}
-		AutoSave.incrementCounter();
+		AutoSave.trigger();
 	}
 
 	@Override

@@ -59,7 +59,7 @@ public abstract class FileIO {
 		File file = null;
 
 		if (bitmap == null || bitmap.isRecycled() || name == null
-				|| name.length() < 1) {
+				|| name.isEmpty()) {
 			Log.e(PaintroidApplication.TAG, "ERROR saving bitmap " + name);
 		} else {
 			file = createNewEmptyPictureFile(name + ENDING);

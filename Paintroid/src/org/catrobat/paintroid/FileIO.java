@@ -63,7 +63,7 @@ public abstract class FileIO {
 		File file = null;
 
 		if (bitmap == null || bitmap.isRecycled() || name == null
-				|| name.isEmpty()) {
+				|| name.length() == 0) {
 			Log.e(PaintroidApplication.TAG, "ERROR saving bitmap " + name);
 		} else {
 			file = createNewEmptyPictureFile(name + ENDING);
@@ -201,8 +201,8 @@ public abstract class FileIO {
 		return filepath;
 	}
 
-	public static void copyStream(InputStream inputStream, OutputStream outputStream)
-			throws IOException {
+	public static void copyStream(InputStream inputStream,
+			OutputStream outputStream) throws IOException {
 		byte[] buffer = new byte[BUFFER_SIZE];
 		int bytesRead;
 		while ((bytesRead = inputStream.read(buffer)) != -1) {

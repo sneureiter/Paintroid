@@ -76,7 +76,7 @@ public class BitmapIntegrationTest extends BaseIntegrationTestClass {
 			}
 		});
 
-		mSolo.sleep(2000);
+		mSolo.sleep(2300);
 
 		float surfaceScaleAfterBitmapCommand = PaintroidApplication.perspective.getScale();
 

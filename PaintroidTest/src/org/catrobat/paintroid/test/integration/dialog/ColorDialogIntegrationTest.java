@@ -137,6 +137,7 @@ public class ColorDialogIntegrationTest extends BaseIntegrationTestClass {
 				continue;
 			}
 
+			mSolo.sleep(200);
 			mSolo.clickOnButton(counterColors);
 			mSolo.sleep(200);
 			int colorColor = presetColors.getColor(counterColors, 0);

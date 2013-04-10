@@ -149,6 +149,7 @@ public class FillToolIntegrationTest extends BaseIntegrationTestClass {
 
 		// to fill the bitmap
 		mSolo.clickOnScreen(pointOnScreen.x, pointOnScreen.y);
+		mSolo.sleep(100);
 		assertTrue("Fill timed out", hasProgressDialogFinished());
 
 		int colorAfterFill = drawingSurface.getPixel(pointOnBitmap);

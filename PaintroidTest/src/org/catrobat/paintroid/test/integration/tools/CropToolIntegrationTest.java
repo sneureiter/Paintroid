@@ -48,7 +48,7 @@ public class CropToolIntegrationTest extends BaseIntegrationTestClass {
 	private final int MAXIMUM_CROPPING_TIMEOUT_COUNTS = 300;
 	private final float BITMAP_DOWNSCALE_FACTOR = 0.5f;
 	private int mLineLength;
-	private final int STABLE_TIME_FOR_THREADS_AND_BITMAPS_UPDATE = 800;// !try multiple times with emulators and
+	private final int STABLE_TIME_FOR_THREADS_AND_BITMAPS_UPDATE = 900;// !try multiple times with emulators and
 																		// different hardware before decreasing the
 																		// value!
 

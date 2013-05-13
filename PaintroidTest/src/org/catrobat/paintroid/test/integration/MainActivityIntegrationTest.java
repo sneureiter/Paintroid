@@ -67,7 +67,7 @@ public class MainActivityIntegrationTest extends BaseIntegrationTestClass {
 		mSolo.clickOnText(buttonNoCaption);
 		mSolo.sleep(500);
 
-		ArrayList<TextView> textViewList = mSolo.getCurrentTextViews(null);
+		ArrayList<TextView> textViewList = mSolo.getCurrentViews(TextView.class);
 		for (TextView textView : textViewList) {
 			String dialogTextReal = textView.getText().toString();
 			assertNotSame("About should be closed by now", dialogTextExpected, dialogTextReal);
@@ -86,14 +86,14 @@ public class MainActivityIntegrationTest extends BaseIntegrationTestClass {
 
 		assertNotNull("Quit dialog text not correct, maybe Quit Dialog not started as expected", dialogTextView);
 
-		ArrayList<TextView> textViewList = mSolo.getCurrentTextViews(null);
+		ArrayList<TextView> textViewList = mSolo.getCurrentViews(TextView.class);
 		assertNotSame("Main Activity should still be here and have textviews", 0, textViewList.size());
 
 		String buttonYesCaption = getActivity().getString(R.string.closing_security_question_yes);
 		mSolo.clickOnText(buttonYesCaption);
 		mSolo.sleep(500);
 
-		textViewList = mSolo.getCurrentTextViews(null);
+		textViewList = mSolo.getCurrentViews(TextView.class);
 		assertEquals("Main Activity should be gone by now", 0, textViewList.size());
 
 	}
@@ -152,7 +152,7 @@ public class MainActivityIntegrationTest extends BaseIntegrationTestClass {
 		clickLongOnTool(toolToClick);
 		mSolo.sleep(100);
 
-		ArrayList<TextView> viewList = mSolo.getCurrentTextViews(null);
+		ArrayList<TextView> viewList = mSolo.getCurrentViews(TextView.class);
 
 		assertEquals("There should be exactly 5 views in the Help dialog", 5, viewList.size());
 
@@ -163,7 +163,7 @@ public class MainActivityIntegrationTest extends BaseIntegrationTestClass {
 		assertTrue("Done button not found", mSolo.searchButton(buttonDoneTextExpected, true));
 		mSolo.clickOnButton(buttonDoneTextExpected);
 
-		viewList = mSolo.getCurrentTextViews(null);
+		viewList = mSolo.getCurrentViews(TextView.class);
 
 		assertFalse("Help text still present", mSolo.searchText(helpTextExpected, true));
 		assertNotSame("Helpdialog should not be open any more after clicking done.", 5, viewList.size());

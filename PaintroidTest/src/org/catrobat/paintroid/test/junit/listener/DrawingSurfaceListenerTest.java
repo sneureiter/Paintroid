@@ -114,7 +114,7 @@ public class DrawingSurfaceListenerTest extends AndroidTestCase {
 
 	}
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
+	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	@Test
 	public void testOnTouchActionMoveMultipleEvents() throws SecurityException, IllegalArgumentException,
 			NoSuchFieldException, IllegalAccessException, InterruptedException {
@@ -126,9 +126,11 @@ public class DrawingSurfaceListenerTest extends AndroidTestCase {
 		pointerCoords[0].y = 0.0f;
 		pointerCoords[0].pressure = 1.0f;
 		pointerCoords[0].size = 1.0f;
-		pointerCoords[1] = new PointerCoords(pointerCoords[0]);
+		pointerCoords[1] = new PointerCoords();
 		pointerCoords[1].x = 3.0f;
 		pointerCoords[1].y = 4.0f;
+		pointerCoords[1].pressure = 1.0f;
+		pointerCoords[1].size = 1.0f;
 
 		mEventToTest.recycle();
 		mEventToTest = MotionEvent.obtain(uptimeMillis, uptimeMillis, MotionEvent.ACTION_MOVE, pointerCoords.length,
@@ -159,7 +161,7 @@ public class DrawingSurfaceListenerTest extends AndroidTestCase {
 				DrawingSurfaceListener.class, mListenerUnderTest, "mPointerMean")).y);
 	}
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
+	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	@Test
 	public void testOnTouchActionMoveMultipleEventsWithOldValues() throws SecurityException, IllegalArgumentException,
 			NoSuchFieldException, IllegalAccessException, InterruptedException {
@@ -171,9 +173,11 @@ public class DrawingSurfaceListenerTest extends AndroidTestCase {
 		pointerCoords[0].y = 0.0f;
 		pointerCoords[0].pressure = 1.0f;
 		pointerCoords[0].size = 1.0f;
-		pointerCoords[1] = new PointerCoords(pointerCoords[0]);
+		pointerCoords[1] = new PointerCoords();
 		pointerCoords[1].x = 3.0f;
 		pointerCoords[1].y = 4.0f;
+		pointerCoords[1].pressure = 1.0f;
+		pointerCoords[1].size = 1.0f;
 
 		mEventToTest.recycle();
 		mEventToTest = MotionEvent.obtain(uptimeMillis, uptimeMillis, MotionEvent.ACTION_MOVE, pointerCoords.length,

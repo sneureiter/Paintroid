@@ -54,6 +54,7 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 	public static final Paint CHECKERED_PATTERN = new Paint();
 	protected static final int NO_BUTTON_RESOURCE = R.drawable.icon_menu_no_icon;
 	public static final float MOVE_TOLERANCE = 5;
+	public static final float INITIAL_STROKE_WIDTH = 25.0f;
 
 	protected static Paint mBitmapPaint;
 	protected static Paint mCanvasPaint;
@@ -77,7 +78,7 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 		mBitmapPaint.setStyle(Paint.Style.STROKE);
 		mBitmapPaint.setStrokeJoin(Paint.Join.ROUND);
 		mBitmapPaint.setStrokeCap(Paint.Cap.ROUND);
-		mBitmapPaint.setStrokeWidth(Tool.stroke25);
+		mBitmapPaint.setStrokeWidth(INITIAL_STROKE_WIDTH);
 		mCanvasPaint = new Paint(mBitmapPaint);
 		Bitmap checkerboard = BitmapFactory.decodeResource(
 				PaintroidApplication.applicationContext.getResources(),

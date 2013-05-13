@@ -30,6 +30,7 @@ public class DrawingSurfaceListenerTest extends AndroidTestCase {
 	@Before
 	protected void setUp() throws Exception {
 		super.setUp();
+		PaintroidApplication.applicationContext = this.getContext();
 		PaintroidApplication.currentTool = new ToolStub();
 		PaintroidApplication.perspective = new PerspectiveStub();
 		mListenerUnderTest = new DrawingSurfaceListener();
@@ -41,6 +42,8 @@ public class DrawingSurfaceListenerTest extends AndroidTestCase {
 	@After
 	protected void tearDown() throws Exception {
 		mEventToTest.recycle();
+		mEventToTest = null;
+		mListenerUnderTest = null;
 		super.tearDown();
 	}
 

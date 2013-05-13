@@ -132,16 +132,12 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 		mMenuBottomParameter2 = null;
 
 		Log.i(PaintroidApplication.TAG, "td " + step++);
-		// if (mSolo.getAllOpenedActivities().size() > 0) {
-		// Log.i(PaintroidApplication.TAG, "td finish " + step++);
-		// PaintroidApplication.drawingSurface.setBitmap(Bitmap.createBitmap(1, 1, Config.ALPHA_8));
-		// mSolo.sleep(200);
-		// mSolo.finishOpenedActivities();
-		// }
-
-		PaintroidApplication.drawingSurface.setBitmap(Bitmap.createBitmap(1, 1, Config.ALPHA_8));
-		mSolo.sleep(200);
-		mSolo.finishOpenedActivities();
+		if (mSolo.getAllOpenedActivities().size() > 0) {
+			Log.i(PaintroidApplication.TAG, "td finish " + step++);
+			PaintroidApplication.drawingSurface.setBitmap(Bitmap.createBitmap(1, 1, Config.ALPHA_8));
+			mSolo.sleep(200);
+			mSolo.finishOpenedActivities();
+		}
 		Log.i(PaintroidApplication.TAG, "td finish " + step++);
 		super.tearDown();
 		Log.i(PaintroidApplication.TAG, "td finish " + step++);
@@ -218,7 +214,7 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 	protected void clickLongOnTool(ToolType toolType) {
 		mSolo.clickOnView(mMenuBottomTool);
 		assertTrue("Waiting for the ToolMenu to open", mSolo.waitForView(GridView.class, 1, TIMEOUT));
-		ArrayList<GridView> gridViews = mSolo.getCurrentViews(GridView.class);// mSolo.getCurrentGridViews();
+		ArrayList<GridView> gridViews = mSolo.getCurrentGridViews();
 		assertEquals("One GridView should be visible", gridViews.size(), 1);
 		GridView toolGrid = gridViews.get(0);
 		assertEquals("GridView is Tools Gridview", toolGrid.getId(), R.id.gridview_tools_menu);

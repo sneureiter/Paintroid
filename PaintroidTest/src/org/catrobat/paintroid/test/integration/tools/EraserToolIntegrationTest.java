@@ -127,7 +127,7 @@ public class EraserToolIntegrationTest extends BaseIntegrationTestClass {
 		String brushWidthText = (String) brushWidthTextView.getText();
 		assertEquals("Wrong brush width displayed", Integer.valueOf(brushWidthText), Integer.valueOf(25));
 
-		ArrayList<ProgressBar> progressBars = mSolo.getCurrentViews(ProgressBar.class);
+		ArrayList<ProgressBar> progressBars = mSolo.getCurrentProgressBars();
 		assertEquals(progressBars.size(), 1);
 		SeekBar strokeWidthBar = (SeekBar) progressBars.get(0);
 		assertEquals(strokeWidthBar.getProgress(), 25);
@@ -201,7 +201,7 @@ public class EraserToolIntegrationTest extends BaseIntegrationTestClass {
 		String brushWidthText = (String) brushWidthTextView.getText();
 		assertEquals("Wrong brush width displayed", Integer.valueOf(brushWidthText), Integer.valueOf(25));
 
-		ArrayList<ProgressBar> progressBars = mSolo.getCurrentViews(ProgressBar.class);
+		ArrayList<ProgressBar> progressBars = mSolo.getCurrentProgressBars();
 		assertEquals(progressBars.size(), 1);
 		SeekBar strokeWidthBar = (SeekBar) progressBars.get(0);
 		assertEquals(strokeWidthBar.getProgress(), 25);
@@ -227,7 +227,7 @@ public class EraserToolIntegrationTest extends BaseIntegrationTestClass {
 		assertTrue("Waiting for Brush Picker Dialog",
 				mSolo.waitForText(mSolo.getString(R.string.stroke_title), 1, TIMEOUT));
 
-		ArrayList<ProgressBar> eraserProgressBars = mSolo.getCurrentViews(ProgressBar.class);
+		ArrayList<ProgressBar> eraserProgressBars = mSolo.getCurrentProgressBars();
 		assertEquals(eraserProgressBars.size(), 1);
 		SeekBar eraserStrokeWidthBar = (SeekBar) eraserProgressBars.get(0);
 		assertEquals(eraserStrokeWidthBar.getProgress(), newStrokeWidth);

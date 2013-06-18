@@ -19,7 +19,7 @@
 
 package org.catrobat.paintroid.pocketpaint.command;
 
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.ui.Statusbar;
 
 public final class UndoRedoManager {

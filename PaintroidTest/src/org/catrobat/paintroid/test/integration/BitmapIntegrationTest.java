@@ -19,7 +19,7 @@
 
 package org.catrobat.paintroid.test.integration;
 
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
 import org.catrobat.paintroid.pocketpaint.command.implementation.BitmapCommand;
 import org.catrobat.paintroid.pocketpaint.ui.DrawingSurface;

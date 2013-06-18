@@ -19,7 +19,7 @@
 
 package org.catrobat.paintroid.test.junit.tools;
 
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
 import org.catrobat.paintroid.pocketpaint.tools.ToolType;
 import org.catrobat.paintroid.pocketpaint.tools.implementation.MoveZoomTool;

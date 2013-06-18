@@ -22,13 +22,13 @@ package org.catrobat.paintroid.pocketpaint.tools.implementation;
 import java.util.Observable;
 import java.util.Observer;
 
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.MainActivity;
 import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
 import org.catrobat.paintroid.pocketpaint.command.implementation.BaseCommand;
 import org.catrobat.paintroid.pocketpaint.dialog.BrushPickerDialog;
-import org.catrobat.paintroid.pocketpaint.dialog.DialogProgressIntermediate;
 import org.catrobat.paintroid.pocketpaint.dialog.BrushPickerDialog.OnBrushChangedListener;
+import org.catrobat.paintroid.pocketpaint.dialog.DialogProgressIntermediate;
 import org.catrobat.paintroid.pocketpaint.dialog.colorpicker.ColorPickerDialog;
 import org.catrobat.paintroid.pocketpaint.dialog.colorpicker.ColorPickerDialog.OnColorPickedListener;
 import org.catrobat.paintroid.pocketpaint.tools.Tool;

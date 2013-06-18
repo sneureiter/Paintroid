@@ -19,7 +19,7 @@
 
 package org.catrobat.paintroid.pocketpaint.dialog;
 
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
 
 import android.annotation.TargetApi;

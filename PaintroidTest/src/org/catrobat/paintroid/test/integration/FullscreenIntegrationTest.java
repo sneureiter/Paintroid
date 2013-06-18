@@ -21,7 +21,7 @@ package org.catrobat.paintroid.test.integration;
 
 import junit.framework.AssertionFailedError;
 
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
 import org.catrobat.paintroid.pocketpaint.ui.DrawingSurface;
 import org.catrobat.paintroid.test.utils.Utils;

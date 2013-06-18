@@ -23,11 +23,11 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.FileIO;
 import org.catrobat.paintroid.pocketpaint.MenuFileActivity;
-import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
 import org.catrobat.paintroid.pocketpaint.MenuFileActivity.ACTION;
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;

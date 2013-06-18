@@ -21,7 +21,7 @@ package org.catrobat.paintroid.pocketpaint.ui.button;
 
 import java.util.ArrayList;
 
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.tools.ToolType;
 
 import android.app.Activity;

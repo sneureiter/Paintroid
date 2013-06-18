@@ -24,7 +24,7 @@ import java.util.Vector;
 
 import junit.framework.AssertionFailedError;
 
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.FileIO;
 import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
 import org.catrobat.paintroid.pocketpaint.ui.DrawingSurface;

@@ -21,12 +21,12 @@ package org.catrobat.paintroid.pocketpaint;
 
 import java.io.File;
 
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.dialog.BrushPickerDialog;
 import org.catrobat.paintroid.pocketpaint.dialog.DialogAbout;
 import org.catrobat.paintroid.pocketpaint.dialog.InfoDialog;
-import org.catrobat.paintroid.pocketpaint.dialog.ToolsDialog;
 import org.catrobat.paintroid.pocketpaint.dialog.InfoDialog.DialogType;
+import org.catrobat.paintroid.pocketpaint.dialog.ToolsDialog;
 import org.catrobat.paintroid.pocketpaint.dialog.colorpicker.ColorPickerDialog;
 import org.catrobat.paintroid.pocketpaint.listener.DrawingSurfaceListener;
 import org.catrobat.paintroid.pocketpaint.tools.Tool;

@@ -21,7 +21,7 @@ package org.catrobat.paintroid.test.junit.tools;
 
 import java.util.List;
 
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.command.Command;
 import org.catrobat.paintroid.pocketpaint.command.implementation.PointCommand;
 import org.catrobat.paintroid.pocketpaint.tools.ToolType;

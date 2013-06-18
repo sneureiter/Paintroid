@@ -40,7 +40,7 @@ package org.catrobat.paintroid.pocketpaint.dialog.colorpicker;
 
 import java.util.ArrayList;
 
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.dialog.BaseDialog;
 
 import android.content.Context;

@@ -22,7 +22,7 @@ package org.catrobat.paintroid.test.integration.dialog;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
 import org.catrobat.paintroid.pocketpaint.tools.ToolType;
 import org.catrobat.paintroid.pocketpaint.tools.implementation.BaseTool;

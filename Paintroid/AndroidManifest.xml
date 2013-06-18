@@ -19,7 +19,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.catrobat.paintroid"
+    package="org.catrobat.paintroid.pocketcode"
     android:finishOnTaskLaunch="true"
     android:installLocation="auto"
     android:versionCode="10"
@@ -46,7 +46,6 @@
 
     <application
         android:name=".pocketpaint.PaintroidApplication"
-        android:debuggable="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.PaintroidSplitActionBar"

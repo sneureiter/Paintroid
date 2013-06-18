@@ -25,7 +25,7 @@ import static org.catrobat.paintroid.test.utils.PaintroidAsserts.assertPathEqual
 import java.util.ArrayList;
 import java.util.List;
 
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.command.Command;
 import org.catrobat.paintroid.pocketpaint.command.implementation.BaseCommand;
 import org.catrobat.paintroid.pocketpaint.command.implementation.PathCommand;

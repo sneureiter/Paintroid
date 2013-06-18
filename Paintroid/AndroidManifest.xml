@@ -45,7 +45,7 @@
     -->
 
     <application
-        android:name=".pocketpaint.PaintroidApplication"
+        android:name=".PaintroidApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.PaintroidSplitActionBar"
@@ -54,7 +54,7 @@
 
         <!-- [prol] disabled Title Bar and Landscape Mode -->
         <activity
-            android:name=".pocketpaint.MainActivity"
+            android:name=".MainActivity"
             android:configChanges="locale"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
@@ -74,7 +74,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".pocketpaint.ToolsDialogActivity"
+            android:name="ToolsDialogActivity"
             android:configChanges="locale"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent" >

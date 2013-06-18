@@ -38,7 +38,7 @@
 
 package org.catrobat.paintroid.pocketpaint.dialog.colorpicker;
 
-import org.catrobat.paintroid.pocketcode.R;
+import org.catrobat.paintroid.pocketpaint.R;
 
 import android.content.Context;
 import android.content.res.TypedArray;

@@ -21,7 +21,6 @@ package org.catrobat.paintroid.pocketpaint;
 
 import java.io.File;
 
-import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.dialog.BrushPickerDialog;
 import org.catrobat.paintroid.pocketpaint.dialog.DialogAbout;
 import org.catrobat.paintroid.pocketpaint.dialog.InfoDialog;

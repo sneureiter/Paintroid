@@ -21,7 +21,7 @@ package org.catrobat.paintroid.pocketpaint.dialog;
 
 import java.util.ArrayList;
 
-import org.catrobat.paintroid.pocketcode.R;
+import org.catrobat.paintroid.pocketpaint.R;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;

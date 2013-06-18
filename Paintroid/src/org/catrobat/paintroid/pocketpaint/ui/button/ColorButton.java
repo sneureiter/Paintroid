@@ -19,7 +19,7 @@
 
 package org.catrobat.paintroid.pocketpaint.ui.button;
 
-import org.catrobat.paintroid.pocketcode.R;
+import org.catrobat.paintroid.pocketpaint.R;
 import org.catrobat.paintroid.pocketpaint.dialog.colorpicker.ColorPickerDialog;
 import org.catrobat.paintroid.pocketpaint.dialog.colorpicker.ColorPickerDialog.OnColorPickedListener;
 

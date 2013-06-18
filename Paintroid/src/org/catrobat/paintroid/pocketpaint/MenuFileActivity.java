@@ -24,7 +24,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.dialog.DialogSaveFile;
 import org.catrobat.paintroid.pocketpaint.dialog.InfoDialog;
 import org.catrobat.paintroid.pocketpaint.dialog.InfoDialog.DialogType;

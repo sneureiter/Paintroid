@@ -19,7 +19,7 @@
 
 package org.catrobat.paintroid.pocketpaint.tools;
 
-import org.catrobat.paintroid.pocketcode.R;
+import org.catrobat.paintroid.pocketpaint.R;
 
 public enum ToolType {
 	ZOOM(R.string.button_zoom, R.drawable.icon_menu_zoom,

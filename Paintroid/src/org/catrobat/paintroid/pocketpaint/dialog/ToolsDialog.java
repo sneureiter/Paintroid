@@ -19,9 +19,9 @@
 
 package org.catrobat.paintroid.pocketpaint.dialog;
 
-import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.MainActivity;
 import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
+import org.catrobat.paintroid.pocketpaint.R;
 import org.catrobat.paintroid.pocketpaint.dialog.InfoDialog.DialogType;
 import org.catrobat.paintroid.pocketpaint.tools.ToolType;
 import org.catrobat.paintroid.pocketpaint.ui.button.ToolsAdapter;

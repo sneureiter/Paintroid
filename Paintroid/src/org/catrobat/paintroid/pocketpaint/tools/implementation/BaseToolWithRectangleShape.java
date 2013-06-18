@@ -19,8 +19,8 @@
 
 package org.catrobat.paintroid.pocketpaint.tools.implementation;
 
-import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
+import org.catrobat.paintroid.pocketpaint.R;
 import org.catrobat.paintroid.pocketpaint.tools.ToolType;
 
 import android.content.Context;

@@ -21,10 +21,10 @@ package org.catrobat.paintroid.pocketpaint.ui;
 
 import java.util.Observable;
 
-import org.catrobat.paintroid.pocketcode.R;
 import org.catrobat.paintroid.pocketpaint.MainActivity;
 import org.catrobat.paintroid.pocketpaint.MenuFileActivity;
 import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
+import org.catrobat.paintroid.pocketpaint.R;
 import org.catrobat.paintroid.pocketpaint.command.UndoRedoManager;
 import org.catrobat.paintroid.pocketpaint.dialog.colorpicker.ColorPickerDialog;
 import org.catrobat.paintroid.pocketpaint.tools.Tool;

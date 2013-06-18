@@ -21,9 +21,9 @@ package org.catrobat.paintroid.test.junit.ui;
 
 import junit.framework.TestCase;
 
+import org.catrobat.paintroid.pocketpaint.ui.Perspective;
 import org.catrobat.paintroid.test.junit.stubs.SurfaceHolderStub;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
-import org.catrobat.paintroid.ui.Perspective;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

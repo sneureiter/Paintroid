@@ -19,9 +19,9 @@
 
 package org.catrobat.paintroid.test.utils;
 
-import org.catrobat.paintroid.MenuFileActivity;
-import org.catrobat.paintroid.PaintroidApplication;
-import org.catrobat.paintroid.ui.Perspective;
+import org.catrobat.paintroid.pocketpaint.MenuFileActivity;
+import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
+import org.catrobat.paintroid.pocketpaint.ui.Perspective;
 
 import android.app.Activity;
 import android.app.KeyguardManager;

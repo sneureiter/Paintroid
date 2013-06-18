@@ -21,10 +21,10 @@ package org.catrobat.paintroid.test.integration;
 
 import junit.framework.AssertionFailedError;
 
-import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
+import org.catrobat.paintroid.pocketpaint.ui.DrawingSurface;
 import org.catrobat.paintroid.test.utils.Utils;
-import org.catrobat.paintroid.ui.DrawingSurface;
 
 import android.graphics.Color;
 import android.graphics.Point;

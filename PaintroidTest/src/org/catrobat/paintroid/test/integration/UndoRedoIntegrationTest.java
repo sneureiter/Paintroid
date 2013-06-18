@@ -19,12 +19,12 @@
 
 package org.catrobat.paintroid.test.integration;
 
-import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
+import org.catrobat.paintroid.pocketpaint.tools.ToolType;
+import org.catrobat.paintroid.pocketpaint.ui.DrawingSurface;
+import org.catrobat.paintroid.pocketpaint.ui.Perspective;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
-import org.catrobat.paintroid.tools.ToolType;
-import org.catrobat.paintroid.ui.DrawingSurface;
-import org.catrobat.paintroid.ui.Perspective;
 import org.junit.Before;
 
 import android.graphics.Bitmap;

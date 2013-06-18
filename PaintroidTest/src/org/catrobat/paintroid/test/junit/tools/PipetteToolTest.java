@@ -19,13 +19,13 @@
 
 package org.catrobat.paintroid.test.junit.tools;
 
-import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
+import org.catrobat.paintroid.pocketpaint.tools.ToolType;
+import org.catrobat.paintroid.pocketpaint.tools.implementation.PipetteTool;
+import org.catrobat.paintroid.pocketpaint.ui.DrawingSurface;
+import org.catrobat.paintroid.pocketpaint.ui.Statusbar.ToolButtonIDs;
 import org.catrobat.paintroid.test.junit.stubs.DrawingSurfaceStub;
-import org.catrobat.paintroid.tools.ToolType;
-import org.catrobat.paintroid.tools.implementation.PipetteTool;
-import org.catrobat.paintroid.ui.DrawingSurface;
-import org.catrobat.paintroid.ui.Statusbar.ToolButtonIDs;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

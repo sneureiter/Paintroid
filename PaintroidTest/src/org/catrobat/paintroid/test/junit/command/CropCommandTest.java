@@ -21,8 +21,8 @@ package org.catrobat.paintroid.test.junit.command;
 
 import java.io.File;
 
-import org.catrobat.paintroid.command.implementation.BaseCommand;
-import org.catrobat.paintroid.command.implementation.CropCommand;
+import org.catrobat.paintroid.pocketpaint.command.implementation.BaseCommand;
+import org.catrobat.paintroid.pocketpaint.command.implementation.CropCommand;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.junit.After;
 import org.junit.Before;

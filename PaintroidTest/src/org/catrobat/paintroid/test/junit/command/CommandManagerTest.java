@@ -19,11 +19,11 @@
 
 package org.catrobat.paintroid.test.junit.command;
 
-import org.catrobat.paintroid.MainActivity;
-import org.catrobat.paintroid.command.Command;
-import org.catrobat.paintroid.command.CommandManager;
-import org.catrobat.paintroid.command.implementation.BaseCommand;
-import org.catrobat.paintroid.command.implementation.CommandManagerImplementation;
+import org.catrobat.paintroid.pocketpaint.MainActivity;
+import org.catrobat.paintroid.pocketpaint.command.Command;
+import org.catrobat.paintroid.pocketpaint.command.CommandManager;
+import org.catrobat.paintroid.pocketpaint.command.implementation.BaseCommand;
+import org.catrobat.paintroid.pocketpaint.command.implementation.CommandManagerImplementation;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.junit.After;
 import org.junit.Before;

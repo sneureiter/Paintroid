@@ -21,9 +21,9 @@ package org.catrobat.paintroid.test.junit.command;
 
 import java.io.File;
 
-import org.catrobat.paintroid.PaintroidApplication;
-import org.catrobat.paintroid.command.implementation.BaseCommand;
-import org.catrobat.paintroid.command.implementation.BitmapCommand;
+import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
+import org.catrobat.paintroid.pocketpaint.command.implementation.BaseCommand;
+import org.catrobat.paintroid.pocketpaint.command.implementation.BitmapCommand;
 import org.catrobat.paintroid.test.utils.PaintroidAsserts;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.junit.After;

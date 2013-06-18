@@ -24,10 +24,10 @@ import java.util.Vector;
 
 import junit.framework.AssertionFailedError;
 
-import org.catrobat.paintroid.FileIO;
-import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
-import org.catrobat.paintroid.ui.DrawingSurface;
+import org.catrobat.paintroid.pocketpaint.FileIO;
+import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
+import org.catrobat.paintroid.pocketpaint.ui.DrawingSurface;
 
 import android.graphics.Color;
 import android.graphics.PointF;

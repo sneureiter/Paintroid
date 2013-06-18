@@ -24,9 +24,9 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import org.catrobat.paintroid.tools.Tool;
-import org.catrobat.paintroid.tools.ToolType;
-import org.catrobat.paintroid.ui.Statusbar.ToolButtonIDs;
+import org.catrobat.paintroid.pocketpaint.tools.Tool;
+import org.catrobat.paintroid.pocketpaint.tools.ToolType;
+import org.catrobat.paintroid.pocketpaint.ui.Statusbar.ToolButtonIDs;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;

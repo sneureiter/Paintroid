@@ -22,7 +22,7 @@
     package="org.catrobat.paintroid.pocketpaint"
     android:finishOnTaskLaunch="true"
     android:installLocation="auto"
-    android:versionCode="10"
+    android:versionCode="13"
     android:versionName="0.7beta" >
 
     <!-- Remember to increase versionCode by 1 with each new release! -->
@@ -74,7 +74,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ToolsDialogActivity"
+            android:name=".ToolsDialogActivity"
             android:configChanges="locale"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent" >

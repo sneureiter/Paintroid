@@ -21,15 +21,15 @@ package org.catrobat.paintroid.test.integration;
 
 import java.util.ArrayList;
 
-import org.catrobat.paintroid.MainActivity;
-import org.catrobat.paintroid.PaintroidApplication;
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketpaint.MainActivity;
+import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
+import org.catrobat.paintroid.pocketpaint.R;
+import org.catrobat.paintroid.pocketpaint.tools.ToolType;
+import org.catrobat.paintroid.pocketpaint.tools.implementation.BaseTool;
+import org.catrobat.paintroid.pocketpaint.ui.DrawingSurface;
+import org.catrobat.paintroid.pocketpaint.ui.button.ToolsAdapter;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.catrobat.paintroid.test.utils.Utils;
-import org.catrobat.paintroid.tools.ToolType;
-import org.catrobat.paintroid.tools.implementation.BaseTool;
-import org.catrobat.paintroid.ui.DrawingSurface;
-import org.catrobat.paintroid.ui.button.ToolsAdapter;
 import org.junit.After;
 import org.junit.Before;
 

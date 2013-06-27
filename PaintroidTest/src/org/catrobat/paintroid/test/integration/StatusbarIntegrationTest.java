@@ -21,12 +21,12 @@ package org.catrobat.paintroid.test.integration;
 
 import java.util.ArrayList;
 
-import org.catrobat.paintroid.MainActivity;
-import org.catrobat.paintroid.PaintroidApplication;
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketpaint.MainActivity;
+import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
+import org.catrobat.paintroid.pocketpaint.R;
+import org.catrobat.paintroid.pocketpaint.tools.ToolType;
+import org.catrobat.paintroid.pocketpaint.ui.Statusbar;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
-import org.catrobat.paintroid.tools.ToolType;
-import org.catrobat.paintroid.ui.Statusbar;
 
 import android.widget.ImageButton;
 import android.widget.LinearLayout;

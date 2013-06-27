@@ -22,7 +22,7 @@ package org.catrobat.paintroid.test.junit.stubs;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.catrobat.paintroid.command.implementation.BaseCommand;
+import org.catrobat.paintroid.pocketpaint.command.implementation.BaseCommand;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

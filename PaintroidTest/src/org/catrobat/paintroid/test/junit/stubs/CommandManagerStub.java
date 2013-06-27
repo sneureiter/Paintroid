@@ -22,8 +22,8 @@ package org.catrobat.paintroid.test.junit.stubs;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.catrobat.paintroid.command.Command;
-import org.catrobat.paintroid.command.CommandManager;
+import org.catrobat.paintroid.pocketpaint.command.Command;
+import org.catrobat.paintroid.pocketpaint.command.CommandManager;
 
 import android.graphics.Bitmap;
 

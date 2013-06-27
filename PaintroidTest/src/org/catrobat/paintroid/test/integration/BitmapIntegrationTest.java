@@ -19,11 +19,11 @@
 
 package org.catrobat.paintroid.test.integration;
 
-import org.catrobat.paintroid.PaintroidApplication;
-import org.catrobat.paintroid.R;
-import org.catrobat.paintroid.command.implementation.BitmapCommand;
+import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
+import org.catrobat.paintroid.pocketpaint.R;
+import org.catrobat.paintroid.pocketpaint.command.implementation.BitmapCommand;
+import org.catrobat.paintroid.pocketpaint.ui.DrawingSurface;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
-import org.catrobat.paintroid.ui.DrawingSurface;
 import org.junit.Test;
 
 import android.graphics.Bitmap;

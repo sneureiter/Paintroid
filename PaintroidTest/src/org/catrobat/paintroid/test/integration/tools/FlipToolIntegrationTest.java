@@ -19,9 +19,9 @@
 
 package org.catrobat.paintroid.test.integration.tools;
 
-import org.catrobat.paintroid.PaintroidApplication;
+import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
+import org.catrobat.paintroid.pocketpaint.tools.ToolType;
 import org.catrobat.paintroid.test.integration.BaseIntegrationTestClass;
-import org.catrobat.paintroid.tools.ToolType;
 import org.junit.Before;
 
 import android.graphics.Color;

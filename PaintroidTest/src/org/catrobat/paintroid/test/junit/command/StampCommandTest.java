@@ -19,8 +19,8 @@
 
 package org.catrobat.paintroid.test.junit.command;
 
-import org.catrobat.paintroid.command.implementation.BaseCommand;
-import org.catrobat.paintroid.command.implementation.StampCommand;
+import org.catrobat.paintroid.pocketpaint.command.implementation.BaseCommand;
+import org.catrobat.paintroid.pocketpaint.command.implementation.StampCommand;
 import org.catrobat.paintroid.test.utils.PaintroidAsserts;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.junit.After;

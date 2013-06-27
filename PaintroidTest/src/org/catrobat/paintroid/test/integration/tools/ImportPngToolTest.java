@@ -1,6 +1,6 @@
 package org.catrobat.paintroid.test.integration.tools;
 
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketpaint.R;
 import org.catrobat.paintroid.test.integration.BaseIntegrationTestClass;
 
 public class ImportPngToolTest extends BaseIntegrationTestClass {

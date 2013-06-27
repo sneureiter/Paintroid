@@ -19,7 +19,7 @@
 
 package org.catrobat.paintroid.test.junit.command;
 
-import org.catrobat.paintroid.command.implementation.PointCommand;
+import org.catrobat.paintroid.pocketpaint.command.implementation.PointCommand;
 import org.catrobat.paintroid.test.utils.PaintroidAsserts;
 import org.junit.After;
 import org.junit.Before;

@@ -19,10 +19,10 @@
 
 package org.catrobat.paintroid.test.integration.dialog;
 
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketpaint.R;
+import org.catrobat.paintroid.pocketpaint.tools.ToolType;
+import org.catrobat.paintroid.pocketpaint.ui.DrawingSurface;
 import org.catrobat.paintroid.test.integration.BaseIntegrationTestClass;
-import org.catrobat.paintroid.tools.ToolType;
-import org.catrobat.paintroid.ui.DrawingSurface;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;

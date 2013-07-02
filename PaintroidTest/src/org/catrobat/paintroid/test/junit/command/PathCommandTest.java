@@ -22,9 +22,9 @@ package org.catrobat.paintroid.test.junit.command;
 import java.util.Observable;
 import java.util.Observer;
 
-import org.catrobat.paintroid.command.Command;
-import org.catrobat.paintroid.command.implementation.BaseCommand;
-import org.catrobat.paintroid.command.implementation.PathCommand;
+import org.catrobat.paintroid.pocketpaint.command.Command;
+import org.catrobat.paintroid.pocketpaint.command.implementation.BaseCommand;
+import org.catrobat.paintroid.pocketpaint.command.implementation.PathCommand;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

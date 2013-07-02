@@ -21,16 +21,16 @@ package org.catrobat.paintroid.test.junit.tools;
 
 import java.util.List;
 
-import org.catrobat.paintroid.R;
-import org.catrobat.paintroid.command.Command;
-import org.catrobat.paintroid.command.implementation.PointCommand;
+import org.catrobat.paintroid.pocketpaint.R;
+import org.catrobat.paintroid.pocketpaint.command.Command;
+import org.catrobat.paintroid.pocketpaint.command.implementation.PointCommand;
+import org.catrobat.paintroid.pocketpaint.tools.ToolType;
+import org.catrobat.paintroid.pocketpaint.tools.implementation.BaseTool;
+import org.catrobat.paintroid.pocketpaint.tools.implementation.BaseToolWithShape;
+import org.catrobat.paintroid.pocketpaint.tools.implementation.CursorTool;
+import org.catrobat.paintroid.pocketpaint.ui.Statusbar.ToolButtonIDs;
 import org.catrobat.paintroid.test.junit.stubs.PathStub;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
-import org.catrobat.paintroid.tools.ToolType;
-import org.catrobat.paintroid.tools.implementation.BaseTool;
-import org.catrobat.paintroid.tools.implementation.BaseToolWithShape;
-import org.catrobat.paintroid.tools.implementation.CursorTool;
-import org.catrobat.paintroid.ui.Statusbar.ToolButtonIDs;
 import org.junit.Ignore;
 import org.junit.Test;
 

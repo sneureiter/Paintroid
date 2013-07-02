@@ -19,9 +19,9 @@
 
 package org.catrobat.paintroid.test.junit.command;
 
-import org.catrobat.paintroid.PaintroidApplication;
-import org.catrobat.paintroid.command.implementation.FlipCommand;
-import org.catrobat.paintroid.command.implementation.FlipCommand.FlipDirection;
+import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
+import org.catrobat.paintroid.pocketpaint.command.implementation.FlipCommand;
+import org.catrobat.paintroid.pocketpaint.command.implementation.FlipCommand.FlipDirection;
 import org.catrobat.paintroid.test.junit.stubs.DrawingSurfaceStub;
 import org.junit.Before;
 

@@ -25,7 +25,7 @@
     android:orientation="vertical"
     android:padding="16dp">
     
-	  <org.catrobat.paintroid.dialog.colorpicker.ColorPickerView
+	  <org.catrobat.paintroid.pocketpaint.dialog.colorpicker.ColorPickerView
 	    android:id="@+id/view_colorpicker"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"/>
@@ -38,7 +38,7 @@
        android:gravity="bottom"
        android:orientation="vertical" >
 
-       <org.catrobat.paintroid.dialog.colorpicker.CheckeredTransparentLinearLayout
+       <org.catrobat.paintroid.pocketpaint.dialog.colorpicker.CheckeredTransparentLinearLayout
            android:id="@+id/colorchooser_ok_button_base_layout"
            android:layout_width="fill_parent"
            android:layout_height="48dp"
@@ -53,7 +53,7 @@
 	            android:textColor="@color/color_chooser_white"
 	            android:gravity="center"
 	            android:background="@android:color/transparent"/>
-         </org.catrobat.paintroid.dialog.colorpicker.CheckeredTransparentLinearLayout>    
+         </org.catrobat.paintroid.pocketpaint.dialog.colorpicker.CheckeredTransparentLinearLayout>    
     </LinearLayout>
     
 </LinearLayout>

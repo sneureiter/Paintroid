@@ -21,8 +21,8 @@ package org.catrobat.paintroid.test.junit.ui;
 
 import junit.framework.TestCase;
 
-import org.catrobat.paintroid.MainActivity;
-import org.catrobat.paintroid.PaintroidApplication;
+import org.catrobat.paintroid.pocketpaint.MainActivity;
+import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
 import org.catrobat.paintroid.test.junit.stubs.CommandManagerStub;
 
 public class DrawingSurfaceTests extends TestCase {

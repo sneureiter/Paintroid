@@ -19,7 +19,7 @@
 
 package org.catrobat.paintroid.test.junit.stubs;
 
-import org.catrobat.paintroid.ui.DrawingSurface;
+import org.catrobat.paintroid.pocketpaint.ui.DrawingSurface;
 
 import android.content.Context;
 import android.graphics.Bitmap;

@@ -19,16 +19,16 @@
 
 package org.catrobat.paintroid.test.integration.tools;
 
-import org.catrobat.paintroid.PaintroidApplication;
-import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
+import org.catrobat.paintroid.pocketpaint.R;
+import org.catrobat.paintroid.pocketpaint.tools.ToolType;
+import org.catrobat.paintroid.pocketpaint.tools.implementation.BaseToolWithRectangleShape;
+import org.catrobat.paintroid.pocketpaint.tools.implementation.BaseToolWithShape;
+import org.catrobat.paintroid.pocketpaint.tools.implementation.CropTool;
+import org.catrobat.paintroid.pocketpaint.ui.DrawingSurface;
 import org.catrobat.paintroid.test.integration.BaseIntegrationTestClass;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.catrobat.paintroid.test.utils.Utils;
-import org.catrobat.paintroid.tools.ToolType;
-import org.catrobat.paintroid.tools.implementation.BaseToolWithRectangleShape;
-import org.catrobat.paintroid.tools.implementation.BaseToolWithShape;
-import org.catrobat.paintroid.tools.implementation.CropTool;
-import org.catrobat.paintroid.ui.DrawingSurface;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -19,7 +19,7 @@
 
 package org.catrobat.paintroid.test.junit.main;
 
-import org.catrobat.paintroid.MainActivity;
+import org.catrobat.paintroid.pocketpaint.MainActivity;
 import org.catrobat.paintroid.test.junit.stubs.StatusbarStub;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
 

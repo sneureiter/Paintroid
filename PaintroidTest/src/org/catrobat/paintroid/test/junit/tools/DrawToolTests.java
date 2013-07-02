@@ -25,22 +25,22 @@ import static org.catrobat.paintroid.test.utils.PaintroidAsserts.assertPathEqual
 import java.util.ArrayList;
 import java.util.List;
 
-import org.catrobat.paintroid.R;
-import org.catrobat.paintroid.command.Command;
-import org.catrobat.paintroid.command.implementation.BaseCommand;
-import org.catrobat.paintroid.command.implementation.PathCommand;
-import org.catrobat.paintroid.command.implementation.PointCommand;
-import org.catrobat.paintroid.dialog.BrushPickerDialog;
-import org.catrobat.paintroid.dialog.BrushPickerDialog.OnBrushChangedListener;
-import org.catrobat.paintroid.dialog.colorpicker.ColorPickerDialog;
-import org.catrobat.paintroid.dialog.colorpicker.ColorPickerDialog.OnColorPickedListener;
+import org.catrobat.paintroid.pocketpaint.R;
+import org.catrobat.paintroid.pocketpaint.command.Command;
+import org.catrobat.paintroid.pocketpaint.command.implementation.BaseCommand;
+import org.catrobat.paintroid.pocketpaint.command.implementation.PathCommand;
+import org.catrobat.paintroid.pocketpaint.command.implementation.PointCommand;
+import org.catrobat.paintroid.pocketpaint.dialog.BrushPickerDialog;
+import org.catrobat.paintroid.pocketpaint.dialog.BrushPickerDialog.OnBrushChangedListener;
+import org.catrobat.paintroid.pocketpaint.dialog.colorpicker.ColorPickerDialog;
+import org.catrobat.paintroid.pocketpaint.dialog.colorpicker.ColorPickerDialog.OnColorPickedListener;
+import org.catrobat.paintroid.pocketpaint.tools.Tool;
+import org.catrobat.paintroid.pocketpaint.tools.ToolType;
+import org.catrobat.paintroid.pocketpaint.tools.implementation.BaseTool;
+import org.catrobat.paintroid.pocketpaint.tools.implementation.DrawTool;
+import org.catrobat.paintroid.pocketpaint.ui.Statusbar.ToolButtonIDs;
 import org.catrobat.paintroid.test.junit.stubs.PathStub;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
-import org.catrobat.paintroid.tools.Tool;
-import org.catrobat.paintroid.tools.ToolType;
-import org.catrobat.paintroid.tools.implementation.BaseTool;
-import org.catrobat.paintroid.tools.implementation.DrawTool;
-import org.catrobat.paintroid.ui.Statusbar.ToolButtonIDs;
 import org.junit.Test;
 
 import android.graphics.Color;

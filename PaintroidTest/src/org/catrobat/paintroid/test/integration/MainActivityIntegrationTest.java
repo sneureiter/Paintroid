@@ -21,9 +21,9 @@ package org.catrobat.paintroid.test.integration;
 
 import java.util.ArrayList;
 
-import org.catrobat.paintroid.R;
-import org.catrobat.paintroid.tools.ToolType;
-import org.catrobat.paintroid.ui.DrawingSurface;
+import org.catrobat.paintroid.pocketpaint.R;
+import org.catrobat.paintroid.pocketpaint.tools.ToolType;
+import org.catrobat.paintroid.pocketpaint.ui.DrawingSurface;
 
 import android.widget.TextView;
 

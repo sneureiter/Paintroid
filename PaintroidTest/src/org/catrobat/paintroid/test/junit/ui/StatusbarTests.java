@@ -21,13 +21,13 @@ package org.catrobat.paintroid.test.junit.ui;
 
 import java.util.Observable;
 
-import org.catrobat.paintroid.MainActivity;
+import org.catrobat.paintroid.pocketpaint.MainActivity;
+import org.catrobat.paintroid.pocketpaint.tools.Tool;
+import org.catrobat.paintroid.pocketpaint.tools.ToolType;
+import org.catrobat.paintroid.pocketpaint.tools.implementation.DrawTool;
+import org.catrobat.paintroid.pocketpaint.ui.Statusbar;
 import org.catrobat.paintroid.test.junit.stubs.ObserverStub;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
-import org.catrobat.paintroid.tools.Tool;
-import org.catrobat.paintroid.tools.ToolType;
-import org.catrobat.paintroid.tools.implementation.DrawTool;
-import org.catrobat.paintroid.ui.Statusbar;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;

@@ -23,9 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
 
-import org.catrobat.paintroid.MainActivity;
-import org.catrobat.paintroid.tools.Tool;
-import org.catrobat.paintroid.ui.Statusbar;
+import org.catrobat.paintroid.pocketpaint.MainActivity;
+import org.catrobat.paintroid.pocketpaint.tools.Tool;
+import org.catrobat.paintroid.pocketpaint.ui.Statusbar;
 
 public class StatusbarStub extends Statusbar {
 

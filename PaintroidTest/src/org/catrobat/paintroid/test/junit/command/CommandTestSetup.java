@@ -19,8 +19,8 @@
 
 package org.catrobat.paintroid.test.junit.command;
 
-import org.catrobat.paintroid.PaintroidApplication;
-import org.catrobat.paintroid.command.Command;
+import org.catrobat.paintroid.pocketpaint.PaintroidApplication;
+import org.catrobat.paintroid.pocketpaint.command.Command;
 import org.catrobat.paintroid.test.junit.stubs.DrawingSurfaceStub;
 import org.junit.After;
 import org.junit.Before;

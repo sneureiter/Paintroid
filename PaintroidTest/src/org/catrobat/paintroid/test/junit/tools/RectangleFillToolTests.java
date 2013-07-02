@@ -19,10 +19,10 @@
 
 package org.catrobat.paintroid.test.junit.tools;
 
-import org.catrobat.paintroid.R;
-import org.catrobat.paintroid.tools.ToolType;
-import org.catrobat.paintroid.tools.implementation.RectangleFillTool;
-import org.catrobat.paintroid.ui.Statusbar.ToolButtonIDs;
+import org.catrobat.paintroid.pocketpaint.R;
+import org.catrobat.paintroid.pocketpaint.tools.ToolType;
+import org.catrobat.paintroid.pocketpaint.tools.implementation.RectangleFillTool;
+import org.catrobat.paintroid.pocketpaint.ui.Statusbar.ToolButtonIDs;
 import org.junit.Before;
 import org.junit.Test;
 

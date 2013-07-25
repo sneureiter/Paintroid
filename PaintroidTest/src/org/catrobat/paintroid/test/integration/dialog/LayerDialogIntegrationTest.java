@@ -92,10 +92,10 @@ public class LayerDialogIntegrationTest extends BaseIntegrationTestClass {
 		mSolo.clickOnView(mButtonTopLayer);
 		mSolo.sleep(1000);
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 2; i++) {
 			mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_add));
 		}
-		assertTrue("More than 5 layers are possible", mSolo.getCurrentListViews().get(0).getAdapter().getCount() > 5);
+		assertTrue("More than 2 layers are possible", mSolo.getCurrentListViews().get(0).getAdapter().getCount() > 2);
 
 	}
 

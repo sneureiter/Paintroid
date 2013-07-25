@@ -180,7 +180,7 @@ public class DrawingSurface extends SurfaceView implements
 	}
 
 	public synchronized void initLayer() {
-		int numLayers = 5;
+		int numLayers = 2;
 
 		recycleBitmap();
 

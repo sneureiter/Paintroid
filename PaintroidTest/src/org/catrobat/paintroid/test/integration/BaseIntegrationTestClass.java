@@ -150,6 +150,8 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 			mCurrentDrawingSurfaceBitmap.recycle();
 		mCurrentDrawingSurfaceBitmap = null;
 
+		PaintroidApplication.drawingSurface.recycleBitmap();
+
 	}
 
 	protected void selectTool(ToolType toolType) {

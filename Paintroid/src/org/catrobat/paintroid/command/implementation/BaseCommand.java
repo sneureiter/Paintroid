@@ -39,15 +39,18 @@ public abstract class BaseCommand extends Observable implements Command {
 	protected Paint mPaint;
 	protected Bitmap mBitmap;
 	protected File mFileToStoredBitmap;
+	protected int commandLayer;
 
 	public static enum NOTIFY_STATES {
 		COMMAND_STARTED, COMMAND_DONE, COMMAND_FAILED
 	};
 
 	public BaseCommand() {
+		commandLayer = PaintroidApplication.currentLayer;
 	}
 
 	public BaseCommand(Paint paint) {
+		commandLayer = PaintroidApplication.currentLayer;
 		if (paint != null) {
 			mPaint = new Paint(paint);
 		} else {
@@ -96,5 +99,9 @@ public abstract class BaseCommand extends Observable implements Command {
 	protected void notifyStatus(NOTIFY_STATES state) {
 		setChanged();
 		notifyObservers(state);
+	}
+
+	public int getCommandLayer() {
+		return this.commandLayer;
 	}
 }

@@ -97,10 +97,10 @@ public class DrawingSurface extends SurfaceView implements
 					BaseTool.CHECKERED_PATTERN);
 			surfaceViewCanvas.drawRect(mWorkingBitmapRect, mFramePaint);
 			Command command = null;
+
 			while (mSurfaceCanBeUsed
 					&& (command = PaintroidApplication.commandManager
 							.getNextCommand()) != null) {
-
 				command.run(mWorkingBitmapCanvas, mWorkingBitmap);
 				surfaceViewCanvas.drawBitmap(mWorkingBitmap, 0, 0, null);
 				PaintroidApplication.currentTool.resetInternalState();

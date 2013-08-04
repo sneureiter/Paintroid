@@ -163,4 +163,15 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 			}
 		}
 	}
+
+	@Override
+	public LinkedList<Command> getCommands() {
+		return mCommandList;
+	}
+
+	@Override
+	public void decrementCounter() {
+		mCommandCounter--;// TODO Auto-generated method stub
+
+	}
 }

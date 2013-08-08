@@ -19,6 +19,8 @@
 
 package org.catrobat.paintroid.ui;
 
+import java.util.LinkedList;
+
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.command.Command;
 import org.catrobat.paintroid.tools.implementation.BaseTool;
@@ -52,6 +54,7 @@ public class DrawingSurface extends SurfaceView implements
 	private Paint mFramePaint;
 	private Paint mClearPaint;
 	protected boolean mSurfaceCanBeUsed;
+	private LinkedList<Command> oldList;
 
 	// private final static Paint mCheckeredPattern =
 	// BaseTool.CHECKERED_PATTERN;
@@ -98,6 +101,24 @@ public class DrawingSurface extends SurfaceView implements
 			surfaceViewCanvas.drawRect(mWorkingBitmapRect, mFramePaint);
 			Command command = null;
 
+			/*
+			 * LinkedList<Command> mySortedList = null;
+			 * 
+			 * if (oldList != null) { if (oldList.size() !=
+			 * (PaintroidApplication.commandManager .getCommands().size())) {
+			 * mySortedList = getSortedList(PaintroidApplication.commandManager
+			 * .getCommands()); } else { mySortedList = oldList; } } else {
+			 * mySortedList = getSortedList(PaintroidApplication.commandManager
+			 * .getCommands()); }
+			 * 
+			 * if (mySortedList != oldList) { for (int c = 0; c <
+			 * mySortedList.size(); c++) { if (mSurfaceCanBeUsed && (command =
+			 * mySortedList.get(c)) != null) { command.run(mWorkingBitmapCanvas,
+			 * mWorkingBitmap); surfaceViewCanvas .drawBitmap(mWorkingBitmap, 0,
+			 * 0, null); PaintroidApplication.currentTool.resetInternalState();
+			 * } else { Log.i(PaintroidApplication.TAG, "nope"); } } }
+			 */
+
 			while (mSurfaceCanBeUsed
 					&& (command = PaintroidApplication.commandManager
 							.getNextCommand()) != null) {
@@ -119,6 +140,25 @@ public class DrawingSurface extends SurfaceView implements
 		}
 	}
 
+	// private LinkedList<Command> getSortedList(LinkedList<Command> commands) {
+	// LinkedList<Command> list = (LinkedList<Command>) commands.clone();
+	//
+	// Collections.sort(list, new Comparator<Command>() {
+	// @Override
+	// public int compare(Command e1, Command e2) {
+	// if (e1.getCommandLayer() > e2.getCommandLayer()) {
+	// return -1;
+	// } else if (e1.getCommandLayer() < e2.getCommandLayer()) {
+	// return 1;
+	// }
+	// return 0;
+	// }
+	// });
+	//
+	// this.oldList = list;
+	// return list;
+	// }
+
 	public DrawingSurface(Context context, AttributeSet attrSet) {
 		super(context, attrSet);
 		init();
@@ -131,6 +171,8 @@ public class DrawingSurface extends SurfaceView implements
 
 	private void init() {
 		getHolder().addCallback(this);
+
+		oldList = null;
 
 		mWorkingBitmapRect = new Rect();
 		mWorkingBitmapCanvas = new Canvas();

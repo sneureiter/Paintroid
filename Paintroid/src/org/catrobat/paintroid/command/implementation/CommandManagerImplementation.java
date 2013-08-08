@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.command.Command;
 import org.catrobat.paintroid.command.CommandManager;
 import org.catrobat.paintroid.command.UndoRedoManager;
@@ -111,7 +112,22 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 		((BaseCommand) command).addObserver(this);
 
-		return mCommandList.add(command);
+		int position = findLastCallIndex(mCommandList,
+				PaintroidApplication.currentLayer);
+		mCommandList.add(position, command);
+		this.resetIndex();
+
+		return mCommandList.get(position) != null;
+	}
+
+	private int findLastCallIndex(LinkedList<Command> mCommandList,
+			int currentLayer) {
+		for (int i = mCommandList.size() - 1; i > 1; i--) {
+			if (mCommandList.get(i).getCommandLayer() == currentLayer) {
+				return i + 1;
+			}
+		}
+		return 1;
 	}
 
 	@Override
@@ -171,7 +187,16 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 	@Override
 	public void decrementCounter() {
-		mCommandCounter--;// TODO Auto-generated method stub
+		mCommandCounter--;
+		if (mCommandCounter == 1) {
+			UndoRedoManager.getInstance().update(
+					UndoRedoManager.StatusMode.DISABLE_UNDO);
+		}
 
+	}
+
+	@Override
+	public void resetIndex() {
+		mCommandIndex = 0;
 	}
 }

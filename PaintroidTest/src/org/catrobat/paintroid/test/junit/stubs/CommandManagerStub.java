@@ -83,4 +83,16 @@ public class CommandManagerStub extends BaseStub implements CommandManager {
 		return null;
 	}
 
+	@Override
+	public void decrementCounter() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void resetIndex() {
+		// TODO Auto-generated method stub
+
+	}
+
 }

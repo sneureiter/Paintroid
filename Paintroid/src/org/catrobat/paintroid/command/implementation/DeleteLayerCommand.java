@@ -13,20 +13,40 @@ public class DeleteLayerCommand extends BaseCommand {
 	public void run(Canvas canvas, Bitmap bitmap) {
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_STARTED);
-		for (int i = 1; i < PaintroidApplication.commandManager.getCommands()
-				.size(); i++) {
-			Log.i(PaintroidApplication.TAG, PaintroidApplication.commandManager
-					.getCommands().get(i).toString());
+		int numCommands = PaintroidApplication.commandManager.getCommands()
+				.size();
+		int i = numCommands - 1;
+
+		while (i < numCommands && i >= 1) {
+			Log.i(PaintroidApplication.TAG, String.valueOf(i));
 
 			if (PaintroidApplication.commandManager.getCommands().get(i)
-					.getCommandLayer() == this.layerIndex) {
+					.getCommandLayer() == this.layerIndex
+					|| PaintroidApplication.commandManager.getCommands().get(i) instanceof DeleteLayerCommand) {
 				PaintroidApplication.commandManager.getCommands().remove(i)
 						.freeResources();
 				PaintroidApplication.commandManager.decrementCounter();
 			}
+			i--;
 		}
+		showAllCommands();
+		PaintroidApplication.commandManager.resetIndex();
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
+	}
+
+	private void showAllCommands() {
+		for (int j = 0; j < PaintroidApplication.commandManager.getCommands()
+				.size(); j++) {
+			Log.i(PaintroidApplication.TAG,
+					String.valueOf(j)
+							+ " "
+							+ PaintroidApplication.commandManager.getCommands()
+									.get(j).toString()
+							+ " "
+							+ String.valueOf(PaintroidApplication.commandManager
+									.getCommands().get(j).getCommandLayer()));
+		}
 
 	}
 

@@ -39,7 +39,7 @@ public abstract class BaseCommand extends Observable implements Command {
 	protected Paint mPaint;
 	protected Bitmap mBitmap;
 	protected File mFileToStoredBitmap;
-	protected int commandLayer;
+	public int commandLayer;
 
 	public static enum NOTIFY_STATES {
 		COMMAND_STARTED, COMMAND_DONE, COMMAND_FAILED
@@ -101,7 +101,13 @@ public abstract class BaseCommand extends Observable implements Command {
 		notifyObservers(state);
 	}
 
+	@Override
 	public int getCommandLayer() {
 		return this.commandLayer;
+	}
+
+	@Override
+	public void setCommandLayer(int a) {
+		this.commandLayer = a;
 	}
 }

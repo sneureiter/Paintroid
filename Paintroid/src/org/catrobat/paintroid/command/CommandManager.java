@@ -43,4 +43,6 @@ public interface CommandManager {
 
 	public void decrementCounter();
 
+	public void resetIndex();
+
 }

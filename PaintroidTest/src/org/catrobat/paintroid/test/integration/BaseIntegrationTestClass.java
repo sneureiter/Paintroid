@@ -25,6 +25,7 @@ import org.catrobat.paintroid.MainActivity;
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.test.utils.PrivateAccess;
+import org.catrobat.paintroid.test.utils.Utils;
 import org.catrobat.paintroid.tools.ToolType;
 import org.catrobat.paintroid.tools.implementation.BaseTool;
 import org.catrobat.paintroid.ui.DrawingSurface;
@@ -56,7 +57,6 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 	protected ImageButton mButtonTopUndo;
 	protected ImageButton mButtonTopRedo;
 	protected ImageButton mButtonTopTool;
-	protected ImageButton mButtonTopLayer;
 	protected ImageButton mButtonTopColor;
 	protected View mMenuBottomTool;
 	protected View mMenuBottomParameter1;
@@ -86,19 +86,18 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 			Log.d("Paintroid test", "setup" + setup++);
 			mSolo = new Solo(getInstrumentation(), getActivity());
 			Log.d("Paintroid test", "setup" + setup++);
-			// if (Utils.isScreenLocked(mSolo.getCurrentActivity())) {
-			// mScreenLocked = true;
-			// tearDown();
-			// assertFalse("Screen is locked!", mScreenLocked);
-			// return;
-			// }
+			if (Utils.isScreenLocked(mSolo.getCurrentActivity())) {
+				mScreenLocked = true;
+				tearDown();
+				assertFalse("Screen is locked!", mScreenLocked);
+				return;
+			}
 			Log.d("Paintroid test", "setup" + setup++);
 			PaintroidApplication.drawingSurface.destroyDrawingCache();
 			Log.d("Paintroid test", "setup" + setup++);
 			mButtonTopUndo = (ImageButton) getActivity().findViewById(R.id.btn_status_undo);
 			mButtonTopRedo = (ImageButton) getActivity().findViewById(R.id.btn_status_redo);
 			mButtonTopTool = (ImageButton) getActivity().findViewById(R.id.btn_status_tool);
-			mButtonTopLayer = (ImageButton) getActivity().findViewById(R.id.btn_status_layer);
 			mButtonTopColor = (ImageButton) getActivity().findViewById(R.id.btn_status_color);
 			mMenuBottomTool = getActivity().findViewById(R.id.menu_item_tools);
 			mMenuBottomParameter1 = getActivity().findViewById(R.id.menu_item_primary_tool_attribute_button);

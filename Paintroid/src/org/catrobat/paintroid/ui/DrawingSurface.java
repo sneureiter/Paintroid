@@ -19,8 +19,6 @@
 
 package org.catrobat.paintroid.ui;
 
-import java.util.LinkedList;
-
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.command.Command;
 import org.catrobat.paintroid.tools.implementation.BaseTool;
@@ -54,7 +52,8 @@ public class DrawingSurface extends SurfaceView implements
 	private Paint mFramePaint;
 	private Paint mClearPaint;
 	protected boolean mSurfaceCanBeUsed;
-	private LinkedList<Command> oldList;
+
+	// private LinkedList<Command> oldList;
 
 	// private final static Paint mCheckeredPattern =
 	// BaseTool.CHECKERED_PATTERN;
@@ -172,7 +171,7 @@ public class DrawingSurface extends SurfaceView implements
 	private void init() {
 		getHolder().addCallback(this);
 
-		oldList = null;
+		// oldList = null;
 
 		mWorkingBitmapRect = new Rect();
 		mWorkingBitmapCanvas = new Canvas();

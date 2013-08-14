@@ -40,7 +40,10 @@ package org.catrobat.paintroid.dialog.layerchooser;
 
 import java.util.ArrayList;
 
+import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.command.Command;
+import org.catrobat.paintroid.command.implementation.layer.ChangeLayerCommand;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -78,6 +81,7 @@ public final class LayerChooserDialog extends DialogFragment implements
 	public static LayerRowAdapter adapter;
 	public static ArrayList<LayerRow> layer_data;
 	public static int mSelectedLayerIndex;
+	private int oldLayerIndex;
 
 	private CheckeredTransparentLinearLayout mBaseButtonLayout;
 	private Context mContext;
@@ -136,6 +140,8 @@ public final class LayerChooserDialog extends DialogFragment implements
 			builder = new AlertDialog.Builder(mContext,
 					AlertDialog.THEME_HOLO_DARK);
 		}
+
+		oldLayerIndex = PaintroidApplication.currentLayer;
 
 		// builder.setContentView(R.layout.layerchooser_dialog);
 		View view = inflator.inflate(R.layout.layerchooser_dialog, null);
@@ -361,6 +367,12 @@ public final class LayerChooserDialog extends DialogFragment implements
 		switch (which) {
 		case AlertDialog.BUTTON_NEUTRAL:
 			updateLayerChange(mSelectedLayerIndex);
+			if (mSelectedLayerIndex != oldLayerIndex) {
+				Command command = new ChangeLayerCommand(mSelectedLayerIndex,
+						oldLayerIndex);
+				PaintroidApplication.commandManager.commitCommand(command);
+			}
+			PaintroidApplication.drawingSurface.postInvalidate();
 			dismiss();
 			break;
 

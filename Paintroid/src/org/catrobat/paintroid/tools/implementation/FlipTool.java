@@ -39,12 +39,12 @@ public class FlipTool extends BaseToolWithRectangleShape {
 		setRotationEnabled(false);
 		setRespectImageBounds(true);
 
-		// TODO: Set boxwidth/height/toolposition to full drawingsurface
-		// height/width
+		mBoxHeight = PaintroidApplication.drawingSurface.getBitmapHeight();
+		mBoxWidth = PaintroidApplication.drawingSurface.getBitmapWidth();
+		mToolPosition.x = mBoxWidth / 2f;
+		mToolPosition.y = mBoxHeight / 2f;
 
-		// TODO: What to do if zoomed in ?
-
-		// TODO: Cast bottom/right... to int before sending to command
+		// TODO: How to reset after loading new Image?
 	}
 
 	@Override

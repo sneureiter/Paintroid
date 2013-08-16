@@ -26,11 +26,13 @@ import org.catrobat.paintroid.test.junit.stubs.DrawingSurfaceStub;
 import org.junit.Before;
 
 import android.graphics.PointF;
+import android.graphics.Rect;
 
 public class FlipCommandTest extends CommandTestSetup {
 
 	private int mBitmapHeigt;
 	private int mBitmapWidth;
+	private Rect mRectFullBitmap;
 
 	@Override
 	@Before
@@ -39,18 +41,19 @@ public class FlipCommandTest extends CommandTestSetup {
 		mBitmapHeigt = mBitmapUnderTest.getHeight();
 		mBitmapWidth = mBitmapUnderTest.getWidth();
 		PaintroidApplication.drawingSurface = new DrawingSurfaceStub(getContext());
+		mRectFullBitmap = new Rect(0, 0, mBitmapWidth, mBitmapHeigt);
 	}
 
-	public void testVerticalFlip() {
-		mCommandUnderTest = new FlipCommand(FlipDirection.FLIP_VERTICAL);
+	public void testFullVerticalFlip() {
+		mCommandUnderTest = new FlipCommand(FlipDirection.FLIP_VERTICAL, mRectFullBitmap);
 		mBitmapUnderTest.setPixel(0, mBitmapHeigt / 2, PAINT_BASE_COLOR);
 		mCommandUnderTest.run(mCanvasUnderTest, mBitmapUnderTest);
 		int pixel = PaintroidApplication.drawingSurface.getPixel(new PointF(mBitmapWidth - 1, mBitmapWidth / 2));
 		assertEquals("pixel should be paint_base_color", PAINT_BASE_COLOR, pixel);
 	}
 
-	public void testHorizontalFlip() {
-		mCommandUnderTest = new FlipCommand(FlipDirection.FLIP_HORIZONTAL);
+	public void testFullHorizontalFlip() {
+		mCommandUnderTest = new FlipCommand(FlipDirection.FLIP_HORIZONTAL, mRectFullBitmap);
 		mBitmapUnderTest.setPixel(mBitmapWidth / 2, 0, PAINT_BASE_COLOR);
 		mCommandUnderTest.run(mCanvasUnderTest, mBitmapUnderTest);
 		int pixel = PaintroidApplication.drawingSurface.getPixel(new PointF(mBitmapWidth / 2, mBitmapWidth - 1));

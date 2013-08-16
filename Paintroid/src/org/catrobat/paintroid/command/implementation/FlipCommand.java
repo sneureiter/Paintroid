@@ -25,6 +25,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 
 public class FlipCommand extends BaseCommand {
@@ -70,8 +72,23 @@ public class FlipCommand extends BaseCommand {
 			return;
 		}
 
+		// New Bitmap: Copy the selection out from the drawing Surface
+		Bitmap portionToFlipBitmap = Bitmap.createBitmap(mRectangleToFlip.right
+				- mRectangleToFlip.left, mRectangleToFlip.bottom
+				- mRectangleToFlip.top, bitmap.getConfig());
+		Canvas portionToFlipCanvas = new Canvas(portionToFlipBitmap);
+
+		Rect rectPortionToFlip = new Rect(0, 0, portionToFlipBitmap.getWidth(),
+				portionToFlipBitmap.getHeight());
+
+		portionToFlipCanvas.drawBitmap(bitmap, mRectangleToFlip,
+				rectPortionToFlip, new Paint());
+
+		// New Bitmap: with size of selection and put previous bitmap on it with
+		// the flip Matrix
 		Bitmap flippedPortionBitmap = Bitmap.createBitmap(
-				mRectangleToFlip.right, mRectangleToFlip.bottom,
+				mRectangleToFlip.right - mRectangleToFlip.left,
+				mRectangleToFlip.bottom - mRectangleToFlip.top,
 				bitmap.getConfig());
 		Canvas flipPortionCanvas = new Canvas(flippedPortionBitmap);
 
@@ -79,19 +96,19 @@ public class FlipCommand extends BaseCommand {
 				flippedPortionBitmap.getWidth(),
 				flippedPortionBitmap.getHeight());
 
-		flipPortionCanvas.drawBitmap(flippedPortionBitmap, mRectangleToFlip,
-				rectFlippedPortion, new Paint());
-		flipPortionCanvas.drawBitmap(bitmap, flipMatrix, new Paint());
+		flipPortionCanvas.drawBitmap(portionToFlipBitmap, flipMatrix,
+				new Paint());
 
-		Bitmap flippedBitmap = Bitmap.createBitmap(bitmap.getWidth(),
-				bitmap.getHeight(), bitmap.getConfig());
+		// New Bitmap: Stamp the flipped portion on to the drawing Surface
+		Bitmap flippedBitmap = Bitmap.createBitmap(bitmap);
+
 		Canvas flippedCanvas = new Canvas(flippedBitmap);
 
-		Rect rectFlipped = new Rect(0, 0, flippedBitmap.getWidth(),
-				flippedBitmap.getHeight());
+		Paint paintPorterDuffSrc = new Paint();
+		paintPorterDuffSrc.setXfermode(new PorterDuffXfermode(Mode.SRC));
 
 		flippedCanvas.drawBitmap(flippedPortionBitmap, rectFlippedPortion,
-				rectFlipped, new Paint());
+				mRectangleToFlip, paintPorterDuffSrc);
 
 		if (PaintroidApplication.drawingSurface != null) {
 			PaintroidApplication.drawingSurface.setBitmap(flippedBitmap);

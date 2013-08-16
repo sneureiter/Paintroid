@@ -25,18 +25,20 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.util.Log;
+import android.graphics.Rect;
 
 public class FlipCommand extends BaseCommand {
 
 	private FlipDirection mFlipDirection;
+	private Rect mRectangleToFlip;
 
 	public static enum FlipDirection {
 		FLIP_HORIZONTAL, FLIP_VERTICAL
 	};
 
-	public FlipCommand(FlipDirection flipDirection) {
+	public FlipCommand(FlipDirection flipDirection, Rect rectangleToFlip) {
 		mFlipDirection = flipDirection;
+		mRectangleToFlip = rectangleToFlip;
 	}
 
 	@Override
@@ -54,13 +56,13 @@ public class FlipCommand extends BaseCommand {
 		switch (mFlipDirection) {
 		case FLIP_HORIZONTAL:
 			flipMatrix.setScale(1, -1);
-			flipMatrix.postTranslate(0, bitmap.getHeight());
-			Log.i(PaintroidApplication.TAG, "flip horizontal");
+			flipMatrix.postTranslate(0, mRectangleToFlip.bottom
+					- mRectangleToFlip.top);
 			break;
 		case FLIP_VERTICAL:
 			flipMatrix.setScale(-1, 1);
-			flipMatrix.postTranslate(bitmap.getWidth(), 0);
-			Log.i(PaintroidApplication.TAG, "flip vertical");
+			flipMatrix.postTranslate(mRectangleToFlip.right
+					- mRectangleToFlip.left, 0);
 			break;
 		default:
 			setChanged();
@@ -68,13 +70,31 @@ public class FlipCommand extends BaseCommand {
 			return;
 		}
 
-		Bitmap flipBitmap = Bitmap.createBitmap(bitmap.getWidth(),
-				bitmap.getHeight(), bitmap.getConfig());
-		Canvas flipCanvas = new Canvas(flipBitmap);
+		Bitmap flippedPortionBitmap = Bitmap.createBitmap(
+				mRectangleToFlip.right, mRectangleToFlip.bottom,
+				bitmap.getConfig());
+		Canvas flipPortionCanvas = new Canvas(flippedPortionBitmap);
 
-		flipCanvas.drawBitmap(bitmap, flipMatrix, new Paint());
+		Rect rectFlippedPortion = new Rect(0, 0,
+				flippedPortionBitmap.getWidth(),
+				flippedPortionBitmap.getHeight());
+
+		flipPortionCanvas.drawBitmap(flippedPortionBitmap, mRectangleToFlip,
+				rectFlippedPortion, new Paint());
+		flipPortionCanvas.drawBitmap(bitmap, flipMatrix, new Paint());
+
+		Bitmap flippedBitmap = Bitmap.createBitmap(bitmap.getWidth(),
+				bitmap.getHeight(), bitmap.getConfig());
+		Canvas flippedCanvas = new Canvas(flippedBitmap);
+
+		Rect rectFlipped = new Rect(0, 0, flippedBitmap.getWidth(),
+				flippedBitmap.getHeight());
+
+		flippedCanvas.drawBitmap(flippedPortionBitmap, rectFlippedPortion,
+				rectFlipped, new Paint());
+
 		if (PaintroidApplication.drawingSurface != null) {
-			PaintroidApplication.drawingSurface.setBitmap(flipBitmap);
+			PaintroidApplication.drawingSurface.setBitmap(flippedBitmap);
 		}
 
 		setChanged();

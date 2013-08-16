@@ -30,27 +30,21 @@ import org.catrobat.paintroid.ui.Statusbar.ToolButtonIDs;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.PointF;
+import android.graphics.Rect;
 
-public class FlipTool extends BaseTool {
+public class FlipTool extends BaseToolWithRectangleShape {
 
 	public FlipTool(Context context, ToolType toolType) {
 		super(context, toolType);
-	}
+		setRotationEnabled(false);
+		setRespectImageBounds(true);
 
-	@Override
-	public boolean handleDown(PointF coordinate) {
-		return false;
-	}
+		// TODO: Set boxwidth/height/toolposition to full drawingsurface
+		// height/width
 
-	@Override
-	public boolean handleMove(PointF coordinate) {
-		return false;
-	}
+		// TODO: What to do if zoomed in ?
 
-	@Override
-	public boolean handleUp(PointF coordinate) {
-		return false;
+		// TODO: Cast bottom/right... to int before sending to command
 	}
 
 	@Override
@@ -83,7 +77,14 @@ public class FlipTool extends BaseTool {
 			return;
 		}
 
-		Command command = new FlipCommand(flipDirection);
+		int left = (int) (mToolPosition.x - (mBoxWidth / 2));
+		int top = (int) (mToolPosition.y - (mBoxHeight / 2));
+		int right = (int) (mToolPosition.x + (mBoxWidth / 2));
+		int bottom = (int) (mToolPosition.y + (mBoxHeight / 2));
+
+		Rect rectangleToFlip = new Rect(left, top, right, bottom);
+
+		Command command = new FlipCommand(flipDirection, rectangleToFlip);
 		mProgressDialog.show();
 		((FlipCommand) command).addObserver(this);
 		PaintroidApplication.commandManager.commitCommand(command);
@@ -100,7 +101,15 @@ public class FlipTool extends BaseTool {
 	}
 
 	@Override
-	public void draw(Canvas canvas) {
+	protected void onClickInBox() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void drawToolSpecifics(Canvas canvas) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

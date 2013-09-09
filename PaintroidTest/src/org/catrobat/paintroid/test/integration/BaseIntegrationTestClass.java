@@ -58,7 +58,7 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 	protected ImageButton mButtonTopRedo;
 	protected ImageButton mButtonTopTool;
 	protected ImageButton mButtonTopColor;
-	protected ImageButton mButtonTopLayer;
+	protected ImageButton mMenuBottomLayer;
 	protected View mMenuBottomTool;
 	protected View mMenuBottomParameter1;
 	protected View mMenuBottomParameter2;
@@ -94,7 +94,7 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 			mMenuBottomTool = getActivity().findViewById(R.id.btn_bottom_tools);
 			mMenuBottomParameter1 = getActivity().findViewById(R.id.btn_bottom_attribute1);
 			mMenuBottomParameter2 = getActivity().findViewById(R.id.btn_bottom_attribute2);
-			mButtonTopLayer = (ImageButton) getActivity().findViewById(R.id.btn_top_layer);
+			mMenuBottomLayer = (ImageButton) getActivity().findViewById(R.id.btn_bottom_layer);
 			mScreenWidth = mSolo.getCurrentActivity().getWindowManager().getDefaultDisplay().getWidth();
 			mScreenHeight = mSolo.getCurrentActivity().getWindowManager().getDefaultDisplay().getHeight();
 			Log.d("Paintroid test", "setup" + setup++);
@@ -120,7 +120,7 @@ public class BaseIntegrationTestClass extends ActivityInstrumentationTestCase2<M
 		mButtonTopRedo = null;
 		mButtonTopTool = null;
 		mButtonTopColor = null;
-		mButtonTopLayer = null;
+		mMenuBottomLayer = null;
 		mMenuBottomTool = null;
 		mMenuBottomParameter1 = null;
 		mMenuBottomParameter2 = null;

@@ -36,7 +36,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 	public final void testDeleteFirstLayer() {
 		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		ListView listview = (ListView) mSolo.getView(R.id.mListView);
@@ -61,7 +61,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 		assertTrue("There shall be no deleted commands yet", getNumOfDeletedCommandsOfLayer(0)
 				+ getNumOfDeletedCommandsOfLayer(1) + getNumOfDeletedCommandsOfLayer(2) == 0);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_remove));
@@ -87,7 +87,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 	public final void testDeleteSecondLayer() {
 		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		ListView listview = (ListView) mSolo.getView(R.id.mListView);
@@ -115,7 +115,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 		assertTrue("There shall be no deleted commands yet", getNumOfDeletedCommandsOfLayer(0)
 				+ getNumOfDeletedCommandsOfLayer(1) + getNumOfDeletedCommandsOfLayer(2) == 0);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_remove));
@@ -141,7 +141,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 	public final void testDeleteLastLayer() {
 		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		ListView listview = (ListView) mSolo.getView(R.id.mListView);
@@ -171,7 +171,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 		assertTrue("There shall be no deleted commands yet", getNumOfDeletedCommandsOfLayer(0)
 				+ getNumOfDeletedCommandsOfLayer(1) + getNumOfDeletedCommandsOfLayer(2) == 0);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_remove));
@@ -197,7 +197,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 	public void testSingleLayerDeletionUndo() {
 		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		ListView listview = (ListView) mSolo.getView(R.id.mListView);
@@ -220,7 +220,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 		assertTrue("There shall be no deleted commands yet", getNumOfDeletedCommandsOfLayer(0)
 				+ getNumOfDeletedCommandsOfLayer(1) + getNumOfDeletedCommandsOfLayer(2) == 0);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_down));
@@ -237,7 +237,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnScreen(pf.x, pf.y);
 		mSolo.sleep(1000);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_remove));
@@ -266,7 +266,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 	public void testMultiLayerDeletionUndo() {
 		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		ListView listview = (ListView) mSolo.getView(R.id.mListView);
@@ -292,7 +292,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 		assertTrue("There shall be no deleted commands yet", getNumOfDeletedCommandsOfLayer(0)
 				+ getNumOfDeletedCommandsOfLayer(1) + getNumOfDeletedCommandsOfLayer(2) == 0);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		// move to the last layer
@@ -315,7 +315,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnScreen(pf.x, pf.y);
 		mSolo.sleep(1000);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_down));
@@ -331,7 +331,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnScreen(pf.x, pf.y);
 		mSolo.sleep(1000);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		assertTrue("There shall be one point-command on the first layer", getNumOfCommandsOfLayer(0) == 1);
@@ -384,7 +384,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 
 		int colorOriginal = PaintroidApplication.drawingSurface.getPixel(pf);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		ListView listview = (ListView) mSolo.getView(R.id.mListView);

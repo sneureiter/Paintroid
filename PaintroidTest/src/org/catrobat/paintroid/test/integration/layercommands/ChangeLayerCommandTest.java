@@ -36,7 +36,7 @@ public class ChangeLayerCommandTest extends LayerIntegrationTestClass {
 		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 		assertTrue("Current Layer should be 0", PaintroidApplication.currentLayer == 0);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		ListView listview = (ListView) mSolo.getView(R.id.mListView);
@@ -78,7 +78,7 @@ public class ChangeLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.sleep(1000);
 		assertTrue("The Undo-Symbol should change", bitmap1 != bitmap3);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		ListView listview = (ListView) mSolo.getView(R.id.mListView);
@@ -102,7 +102,7 @@ public class ChangeLayerCommandTest extends LayerIntegrationTestClass {
 		assertTrue("Current Layer should be 1", PaintroidApplication.currentLayer == 1);
 		assertTrue("There shall be one undo left", bitmap1 != bitmap3);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		mSolo.clickOnView(mSolo.getView(R.id.space));
@@ -141,7 +141,7 @@ public class ChangeLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.sleep(1000);
 		assertTrue("The Redo-Symbol should change", bitmap1 != bitmap3);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		ListView listview = (ListView) mSolo.getView(R.id.mListView);
@@ -166,7 +166,7 @@ public class ChangeLayerCommandTest extends LayerIntegrationTestClass {
 		assertTrue("Current Layer should be 1", PaintroidApplication.currentLayer == 1);
 		assertNotSame("There shall be one redo left", bitmap1, bitmap3);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		mSolo.clickOnView(mSolo.getView(R.id.space));

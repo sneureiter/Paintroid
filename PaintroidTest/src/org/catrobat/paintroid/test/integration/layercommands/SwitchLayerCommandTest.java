@@ -33,7 +33,7 @@ public class SwitchLayerCommandTest extends LayerIntegrationTestClass {
 	public final void testSwitchLayer() {
 		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		ListView listview = (ListView) mSolo.getView(R.id.mListView);
@@ -55,7 +55,7 @@ public class SwitchLayerCommandTest extends LayerIntegrationTestClass {
 		assertTrue("Painting on the layer didn't work", getNumOfCommandsOfLayer(0) == 1);
 		assertTrue("Painting on the correct layer didn't work", getNumOfCommandsOfLayer(1) == 0);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_down));
@@ -89,7 +89,7 @@ public class SwitchLayerCommandTest extends LayerIntegrationTestClass {
 		assertTrue("Painting didn't work properly",
 				colorOriginal != PaintroidApplication.drawingSurface.getPixel(point));
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		ListView listview = (ListView) mSolo.getView(R.id.mListView);
@@ -120,7 +120,7 @@ public class SwitchLayerCommandTest extends LayerIntegrationTestClass {
 		assertTrue("The colors are not combinated",
 				colorOriginal != PaintroidApplication.drawingSurface.getPixel(point2));
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_remove));

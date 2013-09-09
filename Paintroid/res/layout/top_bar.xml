@@ -6,7 +6,7 @@
               android:orientation="horizontal"
               android:paddingLeft="2dp"
               android:paddingRight="2dp"
-              android:weightSum="5" >
+              android:weightSum="4" >
 
     <ImageButton
             android:id="@+id/btn_top_undo"
@@ -30,12 +30,6 @@
             android:layout_height="fill_parent"
             android:layout_weight="1" />
     
-    <org.catrobat.paintroid.ui.button.LayerButton
-            android:id="@+id/btn_top_layer"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1" />
-
     <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

@@ -40,7 +40,7 @@ public class ShowAndHideCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnScreen(pf.x, pf.y);
 		mSolo.sleep(1000);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		ListView listview = (ListView) mSolo.getView(R.id.mListView);
@@ -57,7 +57,7 @@ public class ShowAndHideCommandTest extends LayerIntegrationTestClass {
 		assertTrue("There shall be one hidden command on the first layer", getNumOfHiddenCommandsOfLayer(0) == 1);
 		assertTrue("There shall be no visible commands on the first layer", getNumOfCommandsOfLayer(0) == 0);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		mSolo.clickOnView(mSolo.getView(R.id.eyeIcon));
@@ -75,7 +75,7 @@ public class ShowAndHideCommandTest extends LayerIntegrationTestClass {
 		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
 		assertTrue("Current Layer should be 0", PaintroidApplication.currentLayer == 0);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		ListView listview = (ListView) mSolo.getView(R.id.mListView);
@@ -118,7 +118,7 @@ public class ShowAndHideCommandTest extends LayerIntegrationTestClass {
 
 		assertNotSame("Pixel should  change", Color.TRANSPARENT, colorAfter);
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		mSolo.clickOnView(mSolo.getView(R.id.eyeIcon));
@@ -134,7 +134,7 @@ public class ShowAndHideCommandTest extends LayerIntegrationTestClass {
 		assertTrue("Painted point is still visible",
 				colorBefore == PaintroidApplication.drawingSurface.getPixel(new PointF(pf.x, pf.y)));
 
-		mSolo.clickOnView(mButtonTopLayer);
+		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
 		assertTrue("The layer is back on visible", LayerChooserDialog.layer_data.get(0).visible == false);

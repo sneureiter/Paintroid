@@ -4,6 +4,7 @@ import org.catrobat.paintroid.MainActivity;
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.dialog.ToolsDialog;
+import org.catrobat.paintroid.dialog.layerchooser.LayerChooserDialog;
 import org.catrobat.paintroid.tools.Tool;
 
 import android.view.MotionEvent;
@@ -14,11 +15,16 @@ public class BottomBar implements View.OnTouchListener {
 	private ImageButton mAttributeButton1;
 	private ImageButton mAttributeButton2;
 	private ImageButton mToolMenuButton;
+	private ImageButton mLayerButton;
 
 	private MainActivity mMainActivity;
+	private int mCurrentLayer;
 
 	public BottomBar(MainActivity mainActivity) {
 		mMainActivity = mainActivity;
+
+		mCurrentLayer = 0;
+		PaintroidApplication.currentLayer = mCurrentLayer;
 
 		mAttributeButton1 = (ImageButton) mainActivity
 				.findViewById(R.id.btn_bottom_attribute1);
@@ -31,6 +37,10 @@ public class BottomBar implements View.OnTouchListener {
 		mToolMenuButton = (ImageButton) mainActivity
 				.findViewById(R.id.btn_bottom_tools);
 		mToolMenuButton.setOnTouchListener(this);
+
+		mLayerButton = (ImageButton) mainActivity
+				.findViewById(R.id.btn_bottom_layer);
+		mLayerButton.setOnTouchListener(this);
 	}
 
 	@Override
@@ -53,6 +63,9 @@ public class BottomBar implements View.OnTouchListener {
 			case R.id.btn_bottom_tools:
 				ToolsDialog.getInstance().show();
 				return true;
+			case R.id.btn_bottom_layer:
+				onLayerTouch(motionEvent);
+				return true;
 			default:
 				return false;
 			}
@@ -60,6 +73,15 @@ public class BottomBar implements View.OnTouchListener {
 			view.setBackgroundResource(R.color.abs__holo_blue_light);
 		}
 		return false;
+	}
+
+	private void onLayerTouch(MotionEvent event) {
+		if (event.getAction() == MotionEvent.ACTION_UP) {
+			LayerChooserDialog.getInstance().show(
+					mMainActivity.getSupportFragmentManager(), "layerchooser");
+			LayerChooserDialog.getInstance().setInitialLayer(
+					PaintroidApplication.currentLayer);
+		}
 	}
 
 	public void setTool(Tool tool) {

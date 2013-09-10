@@ -13,6 +13,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -116,6 +118,7 @@ public class LayerRowAdapter extends ArrayAdapter<LayerRow> {
 				alert.show();
 			}
 		});
+
 		if (scaled != null) {
 			holder.thumbnail.setImageBitmap(scaled);
 		}
@@ -149,15 +152,21 @@ public class LayerRowAdapter extends ArrayAdapter<LayerRow> {
 	}
 
 	private Bitmap getCanvasThumbnail(int i, int j, int pos) {
-		Bitmap mBitmapTest = PaintroidApplication.drawingSurface
-				.getBitmapCopy();
 
-		if (mBitmapTest == null) {
-			return null;
-		} else {
+		Bitmap b = Bitmap.createBitmap(480, 800, Config.ARGB_4444);
+		Canvas c = new Canvas();
+		c.setBitmap(b);
 
-			return Bitmap.createScaledBitmap(mBitmapTest, j, j, true);
+		for (int k = 1; k < PaintroidApplication.commandManager.getCommands()
+				.size(); k++) {
+			if (PaintroidApplication.commandManager.getCommands().get(k)
+					.getCommandLayer() == pos) {
+				PaintroidApplication.commandManager.getCommands().get(k)
+						.run(c, b);
+			}
 		}
+		b = Bitmap.createScaledBitmap(b, i, j, true);
+		return b;
 	}
 
 	static class LayerRowHolder {

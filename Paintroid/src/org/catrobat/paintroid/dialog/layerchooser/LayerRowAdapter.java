@@ -160,7 +160,11 @@ public class LayerRowAdapter extends ArrayAdapter<LayerRow> {
 		for (int k = 1; k < PaintroidApplication.commandManager.getCommands()
 				.size(); k++) {
 			if (PaintroidApplication.commandManager.getCommands().get(k)
-					.getCommandLayer() == pos) {
+					.getCommandLayer() == pos
+					&& PaintroidApplication.commandManager.getCommands().get(k)
+							.isUndone() == false
+					&& PaintroidApplication.commandManager.getCommands().get(k)
+							.isDeleted() == false) {
 				PaintroidApplication.commandManager.getCommands().get(k)
 						.run(c, b);
 			}

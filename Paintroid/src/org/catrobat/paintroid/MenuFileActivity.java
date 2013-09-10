@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import org.catrobat.paintroid.dialog.DialogSaveFile;
 import org.catrobat.paintroid.dialog.InfoDialog;
 import org.catrobat.paintroid.dialog.InfoDialog.DialogType;
+import org.catrobat.paintroid.dialog.layerchooser.LayerChooserDialog;
 import org.catrobat.paintroid.tools.Tool.StateChange;
 
 import android.app.Activity;
@@ -434,6 +435,9 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 	}
 
 	protected void initialiseNewBitmap() {
+		LayerChooserDialog.layer_data = null;
+		PaintroidApplication.currentLayer = 0;
+
 		Display display = getWindowManager().getDefaultDisplay();
 		float width = display.getWidth();
 		float height = display.getHeight();

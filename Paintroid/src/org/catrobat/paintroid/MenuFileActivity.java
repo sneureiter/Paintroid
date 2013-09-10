@@ -43,6 +43,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
+import android.widget.ImageButton;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -437,6 +438,9 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 	protected void initialiseNewBitmap() {
 		LayerChooserDialog.layer_data = null;
 		PaintroidApplication.currentLayer = 0;
+		ImageButton mLayerButton = (ImageButton) this
+				.findViewById(R.id.btn_bottom_layer);
+		mLayerButton.invalidate();
 
 		Display display = getWindowManager().getDefaultDisplay();
 		float width = display.getWidth();

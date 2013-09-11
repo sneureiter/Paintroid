@@ -20,6 +20,7 @@ public class HideLayerCommand extends BaseCommand {
 
 		if (this.firstTime == true) {
 			this.firstTime = false;
+
 			int numCommands = PaintroidApplication.commandManager.getCommands()
 					.size();
 			int i = numCommands - 1;

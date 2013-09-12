@@ -21,6 +21,8 @@ package org.catrobat.paintroid.command;
 
 import java.util.LinkedList;
 
+import org.catrobat.paintroid.command.implementation.CommandList;
+
 import android.graphics.Bitmap;
 
 public interface CommandManager {
@@ -50,4 +52,8 @@ public interface CommandManager {
 	public boolean hasRedosLeft(int minValue);
 
 	public int getNumberOfCommands();
+
+	public CommandList getCommandListByIndex(int number);
+
+	public LinkedList<CommandList> getCommandList();
 }

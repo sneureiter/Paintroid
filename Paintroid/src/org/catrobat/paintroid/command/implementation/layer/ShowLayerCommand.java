@@ -36,6 +36,8 @@ public class ShowLayerCommand extends BaseCommand {
 				}
 				i--;
 			}
+			PaintroidApplication.commandManager.getCommandListByIndex(
+					layerIndex).setHidden(false);
 		}
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);

@@ -212,6 +212,9 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 				PaintroidApplication.currentLayer, false);
 		mCurrentCommandList.add(position, command);
 		// this.resetIndex();
+		if (mAllCommandLists.get(PaintroidApplication.currentLayer).isHidden()) {
+			this.resetIndex();
+		}
 
 		return mCurrentCommandList.get(position) != null;
 	}
@@ -430,5 +433,15 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	@Override
 	public int getNumberOfCommands() {
 		return mCommandCounter;
+	}
+
+	@Override
+	public CommandList getCommandListByIndex(int number) {
+		return mAllCommandLists.get(number);
+	}
+
+	@Override
+	public LinkedList<CommandList> getCommandList() {
+		return mAllCommandLists;
 	}
 }

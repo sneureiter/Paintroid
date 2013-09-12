@@ -1,12 +1,10 @@
 package org.catrobat.paintroid.command.implementation.layer;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
 
 import org.catrobat.paintroid.PaintroidApplication;
-import org.catrobat.paintroid.command.Command;
 import org.catrobat.paintroid.command.implementation.BaseCommand;
+import org.catrobat.paintroid.command.implementation.CommandList;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -24,34 +22,11 @@ public class SwitchLayerCommand extends BaseCommand {
 	@Override
 	public void run(Canvas canvas, Bitmap bitmap) {
 
-		LinkedList<Command> l = PaintroidApplication.commandManager
-				.getCommands();
+		LinkedList<CommandList> l = PaintroidApplication.commandManager
+				.getCommandList();
 
-		for (int i = 1; i < PaintroidApplication.commandManager.getCommands()
-				.size(); i++) {
-			if (PaintroidApplication.commandManager.getCommands().get(i)
-					.getCommandLayer() == this.firstLayer) {
-				PaintroidApplication.commandManager.getCommands().get(i)
-						.setCommandLayer(this.secondLayer);
-			} else if (PaintroidApplication.commandManager.getCommands().get(i)
-					.getCommandLayer() == this.secondLayer) {
-				PaintroidApplication.commandManager.getCommands().get(i)
-						.setCommandLayer(this.firstLayer);
-			}
-		}
-		Command firstCommand = l.removeFirst();
-		Collections.sort(l, new Comparator<Command>() {
-			@Override
-			public int compare(Command o1, Command o2) {
-				if (o1.getCommandLayer() > o2.getCommandLayer()) {
-					return -1;
-				}
-				if (o1.getCommandLayer() < o2.getCommandLayer()) {
-					return 1;
-				}
-				return 0;
-			}
-		});
-		l.addFirst(firstCommand);
+		CommandList tmp = l.remove(firstLayer);
+		l.add(firstLayer, l.get(secondLayer));
+		l.add(secondLayer, tmp);
 	}
 }

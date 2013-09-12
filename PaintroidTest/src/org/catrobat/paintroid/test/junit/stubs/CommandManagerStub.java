@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.catrobat.paintroid.command.Command;
 import org.catrobat.paintroid.command.CommandManager;
+import org.catrobat.paintroid.command.implementation.CommandList;
 
 import android.graphics.Bitmap;
 
@@ -111,6 +112,12 @@ public class CommandManagerStub extends BaseStub implements CommandManager {
 	public boolean hasRedosLeft(int maxValue) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public CommandList getCommandList(int number) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

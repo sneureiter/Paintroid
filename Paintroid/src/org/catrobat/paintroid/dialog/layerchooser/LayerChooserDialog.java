@@ -306,6 +306,8 @@ public final class LayerChooserDialog extends DialogFragment implements
 					new LayerRow(R.drawable.arrow, mContext
 							.getString(R.string.layer_new_layer_name), true,
 							false));
+			PaintroidApplication.commandManager
+					.addEmptyCommandList(mSelectedLayerIndex + 1);
 			adapter.notifyDataSetChanged();
 		} else {
 			return;

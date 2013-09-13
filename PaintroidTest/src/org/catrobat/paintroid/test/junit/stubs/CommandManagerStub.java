@@ -115,9 +115,33 @@ public class CommandManagerStub extends BaseStub implements CommandManager {
 	}
 
 	@Override
-	public CommandList getCommandList(int number) {
+	public CommandList getCommandListByIndex(int number) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public LinkedList<CommandList> getCommandList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addEmptyCommandList(int index) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void changeCurrentCommandList(int index) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void removeCommandList(int index) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

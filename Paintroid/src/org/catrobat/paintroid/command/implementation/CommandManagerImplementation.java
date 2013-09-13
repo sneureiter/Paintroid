@@ -128,18 +128,6 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	@Override
 	public synchronized boolean commitCommand(Command command) {
 
-		if (mAllCommandLists.size() < PaintroidApplication.currentLayer + 1) {
-			mCurrentCommandList = new LinkedList<Command>();
-			mAllCommandLists.add(PaintroidApplication.currentLayer,
-					new CommandList(mCurrentCommandList));
-			mCommandCounter = 0;
-		} else {
-			mCurrentCommandList = mAllCommandLists.get(
-					PaintroidApplication.currentLayer).getCommands();
-			mCommandCounter = mCurrentCommandList.size();
-
-		}
-
 		UndoRedoManager.getInstance().update(StatusMode.DISABLE_REDO);
 
 		// Switch-Layer-Command & Hide-/Show-Layer-Command & Change-Layer-
@@ -444,4 +432,22 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	public LinkedList<CommandList> getCommandList() {
 		return mAllCommandLists;
 	}
+
+	@Override
+	public void addEmptyCommandList(int index) {
+		mCurrentCommandList = new LinkedList<Command>();
+		mAllCommandLists.add(index, new CommandList(mCurrentCommandList));
+	}
+
+	@Override
+	public void removeCommandList(int index) {
+		mAllCommandLists.remove(index);
+	}
+
+	@Override
+	public void changeCurrentCommandList(int index) {
+		mCurrentCommandList = mAllCommandLists.get(index).getCommands();
+		mCommandCounter = mCurrentCommandList.size();
+	}
+
 }

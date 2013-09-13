@@ -26,6 +26,8 @@ public class ChangeLayerCommand extends BaseCommand {
 			UndoRedoManager.getInstance().update(
 					UndoRedoManager.StatusMode.ENABLE_REDO);
 		}
+		PaintroidApplication.commandManager
+				.changeCurrentCommandList(PaintroidApplication.currentLayer);
 
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);

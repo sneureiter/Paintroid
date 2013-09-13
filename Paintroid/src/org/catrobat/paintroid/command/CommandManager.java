@@ -56,4 +56,10 @@ public interface CommandManager {
 	public CommandList getCommandListByIndex(int number);
 
 	public LinkedList<CommandList> getCommandList();
+
+	void addEmptyCommandList(int index);
+
+	void changeCurrentCommandList(int index);
+
+	void removeCommandList(int index);
 }

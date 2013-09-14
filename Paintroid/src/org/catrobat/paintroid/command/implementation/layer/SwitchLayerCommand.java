@@ -25,8 +25,18 @@ public class SwitchLayerCommand extends BaseCommand {
 		LinkedList<CommandList> l = PaintroidApplication.commandManager
 				.getCommandList();
 
-		CommandList tmp = l.remove(firstLayer);
-		l.add(firstLayer, l.get(secondLayer));
-		l.add(secondLayer, tmp);
+		if (secondLayer > firstLayer) {
+			CommandList tmpSecond = l.remove(secondLayer);
+			CommandList tmpFirst = l.remove(firstLayer);
+
+			l.add(firstLayer, tmpSecond);
+			l.add(secondLayer, tmpFirst);
+		} else {
+			CommandList tmpFirst = l.remove(firstLayer);
+			CommandList tmpSecond = l.remove(secondLayer);
+
+			l.add(secondLayer, tmpFirst);
+			l.add(firstLayer, tmpSecond);
+		}
 	}
 }

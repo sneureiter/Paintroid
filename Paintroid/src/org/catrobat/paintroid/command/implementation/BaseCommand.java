@@ -114,29 +114,8 @@ public abstract class BaseCommand extends Observable implements Command {
 	}
 
 	@Override
-	public void setUndone(boolean a) {
-		this.undone = a;
-
-	}
-
-	@Override
-	public void setDeleted(boolean a) {
-		this.deleted = a;
-	}
-
-	@Override
 	public void setHidden(boolean a) {
 		this.hidden = a;
-	}
-
-	@Override
-	public boolean isUndone() {
-		return this.undone;
-	}
-
-	@Override
-	public boolean isDeleted() {
-		return this.deleted;
 	}
 
 	@Override

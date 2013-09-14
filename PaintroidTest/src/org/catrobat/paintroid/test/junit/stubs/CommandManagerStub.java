@@ -103,18 +103,6 @@ public class CommandManagerStub extends BaseStub implements CommandManager {
 	}
 
 	@Override
-	public boolean hasUndosLeft(int maxValue) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean hasRedosLeft(int maxValue) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public CommandList getCommandListByIndex(int number) {
 		// TODO Auto-generated method stub
 		return null;
@@ -140,6 +128,12 @@ public class CommandManagerStub extends BaseStub implements CommandManager {
 
 	@Override
 	public void removeCommandList(int index) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void saveCurrentCommandListPointer() {
 		// TODO Auto-generated method stub
 
 	}

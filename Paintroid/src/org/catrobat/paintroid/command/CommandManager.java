@@ -47,9 +47,9 @@ public interface CommandManager {
 
 	public void resetIndex();
 
-	public boolean hasUndosLeft(int maxValue);
-
-	public boolean hasRedosLeft(int minValue);
+	// public boolean hasUndosLeft(int maxValue);
+	//
+	// public boolean hasRedosLeft(int minValue);
 
 	public int getNumberOfCommands();
 

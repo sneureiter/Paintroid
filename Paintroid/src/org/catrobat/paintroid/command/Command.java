@@ -32,15 +32,15 @@ public interface Command {
 
 	public void setCommandLayer(int a);
 
-	public void setUndone(boolean a);
-
-	public void setDeleted(boolean a);
+	// public void setUndone(boolean a);
+	//
+	// public void setDeleted(boolean a);
 
 	public void setHidden(boolean a);
 
-	public boolean isUndone();
-
-	public boolean isDeleted();
+	// public boolean isUndone();
+	//
+	// public boolean isDeleted();
 
 	public boolean isHidden();
 }

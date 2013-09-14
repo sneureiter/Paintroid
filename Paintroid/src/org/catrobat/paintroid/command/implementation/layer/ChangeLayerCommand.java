@@ -1,7 +1,6 @@
 package org.catrobat.paintroid.command.implementation.layer;
 
 import org.catrobat.paintroid.PaintroidApplication;
-import org.catrobat.paintroid.command.UndoRedoManager;
 import org.catrobat.paintroid.command.implementation.BaseCommand;
 
 import android.graphics.Bitmap;
@@ -17,18 +16,18 @@ public class ChangeLayerCommand extends BaseCommand {
 		PaintroidApplication.commandManager
 				.changeCurrentCommandList(PaintroidApplication.currentLayer);
 
-		if (PaintroidApplication.commandManager
-				.hasUndosLeft(PaintroidApplication.commandManager.getCommands()
-						.size())) {
-			UndoRedoManager.getInstance().update(
-					UndoRedoManager.StatusMode.ENABLE_UNDO);
-		}
-		if (PaintroidApplication.commandManager
-				.hasRedosLeft(PaintroidApplication.commandManager.getCommands()
-						.size())) {
-			UndoRedoManager.getInstance().update(
-					UndoRedoManager.StatusMode.ENABLE_REDO);
-		}
+		// if (PaintroidApplication.commandManager
+		// .hasUndosLeft(PaintroidApplication.commandManager.getCommands()
+		// .size())) {
+		// UndoRedoManager.getInstance().update(
+		// UndoRedoManager.StatusMode.ENABLE_UNDO);
+		// }
+		// if (PaintroidApplication.commandManager
+		// .hasRedosLeft(PaintroidApplication.commandManager.getCommands()
+		// .size())) {
+		// UndoRedoManager.getInstance().update(
+		// UndoRedoManager.StatusMode.ENABLE_REDO);
+		// }
 
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);

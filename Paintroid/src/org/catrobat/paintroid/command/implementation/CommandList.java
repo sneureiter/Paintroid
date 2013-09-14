@@ -9,6 +9,8 @@ public class CommandList extends LinkedList<Command> {
 	LinkedList<Command> mCommands;
 	boolean isHidden = false;
 	boolean isDeleted = false;
+	int lastCommandIndex = 0;
+	int lastCommandCount = 0;
 
 	public CommandList(LinkedList<Command> c) {
 		this.mCommands = c;
@@ -34,4 +36,19 @@ public class CommandList extends LinkedList<Command> {
 		this.isDeleted = isDeleted;
 	}
 
+	public int getLastCommandIndex() {
+		return lastCommandIndex;
+	}
+
+	public void setLastCommandIndex(int lastCommandIndex) {
+		this.lastCommandIndex = lastCommandIndex;
+	}
+
+	public int getLastCommandCount() {
+		return lastCommandCount;
+	}
+
+	public void setLastCommandCount(int lastCommandCount) {
+		this.lastCommandCount = lastCommandCount;
+	}
 }

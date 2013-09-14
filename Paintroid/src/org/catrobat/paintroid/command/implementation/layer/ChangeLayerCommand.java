@@ -14,6 +14,9 @@ public class ChangeLayerCommand extends BaseCommand {
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_STARTED);
 
+		PaintroidApplication.commandManager
+				.changeCurrentCommandList(PaintroidApplication.currentLayer);
+
 		if (PaintroidApplication.commandManager
 				.hasUndosLeft(PaintroidApplication.commandManager.getCommands()
 						.size())) {
@@ -26,8 +29,6 @@ public class ChangeLayerCommand extends BaseCommand {
 			UndoRedoManager.getInstance().update(
 					UndoRedoManager.StatusMode.ENABLE_REDO);
 		}
-		PaintroidApplication.commandManager
-				.changeCurrentCommandList(PaintroidApplication.currentLayer);
 
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);

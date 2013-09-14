@@ -81,6 +81,7 @@ public class BottomBar implements View.OnTouchListener {
 					mMainActivity.getSupportFragmentManager(), "layerchooser");
 			LayerChooserDialog.getInstance().setInitialLayer(
 					PaintroidApplication.currentLayer);
+			PaintroidApplication.commandManager.saveCurrentCommandListPointer();
 		}
 	}
 

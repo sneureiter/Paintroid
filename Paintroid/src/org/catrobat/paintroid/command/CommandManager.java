@@ -62,4 +62,6 @@ public interface CommandManager {
 	void changeCurrentCommandList(int index);
 
 	void removeCommandList(int index);
+
+	void saveCurrentCommandListPointer();
 }

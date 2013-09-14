@@ -89,7 +89,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 		for (int z = 0; z < mAllCommandLists.size(); z++) {
 
-			for (int i = 0; i < mCurrentCommandList.size(); i++) {
+			for (int i = 0; i < mAllCommandLists.get(z).size(); i++) {
 				mAllCommandLists.get(z).getCommands().get(i).freeResources();
 			}
 			mAllCommandLists.get(z).clear();
@@ -435,8 +435,11 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 	@Override
 	public void addEmptyCommandList(int index) {
-		mCurrentCommandList = new LinkedList<Command>();
-		mAllCommandLists.add(index, new CommandList(mCurrentCommandList));
+		LinkedList<Command> com = new LinkedList<Command>();
+		com.add(new BitmapCommand(mOriginalBitmap, false));
+		mAllCommandLists.add(index, new CommandList(com));
+		mAllCommandLists.get(index).setLastCommandCount(1);
+		mAllCommandLists.get(index).setLastCommandIndex(1);
 	}
 
 	@Override
@@ -447,7 +450,15 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	@Override
 	public void changeCurrentCommandList(int index) {
 		mCurrentCommandList = mAllCommandLists.get(index).getCommands();
-		mCommandCounter = mCurrentCommandList.size();
+		mCommandCounter = mAllCommandLists.get(index).getLastCommandCount();
+		mCommandIndex = mAllCommandLists.get(index).getLastCommandIndex();
 	}
 
+	@Override
+	public void saveCurrentCommandListPointer() {
+		mAllCommandLists.get(PaintroidApplication.currentLayer)
+				.setLastCommandCount(mCommandCounter);
+		mAllCommandLists.get(PaintroidApplication.currentLayer)
+				.setLastCommandIndex(mCommandIndex);
+	}
 }

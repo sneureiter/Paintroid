@@ -37,6 +37,7 @@ import org.catrobat.paintroid.dialog.layerchooser.LayerChooserDialog;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.graphics.Point;
 import android.util.Log;
 
 public class CommandManagerImplementation implements CommandManager, Observer {
@@ -118,7 +119,8 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		if (mCommandIndex == 0 && mBitmapBelow != null && !belowUsed) {
 			belowUsed = true;
 			aboveUsed = false;
-			return new BitmapCommand(mBitmapBelow, false);
+			return new StampCommand(mBitmapBelow, new Point(240, 400), 480f,
+					800f, 0);
 
 		} else if (mCommandIndex == 0 && mBitmapBelow == null && !belowUsed) {
 			belowUsed = true;
@@ -137,13 +139,13 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 			}
 			return mCurrentCommandList.get(mCommandIndex++);
 
-			// } else if (mBitmapAbove != null && mCommandIndex ==
-			// mCommandCounter
-			// && !aboveUsed) {
-			// aboveUsed = true;
-			// belowUsed = false;
-			//
-			// return new BitmapCommand(mBitmapAbove);
+		} else if (mBitmapAbove != null && mCommandIndex == mCommandCounter
+				&& mCommandCounter == mCurrentCommandList.size() && !aboveUsed) {
+			aboveUsed = true;
+			belowUsed = false;
+
+			return new StampCommand(mBitmapAbove, new Point(240, 400), 480f,
+					800f, 0);
 		} else {
 			return null;
 		}

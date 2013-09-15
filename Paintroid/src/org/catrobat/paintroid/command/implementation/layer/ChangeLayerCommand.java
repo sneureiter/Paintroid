@@ -93,7 +93,7 @@ public class ChangeLayerCommand extends BaseCommand {
 
 					if (!PaintroidApplication.commandManager
 							.getAllCommandList().get(i).isHidden()
-							|| (!(PaintroidApplication.commandManager
+							&& !((PaintroidApplication.commandManager
 									.getAllCommandList().get(i).getCommands()
 									.get(k) instanceof BitmapCommand) && k == 0)) {
 						PaintroidApplication.commandManager.getAllCommandList()

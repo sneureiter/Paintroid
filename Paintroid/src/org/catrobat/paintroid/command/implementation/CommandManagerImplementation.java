@@ -137,12 +137,13 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 			}
 			return mCurrentCommandList.get(mCommandIndex++);
 
-		} else if (mBitmapAbove != null && mCommandIndex == mCommandCounter
-				&& !aboveUsed) {
-			aboveUsed = true;
-			belowUsed = false;
-
-			return new BitmapCommand(mBitmapAbove);
+			// } else if (mBitmapAbove != null && mCommandIndex ==
+			// mCommandCounter
+			// && !aboveUsed) {
+			// aboveUsed = true;
+			// belowUsed = false;
+			//
+			// return new BitmapCommand(mBitmapAbove);
 		} else {
 			return null;
 		}
@@ -199,9 +200,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		mCurrentCommandList.add(command);
 
 		if (mAllCommandLists.get(PaintroidApplication.currentLayer).isHidden()
-				|| (PaintroidApplication.currentLayer != 0)
-				&& PaintroidApplication.commandManager.getAllCommandList()
-						.size() > 1) {
+				|| (PaintroidApplication.currentLayer != 0)) {
 			this.resetIndex();
 		}
 

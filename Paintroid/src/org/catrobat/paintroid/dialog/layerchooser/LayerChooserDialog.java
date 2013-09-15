@@ -142,7 +142,6 @@ public final class LayerChooserDialog extends DialogFragment implements
 					AlertDialog.THEME_HOLO_DARK);
 		}
 
-		// builder.setContentView(R.layout.layerchooser_dialog);
 		View view = inflator.inflate(R.layout.layerchooser_dialog, null);
 		builder.setTitle(R.string.layer_chooser_title);
 

@@ -83,7 +83,6 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		mCurrentCommandList.removeFirst().freeResources();
 		mCurrentCommandList.addFirst(new BitmapCommand(mOriginalBitmap, false));
 		incrementCounter();
-		mBitmapBelow = mOriginalBitmap;
 	}
 
 	@Override
@@ -116,17 +115,16 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	@Override
 	public synchronized Command getNextCommand() {
 
-		// if (mCommandIndex == 0 && mBitmapBelow != null && !belowUsed) {
-		// belowUsed = true;
-		// aboveUsed = false;
-		// return new BitmapCommand(mBitmapBelow, false);
-		//
-		// } else if (mCommandIndex == 0 && mBitmapBelow == null && !belowUsed)
-		// {
-		// belowUsed = true;
-		// aboveUsed = false;
-		// return new BitmapCommand(mOriginalBitmap, false);
-		// }
+		if (mCommandIndex == 0 && mBitmapBelow != null && !belowUsed) {
+			belowUsed = true;
+			aboveUsed = false;
+			return new BitmapCommand(mBitmapBelow, false);
+
+		} else if (mCommandIndex == 0 && mBitmapBelow == null && !belowUsed) {
+			belowUsed = true;
+			aboveUsed = false;
+			return new BitmapCommand(mOriginalBitmap, false);
+		}
 
 		if (mCommandIndex < mCommandCounter) {
 
@@ -433,10 +431,10 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	@Override
 	public void addEmptyCommandList(int index) {
 		LinkedList<Command> com = new LinkedList<Command>();
-		// com.add(new BitmapCommand(mOriginalBitmap, false));
+		com.add(new BitmapCommand(mOriginalBitmap, false));
 		mAllCommandLists.add(index, new CommandList(com));
-		mAllCommandLists.get(index).setLastCommandCount(0);
-		mAllCommandLists.get(index).setLastCommandIndex(0);
+		mAllCommandLists.get(index).setLastCommandCount(1);
+		mAllCommandLists.get(index).setLastCommandIndex(1);
 	}
 
 	@Override

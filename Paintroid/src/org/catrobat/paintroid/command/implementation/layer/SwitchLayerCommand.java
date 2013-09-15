@@ -23,7 +23,7 @@ public class SwitchLayerCommand extends BaseCommand {
 	public void run(Canvas canvas, Bitmap bitmap) {
 
 		LinkedList<CommandList> l = PaintroidApplication.commandManager
-				.getCommandList();
+				.getAllCommandList();
 
 		if (secondLayer > firstLayer) {
 			CommandList tmpSecond = l.remove(secondLayer);

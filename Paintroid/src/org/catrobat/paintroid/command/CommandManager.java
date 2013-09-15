@@ -55,7 +55,7 @@ public interface CommandManager {
 
 	public CommandList getCommandListByIndex(int number);
 
-	public LinkedList<CommandList> getCommandList();
+	public LinkedList<CommandList> getAllCommandList();
 
 	void addEmptyCommandList(int index);
 
@@ -64,4 +64,14 @@ public interface CommandManager {
 	void removeCommandList(int index);
 
 	void saveCurrentCommandListPointer();
+
+	void incrementCounter();
+
+	Bitmap getmBitmapAbove();
+
+	void setmBitmapAbove(Bitmap mBitmapAbove);
+
+	void setmBitmapBelow(Bitmap mBitmapBelow);
+
+	Bitmap getmBitmapBelow();
 }

@@ -109,7 +109,7 @@ public class CommandManagerStub extends BaseStub implements CommandManager {
 	}
 
 	@Override
-	public LinkedList<CommandList> getCommandList() {
+	public LinkedList<CommandList> getAllCommandList() {
 		// TODO Auto-generated method stub
 		return null;
 	}

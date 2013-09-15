@@ -48,6 +48,12 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	private int mCommandIndex;
 	private Bitmap mOriginalBitmap;
 
+	public Bitmap mBitmapAbove = null;
+	public Bitmap mBitmapBelow = null;
+
+	public boolean belowUsed = false;
+	public boolean aboveUsed = false;
+
 	private int lastLayer;
 
 	public CommandManagerImplementation() {
@@ -66,7 +72,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 	@Override
 	public boolean hasCommands() {
-		return mCommandCounter > 1;
+		return mCommandCounter >= 1;
 	}
 
 	@Override
@@ -76,6 +82,8 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		// it (instead of clear).
 		mCurrentCommandList.removeFirst().freeResources();
 		mCurrentCommandList.addFirst(new BitmapCommand(mOriginalBitmap, false));
+		incrementCounter();
+		mBitmapBelow = mOriginalBitmap;
 	}
 
 	@Override
@@ -98,8 +106,8 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		mCurrentCommandList.add(new ClearCommand());
 		mAllCommandLists.add(0, new CommandList(mCurrentCommandList));
 
-		mCommandCounter = 1;
-		mCommandIndex = 1;
+		mCommandCounter = 0;
+		mCommandIndex = 0;
 
 		UndoRedoManager.getInstance().update(StatusMode.DISABLE_REDO);
 		UndoRedoManager.getInstance().update(StatusMode.DISABLE_UNDO);
@@ -108,7 +116,21 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	@Override
 	public synchronized Command getNextCommand() {
 
+		// if (mCommandIndex == 0 && mBitmapBelow != null && !belowUsed) {
+		// belowUsed = true;
+		// aboveUsed = false;
+		// return new BitmapCommand(mBitmapBelow, false);
+		//
+		// } else if (mCommandIndex == 0 && mBitmapBelow == null && !belowUsed)
+		// {
+		// belowUsed = true;
+		// aboveUsed = false;
+		// return new BitmapCommand(mOriginalBitmap, false);
+		// }
+
 		if (mCommandIndex < mCommandCounter) {
+
+			Log.i("my", "" + mCommandIndex + " - " + mCommandCounter);
 
 			if (mCurrentCommandList.get(mCommandIndex).isHidden()) {
 				mCommandIndex++;
@@ -116,6 +138,13 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 				return getNextCommand();
 			}
 			return mCurrentCommandList.get(mCommandIndex++);
+
+		} else if (mBitmapAbove != null && mCommandIndex == mCommandCounter
+				&& !aboveUsed) {
+			aboveUsed = true;
+			belowUsed = false;
+
+			return new BitmapCommand(mBitmapAbove);
 		} else {
 			return null;
 		}
@@ -170,8 +199,11 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		// PaintroidApplication.currentLayer, false);
 
 		mCurrentCommandList.add(command);
-		// this.resetIndex();
-		if (mAllCommandLists.get(PaintroidApplication.currentLayer).isHidden()) {
+
+		if (mAllCommandLists.get(PaintroidApplication.currentLayer).isHidden()
+				|| (PaintroidApplication.currentLayer != 0)
+				&& PaintroidApplication.commandManager.getAllCommandList()
+						.size() > 1) {
 			this.resetIndex();
 		}
 
@@ -247,7 +279,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	public synchronized void undo() {
 		if (mCommandCounter > 1) {
 			mCommandCounter--;
-			mCommandIndex = 0;
+			resetIndex();
 			UndoRedoManager.getInstance().update(
 					UndoRedoManager.StatusMode.ENABLE_REDO);
 			if (mCommandCounter <= 1) {
@@ -333,6 +365,16 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 	}
 
+	@Override
+	public void incrementCounter() {
+		mCommandCounter++;
+		if (mCommandCounter == getCommands().size()) {
+			UndoRedoManager.getInstance().update(
+					UndoRedoManager.StatusMode.DISABLE_REDO);
+		}
+
+	}
+
 	private void showAllCommands() {
 		for (int j = 0; j < PaintroidApplication.commandManager.getCommands()
 				.size(); j++) {
@@ -364,17 +406,37 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	}
 
 	@Override
-	public LinkedList<CommandList> getCommandList() {
+	public LinkedList<CommandList> getAllCommandList() {
 		return mAllCommandLists;
+	}
+
+	@Override
+	public Bitmap getmBitmapAbove() {
+		return mBitmapAbove;
+	}
+
+	@Override
+	public void setmBitmapAbove(Bitmap mBitmapAbove) {
+		this.mBitmapAbove = mBitmapAbove;
+	}
+
+	@Override
+	public Bitmap getmBitmapBelow() {
+		return mBitmapBelow;
+	}
+
+	@Override
+	public void setmBitmapBelow(Bitmap mBitmapBelow) {
+		this.mBitmapBelow = mBitmapBelow;
 	}
 
 	@Override
 	public void addEmptyCommandList(int index) {
 		LinkedList<Command> com = new LinkedList<Command>();
-		com.add(new BitmapCommand(mOriginalBitmap, false));
+		// com.add(new BitmapCommand(mOriginalBitmap, false));
 		mAllCommandLists.add(index, new CommandList(com));
-		mAllCommandLists.get(index).setLastCommandCount(1);
-		mAllCommandLists.get(index).setLastCommandIndex(1);
+		mAllCommandLists.get(index).setLastCommandCount(0);
+		mAllCommandLists.get(index).setLastCommandIndex(0);
 	}
 
 	@Override

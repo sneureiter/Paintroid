@@ -157,12 +157,12 @@ public class LayerRowAdapter extends ArrayAdapter<LayerRow> {
 		Canvas c = new Canvas();
 		c.setBitmap(b);
 
-		for (int k = 0; k < PaintroidApplication.commandManager.getCommands()
-				.size(); k++) {
-			if (PaintroidApplication.commandManager.getCommands().get(k)
-					.getCommandLayer() == pos) {
-				PaintroidApplication.commandManager.getCommands().get(k)
-						.run(c, b);
+		for (int k = 0; k < PaintroidApplication.commandManager
+				.getAllCommandList().get(pos).getCommands().size(); k++) {
+			if (PaintroidApplication.commandManager.getAllCommandList()
+					.get(pos).isHidden() == false) {
+				PaintroidApplication.commandManager.getAllCommandList()
+						.get(pos).getCommands().get(k).run(c, b);
 			}
 		}
 		b = Bitmap.createScaledBitmap(b, i, j, true);

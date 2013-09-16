@@ -113,7 +113,9 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 		if (mCommandIndex < mCommandCounter) {
 
-			if (mCurrentCommandList.get(mCommandIndex).isHidden()) {
+			if (PaintroidApplication.commandManager.getCommandListByIndex(
+					PaintroidApplication.currentLayer).isHidden()
+					&& mCommandIndex != 0) {
 				mCommandIndex++;
 
 				return getNextCommand();
@@ -166,8 +168,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 		mCurrentCommandList.add(command);
 
-		if (mAllCommandLists.get(PaintroidApplication.currentLayer).isHidden()
-				|| (PaintroidApplication.currentLayer != 0)) {
+		if (mAllCommandLists.get(PaintroidApplication.currentLayer).isHidden()) {
 			this.resetIndex();
 		}
 

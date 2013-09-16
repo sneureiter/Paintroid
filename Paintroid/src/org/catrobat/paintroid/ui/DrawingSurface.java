@@ -105,6 +105,8 @@ public class DrawingSurface extends SurfaceView implements
 							.getNextCommand()) != null) {
 
 				command.run(mWorkingBitmapCanvas, mWorkingBitmap);
+				// TODO: Here is no need for it, it just costs time and
+				// resources
 				// surfaceViewCanvas.drawBitmap(mWorkingBitmap, 0, 0, null);
 				PaintroidApplication.currentTool
 						.resetInternalState(StateChange.RESET_INTERNAL_STATE);

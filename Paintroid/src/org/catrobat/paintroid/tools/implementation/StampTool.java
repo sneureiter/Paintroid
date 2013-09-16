@@ -126,7 +126,7 @@ public class StampTool extends BaseToolWithRectangleShape {
 				(float) (distanceToMassCentre));
 
 		Bitmap copyOfCurrentDrawingSurfaceBitmap = PaintroidApplication.drawingSurface
-				.getBitmapCopy();
+				.getFullBitmapCopy();
 		if (copyOfCurrentDrawingSurfaceBitmap == null
 				|| copyOfCurrentDrawingSurfaceBitmap.isRecycled()) {
 			return;
@@ -195,7 +195,7 @@ public class StampTool extends BaseToolWithRectangleShape {
 							- left_top_box_bitmapcoordinates.y);
 
 			Bitmap copyOfCurrentDrawingSurfaceBitmap = PaintroidApplication.drawingSurface
-					.getBitmapCopy();
+					.getFullBitmapCopy();
 			if (copyOfCurrentDrawingSurfaceBitmap == null
 					|| copyOfCurrentDrawingSurfaceBitmap.isRecycled()) {
 				copyOfCurrentDrawingSurfaceBitmap = null;

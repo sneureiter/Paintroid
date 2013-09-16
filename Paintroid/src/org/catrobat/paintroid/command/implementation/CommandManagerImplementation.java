@@ -33,7 +33,6 @@ import org.catrobat.paintroid.command.implementation.layer.DeleteLayerCommand;
 import org.catrobat.paintroid.command.implementation.layer.HideLayerCommand;
 import org.catrobat.paintroid.command.implementation.layer.ShowLayerCommand;
 import org.catrobat.paintroid.command.implementation.layer.SwitchLayerCommand;
-import org.catrobat.paintroid.dialog.layerchooser.LayerChooserDialog;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -158,13 +157,6 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		((BaseCommand) command).addObserver(this);
 		PaintroidApplication.isSaved = false;
 		command.setCommandLayer(PaintroidApplication.currentLayer);
-
-		if (LayerChooserDialog.layer_data != null) {
-			if (LayerChooserDialog.layer_data
-					.get(PaintroidApplication.currentLayer).visible == false) {
-				command.setHidden(true);
-			}
-		}
 
 		mCurrentCommandList.add(command);
 

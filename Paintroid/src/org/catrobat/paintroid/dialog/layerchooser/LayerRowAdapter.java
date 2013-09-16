@@ -13,8 +13,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.graphics.Canvas;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -153,20 +151,24 @@ public class LayerRowAdapter extends ArrayAdapter<LayerRow> {
 
 	private Bitmap getCanvasThumbnail(int i, int j, int pos) {
 
-		Bitmap b = Bitmap.createBitmap(480, 800, Config.ARGB_4444);
-		Canvas c = new Canvas();
-		c.setBitmap(b);
-
-		for (int k = 0; k < PaintroidApplication.commandManager
-				.getAllCommandList().get(pos).getCommands().size(); k++) {
-			if (PaintroidApplication.commandManager.getAllCommandList()
-					.get(pos).isHidden() == false) {
-				PaintroidApplication.commandManager.getAllCommandList()
-						.get(pos).getCommands().get(k).run(c, b);
-			}
-		}
-		b = Bitmap.createScaledBitmap(b, i, j, true);
-		return b;
+		// Bitmap b = Bitmap.createBitmap(480, 800, Config.ARGB_4444);
+		// Canvas c = new Canvas();
+		// c.setBitmap(b);
+		//
+		// for (int k = 0; k < PaintroidApplication.commandManager
+		// .getAllCommandList().get(pos).getCommands().size(); k++) {
+		// if (PaintroidApplication.commandManager.getAllCommandList()
+		// .get(pos).isHidden() == false) {
+		// PaintroidApplication.commandManager.getAllCommandList()
+		// .get(pos).getCommands().get(k).run(c, b);
+		// }
+		// }
+		// Bitmap bScaled = Bitmap.createScaledBitmap(b, i, j, true);
+		// b.recycle();
+		// b = null;
+		//
+		// return bScaled;
+		return null;
 	}
 
 	static class LayerRowHolder {

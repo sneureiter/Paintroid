@@ -112,14 +112,4 @@ public abstract class BaseCommand extends Observable implements Command {
 	public void setCommandLayer(int a) {
 		this.commandLayer = a;
 	}
-
-	@Override
-	public void setHidden(boolean a) {
-		this.hidden = a;
-	}
-
-	@Override
-	public boolean isHidden() {
-		return this.hidden;
-	}
 }

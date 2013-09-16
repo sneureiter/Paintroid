@@ -18,11 +18,11 @@ public class ChangeLayerCommand extends BaseCommand {
 		PaintroidApplication.commandManager
 				.changeCurrentCommandList(PaintroidApplication.currentLayer);
 
-		Bitmap above = generateImageOfAboveLayers(PaintroidApplication.currentLayer);
-		PaintroidApplication.commandManager.setmBitmapAbove(above);
+		PaintroidApplication.commandManager
+				.setmBitmapAbove(generateImageOfAboveLayers(PaintroidApplication.currentLayer));
 
-		Bitmap below = generateImageOfBelowLayers(PaintroidApplication.currentLayer);
-		PaintroidApplication.commandManager.setmBitmapBelow(below);
+		PaintroidApplication.commandManager
+				.setmBitmapBelow(generateImageOfBelowLayers(PaintroidApplication.currentLayer));
 
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);

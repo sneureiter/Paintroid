@@ -73,6 +73,7 @@ public class FlipCommand extends BaseCommand {
 		Canvas flipCanvas = new Canvas(flipBitmap);
 
 		flipCanvas.drawBitmap(bitmap, flipMatrix, new Paint());
+
 		if (PaintroidApplication.drawingSurface != null) {
 			PaintroidApplication.drawingSurface.setBitmap(flipBitmap);
 		}
@@ -80,4 +81,49 @@ public class FlipCommand extends BaseCommand {
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
 	}
+
+	public Bitmap runLayer(Canvas canvas, Bitmap bitmap) {
+		setChanged();
+		notifyStatus(NOTIFY_STATES.COMMAND_STARTED);
+		if (mFlipDirection == null) {
+			setChanged();
+			notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
+			return null;
+		}
+
+		Matrix flipMatrix = new Matrix();
+
+		switch (mFlipDirection) {
+		case FLIP_HORIZONTAL:
+			flipMatrix.setScale(1, -1);
+			flipMatrix.postTranslate(0, bitmap.getHeight());
+			Log.i(PaintroidApplication.TAG, "flip horizontal");
+			break;
+		case FLIP_VERTICAL:
+			flipMatrix.setScale(-1, 1);
+			flipMatrix.postTranslate(bitmap.getWidth(), 0);
+			Log.i(PaintroidApplication.TAG, "flip vertical");
+			break;
+		default:
+			setChanged();
+			notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
+			return null;
+		}
+
+		Bitmap flipBitmap = Bitmap.createBitmap(bitmap.getWidth(),
+				bitmap.getHeight(), bitmap.getConfig());
+		Canvas flipCanvas = new Canvas(flipBitmap);
+
+		flipCanvas.drawBitmap(bitmap, flipMatrix, new Paint());
+
+		// if (PaintroidApplication.drawingSurface != null) {
+		// PaintroidApplication.drawingSurface.setBitmap(flipBitmap);
+		// }
+
+		setChanged();
+		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
+
+		return flipBitmap;
+	}
+
 }

@@ -159,8 +159,15 @@ public class LayerRowAdapter extends ArrayAdapter<LayerRow> {
 		// .getAllCommandList().get(pos).getCommands().size(); k++) {
 		// if (PaintroidApplication.commandManager.getAllCommandList()
 		// .get(pos).isHidden() == false) {
+		// if (PaintroidApplication.commandManager.getAllCommandList()
+		// .get(i).getCommands().get(k) instanceof FlipCommand) {
+		// b = ((FlipCommand) PaintroidApplication.commandManager
+		// .getAllCommandList().get(i).getCommands().get(k))
+		// .runLayer(c, b);
+		// } else {
 		// PaintroidApplication.commandManager.getAllCommandList()
 		// .get(pos).getCommands().get(k).run(c, b);
+		// }
 		// }
 		// }
 		// Bitmap bScaled = Bitmap.createScaledBitmap(b, i, j, true);

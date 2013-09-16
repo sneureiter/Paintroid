@@ -3,6 +3,7 @@ package org.catrobat.paintroid.command.implementation.layer;
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.command.implementation.BaseCommand;
 import org.catrobat.paintroid.command.implementation.BitmapCommand;
+import org.catrobat.paintroid.command.implementation.FlipCommand;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -45,8 +46,19 @@ public class ChangeLayerCommand extends BaseCommand {
 							&& !((PaintroidApplication.commandManager
 									.getAllCommandList().get(i).getCommands()
 									.get(k) instanceof BitmapCommand) && k == 0)) {
-						PaintroidApplication.commandManager.getAllCommandList()
-								.get(i).getCommands().get(k).run(c, b);
+
+						if (PaintroidApplication.commandManager
+								.getAllCommandList().get(i).getCommands()
+								.get(k) instanceof FlipCommand) {
+							b = ((FlipCommand) PaintroidApplication.commandManager
+									.getAllCommandList().get(i).getCommands()
+									.get(k)).runLayer(c, b);
+						} else {
+
+							PaintroidApplication.commandManager
+									.getAllCommandList().get(i).getCommands()
+									.get(k).run(c, b);
+						}
 					}
 				}
 			}
@@ -74,8 +86,18 @@ public class ChangeLayerCommand extends BaseCommand {
 							&& !((PaintroidApplication.commandManager
 									.getAllCommandList().get(i).getCommands()
 									.get(k) instanceof BitmapCommand) && k == 0)) {
-						PaintroidApplication.commandManager.getAllCommandList()
-								.get(i).getCommands().get(k).run(c, b);
+
+						if (PaintroidApplication.commandManager
+								.getAllCommandList().get(i).getCommands()
+								.get(k) instanceof FlipCommand) {
+							b = ((FlipCommand) PaintroidApplication.commandManager
+									.getAllCommandList().get(i).getCommands()
+									.get(k)).runLayer(c, b);
+						} else {
+							PaintroidApplication.commandManager
+									.getAllCommandList().get(i).getCommands()
+									.get(k).run(c, b);
+						}
 					}
 				}
 			}

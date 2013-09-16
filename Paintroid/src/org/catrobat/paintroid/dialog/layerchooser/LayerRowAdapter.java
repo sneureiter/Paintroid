@@ -160,9 +160,9 @@ public class LayerRowAdapter extends ArrayAdapter<LayerRow> {
 		// if (PaintroidApplication.commandManager.getAllCommandList()
 		// .get(pos).isHidden() == false) {
 		// if (PaintroidApplication.commandManager.getAllCommandList()
-		// .get(i).getCommands().get(k) instanceof FlipCommand) {
+		// .get(pos).getCommands().get(k) instanceof FlipCommand) {
 		// b = ((FlipCommand) PaintroidApplication.commandManager
-		// .getAllCommandList().get(i).getCommands().get(k))
+		// .getAllCommandList().get(pos).getCommands().get(k))
 		// .runLayer(c, b);
 		// } else {
 		// PaintroidApplication.commandManager.getAllCommandList()
@@ -170,7 +170,20 @@ public class LayerRowAdapter extends ArrayAdapter<LayerRow> {
 		// }
 		// }
 		// }
-		// Bitmap bScaled = Bitmap.createScaledBitmap(b, i, j, true);
+		//
+		// int width = b.getWidth();
+		// int height = b.getHeight();
+		// float scaleWidth = ((float) i) / width;
+		// float scaleHeight = ((float) j) / height;
+		//
+		// // CREATE A MATRIX FOR THE MANIPULATION
+		// Matrix matrix = new Matrix();
+		// // RESIZE THE BIT MAP
+		// matrix.postScale(scaleWidth, scaleHeight);
+		//
+		// Bitmap bScaled = Bitmap.createBitmap(b, 0, 0, width, height, matrix,
+		// false);
+		// // Bitmap bScaled = Bitmap.createScaledBitmap(b, i, j, true);
 		// b.recycle();
 		// b = null;
 		//

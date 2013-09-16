@@ -138,4 +138,34 @@ public class CommandManagerStub extends BaseStub implements CommandManager {
 
 	}
 
+	@Override
+	public void incrementCounter() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Bitmap getmBitmapAbove() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setmBitmapAbove(Bitmap mBitmapAbove) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void setmBitmapBelow(Bitmap mBitmapBelow) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Bitmap getmBitmapBelow() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

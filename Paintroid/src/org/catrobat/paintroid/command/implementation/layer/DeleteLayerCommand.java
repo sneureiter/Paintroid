@@ -10,7 +10,6 @@ import android.graphics.Canvas;
 public class DeleteLayerCommand extends BaseCommand {
 	public int layerIndex;
 	public LayerRow data;
-	public boolean firstTime = true;
 
 	@Override
 	public void run(Canvas canvas, Bitmap bitmap) {
@@ -18,34 +17,6 @@ public class DeleteLayerCommand extends BaseCommand {
 		notifyStatus(NOTIFY_STATES.COMMAND_STARTED);
 
 		PaintroidApplication.commandManager.removeCommandList(layerIndex);
-
-		// if (this.firstTime == true) {
-		// this.firstTime = false;
-		// int numCommands = PaintroidApplication.commandManager.getCommands()
-		// .size();
-		// int i = numCommands - 1;
-		//
-		// while (i < numCommands && i >= 1) {
-		//
-		// if (PaintroidApplication.commandManager.getCommands().get(i)
-		// .getCommandLayer() == this.layerIndex) {
-		// PaintroidApplication.commandManager.getCommands().get(i)
-		// .setDeleted(true);
-		// } else if (PaintroidApplication.commandManager.getCommands()
-		// .get(i).getCommandLayer() > this.layerIndex) {
-		// PaintroidApplication.commandManager
-		// .getCommands()
-		// .get(i)
-		// .setCommandLayer(
-		// PaintroidApplication.commandManager
-		// .getCommands().get(i)
-		// .getCommandLayer() - 1);
-		// }
-		// i--;
-		// }
-		// this.setHidden(true);
-		// }
-		// showAllCommands();
 
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);

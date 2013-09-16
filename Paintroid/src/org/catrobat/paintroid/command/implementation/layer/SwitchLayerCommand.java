@@ -21,6 +21,8 @@ public class SwitchLayerCommand extends BaseCommand {
 
 	@Override
 	public void run(Canvas canvas, Bitmap bitmap) {
+		setChanged();
+		notifyStatus(NOTIFY_STATES.COMMAND_STARTED);
 
 		LinkedList<CommandList> l = PaintroidApplication.commandManager
 				.getAllCommandList();
@@ -38,5 +40,8 @@ public class SwitchLayerCommand extends BaseCommand {
 			l.add(secondLayer, tmpFirst);
 			l.add(firstLayer, tmpSecond);
 		}
+
+		setChanged();
+		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
 	}
 }

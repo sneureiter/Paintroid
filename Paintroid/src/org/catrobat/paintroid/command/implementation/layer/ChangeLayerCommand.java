@@ -7,7 +7,6 @@ import org.catrobat.paintroid.command.implementation.BitmapCommand;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
-import android.util.Log;
 
 public class ChangeLayerCommand extends BaseCommand {
 
@@ -19,32 +18,11 @@ public class ChangeLayerCommand extends BaseCommand {
 		PaintroidApplication.commandManager
 				.changeCurrentCommandList(PaintroidApplication.currentLayer);
 
-		for (int i = 0; i < PaintroidApplication.commandManager.getCommands()
-				.size(); i++) {
-			Log.i("my", i
-					+ " "
-					+ PaintroidApplication.commandManager.getCommands().get(i)
-							.toString());
-		}
-
 		Bitmap above = generateImageOfAboveLayers(PaintroidApplication.currentLayer);
 		PaintroidApplication.commandManager.setmBitmapAbove(above);
 
 		Bitmap below = generateImageOfBelowLayers(PaintroidApplication.currentLayer);
 		PaintroidApplication.commandManager.setmBitmapBelow(below);
-
-		// if (PaintroidApplication.commandManager
-		// .hasUndosLeft(PaintroidApplication.commandManager.getCommands()
-		// .size())) {
-		// UndoRedoManager.getInstance().update(
-		// UndoRedoManager.StatusMode.ENABLE_UNDO);
-		// }
-		// if (PaintroidApplication.commandManager
-		// .hasRedosLeft(PaintroidApplication.commandManager.getCommands()
-		// .size())) {
-		// UndoRedoManager.getInstance().update(
-		// UndoRedoManager.StatusMode.ENABLE_REDO);
-		// }
 
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);

@@ -16,21 +16,6 @@ public class ShowLayerCommand extends BaseCommand {
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_STARTED);
 
-		int numCommands = PaintroidApplication.commandManager.getCommands()
-				.size();
-		int i = numCommands - 1;
-
-		while (i < numCommands && i >= 1) {
-
-			if (PaintroidApplication.commandManager.getCommands().get(i)
-					.getCommandLayer() == this.layerIndex
-					|| PaintroidApplication.commandManager.getCommands().get(i) instanceof ShowLayerCommand) {
-				PaintroidApplication.commandManager.getCommands().get(i)
-						.setHidden(false);
-			}
-			i--;
-		}
-
 		PaintroidApplication.commandManager.getCommandListByIndex(layerIndex)
 				.setHidden(false);
 		setChanged();

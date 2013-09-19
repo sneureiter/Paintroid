@@ -3,10 +3,17 @@ package org.catrobat.paintroid.ui;
 import org.catrobat.paintroid.MainActivity;
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.command.implementation.BitmapCommand;
+import org.catrobat.paintroid.command.implementation.FillCommand;
+import org.catrobat.paintroid.command.implementation.FlipCommand;
 import org.catrobat.paintroid.dialog.ToolsDialog;
 import org.catrobat.paintroid.dialog.layerchooser.LayerChooserDialog;
 import org.catrobat.paintroid.tools.Tool;
 
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -77,12 +84,62 @@ public class BottomBar implements View.OnTouchListener {
 
 	private void onLayerTouch(MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_UP) {
+
+			PaintroidApplication.commandManager.saveCurrentCommandListPointer();
+			generateThumbnail();
 			LayerChooserDialog.getInstance().show(
 					mMainActivity.getSupportFragmentManager(), "layerchooser");
 			LayerChooserDialog.getInstance().setInitialLayer(
 					PaintroidApplication.currentLayer);
-			PaintroidApplication.commandManager.saveCurrentCommandListPointer();
 		}
+	}
+
+	private void generateThumbnail() {
+
+		Bitmap b = Bitmap.createBitmap(480, 800, Config.ARGB_8888);
+		Canvas c = new Canvas();
+		c.setBitmap(b);
+
+		for (int i = 0; i < PaintroidApplication.commandManager
+				.getAllCommandList().get(PaintroidApplication.currentLayer)
+				.getLastCommandCount(); i++) {
+
+			if (!PaintroidApplication.commandManager.getAllCommandList()
+					.get(PaintroidApplication.currentLayer).isHidden()
+					&& !((PaintroidApplication.commandManager
+							.getAllCommandList()
+							.get(PaintroidApplication.currentLayer)
+							.getCommands().get(i) instanceof BitmapCommand) && i == 0)) {
+
+				if (PaintroidApplication.commandManager.getAllCommandList()
+						.get(PaintroidApplication.currentLayer).getCommands()
+						.get(i) instanceof FlipCommand) {
+					b = ((FlipCommand) PaintroidApplication.commandManager
+							.getAllCommandList()
+							.get(PaintroidApplication.currentLayer)
+							.getCommands().get(i)).runLayer(c, b);
+				} else if (PaintroidApplication.commandManager
+						.getAllCommandList()
+						.get(PaintroidApplication.currentLayer).getCommands()
+						.get(i) instanceof FillCommand) {
+					b = ((FillCommand) PaintroidApplication.commandManager
+							.getAllCommandList()
+							.get(PaintroidApplication.currentLayer)
+							.getCommands().get(i)).runLayer(c, b,
+							PaintroidApplication.currentLayer);
+				} else {
+
+					PaintroidApplication.commandManager.getAllCommandList()
+							.get(PaintroidApplication.currentLayer)
+							.getCommands().get(i).run(c, b);
+				}
+			}
+			c.drawBitmap(b, new Matrix(), null);
+		}
+		PaintroidApplication.commandManager.getAllCommandList()
+				.get(PaintroidApplication.currentLayer)
+				.setThumbnail(Bitmap.createScaledBitmap(b, 48, 64, true));
+
 	}
 
 	public void setTool(Tool tool) {

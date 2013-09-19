@@ -4,6 +4,8 @@ import java.util.LinkedList;
 
 import org.catrobat.paintroid.command.Command;
 
+import android.graphics.Bitmap;
+
 public class CommandList extends LinkedList<Command> {
 
 	LinkedList<Command> mCommands;
@@ -11,6 +13,7 @@ public class CommandList extends LinkedList<Command> {
 	boolean isDeleted = false;
 	int lastCommandIndex = 0;
 	int lastCommandCount = 0;
+	Bitmap thumbnail = null;
 
 	public CommandList(LinkedList<Command> c) {
 		this.mCommands = c;
@@ -50,5 +53,13 @@ public class CommandList extends LinkedList<Command> {
 
 	public void setLastCommandCount(int lastCommandCount) {
 		this.lastCommandCount = lastCommandCount;
+	}
+
+	public Bitmap getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(Bitmap thumbnail) {
+		this.thumbnail = thumbnail;
 	}
 }

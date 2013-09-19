@@ -158,7 +158,7 @@ public class LayerRowAdapter extends ArrayAdapter<LayerRow> {
 		// for (int k = 0; k < PaintroidApplication.commandManager
 		// .getAllCommandList().get(pos).getCommands().size(); k++) {
 		// if (PaintroidApplication.commandManager.getAllCommandList()
-		// .get(pos).isHidden() == false) {
+		// .get(pos).isHidden() == nullfalse) {
 		// if (PaintroidApplication.commandManager.getAllCommandList()
 		// .get(pos).getCommands().get(k) instanceof FlipCommand) {
 		// b = ((FlipCommand) PaintroidApplication.commandManager
@@ -188,7 +188,8 @@ public class LayerRowAdapter extends ArrayAdapter<LayerRow> {
 		// b = null;
 		//
 		// return bScaled;
-		return null;
+		return PaintroidApplication.commandManager.getAllCommandList().get(pos)
+				.getThumbnail();
 	}
 
 	static class LayerRowHolder {

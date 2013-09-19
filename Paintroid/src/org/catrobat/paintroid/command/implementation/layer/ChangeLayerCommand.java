@@ -42,7 +42,7 @@ public class ChangeLayerCommand extends BaseCommand {
 
 				Bitmap tmp = Bitmap.createBitmap(480, 800, Config.ARGB_8888);
 				for (int k = 0; k < PaintroidApplication.commandManager
-						.getAllCommandList().get(i).getCommands().size(); k++) {
+						.getAllCommandList().get(i).getLastCommandCount(); k++) {
 
 					if (!PaintroidApplication.commandManager
 							.getAllCommandList().get(i).isHidden()
@@ -92,7 +92,7 @@ public class ChangeLayerCommand extends BaseCommand {
 
 				Bitmap tmp = Bitmap.createBitmap(480, 800, Config.ARGB_8888);
 				for (int k = 0; k < PaintroidApplication.commandManager
-						.getAllCommandList().get(i).getCommands().size(); k++) {
+						.getAllCommandList().get(i).getLastCommandCount(); k++) {
 
 					if (!PaintroidApplication.commandManager
 							.getAllCommandList().get(i).isHidden()

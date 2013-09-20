@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -104,6 +105,12 @@ public class BottomBar implements View.OnTouchListener {
 				.getAllCommandList().get(PaintroidApplication.currentLayer)
 				.getLastCommandCount(); i++) {
 
+			Log.i("my", i
+					+ ": "
+					+ PaintroidApplication.commandManager.getAllCommandList()
+							.get(PaintroidApplication.currentLayer)
+							.getCommands().get(i).toString());
+
 			if (!PaintroidApplication.commandManager.getAllCommandList()
 					.get(PaintroidApplication.currentLayer).isHidden()
 					&& !((PaintroidApplication.commandManager
@@ -114,7 +121,7 @@ public class BottomBar implements View.OnTouchListener {
 				if (PaintroidApplication.commandManager.getAllCommandList()
 						.get(PaintroidApplication.currentLayer).getCommands()
 						.get(i) instanceof FlipCommand) {
-					b = ((FlipCommand) PaintroidApplication.commandManager
+					((FlipCommand) PaintroidApplication.commandManager
 							.getAllCommandList()
 							.get(PaintroidApplication.currentLayer)
 							.getCommands().get(i)).runLayer(c, b);

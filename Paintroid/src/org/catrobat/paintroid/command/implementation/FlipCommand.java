@@ -82,13 +82,13 @@ public class FlipCommand extends BaseCommand {
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
 	}
 
-	public Bitmap runLayer(Canvas canvas, Bitmap bitmap) {
+	public void runLayer(Canvas canvas, Bitmap bitmap) {
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_STARTED);
 		if (mFlipDirection == null) {
 			setChanged();
 			notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
-			return null;
+			return;
 		}
 
 		Matrix flipMatrix = new Matrix();
@@ -107,7 +107,7 @@ public class FlipCommand extends BaseCommand {
 		default:
 			setChanged();
 			notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
-			return null;
+			return;
 		}
 
 		Bitmap flipBitmap = Bitmap.createBitmap(bitmap.getWidth(),
@@ -116,14 +116,9 @@ public class FlipCommand extends BaseCommand {
 
 		flipCanvas.drawBitmap(bitmap, flipMatrix, new Paint());
 
-		// if (PaintroidApplication.drawingSurface != null) {
-		// PaintroidApplication.drawingSurface.setBitmap(flipBitmap);
-		// }
-
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
 
-		return flipBitmap;
 	}
 
 }

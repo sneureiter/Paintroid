@@ -53,7 +53,7 @@ public class ChangeLayerCommand extends BaseCommand {
 						if (PaintroidApplication.commandManager
 								.getAllCommandList().get(i).getCommands()
 								.get(k) instanceof FlipCommand) {
-							tmp = ((FlipCommand) PaintroidApplication.commandManager
+							((FlipCommand) PaintroidApplication.commandManager
 									.getAllCommandList().get(i).getCommands()
 									.get(k)).runLayer(c, tmp);
 						} else if (PaintroidApplication.commandManager
@@ -103,7 +103,7 @@ public class ChangeLayerCommand extends BaseCommand {
 						if (PaintroidApplication.commandManager
 								.getAllCommandList().get(i).getCommands()
 								.get(k) instanceof FlipCommand) {
-							tmp = ((FlipCommand) PaintroidApplication.commandManager
+							((FlipCommand) PaintroidApplication.commandManager
 									.getAllCommandList().get(i).getCommands()
 									.get(k)).runLayer(c, tmp);
 						} else if (PaintroidApplication.commandManager

@@ -442,6 +442,8 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 		ImageButton mLayerButton = (ImageButton) this
 				.findViewById(R.id.btn_bottom_layer);
 		mLayerButton.invalidate();
+		PaintroidApplication.commandManager.setmBitmapAbove(null);
+		PaintroidApplication.commandManager.setmBitmapBelow(null);
 
 		Display display = getWindowManager().getDefaultDisplay();
 		float width = display.getWidth();

@@ -109,8 +109,6 @@ public class ChangeLayerCommand extends BaseCommand {
 									.getAllCommandList().get(i).getCommands()
 									.get(k).run(ctmp, tmp);
 						}
-					} else {
-						Log.i("my", "Bitmap-Skip");
 					}
 				}
 				c.drawBitmap(tmp, new Matrix(), null);

@@ -41,20 +41,22 @@ public class LayerRowAdapter extends ArrayAdapter<LayerRow> {
 		View row = convertView;
 		LayerRowHolder holder = null;
 
-		if (row == null) {
-			LayoutInflater inflater = (LayoutInflater) getContext()
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			row = inflater.inflate(layoutResourceId, parent, false);
+		// if (row == null) {
+		LayoutInflater inflater = (LayoutInflater) getContext()
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		row = inflater.inflate(layoutResourceId, parent, false);
 
-			holder = new LayerRowHolder();
-			holder.thumbnail = (ImageView) row.findViewById(R.id.thumbnail);
-			holder.layerTitle = (TextView) row.findViewById(R.id.layerTitle);
-			holder.eyeIcon = (ImageView) row.findViewById(R.id.eyeIcon);
+		holder = new LayerRowHolder();
+		holder.thumbnail = (ImageView) row.findViewById(R.id.thumbnail);
+		holder.layerTitle = (TextView) row.findViewById(R.id.layerTitle);
+		holder.eyeIcon = (ImageView) row.findViewById(R.id.eyeIcon);
 
-			row.setTag(holder);
-		} else {
-			holder = (LayerRowHolder) row.getTag();
-		}
+		row.setTag(holder);
+
+		// } else {
+		// holder = (LayerRowHolder) row.getTag();
+		// Log.i("my", "holder");
+		// }
 
 		Bitmap scaled = getCanvasThumbnail(position);
 

@@ -74,7 +74,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		// it (instead of clear).
 		mCurrentCommandList.removeFirst().freeResources();
 		mCurrentCommandList.addFirst(new BitmapCommand(mOriginalBitmap, false));
-		incrementCounter();
+		mCommandCounter++;
 	}
 
 	@Override
@@ -196,7 +196,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		int indexOfCommand = mCurrentCommandList.indexOf(command);
 		((BaseCommand) mCurrentCommandList.remove(indexOfCommand))
 				.freeResources();
-		decrementCounter();
+		mCommandCounter--;
 		mCommandIndex--;
 		if (mCommandCounter == 1) {
 			UndoRedoManager.getInstance().update(
@@ -218,26 +218,6 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	@Override
 	public LinkedList<Command> getCommands() {
 		return mCurrentCommandList;
-	}
-
-	@Override
-	public void decrementCounter() {
-		mCommandCounter--;
-		if (mCommandCounter == 1) {
-			UndoRedoManager.getInstance().update(
-					UndoRedoManager.StatusMode.DISABLE_UNDO);
-		}
-
-	}
-
-	@Override
-	public void incrementCounter() {
-		mCommandCounter++;
-		if (mCommandCounter == getCommands().size()) {
-			UndoRedoManager.getInstance().update(
-					UndoRedoManager.StatusMode.DISABLE_REDO);
-		}
-
 	}
 
 	@Override
@@ -282,11 +262,16 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 	@Override
 	public void addEmptyCommandList(int index) {
-		LinkedList<Command> com = new LinkedList<Command>();
-		com.add(new BitmapCommand(mOriginalBitmap, false));
-		mAllCommandLists.add(index, new CommandList(com));
-		mAllCommandLists.get(index).setLastCommandCount(1);
-		mAllCommandLists.get(index).setLastCommandIndex(1);
+		LinkedList<Command> firstCommand = new LinkedList<Command>();
+		firstCommand.add(new BitmapCommand(mOriginalBitmap, false));
+
+		CommandList mCommandList = new CommandList(firstCommand);
+		mCommandList.setLastCommandCount(1);
+		mCommandList.setLastCommandIndex(1);
+		mCommandList.setThumbnail(null);
+
+		mAllCommandLists.add(index, mCommandList);
+
 	}
 
 	@Override
@@ -296,16 +281,19 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 	@Override
 	public void changeCurrentCommandList(int index) {
-		mCurrentCommandList = mAllCommandLists.get(index).getCommands();
-		mCommandCounter = mAllCommandLists.get(index).getLastCommandCount();
-		mCommandIndex = mAllCommandLists.get(index).getLastCommandIndex();
+		CommandList mCommandList = mAllCommandLists.get(index);
+
+		mCurrentCommandList = mCommandList.getCommands();
+		mCommandCounter = mCommandList.getLastCommandCount();
+		mCommandIndex = mCommandList.getLastCommandIndex();
 	}
 
 	@Override
 	public void saveCurrentCommandListPointer() {
-		mAllCommandLists.get(PaintroidApplication.currentLayer)
-				.setLastCommandCount(mCommandCounter);
-		mAllCommandLists.get(PaintroidApplication.currentLayer)
-				.setLastCommandIndex(mCommandIndex);
+		CommandList mCommandList = mAllCommandLists
+				.get(PaintroidApplication.currentLayer);
+
+		mCommandList.setLastCommandCount(mCommandCounter);
+		mCommandList.setLastCommandIndex(mCommandIndex);
 	}
 }

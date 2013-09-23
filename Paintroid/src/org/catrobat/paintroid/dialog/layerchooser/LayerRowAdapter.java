@@ -14,7 +14,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -96,7 +95,6 @@ public class LayerRowAdapter extends ArrayAdapter<LayerRow> {
 							@Override
 							public void onClick(DialogInterface dialog,
 									int whichButton) {
-								Log.i("my", input.getText().toString());
 								if (!input.getText().toString().matches("")) {
 									data.get(position).name = input.getText()
 											.toString();

@@ -43,8 +43,6 @@ public interface CommandManager {
 
 	public LinkedList<Command> getCommands();
 
-	public void decrementCounter();
-
 	public void resetIndex();
 
 	public int getNumberOfCommands();
@@ -60,8 +58,6 @@ public interface CommandManager {
 	void removeCommandList(int index);
 
 	void saveCurrentCommandListPointer();
-
-	void incrementCounter();
 
 	Bitmap getmBitmapAbove();
 

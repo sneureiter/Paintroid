@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.util.Log;
 
 public class ChangeLayerCommand extends BaseCommand {
 
@@ -53,7 +54,7 @@ public class ChangeLayerCommand extends BaseCommand {
 						if (PaintroidApplication.commandManager
 								.getAllCommandList().get(i).getCommands()
 								.get(k) instanceof FlipCommand) {
-							((FlipCommand) PaintroidApplication.commandManager
+							tmp = ((FlipCommand) PaintroidApplication.commandManager
 									.getAllCommandList().get(i).getCommands()
 									.get(k)).runLayer(ctmp, tmp);
 						} else {
@@ -62,6 +63,8 @@ public class ChangeLayerCommand extends BaseCommand {
 									.getAllCommandList().get(i).getCommands()
 									.get(k).run(ctmp, tmp);
 						}
+					} else {
+						Log.i("my", "Bitmap-Skip");
 					}
 				}
 				c.drawBitmap(tmp, new Matrix(), null);
@@ -98,7 +101,7 @@ public class ChangeLayerCommand extends BaseCommand {
 						if (PaintroidApplication.commandManager
 								.getAllCommandList().get(i).getCommands()
 								.get(k) instanceof FlipCommand) {
-							((FlipCommand) PaintroidApplication.commandManager
+							tmp = ((FlipCommand) PaintroidApplication.commandManager
 									.getAllCommandList().get(i).getCommands()
 									.get(k)).runLayer(ctmp, tmp);
 						} else {
@@ -106,6 +109,8 @@ public class ChangeLayerCommand extends BaseCommand {
 									.getAllCommandList().get(i).getCommands()
 									.get(k).run(ctmp, tmp);
 						}
+					} else {
+						Log.i("my", "Bitmap-Skip");
 					}
 				}
 				c.drawBitmap(tmp, new Matrix(), null);

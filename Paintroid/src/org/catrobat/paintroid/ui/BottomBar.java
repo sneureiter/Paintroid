@@ -113,7 +113,7 @@ public class BottomBar implements View.OnTouchListener {
 				if (PaintroidApplication.commandManager.getAllCommandList()
 						.get(PaintroidApplication.currentLayer).getCommands()
 						.get(i) instanceof FlipCommand) {
-					((FlipCommand) PaintroidApplication.commandManager
+					b = ((FlipCommand) PaintroidApplication.commandManager
 							.getAllCommandList()
 							.get(PaintroidApplication.currentLayer)
 							.getCommands().get(i)).runLayer(c, b);

@@ -4,7 +4,6 @@ import org.catrobat.paintroid.MainActivity;
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.command.implementation.BitmapCommand;
-import org.catrobat.paintroid.command.implementation.FillCommand;
 import org.catrobat.paintroid.command.implementation.FlipCommand;
 import org.catrobat.paintroid.dialog.ToolsDialog;
 import org.catrobat.paintroid.dialog.layerchooser.LayerChooserDialog;
@@ -14,7 +13,6 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -105,12 +103,6 @@ public class BottomBar implements View.OnTouchListener {
 				.getAllCommandList().get(PaintroidApplication.currentLayer)
 				.getLastCommandCount(); i++) {
 
-			Log.i("my", i
-					+ ": "
-					+ PaintroidApplication.commandManager.getAllCommandList()
-							.get(PaintroidApplication.currentLayer)
-							.getCommands().get(i).toString());
-
 			if (!PaintroidApplication.commandManager.getAllCommandList()
 					.get(PaintroidApplication.currentLayer).isHidden()
 					&& !((PaintroidApplication.commandManager
@@ -125,15 +117,6 @@ public class BottomBar implements View.OnTouchListener {
 							.getAllCommandList()
 							.get(PaintroidApplication.currentLayer)
 							.getCommands().get(i)).runLayer(c, b);
-				} else if (PaintroidApplication.commandManager
-						.getAllCommandList()
-						.get(PaintroidApplication.currentLayer).getCommands()
-						.get(i) instanceof FillCommand) {
-					b = ((FillCommand) PaintroidApplication.commandManager
-							.getAllCommandList()
-							.get(PaintroidApplication.currentLayer)
-							.getCommands().get(i)).runLayer(c, b,
-							PaintroidApplication.currentLayer);
 				} else {
 
 					PaintroidApplication.commandManager.getAllCommandList()

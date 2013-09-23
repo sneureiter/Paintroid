@@ -70,37 +70,4 @@ public class FillCommand extends BaseCommand {
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
 	}
-
-	public Bitmap runLayer(Canvas canvas, Bitmap bitmap, int i) {
-		setChanged();
-		notifyStatus(NOTIFY_STATES.COMMAND_STARTED);
-		if (mClickedPixel == null) {
-			setChanged();
-			notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
-			return null;
-		}
-
-		if (PaintroidApplication.commandManager.getCommandListByIndex(i).size() == EMPTY_COMMAND_LIST_LENGTH) {
-			canvas.drawColor(mPaint.getColor());
-			Log.w(PaintroidApplication.TAG,
-					"Fill Command color: " + mPaint.getColor());
-		} else {
-			int colorToReplace = bitmap.getPixel(mClickedPixel.x,
-					mClickedPixel.y);
-			int pixels[] = new int[bitmap.getWidth() * bitmap.getHeight()];
-			bitmap.getPixels(pixels, 0, bitmap.getWidth(), 0, 0,
-					bitmap.getWidth(), bitmap.getHeight());
-
-			QueueLinearFloodFiller.floodFill(pixels, bitmap.getWidth(),
-					bitmap.getHeight(), mClickedPixel, colorToReplace,
-					mPaint.getColor(), SELECTION_THRESHOLD);
-
-			bitmap.setPixels(pixels, 0, bitmap.getWidth(), 0, 0,
-					bitmap.getWidth(), bitmap.getHeight());
-		}
-		setChanged();
-		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
-
-		return bitmap;
-	}
 }

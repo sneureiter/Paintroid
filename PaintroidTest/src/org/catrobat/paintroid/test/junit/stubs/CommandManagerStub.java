@@ -91,12 +91,6 @@ public class CommandManagerStub extends BaseStub implements CommandManager {
 	}
 
 	@Override
-	public void decrementCounter() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void resetIndex() {
 		// TODO Auto-generated method stub
 
@@ -134,12 +128,6 @@ public class CommandManagerStub extends BaseStub implements CommandManager {
 
 	@Override
 	public void saveCurrentCommandListPointer() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void incrementCounter() {
 		// TODO Auto-generated method stub
 
 	}

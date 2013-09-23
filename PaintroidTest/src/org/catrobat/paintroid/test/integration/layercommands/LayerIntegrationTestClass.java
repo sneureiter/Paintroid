@@ -9,11 +9,6 @@ import android.util.Log;
 
 public class LayerIntegrationTestClass extends BaseIntegrationTestClass {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.catrobat.paintroid.test.integration.BaseIntegrationTestClass#setUp()
-	 */
 	@Override
 	protected void setUp() {
 		super.setUp();
@@ -40,25 +35,13 @@ public class LayerIntegrationTestClass extends BaseIntegrationTestClass {
 	}
 
 	public int getNumOfCommandsOfLayer(int i) {
-		int counter = 0;
-		for (int j = 1; j < PaintroidApplication.commandManager.getCommands().size(); j++) {
-			if (PaintroidApplication.commandManager.getCommands().get(j).getCommandLayer() == i
-					&& PaintroidApplication.commandManager.getCommands().get(j).isDeleted() == false
-					&& PaintroidApplication.commandManager.getCommands().get(j).isHidden() == false
-					&& !(PaintroidApplication.commandManager.getCommands().get(j) instanceof DeleteLayerCommand)) {
-				counter++;
-			}
-		}
-		return counter;
+		return PaintroidApplication.commandManager.getAllCommandList().get(i).getCommands().size();
 	}
 
 	public int getNumOfHiddenCommandsOfLayer(int i) {
 		int counter = 0;
 		for (int j = 1; j < PaintroidApplication.commandManager.getCommands().size(); j++) {
-			if (PaintroidApplication.commandManager.getCommands().get(j).getCommandLayer() == i
-					&& PaintroidApplication.commandManager.getCommands().get(j).isDeleted() == false
-					&& PaintroidApplication.commandManager.getCommands().get(j).isHidden() == true
-					&& !(PaintroidApplication.commandManager.getCommands().get(j) instanceof DeleteLayerCommand)) {
+			if (PaintroidApplication.commandManager.getCommands().get(j).getCommandLayer() == i) {
 				counter++;
 			}
 		}
@@ -71,7 +54,6 @@ public class LayerIntegrationTestClass extends BaseIntegrationTestClass {
 			Log.i(PaintroidApplication.TAG, PaintroidApplication.commandManager.getCommands().get(j).toString() + " "
 					+ String.valueOf(PaintroidApplication.commandManager.getCommands().get(j).getCommandLayer()));
 			if (PaintroidApplication.commandManager.getCommands().get(j).getCommandLayer() == i
-					&& PaintroidApplication.commandManager.getCommands().get(j).isDeleted() == true
 					&& !(PaintroidApplication.commandManager.getCommands().get(j) instanceof DeleteLayerCommand)) {
 				counter++;
 			}

@@ -57,7 +57,7 @@ public class LayerRowAdapter extends ArrayAdapter<LayerRow> {
 			holder = (LayerRowHolder) row.getTag();
 		}
 
-		Bitmap scaled = getCanvasThumbnail(48, 64, position);
+		Bitmap scaled = getCanvasThumbnail(position);
 
 		LayerRow mLayerRow = data.get(position);
 		holder.layerTitle.setText(mLayerRow.name);
@@ -149,45 +149,7 @@ public class LayerRowAdapter extends ArrayAdapter<LayerRow> {
 		return row;
 	}
 
-	private Bitmap getCanvasThumbnail(int i, int j, int pos) {
-
-		// Bitmap b = Bitmap.createBitmap(480, 800, Config.ARGB_4444);
-		// Canvas c = new Canvas();
-		// c.setBitmap(b);
-		//
-		// for (int k = 0; k < PaintroidApplication.commandManager
-		// .getAllCommandList().get(pos).getCommands().size(); k++) {
-		// if (PaintroidApplication.commandManager.getAllCommandList()
-		// .get(pos).isHidden() == nullfalse) {
-		// if (PaintroidApplication.commandManager.getAllCommandList()
-		// .get(pos).getCommands().get(k) instanceof FlipCommand) {
-		// b = ((FlipCommand) PaintroidApplication.commandManager
-		// .getAllCommandList().get(pos).getCommands().get(k))
-		// .runLayer(c, b);
-		// } else {
-		// PaintroidApplication.commandManager.getAllCommandList()
-		// .get(pos).getCommands().get(k).run(c, b);
-		// }
-		// }
-		// }
-		//
-		// int width = b.getWidth();
-		// int height = b.getHeight();
-		// float scaleWidth = ((float) i) / width;
-		// float scaleHeight = ((float) j) / height;
-		//
-		// // CREATE A MATRIX FOR THE MANIPULATION
-		// Matrix matrix = new Matrix();
-		// // RESIZE THE BIT MAP
-		// matrix.postScale(scaleWidth, scaleHeight);
-		//
-		// Bitmap bScaled = Bitmap.createBitmap(b, 0, 0, width, height, matrix,
-		// false);
-		// // Bitmap bScaled = Bitmap.createScaledBitmap(b, i, j, true);
-		// b.recycle();
-		// b = null;
-		//
-		// return bScaled;
+	private Bitmap getCanvasThumbnail(int pos) {
 		return PaintroidApplication.commandManager.getAllCommandList().get(pos)
 				.getThumbnail();
 	}

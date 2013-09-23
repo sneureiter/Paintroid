@@ -103,12 +103,9 @@ public class BottomBar implements View.OnTouchListener {
 				.getAllCommandList().get(PaintroidApplication.currentLayer)
 				.getLastCommandCount(); i++) {
 
-			if (!PaintroidApplication.commandManager.getAllCommandList()
-					.get(PaintroidApplication.currentLayer).isHidden()
-					&& !((PaintroidApplication.commandManager
-							.getAllCommandList()
-							.get(PaintroidApplication.currentLayer)
-							.getCommands().get(i) instanceof BitmapCommand) && i == 0)) {
+			if (!((PaintroidApplication.commandManager.getAllCommandList()
+					.get(PaintroidApplication.currentLayer).getCommands()
+					.get(i) instanceof BitmapCommand) && i == 0)) {
 
 				if (PaintroidApplication.commandManager.getAllCommandList()
 						.get(PaintroidApplication.currentLayer).getCommands()

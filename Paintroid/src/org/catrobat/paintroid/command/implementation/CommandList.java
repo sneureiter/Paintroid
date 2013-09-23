@@ -10,7 +10,6 @@ public class CommandList extends LinkedList<Command> {
 
 	LinkedList<Command> mCommands;
 	boolean isHidden = false;
-	boolean isDeleted = false;
 	int lastCommandIndex = 0;
 	int lastCommandCount = 0;
 	Bitmap thumbnail = null;
@@ -29,14 +28,6 @@ public class CommandList extends LinkedList<Command> {
 
 	public void setHidden(boolean isHidden) {
 		this.isHidden = isHidden;
-	}
-
-	public boolean isDeleted() {
-		return isDeleted;
-	}
-
-	public void setDeleted(boolean isDeleted) {
-		this.isDeleted = isDeleted;
 	}
 
 	public int getLastCommandIndex() {

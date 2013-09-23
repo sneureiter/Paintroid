@@ -46,11 +46,8 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	private int mCommandIndex;
 	private Bitmap mOriginalBitmap;
 
-	public Bitmap mBitmapAbove = null;
-	public Bitmap mBitmapBelow = null;
-
-	public boolean belowUsed = false;
-	public boolean aboveUsed = false;
+	private Bitmap mBitmapAbove = null;
+	private Bitmap mBitmapBelow = null;
 
 	public CommandManagerImplementation() {
 		mAllCommandLists = new LinkedList<CommandList>();

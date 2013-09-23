@@ -319,7 +319,7 @@ public final class LayerChooserDialog extends DialogFragment implements
 
 			LayerRow data = layer_data.remove(mSelectedLayerIndex);
 
-			Command command = new DeleteLayerCommand(mSelectedLayerIndex, data);
+			Command command = new DeleteLayerCommand(mSelectedLayerIndex);
 			PaintroidApplication.commandManager.commitCommand(command);
 
 			if (layer_data.size() == mSelectedLayerIndex) {

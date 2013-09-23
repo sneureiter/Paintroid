@@ -307,6 +307,7 @@ public final class LayerChooserDialog extends DialogFragment implements
 							false));
 			PaintroidApplication.commandManager
 					.addEmptyCommandList(mSelectedLayerIndex + 1);
+			setSelected(mSelectedLayerIndex + 1, null, null);
 			adapter.notifyDataSetChanged();
 		} else {
 			return;

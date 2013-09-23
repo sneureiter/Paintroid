@@ -64,7 +64,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 	@Override
 	public boolean hasCommands() {
-		return mCommandCounter >= 1;
+		return mCommandCounter > 1 || mAllCommandLists.size() > 1;
 	}
 
 	@Override

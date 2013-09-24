@@ -118,7 +118,7 @@ public class LayerButton extends ImageButton implements OnLayerPickedListener {
 		canvas.drawRect(colorRect, mColorPaint);
 
 		if (!this.visible) {
-			canvas.drawBitmap(eyeImage, 10f, 0, null);
+			canvas.drawBitmap(eyeImage, RECT_SIDE_LENGTH / 2, 0, null);
 			canvas.drawText(String.valueOf(PaintroidApplication.currentLayer),
 					rectX + RECT_SIDE_LENGTH / 2, rectY + RECT_SIDE_LENGTH / 2,
 					mTextPaintHidden);

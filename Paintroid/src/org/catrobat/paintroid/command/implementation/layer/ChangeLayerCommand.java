@@ -3,6 +3,7 @@ package org.catrobat.paintroid.command.implementation.layer;
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.command.implementation.BaseCommand;
 import org.catrobat.paintroid.command.implementation.BitmapCommand;
+import org.catrobat.paintroid.command.implementation.CommandList;
 import org.catrobat.paintroid.command.implementation.FlipCommand;
 
 import android.graphics.Bitmap;
@@ -42,26 +43,21 @@ public class ChangeLayerCommand extends BaseCommand {
 
 				Bitmap tmp = Bitmap.createBitmap(480, 800, Config.ARGB_8888);
 				Canvas ctmp = new Canvas(tmp);
-				for (int k = 0; k < PaintroidApplication.commandManager
-						.getAllCommandList().get(i).getLastCommandCount(); k++) {
 
-					if (!PaintroidApplication.commandManager
-							.getAllCommandList().get(i).isHidden()
-							&& !((PaintroidApplication.commandManager
-									.getAllCommandList().get(i).getCommands()
-									.get(k) instanceof BitmapCommand) && k == 0)) {
+				CommandList mList = PaintroidApplication.commandManager
+						.getAllCommandList().get(i);
 
-						if (PaintroidApplication.commandManager
-								.getAllCommandList().get(i).getCommands()
-								.get(k) instanceof FlipCommand) {
-							tmp = ((FlipCommand) PaintroidApplication.commandManager
-									.getAllCommandList().get(i).getCommands()
-									.get(k)).runLayer(ctmp, tmp);
+				for (int k = 0; k < mList.getLastCommandCount(); k++) {
+
+					if (!mList.isHidden()
+							&& !((mList.getCommands().get(k) instanceof BitmapCommand) && k == 0)) {
+
+						if (mList.getCommands().get(k) instanceof FlipCommand) {
+							tmp = ((FlipCommand) mList.getCommands().get(k))
+									.runLayer(ctmp, tmp);
 						} else {
 
-							PaintroidApplication.commandManager
-									.getAllCommandList().get(i).getCommands()
-									.get(k).run(ctmp, tmp);
+							mList.getCommands().get(k).run(ctmp, tmp);
 						}
 					} else {
 						Log.i("my", "Bitmap-Skip");
@@ -89,25 +85,20 @@ public class ChangeLayerCommand extends BaseCommand {
 
 				Bitmap tmp = Bitmap.createBitmap(480, 800, Config.ARGB_8888);
 				Canvas ctmp = new Canvas(tmp);
-				for (int k = 0; k < PaintroidApplication.commandManager
-						.getAllCommandList().get(i).getLastCommandCount(); k++) {
 
-					if (!PaintroidApplication.commandManager
-							.getAllCommandList().get(i).isHidden()
-							&& !((PaintroidApplication.commandManager
-									.getAllCommandList().get(i).getCommands()
-									.get(k) instanceof BitmapCommand) && k == 0)) {
+				CommandList mList = PaintroidApplication.commandManager
+						.getAllCommandList().get(i);
 
-						if (PaintroidApplication.commandManager
-								.getAllCommandList().get(i).getCommands()
-								.get(k) instanceof FlipCommand) {
-							tmp = ((FlipCommand) PaintroidApplication.commandManager
-									.getAllCommandList().get(i).getCommands()
-									.get(k)).runLayer(ctmp, tmp);
+				for (int k = 0; k < mList.getLastCommandCount(); k++) {
+
+					if (!mList.isHidden()
+							&& !((mList.getCommands().get(k) instanceof BitmapCommand) && k == 0)) {
+
+						if (mList.getCommands().get(k) instanceof FlipCommand) {
+							tmp = ((FlipCommand) mList.getCommands().get(k))
+									.runLayer(ctmp, tmp);
 						} else {
-							PaintroidApplication.commandManager
-									.getAllCommandList().get(i).getCommands()
-									.get(k).run(ctmp, tmp);
+							mList.getCommands().get(k).run(ctmp, tmp);
 						}
 					}
 				}

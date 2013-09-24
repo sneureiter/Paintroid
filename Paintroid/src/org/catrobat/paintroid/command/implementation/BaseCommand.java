@@ -41,9 +41,6 @@ public abstract class BaseCommand extends Observable implements Command {
 	protected Bitmap mBitmap;
 	protected File mFileToStoredBitmap;
 	protected int commandLayer;
-	protected boolean undone = false;
-	protected boolean deleted = false;
-	protected boolean hidden = false;
 
 	public static enum NOTIFY_STATES {
 		COMMAND_STARTED, COMMAND_DONE, COMMAND_FAILED

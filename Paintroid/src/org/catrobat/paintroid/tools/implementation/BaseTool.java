@@ -62,7 +62,8 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 	protected Context mContext;
 	protected PointF mMovedDistance;
 	protected PointF mPreviousEventCoordinate;
-	protected float mScreenWidth;
+	protected int mScreenWidth;
+	protected int mScreenHeight;
 
 	private OnBrushChangedListener mStroke;
 	protected OnColorPickedListener mColor;
@@ -95,6 +96,7 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 		Display display = ((WindowManager) context
 				.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		mScreenWidth = display.getWidth();
+		mScreenHeight = display.getHeight();
 
 		mColor = new OnColorPickedListener() {
 			@Override

@@ -41,12 +41,16 @@ public class DrawTool extends BaseTool {
 	public static final int STROKE_5 = 5;
 	public static final int STROKE_15 = 15;
 	public static final int STROKE_25 = 25;
-	public static final int TOLL = 50;
+	public static final int SCROLL_TOLERANCE = 50;
 
 	protected final Path pathToDraw;
 	protected PointF mInitialEventCoordinate;
 	protected final PointF movedDistance;
 	protected MoveOnZoomAsyncTask mMoveAsync;
+
+	protected enum Direction {
+		RIGHT, LEFT, UP, DOWN;
+	}
 
 	public DrawTool(Context context, ToolType toolType) {
 		super(context, toolType);
@@ -80,6 +84,16 @@ public class DrawTool extends BaseTool {
 		return true;
 	}
 
+	protected void executeMoveOnZoom(Direction direction) {
+
+		if (mMoveAsync.getStatus() == AsyncTask.Status.PENDING) {
+			mMoveAsync.execute(direction);
+		} else if (mMoveAsync.getStatus() == AsyncTask.Status.FINISHED) {
+			mMoveAsync = new MoveOnZoomAsyncTask();
+			mMoveAsync.execute(direction);
+		}
+	}
+
 	@Override
 	public boolean handleMove(PointF coordinate) {
 		if (mInitialEventCoordinate == null || mPreviousEventCoordinate == null
@@ -92,16 +106,21 @@ public class DrawTool extends BaseTool {
 		PointF calcPoint = PaintroidApplication.perspective
 				.calculateFromCanvasToScreen(new PointF(cx, cy));
 
-		if (calcPoint.x > (mScreenWidth - TOLL)) {
+		// TODO Fix screen height / move up/down
+		if (calcPoint.x > (mScreenWidth - SCROLL_TOLERANCE)) {
+			executeMoveOnZoom(Direction.RIGHT);
 
-			// move
-			if (mMoveAsync.getStatus() == AsyncTask.Status.PENDING) {
-				mMoveAsync.execute();
-			} else if (mMoveAsync.getStatus() == AsyncTask.Status.FINISHED) {
-				mMoveAsync = new MoveOnZoomAsyncTask();
-				mMoveAsync.execute();
-			}
+		} else if (calcPoint.x < SCROLL_TOLERANCE) {
+			executeMoveOnZoom(Direction.LEFT);
 
+		} else if (calcPoint.y > (mScreenHeight - SCROLL_TOLERANCE)) {
+			executeMoveOnZoom(Direction.UP);
+
+		} else if (calcPoint.y < SCROLL_TOLERANCE) {
+			executeMoveOnZoom(Direction.DOWN);
+
+		} else if (mMoveAsync.getStatus() == AsyncTask.Status.RUNNING) {
+			mMoveAsync.cancel(true);
 		}
 
 		pathToDraw.quadTo(mPreviousEventCoordinate.x,
@@ -188,7 +207,8 @@ public class DrawTool extends BaseTool {
 		mPreviousEventCoordinate = null;
 	}
 
-	protected class MoveOnZoomAsyncTask extends AsyncTask<Void, Integer, Void> {
+	protected class MoveOnZoomAsyncTask extends
+			AsyncTask<Direction, Integer, Void> {
 
 		@Override
 		protected void onPreExecute() {
@@ -196,14 +216,35 @@ public class DrawTool extends BaseTool {
 		}
 
 		@Override
-		protected Void doInBackground(Void... arg0) {
-			while (!isCancelled()) {
-				PaintroidApplication.perspective.translate(-1, 0);
-				try {
-					Thread.sleep(3);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+		protected Void doInBackground(Direction... direction) {
+			if (direction.length > 0) {
+				int x = 0;
+				int y = 0;
+				// TODO diagonal?
+				switch (direction[0]) {
+				case RIGHT:
+					x = -1;
+					break;
+				case LEFT:
+					x = 1;
+					break;
+				case UP:
+					y = -1;
+					break;
+				case DOWN:
+					y = 1;
+					break;
+				}
+
+				while (!isCancelled()) {
+
+					PaintroidApplication.perspective.translate(x, y);
+					try {
+						Thread.sleep(3);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 			return null;

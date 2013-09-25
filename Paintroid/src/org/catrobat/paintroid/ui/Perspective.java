@@ -164,6 +164,16 @@ public class Perspective implements Serializable {
 		p.y = ((p.y + mSurfaceTranslationY - mSurfaceCenterY) * mSurfaceScale + mSurfaceCenterY);
 
 	}
+	
+	public synchronized PointF calculateFromCanvasToScreen(PointF p){
+		
+		PointF calculatetP = p;
+		calculatetP.x = ((p.x + mSurfaceTranslationX - mSurfaceCenterX) * mSurfaceScale + mSurfaceCenterX);
+		calculatetP.y = ((p.y + mSurfaceTranslationY - mSurfaceCenterY) * mSurfaceScale + mSurfaceCenterY);
+
+		
+		return calculatetP;
+	}
 
 	public synchronized void applyToCanvas(Canvas canvas) {
 		canvas.scale(mSurfaceScale, mSurfaceScale, mSurfaceCenterX,

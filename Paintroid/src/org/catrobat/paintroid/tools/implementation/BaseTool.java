@@ -47,6 +47,8 @@ import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader;
+import android.view.Display;
+import android.view.WindowManager;
 
 public abstract class BaseTool extends Observable implements Tool, Observer {
 	// TODO maybe move to PaintroidApplication.
@@ -60,6 +62,7 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 	protected Context mContext;
 	protected PointF mMovedDistance;
 	protected PointF mPreviousEventCoordinate;
+	protected float mScreenWidth;
 
 	private OnBrushChangedListener mStroke;
 	protected OnColorPickedListener mColor;
@@ -89,6 +92,9 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 		super();
 		mToolType = toolType;
 		mContext = context;
+		Display display = ((WindowManager) context
+				.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		mScreenWidth = display.getWidth();
 
 		mColor = new OnColorPickedListener() {
 			@Override
@@ -107,6 +113,7 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 			public void setStroke(int strokeWidth) {
 				changePaintStrokeWidth(strokeWidth);
 			}
+
 		};
 
 		BrushPickerDialog.getInstance().addBrushChangedListener(mStroke);

@@ -32,6 +32,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.os.AsyncTask;
 
 public class DrawTool extends BaseTool {
 	// TODO put in PaintroidApplication and scale dynamically depending on
@@ -40,16 +41,19 @@ public class DrawTool extends BaseTool {
 	public static final int STROKE_5 = 5;
 	public static final int STROKE_15 = 15;
 	public static final int STROKE_25 = 25;
+	public static final int TOLL = 50;
 
 	protected final Path pathToDraw;
 	protected PointF mInitialEventCoordinate;
 	protected final PointF movedDistance;
+	protected MoveOnZoomAsyncTask mMoveAsync;
 
 	public DrawTool(Context context, ToolType toolType) {
 		super(context, toolType);
 		pathToDraw = new Path();
 		pathToDraw.incReserve(1);
 		movedDistance = new PointF(0f, 0f);
+		mMoveAsync = new MoveOnZoomAsyncTask();
 	}
 
 	@Override
@@ -84,6 +88,22 @@ public class DrawTool extends BaseTool {
 		}
 		final float cx = (mPreviousEventCoordinate.x + coordinate.x) / 2;
 		final float cy = (mPreviousEventCoordinate.y + coordinate.y) / 2;
+
+		PointF calcPoint = PaintroidApplication.perspective
+				.calculateFromCanvasToScreen(new PointF(cx, cy));
+
+		if (calcPoint.x > (mScreenWidth - TOLL)) {
+
+			// move
+			if (mMoveAsync.getStatus() == AsyncTask.Status.PENDING) {
+				mMoveAsync.execute();
+			} else if (mMoveAsync.getStatus() == AsyncTask.Status.FINISHED) {
+				mMoveAsync = new MoveOnZoomAsyncTask();
+				mMoveAsync.execute();
+			}
+
+		}
+
 		pathToDraw.quadTo(mPreviousEventCoordinate.x,
 				mPreviousEventCoordinate.y, cx, cy);
 		pathToDraw.incReserve(1);
@@ -99,6 +119,7 @@ public class DrawTool extends BaseTool {
 
 	@Override
 	public boolean handleUp(PointF coordinate) {
+		mMoveAsync.cancel(true);
 		if (mInitialEventCoordinate == null || mPreviousEventCoordinate == null
 				|| coordinate == null) {
 			return false;
@@ -165,5 +186,32 @@ public class DrawTool extends BaseTool {
 		pathToDraw.rewind();
 		mInitialEventCoordinate = null;
 		mPreviousEventCoordinate = null;
+	}
+
+	protected class MoveOnZoomAsyncTask extends AsyncTask<Void, Integer, Void> {
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+		}
+
+		@Override
+		protected Void doInBackground(Void... arg0) {
+			while (!isCancelled()) {
+				PaintroidApplication.perspective.translate(-1, 0);
+				try {
+					Thread.sleep(3);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void nothing) {
+		}
+
 	}
 }

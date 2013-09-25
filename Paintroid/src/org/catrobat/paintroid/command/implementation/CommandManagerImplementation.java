@@ -117,7 +117,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		}
 
 		((BaseCommand) command).addObserver(this);
-		PaintroidApplication.savedState = false;
+		PaintroidApplication.isSaved = false;
 
 		return mCommandList.add(command);
 	}

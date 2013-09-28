@@ -42,6 +42,7 @@ public class DrawTool extends BaseTool {
 	public static final int STROKE_15 = 15;
 	public static final int STROKE_25 = 25;
 	public static final int SCROLL_TOLERANCE = 50;
+	public static final int SCROLL_INTERVAL_FACTOR = 5;
 
 	protected final Path mPathToDraw;
 	protected PointF mInitialEventCoordinate;
@@ -137,6 +138,10 @@ public class DrawTool extends BaseTool {
 		mPreviousEventCoordinate.set(coordinate.x, coordinate.y);
 	}
 
+	protected int calculateScrollInterval(float scale) {
+		return (int) (SCROLL_INTERVAL_FACTOR / Math.pow(scale, 1 / 3));
+	}
+
 	@Override
 	public boolean handleUp(PointF coordinate) {
 		mMoveAsync.cancel(true);
@@ -218,23 +223,22 @@ public class DrawTool extends BaseTool {
 
 		@Override
 		protected Void doInBackground(PointF... coordinateDeltas) {
+
+			float scale = PaintroidApplication.perspective.getScale();
+
 			if (coordinateDeltas.length > 0) {
 				while (!isCancelled()) {
 					PaintroidApplication.perspective.translate(
 							coordinateDeltas[0].x, coordinateDeltas[0].y);
 					PointF coordinate = new PointF(mPreviousEventCoordinate.x
-							- coordinateDeltas[0].x
-							/ PaintroidApplication.perspective.getScale(),
-							mPreviousEventCoordinate.y
-									- coordinateDeltas[0].y
-									/ PaintroidApplication.perspective
-											.getScale());
+							- coordinateDeltas[0].x / scale,
+							mPreviousEventCoordinate.y - coordinateDeltas[0].y
+									/ scale);
 					addToPath(coordinate);
 
 					try {
-						Thread.sleep(3);
+						Thread.sleep(calculateScrollInterval(scale));
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

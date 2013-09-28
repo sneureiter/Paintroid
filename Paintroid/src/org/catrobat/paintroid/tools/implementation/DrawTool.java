@@ -33,6 +33,7 @@ import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.os.AsyncTask;
+import android.view.WindowManager;
 
 public class DrawTool extends BaseTool {
 	// TODO put in PaintroidApplication and scale dynamically depending on
@@ -41,13 +42,16 @@ public class DrawTool extends BaseTool {
 	public static final int STROKE_5 = 5;
 	public static final int STROKE_15 = 15;
 	public static final int STROKE_25 = 25;
-	public static final int SCROLL_TOLERANCE = 50;
+	public static final int SCROLL_TOLERANCE_PERCENTAGE = 15;
 	public static final int SCROLL_INTERVAL_FACTOR = 5;
 
 	protected final Path mPathToDraw;
 	protected PointF mInitialEventCoordinate;
 	protected final PointF movedDistance;
 	protected MoveOnZoomAsyncTask mMoveAsync;
+	protected int mPreviousDeltaX;
+	protected int mPreviousDeltaY;
+	protected int mScrollTolerance;
 
 	public DrawTool(Context context, ToolType toolType) {
 		super(context, toolType);
@@ -55,6 +59,12 @@ public class DrawTool extends BaseTool {
 		mPathToDraw.incReserve(1);
 		movedDistance = new PointF(0f, 0f);
 		mMoveAsync = new MoveOnZoomAsyncTask();
+		mPreviousDeltaX = 0;
+		mPreviousDeltaY = 0;
+		WindowManager windowManager = (WindowManager) PaintroidApplication.applicationContext
+				.getSystemService(Context.WINDOW_SERVICE);
+		mScrollTolerance = windowManager.getDefaultDisplay().getWidth()
+				* SCROLL_TOLERANCE_PERCENTAGE / 100;
 	}
 
 	@Override
@@ -98,27 +108,43 @@ public class DrawTool extends BaseTool {
 			return false;
 		}
 
+		int deltaX = 0;
+		int deltaY = 0;
+
 		PointF calcPoint = PaintroidApplication.perspective
 				.calculateFromCanvasToScreen(new PointF(coordinate.x,
 						coordinate.y));
 
-		if (calcPoint.x > (PaintroidApplication.drawingSurface.getWidth() - SCROLL_TOLERANCE)) {
-			executeMoveOnZoom(new PointF(-1, 0));
+		if (calcPoint.x > (PaintroidApplication.drawingSurface.getWidth() - mScrollTolerance)) {
+			deltaX = -1;
 
-		} else if (calcPoint.x < SCROLL_TOLERANCE) {
-			executeMoveOnZoom(new PointF(1, 0));
+		} else if (calcPoint.x < mScrollTolerance) {
+			deltaX = 1;
+		}
 
-		} else if (calcPoint.y > (PaintroidApplication.drawingSurface
-				.getHeight() - SCROLL_TOLERANCE)) {
-			executeMoveOnZoom(new PointF(0, -1));
+		if (calcPoint.y > (PaintroidApplication.drawingSurface.getHeight() - mScrollTolerance)) {
+			deltaY = -1;
 
-		} else if (calcPoint.y < SCROLL_TOLERANCE) {
-			executeMoveOnZoom(new PointF(0, 1));
+		} else if (calcPoint.y < mScrollTolerance) {
+			deltaY = 1;
 
-		} else if (mMoveAsync.getStatus() == AsyncTask.Status.RUNNING) {
+		}
+
+		boolean directionHasChanged = deltaX != mPreviousDeltaX
+				|| deltaY != mPreviousDeltaY;
+		if (directionHasChanged
+				&& mMoveAsync.getStatus() == AsyncTask.Status.RUNNING) {
 			mMoveAsync.cancel(true);
 		}
+
+		if (deltaX != 0 || deltaY != 0) {
+			executeMoveOnZoom(new PointF(deltaX, deltaY));
+		}
+
 		addToPath(coordinate);
+
+		mPreviousDeltaX = deltaX;
+		mPreviousDeltaY = deltaY;
 
 		return true;
 	}

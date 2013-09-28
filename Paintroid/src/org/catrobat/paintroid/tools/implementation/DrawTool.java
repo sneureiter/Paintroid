@@ -107,13 +107,15 @@ public class DrawTool extends BaseTool {
 				.calculateFromCanvasToScreen(new PointF(cx, cy));
 
 		// TODO Fix screen height / move up/down
-		if (calcPoint.x > (mScreenWidth - SCROLL_TOLERANCE)) {
+
+		if (calcPoint.x > (PaintroidApplication.drawingSurface.getWidth() - SCROLL_TOLERANCE)) {
 			executeMoveOnZoom(Direction.RIGHT);
 
 		} else if (calcPoint.x < SCROLL_TOLERANCE) {
 			executeMoveOnZoom(Direction.LEFT);
 
-		} else if (calcPoint.y > (mScreenHeight - SCROLL_TOLERANCE)) {
+		} else if (calcPoint.y > (PaintroidApplication.drawingSurface
+				.getHeight() - SCROLL_TOLERANCE)) {
 			executeMoveOnZoom(Direction.UP);
 
 		} else if (calcPoint.y < SCROLL_TOLERANCE) {
@@ -237,7 +239,6 @@ public class DrawTool extends BaseTool {
 				}
 
 				while (!isCancelled()) {
-
 					PaintroidApplication.perspective.translate(x, y);
 					try {
 						Thread.sleep(3);

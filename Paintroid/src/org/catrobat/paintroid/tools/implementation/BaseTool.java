@@ -47,8 +47,6 @@ import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader;
-import android.view.Display;
-import android.view.WindowManager;
 
 public abstract class BaseTool extends Observable implements Tool, Observer {
 	// TODO maybe move to PaintroidApplication.
@@ -62,8 +60,8 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 	protected Context mContext;
 	protected PointF mMovedDistance;
 	protected PointF mPreviousEventCoordinate;
-	protected int mScreenWidth;
-	protected int mScreenHeight;
+	// protected int mScreenWidth;
+	// protected int mScreenHeight;
 
 	private OnBrushChangedListener mStroke;
 	protected OnColorPickedListener mColor;
@@ -93,10 +91,6 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 		super();
 		mToolType = toolType;
 		mContext = context;
-		Display display = ((WindowManager) context
-				.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-		mScreenWidth = display.getWidth();
-		mScreenHeight = display.getHeight();
 
 		mColor = new OnColorPickedListener() {
 			@Override

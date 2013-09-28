@@ -227,7 +227,9 @@ public class DrawTool extends BaseTool {
 			float scale = PaintroidApplication.perspective.getScale();
 
 			if (coordinateDeltas.length > 0) {
-				while (!isCancelled()) {
+				// TODO mPreviousEventCoordinate check shouldn't be necessary if
+				// issue #156 is resolved
+				while (!isCancelled() && mPreviousEventCoordinate != null) {
 					PaintroidApplication.perspective.translate(
 							coordinateDeltas[0].x, coordinateDeltas[0].y);
 					PointF coordinate = new PointF(mPreviousEventCoordinate.x

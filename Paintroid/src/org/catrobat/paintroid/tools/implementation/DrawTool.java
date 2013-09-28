@@ -114,12 +114,10 @@ public class DrawTool extends BaseTool {
 		} else if (calcPoint.y < SCROLL_TOLERANCE) {
 			executeMoveOnZoom(new PointF(0, 1));
 
-		} else {
-			if (mMoveAsync.getStatus() == AsyncTask.Status.RUNNING) {
-				mMoveAsync.cancel(true);
-			}
-			addToPath(coordinate);
+		} else if (mMoveAsync.getStatus() == AsyncTask.Status.RUNNING) {
+			mMoveAsync.cancel(true);
 		}
+		addToPath(coordinate);
 
 		return true;
 	}
@@ -222,13 +220,17 @@ public class DrawTool extends BaseTool {
 		protected Void doInBackground(PointF... coordinateDeltas) {
 			if (coordinateDeltas.length > 0) {
 				while (!isCancelled()) {
-					PointF coordinate = new PointF(mPreviousEventCoordinate.x
-							- coordinateDeltas[0].x, mPreviousEventCoordinate.y
-							- coordinateDeltas[0].y);
 					PaintroidApplication.perspective.translate(
 							coordinateDeltas[0].x, coordinateDeltas[0].y);
-
+					PointF coordinate = new PointF(mPreviousEventCoordinate.x
+							- coordinateDeltas[0].x
+							/ PaintroidApplication.perspective.getScale(),
+							mPreviousEventCoordinate.y
+									- coordinateDeltas[0].y
+									/ PaintroidApplication.perspective
+											.getScale());
 					addToPath(coordinate);
+
 					try {
 						Thread.sleep(3);
 					} catch (InterruptedException e) {

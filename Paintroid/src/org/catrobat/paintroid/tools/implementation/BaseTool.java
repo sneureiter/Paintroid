@@ -60,8 +60,6 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 	protected Context mContext;
 	protected PointF mMovedDistance;
 	protected PointF mPreviousEventCoordinate;
-	// protected int mScreenWidth;
-	// protected int mScreenHeight;
 
 	private OnBrushChangedListener mStroke;
 	protected OnColorPickedListener mColor;

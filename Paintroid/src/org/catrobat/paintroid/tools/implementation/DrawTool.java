@@ -43,19 +43,15 @@ public class DrawTool extends BaseTool {
 	public static final int STROKE_25 = 25;
 	public static final int SCROLL_TOLERANCE = 50;
 
-	protected final Path pathToDraw;
+	protected final Path mPathToDraw;
 	protected PointF mInitialEventCoordinate;
 	protected final PointF movedDistance;
 	protected MoveOnZoomAsyncTask mMoveAsync;
 
-	protected enum Direction {
-		RIGHT, LEFT, UP, DOWN;
-	}
-
 	public DrawTool(Context context, ToolType toolType) {
 		super(context, toolType);
-		pathToDraw = new Path();
-		pathToDraw.incReserve(1);
+		mPathToDraw = new Path();
+		mPathToDraw.incReserve(1);
 		movedDistance = new PointF(0f, 0f);
 		mMoveAsync = new MoveOnZoomAsyncTask();
 	}
@@ -65,10 +61,10 @@ public class DrawTool extends BaseTool {
 		changePaintColor(mCanvasPaint.getColor());
 		if (mCanvasPaint.getColor() == Color.TRANSPARENT) {
 			mCanvasPaint.setColor(Color.BLACK);
-			canvas.drawPath(pathToDraw, mCanvasPaint);
+			canvas.drawPath(mPathToDraw, mCanvasPaint);
 			mCanvasPaint.setColor(Color.TRANSPARENT);
 		} else {
-			canvas.drawPath(pathToDraw, mBitmapPaint);
+			canvas.drawPath(mPathToDraw, mBitmapPaint);
 		}
 	}
 
@@ -79,18 +75,18 @@ public class DrawTool extends BaseTool {
 		}
 		mInitialEventCoordinate = new PointF(coordinate.x, coordinate.y);
 		mPreviousEventCoordinate = new PointF(coordinate.x, coordinate.y);
-		pathToDraw.moveTo(coordinate.x, coordinate.y);
+		mPathToDraw.moveTo(coordinate.x, coordinate.y);
 		movedDistance.set(0, 0);
 		return true;
 	}
 
-	protected void executeMoveOnZoom(Direction direction) {
+	protected void executeMoveOnZoom(PointF coordinateDelta) {
 
 		if (mMoveAsync.getStatus() == AsyncTask.Status.PENDING) {
-			mMoveAsync.execute(direction);
+			mMoveAsync.execute(coordinateDelta);
 		} else if (mMoveAsync.getStatus() == AsyncTask.Status.FINISHED) {
 			mMoveAsync = new MoveOnZoomAsyncTask();
-			mMoveAsync.execute(direction);
+			mMoveAsync.execute(coordinateDelta);
 		}
 	}
 
@@ -100,42 +96,47 @@ public class DrawTool extends BaseTool {
 				|| coordinate == null) {
 			return false;
 		}
-		final float cx = (mPreviousEventCoordinate.x + coordinate.x) / 2;
-		final float cy = (mPreviousEventCoordinate.y + coordinate.y) / 2;
 
 		PointF calcPoint = PaintroidApplication.perspective
-				.calculateFromCanvasToScreen(new PointF(cx, cy));
-
-		// TODO Fix screen height / move up/down
+				.calculateFromCanvasToScreen(new PointF(coordinate.x,
+						coordinate.y));
 
 		if (calcPoint.x > (PaintroidApplication.drawingSurface.getWidth() - SCROLL_TOLERANCE)) {
-			executeMoveOnZoom(Direction.RIGHT);
+			executeMoveOnZoom(new PointF(-1, 0));
 
 		} else if (calcPoint.x < SCROLL_TOLERANCE) {
-			executeMoveOnZoom(Direction.LEFT);
+			executeMoveOnZoom(new PointF(1, 0));
 
 		} else if (calcPoint.y > (PaintroidApplication.drawingSurface
 				.getHeight() - SCROLL_TOLERANCE)) {
-			executeMoveOnZoom(Direction.UP);
+			executeMoveOnZoom(new PointF(0, -1));
 
 		} else if (calcPoint.y < SCROLL_TOLERANCE) {
-			executeMoveOnZoom(Direction.DOWN);
+			executeMoveOnZoom(new PointF(0, 1));
 
-		} else if (mMoveAsync.getStatus() == AsyncTask.Status.RUNNING) {
-			mMoveAsync.cancel(true);
+		} else {
+			if (mMoveAsync.getStatus() == AsyncTask.Status.RUNNING) {
+				mMoveAsync.cancel(true);
+			}
+			addToPath(coordinate);
 		}
 
-		pathToDraw.quadTo(mPreviousEventCoordinate.x,
+		return true;
+	}
+
+	protected void addToPath(PointF coordinate) {
+
+		final float cx = (mPreviousEventCoordinate.x + coordinate.x) / 2;
+		final float cy = (mPreviousEventCoordinate.y + coordinate.y) / 2;
+		mPathToDraw.quadTo(mPreviousEventCoordinate.x,
 				mPreviousEventCoordinate.y, cx, cy);
-		pathToDraw.incReserve(1);
+		mPathToDraw.incReserve(1);
 		movedDistance.set(
 				movedDistance.x
 						+ Math.abs(coordinate.x - mPreviousEventCoordinate.x),
 				movedDistance.y
 						+ Math.abs(coordinate.y - mPreviousEventCoordinate.y));
 		mPreviousEventCoordinate.set(coordinate.x, coordinate.y);
-
-		return true;
 	}
 
 	@Override
@@ -161,8 +162,8 @@ public class DrawTool extends BaseTool {
 	}
 
 	protected boolean addPathCommand(PointF coordinate) {
-		pathToDraw.lineTo(coordinate.x, coordinate.y);
-		Command command = new PathCommand(mBitmapPaint, pathToDraw);
+		mPathToDraw.lineTo(coordinate.x, coordinate.y);
+		Command command = new PathCommand(mBitmapPaint, mPathToDraw);
 		PaintroidApplication.commandManager.commitCommand(command);
 		return true;
 	}
@@ -204,13 +205,13 @@ public class DrawTool extends BaseTool {
 
 	@Override
 	public void resetInternalState() {
-		pathToDraw.rewind();
+		mPathToDraw.rewind();
 		mInitialEventCoordinate = null;
 		mPreviousEventCoordinate = null;
 	}
 
 	protected class MoveOnZoomAsyncTask extends
-			AsyncTask<Direction, Integer, Void> {
+			AsyncTask<PointF, Integer, Void> {
 
 		@Override
 		protected void onPreExecute() {
@@ -218,28 +219,16 @@ public class DrawTool extends BaseTool {
 		}
 
 		@Override
-		protected Void doInBackground(Direction... direction) {
-			if (direction.length > 0) {
-				int x = 0;
-				int y = 0;
-				// TODO diagonal?
-				switch (direction[0]) {
-				case RIGHT:
-					x = -1;
-					break;
-				case LEFT:
-					x = 1;
-					break;
-				case UP:
-					y = -1;
-					break;
-				case DOWN:
-					y = 1;
-					break;
-				}
-
+		protected Void doInBackground(PointF... coordinateDeltas) {
+			if (coordinateDeltas.length > 0) {
 				while (!isCancelled()) {
-					PaintroidApplication.perspective.translate(x, y);
+					PointF coordinate = new PointF(mPreviousEventCoordinate.x
+							- coordinateDeltas[0].x, mPreviousEventCoordinate.y
+							- coordinateDeltas[0].y);
+					PaintroidApplication.perspective.translate(
+							coordinateDeltas[0].x, coordinateDeltas[0].y);
+
+					addToPath(coordinate);
 					try {
 						Thread.sleep(3);
 					} catch (InterruptedException e) {

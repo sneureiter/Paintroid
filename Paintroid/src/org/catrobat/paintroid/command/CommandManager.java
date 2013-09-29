@@ -66,4 +66,6 @@ public interface CommandManager {
 	void setmBitmapBelow(Bitmap mBitmapBelow);
 
 	Bitmap getmBitmapBelow();
+
+	Command getLastCropCommand();
 }

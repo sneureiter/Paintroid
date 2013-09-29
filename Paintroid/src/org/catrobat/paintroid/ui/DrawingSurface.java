@@ -132,7 +132,9 @@ public class DrawingSurface extends SurfaceView implements
 							PaintroidApplication.commandManager
 									.getmBitmapAbove(), 0, 0, null);
 				}
+
 				PaintroidApplication.currentTool.draw(surfaceViewCanvas);
+
 			}
 		} catch (Exception catchAllException) {
 			Log.e(PaintroidApplication.TAG, "DrawingSurface:"

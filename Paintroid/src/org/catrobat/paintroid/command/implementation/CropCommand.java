@@ -103,7 +103,7 @@ public class CropCommand extends BaseCommand {
 					mCropCoordinateYBottom - mCropCoordinateYTop);
 
 			PaintroidApplication.drawingSurface.setBitmap(croppedBitmap);
-			mBitmap = croppedBitmap;
+			bitmap = croppedBitmap.copy(bitmap.getConfig(), true);
 
 			if (mFileToStoredBitmap == null) {
 				mBitmap = croppedBitmap.copy(Config.ARGB_8888, true);

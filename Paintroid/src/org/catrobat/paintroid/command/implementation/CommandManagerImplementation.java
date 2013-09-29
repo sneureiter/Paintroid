@@ -42,6 +42,8 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 	private LinkedList<Command> mCurrentCommandList;
 	private final LinkedList<CommandList> mAllCommandLists;
+	private final LinkedList<Command> mCropCommandList;
+
 	private int mCommandCounter;
 	private int mCommandIndex;
 	private Bitmap mOriginalBitmap;
@@ -49,10 +51,15 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	private Bitmap mBitmapAbove = null;
 	private Bitmap mBitmapBelow = null;
 
+	private boolean cropped = false;
+
 	public CommandManagerImplementation() {
 		mAllCommandLists = new LinkedList<CommandList>();
 
 		mCurrentCommandList = new LinkedList<Command>();
+
+		mCropCommandList = new LinkedList<Command>();
+		mCropCommandList.add(new CropCommand(0, 0, 0, 0));
 		// The first command in the list is needed to clear the image when
 		// rolling back commands.
 		mCurrentCommandList.add(new ClearCommand());
@@ -111,13 +118,20 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 			if (PaintroidApplication.commandManager.getCommandListByIndex(
 					PaintroidApplication.currentLayer).isHidden()
-					&& mCommandIndex != 0) {
+					&& mCommandIndex != 0
+					|| (mCurrentCommandList.get(mCommandIndex) instanceof CropCommand)) {
 				mCommandIndex++;
 
 				return getNextCommand();
 			}
 			return mCurrentCommandList.get(mCommandIndex++);
+
+		} else if (mCommandIndex == mCommandCounter && cropped == false) {
+			cropped = true;
+			return getLastCropCommand();
+
 		} else {
+
 			return null;
 		}
 	}
@@ -172,6 +186,11 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 		mCurrentCommandList.add(command);
 
+		if (command instanceof CropCommand) {
+			mCropCommandList.addLast(command);
+			cropped = false;
+		}
+
 		if (mAllCommandLists.get(PaintroidApplication.currentLayer).isHidden()) {
 			this.resetIndex();
 		}
@@ -182,8 +201,14 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	@Override
 	public synchronized void undo() {
 		if (mCommandCounter > 1) {
+			if (mCurrentCommandList.get(mCommandIndex - 1) instanceof CropCommand) {
+				mCropCommandList.remove(mCurrentCommandList
+						.get(mCommandIndex - 1));
+				cropped = false;
+			}
 			mCommandCounter--;
 			resetIndex();
+
 			UndoRedoManager.getInstance().update(
 					UndoRedoManager.StatusMode.ENABLE_REDO);
 			if (mCommandCounter <= 1) {
@@ -196,6 +221,13 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	@Override
 	public synchronized void redo() {
 		if (mCommandCounter < mCurrentCommandList.size()) {
+
+			if (mCurrentCommandList.get(mCommandIndex) instanceof CropCommand) {
+				mCropCommandList
+						.addLast(mCurrentCommandList.get(mCommandIndex));
+				cropped = false;
+			}
+
 			mCommandIndex = mCommandCounter;
 			mCommandCounter++;
 			UndoRedoManager.getInstance().update(
@@ -310,5 +342,10 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 		mCommandList.setLastCommandCount(mCommandCounter);
 		mCommandList.setLastCommandIndex(mCommandIndex);
+	}
+
+	@Override
+	public Command getLastCropCommand() {
+		return mCropCommandList.getLast();
 	}
 }

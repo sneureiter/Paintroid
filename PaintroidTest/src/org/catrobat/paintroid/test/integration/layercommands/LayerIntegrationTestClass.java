@@ -5,7 +5,6 @@ import org.catrobat.paintroid.command.implementation.layer.DeleteLayerCommand;
 import org.catrobat.paintroid.test.integration.BaseIntegrationTestClass;
 
 import android.graphics.PointF;
-import android.util.Log;
 
 public class LayerIntegrationTestClass extends BaseIntegrationTestClass {
 
@@ -22,39 +21,19 @@ public class LayerIntegrationTestClass extends BaseIntegrationTestClass {
 		super();
 	}
 
-	public void showAllCommands() {
-		for (int j = 0; j < PaintroidApplication.commandManager.getCommands().size(); j++) {
-			Log.i(PaintroidApplication.TAG,
-					String.valueOf(j)
-							+ " "
-							+ PaintroidApplication.commandManager.getCommands().get(j).toString()
-							+ " "
-							+ String.valueOf(PaintroidApplication.commandManager.getCommands().get(j).getCommandLayer()));
-		}
-
-	}
-
 	public int getNumOfCommandsOfLayer(int i) {
 		return PaintroidApplication.commandManager.getAllCommandList().get(i).getCommands().size();
 	}
 
 	public int getNumOfHiddenCommandsOfLayer(int i) {
 		int counter = 0;
-		for (int j = 1; j < PaintroidApplication.commandManager.getCommands().size(); j++) {
-			if (PaintroidApplication.commandManager.getCommands().get(j).getCommandLayer() == i) {
-				counter++;
-			}
-		}
 		return counter;
 	}
 
 	public int getNumOfDeletedCommandsOfLayer(int i) {
 		int counter = 0;
 		for (int j = 1; j < PaintroidApplication.commandManager.getCommands().size(); j++) {
-			Log.i(PaintroidApplication.TAG, PaintroidApplication.commandManager.getCommands().get(j).toString() + " "
-					+ String.valueOf(PaintroidApplication.commandManager.getCommands().get(j).getCommandLayer()));
-			if (PaintroidApplication.commandManager.getCommands().get(j).getCommandLayer() == i
-					&& !(PaintroidApplication.commandManager.getCommands().get(j) instanceof DeleteLayerCommand)) {
+			if (!(PaintroidApplication.commandManager.getCommands().get(j) instanceof DeleteLayerCommand)) {
 				counter++;
 			}
 		}

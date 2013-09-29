@@ -28,7 +28,4 @@ public interface Command {
 
 	public void freeResources();
 
-	public int getCommandLayer();
-
-	public void setCommandLayer(int a);
 }

@@ -357,7 +357,6 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnView(mSolo.getButton(mSolo.getString(R.string.done)));
 		mSolo.sleep(1000);
 
-		showAllCommands();
 		assertTrue("There shall be one command from the old third layer", getNumOfCommandsOfLayer(0) == 1);
 		assertTrue("There shall be no command ", getNumOfCommandsOfLayer(1) == 0);
 		assertTrue("There shall be no command ", getNumOfCommandsOfLayer(2) == 0);

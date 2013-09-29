@@ -111,13 +111,7 @@ public class LayerDialogIntegrationTest extends BaseIntegrationTestClass {
 
 	private int getNumOfCommandsOfLayer(int i) {
 		int counter = 0;
-		for (int j = 0; j < PaintroidApplication.commandManager.getCommands().size(); j++) {
-			if (PaintroidApplication.commandManager.getCommands().get(j).getCommandLayer() == i) { // &&
-																									// PaintroidApplication.commandManager.getCommands().get(j).isDeleted()
-																									// == false
-				counter++;
-			}
-		}
+
 		return counter;
 	}
 

@@ -137,6 +137,22 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 			command.run(null, null);
 
+			if (mCurrentCommandList.size() > mCommandCounter) {
+				UndoRedoManager.getInstance().update(
+						UndoRedoManager.StatusMode.ENABLE_REDO);
+			} else {
+				UndoRedoManager.getInstance().update(
+						UndoRedoManager.StatusMode.DISABLE_REDO);
+			}
+
+			if (mCommandCounter > 1) {
+				UndoRedoManager.getInstance().update(
+						UndoRedoManager.StatusMode.ENABLE_UNDO);
+			} else {
+				UndoRedoManager.getInstance().update(
+						UndoRedoManager.StatusMode.DISABLE_UNDO);
+			}
+
 			this.resetIndex();
 			return mCurrentCommandList != null;
 		}
@@ -153,7 +169,6 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 		((BaseCommand) command).addObserver(this);
 		PaintroidApplication.isSaved = false;
-		command.setCommandLayer(PaintroidApplication.currentLayer);
 
 		mCurrentCommandList.add(command);
 

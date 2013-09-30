@@ -118,11 +118,23 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 			if (PaintroidApplication.commandManager.getCommandListByIndex(
 					PaintroidApplication.currentLayer).isHidden()
-					&& mCommandIndex != 0
-					|| (mCurrentCommandList.get(mCommandIndex) instanceof CropCommand)) {
+					&& mCommandIndex != 0) {
 				mCommandIndex++;
 
 				return getNextCommand();
+
+			} else if (mCurrentCommandList.get(mCommandIndex) instanceof CropCommand) {
+				if (mCurrentCommandList.get(mCommandIndex).equals(
+						getLastCropCommand())) {
+					cropped = true;
+					mCommandIndex++;
+
+					return getLastCropCommand();
+				} else {
+					mCommandIndex++;
+					return getNextCommand();
+
+				}
 			}
 			return mCurrentCommandList.get(mCommandIndex++);
 

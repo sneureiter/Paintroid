@@ -135,6 +135,7 @@ public class DrawTool extends BaseTool {
 		if (directionHasChanged
 				&& mMoveAsync.getStatus() == AsyncTask.Status.RUNNING) {
 			mMoveAsync.cancel(true);
+
 		}
 
 		if (deltaX != 0 || deltaY != 0) {
@@ -149,12 +150,10 @@ public class DrawTool extends BaseTool {
 		return true;
 	}
 
-	protected void addToPath(PointF coordinate) {
+	protected synchronized void addToPath(PointF coordinate) {
 
-		final float cx = (mPreviousEventCoordinate.x + coordinate.x) / 2;
-		final float cy = (mPreviousEventCoordinate.y + coordinate.y) / 2;
 		mPathToDraw.quadTo(mPreviousEventCoordinate.x,
-				mPreviousEventCoordinate.y, cx, cy);
+				mPreviousEventCoordinate.y, coordinate.x, coordinate.y);
 		mPathToDraw.incReserve(1);
 		movedDistance.set(
 				movedDistance.x
@@ -251,6 +250,7 @@ public class DrawTool extends BaseTool {
 		protected Void doInBackground(PointF... coordinateDeltas) {
 
 			float scale = PaintroidApplication.perspective.getScale();
+			int scrollInterval = calculateScrollInterval(scale);
 
 			if (coordinateDeltas.length > 0) {
 				// TODO mPreviousEventCoordinate check shouldn't be necessary if
@@ -265,7 +265,7 @@ public class DrawTool extends BaseTool {
 					addToPath(coordinate);
 
 					try {
-						Thread.sleep(calculateScrollInterval(scale));
+						Thread.sleep(scrollInterval);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

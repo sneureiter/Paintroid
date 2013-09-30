@@ -119,4 +119,84 @@ public class CropCommand extends BaseCommand {
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
 	}
+
+	public Bitmap runLayer(Canvas canvas, Bitmap bitmap) {
+		setChanged();
+		notifyStatus(NOTIFY_STATES.COMMAND_STARTED);
+		if (mFileToStoredBitmap != null) {
+			PaintroidApplication.drawingSurface.setBitmap(FileIO
+					.getBitmapFromFile(mFileToStoredBitmap));
+			setChanged();
+			notifyStatus(NOTIFY_STATES.COMMAND_DONE);
+			return null;
+		}
+		try {
+
+			if (mCropCoordinateXRight < mCropCoordinateXLeft) {
+				Log.e(PaintroidApplication.TAG,
+						"coordinate X left is larger than coordinate X right");
+				setChanged();
+				notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
+				return null;
+			}
+			if (mCropCoordinateXRight < 0 || mCropCoordinateXLeft < 0
+					|| mCropCoordinateXRight > bitmap.getWidth()
+					|| mCropCoordinateXLeft > bitmap.getWidth()) {
+				Log.e(PaintroidApplication.TAG,
+						"coordinate X is out of bitmap scope");
+				setChanged();
+				notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
+				return null;
+			}
+			if (mCropCoordinateYBottom < mCropCoordinateYTop) {
+				Log.e(PaintroidApplication.TAG,
+						"coordinate Y bottom is smaller than coordinate Y top");
+				setChanged();
+				notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
+				return null;
+			}
+			if (mCropCoordinateYBottom < 0 || mCropCoordinateYTop < 0
+					|| mCropCoordinateYBottom > bitmap.getHeight()
+					|| mCropCoordinateYTop > bitmap.getHeight()) {
+				Log.e(PaintroidApplication.TAG,
+						"coordinate Y is out of bitmap scope");
+				setChanged();
+				notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
+				return null;
+			}
+			if (mCropCoordinateXLeft <= 0
+					&& mCropCoordinateXRight == bitmap.getWidth()
+					&& mCropCoordinateYBottom == bitmap.getHeight()
+					&& mCropCoordinateYTop <= 0) {
+				Log.e(PaintroidApplication.TAG, " no need to crop ");
+				setChanged();
+				notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
+				return null;
+			}
+
+			Bitmap croppedBitmap = Bitmap.createBitmap(bitmap,
+					mCropCoordinateXLeft, mCropCoordinateYTop,
+					mCropCoordinateXRight - mCropCoordinateXLeft,
+					mCropCoordinateYBottom - mCropCoordinateYTop);
+
+			// PaintroidApplication.drawingSurface.setBitmap(croppedBitmap);
+			bitmap = croppedBitmap.copy(bitmap.getConfig(), true);
+			mBitmap = croppedBitmap.copy(bitmap.getConfig(), true);
+
+			if (mFileToStoredBitmap == null) {
+				mBitmap = croppedBitmap.copy(Config.ARGB_8888, true);
+				storeBitmap();
+			}
+
+		} catch (Exception e) {
+			Log.e(PaintroidApplication.TAG,
+					"failed to crop bitmap:" + e.getMessage());
+			setChanged();
+			notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
+		}
+		setChanged();
+		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
+
+		return bitmap;
+	}
 }

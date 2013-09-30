@@ -4,6 +4,7 @@ import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.command.implementation.BaseCommand;
 import org.catrobat.paintroid.command.implementation.BitmapCommand;
 import org.catrobat.paintroid.command.implementation.CommandList;
+import org.catrobat.paintroid.command.implementation.CropCommand;
 import org.catrobat.paintroid.command.implementation.FlipCommand;
 
 import android.graphics.Bitmap;
@@ -54,8 +55,10 @@ public class ChangeLayerCommand extends BaseCommand {
 						if (mList.getCommands().get(k) instanceof FlipCommand) {
 							tmp = ((FlipCommand) mList.getCommands().get(k))
 									.runLayer(ctmp, tmp);
+						} else if ((mList.getCommands().get(k) instanceof CropCommand)) {
+							tmp = ((CropCommand) mList.getCommands().get(k))
+									.runLayer(ctmp, tmp);
 						} else {
-
 							mList.getCommands().get(k).run(ctmp, tmp);
 						}
 					}
@@ -93,6 +96,9 @@ public class ChangeLayerCommand extends BaseCommand {
 
 						if (mList.getCommands().get(k) instanceof FlipCommand) {
 							tmp = ((FlipCommand) mList.getCommands().get(k))
+									.runLayer(ctmp, tmp);
+						} else if ((mList.getCommands().get(k) instanceof CropCommand)) {
+							tmp = ((CropCommand) mList.getCommands().get(k))
 									.runLayer(ctmp, tmp);
 						} else {
 							mList.getCommands().get(k).run(ctmp, tmp);

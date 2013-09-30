@@ -84,7 +84,7 @@ public class DrawToolTests extends BaseToolTest {
 			NoSuchFieldException, IllegalAccessException {
 		PointF event = new PointF(0, 0);
 		PathStub pathStub = new PathStub();
-		PrivateAccess.setMemberValue(DrawTool.class, mToolToTest, "pathToDraw", pathStub);
+		PrivateAccess.setMemberValue(DrawTool.class, mToolToTest, "mPathToDraw", pathStub);
 
 		boolean returnValue = mToolToTest.handleDown(event);
 
@@ -107,7 +107,7 @@ public class DrawToolTests extends BaseToolTest {
 	public void testShouldNotStartPathIfNoCoordinateOnDownEvent() throws SecurityException, IllegalArgumentException,
 			NoSuchFieldException, IllegalAccessException {
 		PathStub pathStub = new PathStub();
-		PrivateAccess.setMemberValue(DrawTool.class, mToolToTest, "pathToDraw", pathStub);
+		PrivateAccess.setMemberValue(DrawTool.class, mToolToTest, "mPathToDraw", pathStub);
 
 		boolean returnValue = mToolToTest.handleDown(null);
 
@@ -122,7 +122,7 @@ public class DrawToolTests extends BaseToolTest {
 		PointF event1 = new PointF(0, 0);
 		PointF event2 = new PointF(5, 6);
 		PathStub pathStub = new PathStub();
-		PrivateAccess.setMemberValue(DrawTool.class, mToolToTest, "pathToDraw", pathStub);
+		PrivateAccess.setMemberValue(DrawTool.class, mToolToTest, "mPathToDraw", pathStub);
 
 		mToolToTest.handleDown(event1);
 		boolean returnValue = mToolToTest.handleMove(event2);
@@ -153,7 +153,7 @@ public class DrawToolTests extends BaseToolTest {
 			NoSuchFieldException, IllegalAccessException {
 		PointF event = new PointF(0, 0);
 		PathStub pathStub = new PathStub();
-		PrivateAccess.setMemberValue(DrawTool.class, mToolToTest, "pathToDraw", pathStub);
+		PrivateAccess.setMemberValue(DrawTool.class, mToolToTest, "mPathToDraw", pathStub);
 
 		mToolToTest.handleDown(event);
 		boolean returnValue = mToolToTest.handleMove(null);
@@ -169,7 +169,7 @@ public class DrawToolTests extends BaseToolTest {
 		PointF event2 = new PointF(MOVE_TOLERANCE, MOVE_TOLERANCE);
 		PointF event3 = new PointF(MOVE_TOLERANCE * 2, -MOVE_TOLERANCE);
 		PathStub pathStub = new PathStub();
-		PrivateAccess.setMemberValue(DrawTool.class, mToolToTest, "pathToDraw", pathStub);
+		PrivateAccess.setMemberValue(DrawTool.class, mToolToTest, "mPathToDraw", pathStub);
 
 		mToolToTest.handleDown(event1);
 		mToolToTest.handleMove(event2);
@@ -188,7 +188,7 @@ public class DrawToolTests extends BaseToolTest {
 			NoSuchFieldException, IllegalAccessException {
 		PointF event = new PointF(0, 0);
 		PathStub pathStub = new PathStub();
-		PrivateAccess.setMemberValue(DrawTool.class, mToolToTest, "pathToDraw", pathStub);
+		PrivateAccess.setMemberValue(DrawTool.class, mToolToTest, "mPathToDraw", pathStub);
 
 		mToolToTest.handleDown(event);
 		mToolToTest.handleMove(event);
@@ -204,7 +204,7 @@ public class DrawToolTests extends BaseToolTest {
 		PointF event1 = new PointF(MOVE_TOLERANCE + 0.1f, 0);
 		PointF event2 = new PointF(MOVE_TOLERANCE + 2, MOVE_TOLERANCE + 2);
 		PathStub pathStub = new PathStub();
-		PrivateAccess.setMemberValue(DrawTool.class, mToolToTest, "pathToDraw", pathStub);
+		PrivateAccess.setMemberValue(DrawTool.class, mToolToTest, "mPathToDraw", pathStub);
 
 		mToolToTest.handleDown(event);
 		mToolToTest.handleMove(event1);
@@ -294,7 +294,7 @@ public class DrawToolTests extends BaseToolTest {
 	public void testShouldRewindPathOnAppliedToBitmap() throws SecurityException, IllegalArgumentException,
 			NoSuchFieldException, IllegalAccessException {
 		PathStub pathStub = new PathStub();
-		PrivateAccess.setMemberValue(DrawTool.class, mToolToTest, "pathToDraw", pathStub);
+		PrivateAccess.setMemberValue(DrawTool.class, mToolToTest, "mPathToDraw", pathStub);
 
 		mToolToTest.resetInternalState(StateChange.RESET_INTERNAL_STATE);
 

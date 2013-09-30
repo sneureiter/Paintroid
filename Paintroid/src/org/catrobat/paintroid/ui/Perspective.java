@@ -167,7 +167,7 @@ public class Perspective implements Serializable {
 
 	public synchronized PointF calculateFromCanvasToScreen(PointF p) {
 
-		PointF calculatetP = p;
+		PointF calculatetP = new PointF(p.x, p.y);
 		calculatetP.x = ((p.x + mSurfaceTranslationX - mSurfaceCenterX)
 				* mSurfaceScale + mSurfaceCenterX);
 		calculatetP.y = ((p.y + mSurfaceTranslationY - mSurfaceCenterY)

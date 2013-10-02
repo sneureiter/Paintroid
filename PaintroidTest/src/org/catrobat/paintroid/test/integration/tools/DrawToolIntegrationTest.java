@@ -2,6 +2,7 @@ package org.catrobat.paintroid.test.integration.tools;
 
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.test.integration.BaseIntegrationTestClass;
+import org.catrobat.paintroid.test.utils.Utils;
 import org.catrobat.paintroid.tools.ToolType;
 import org.junit.After;
 import org.junit.Before;
@@ -41,25 +42,34 @@ public class DrawToolIntegrationTest extends BaseIntegrationTestClass {
 		int xLeft = 1;
 		int xMiddle = mScreenWidth / 2;
 
-		// TODO get correct y points, sub toolbarhight
-		// PointF calcPoint = PaintroidApplication.perspective.calculateFromCanvasToScreen(new PointF(0, 0));
-
 		int yMiddle = mScreenHeight / 2;
-		// int yTop = (int) (1 + calcPoint.y);
-		int yBottom = mScreenHeight - 1;
+		int yTop = (int) (Utils.getActionbarHeight() + Utils.getStatusbarHeigt(getActivity()) + 1);
+		int yBottom = mScreenHeight - ((int) Utils.getStatusbarHeigt(getActivity()) + 1);
 
 		Point rightMiddle = new Point(xRight, yMiddle);
 		Point leftMiddle = new Point(xLeft, yMiddle);
-		// Point topMiddle = new Point(xMiddle, yTop);
-		// Point bottomMiddle = new Point(xMiddle, yBottom);
+		Point topMiddle = new Point(xMiddle, yTop);
+		Point bottomMiddle = new Point(xMiddle, yBottom);
+		Point bottomRight = new Point(xRight, yBottom);
+		Point topLeft = new Point(xLeft, yTop);
+		Point bottomLeft = new Point(xLeft, yBottom);
+		Point topRight = new Point(xRight, yTop);
 
 		longpressOnPointAndCheckIfCanvasPointHasChanged(rightMiddle);
 		mSolo.sleep(100);
 		longpressOnPointAndCheckIfCanvasPointHasChanged(leftMiddle);
 		mSolo.sleep(100);
-		// longpressOnPointAndCheckIfCanvasPointHasChanged(topMiddle);
-		// mSolo.sleep(100);
-		// longpressOnPointAndCheckIfCanvasPointHasChanged(bottomMiddle);
+		longpressOnPointAndCheckIfCanvasPointHasChanged(topMiddle);
+		mSolo.sleep(100);
+		longpressOnPointAndCheckIfCanvasPointHasChanged(bottomMiddle);
+		mSolo.sleep(100);
+		longpressOnPointAndCheckIfCanvasPointHasChanged(bottomRight);
+		mSolo.sleep(100);
+		longpressOnPointAndCheckIfCanvasPointHasChanged(topLeft);
+		mSolo.sleep(100);
+		longpressOnPointAndCheckIfCanvasPointHasChanged(bottomLeft);
+		mSolo.sleep(100);
+		longpressOnPointAndCheckIfCanvasPointHasChanged(topRight);
 	}
 
 	public void longpressOnPointAndCheckIfCanvasPointHasChanged(Point clickPoint) {

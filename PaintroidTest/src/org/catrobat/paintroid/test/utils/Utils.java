@@ -37,7 +37,7 @@ public class Utils {
 
 	protected static final float ACTION_BAR_HEIGHT = 50.0f;
 
-	public static float getStatusbarHeigt(Activity activity) {
+	public static float getStatusbarHeight(Activity activity) {
 
 		int statusbarheight = 0;
 		int resourceId = activity.getResources().getIdentifier("status_bar_height", "dimen", "android");

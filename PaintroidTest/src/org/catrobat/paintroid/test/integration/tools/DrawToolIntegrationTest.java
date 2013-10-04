@@ -2,12 +2,15 @@ package org.catrobat.paintroid.test.integration.tools;
 
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.test.integration.BaseIntegrationTestClass;
+import org.catrobat.paintroid.test.utils.PrivateAccess;
 import org.catrobat.paintroid.test.utils.Utils;
-import org.catrobat.paintroid.tools.ToolType;
+import org.catrobat.paintroid.ui.Perspective;
 import org.junit.After;
 import org.junit.Before;
 
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 public class DrawToolIntegrationTest extends BaseIntegrationTestClass {
 
@@ -31,20 +34,18 @@ public class DrawToolIntegrationTest extends BaseIntegrationTestClass {
 			NoSuchFieldException, IllegalAccessException {
 
 		// zoom in
-		selectTool(ToolType.MOVE);
-		mSolo.clickOnView(mMenuBottomParameter2);
-		mSolo.clickOnView(mMenuBottomParameter2);
-		mSolo.clickOnView(mMenuBottomParameter2);
-
-		selectTool(ToolType.BRUSH);
-
-		int xRight = mScreenWidth - 1;
+		PaintroidApplication.perspective.setScale(5);
+		float surfaceWidth = (Float) PrivateAccess.getMemberValue(Perspective.class, PaintroidApplication.perspective,
+				"mSurfaceWidth");
+		float surfaceHeight = (Float) PrivateAccess.getMemberValue(Perspective.class, PaintroidApplication.perspective,
+				"mSurfaceHeight");
+		int xRight = (int) surfaceWidth - 1;
 		int xLeft = 1;
-		int xMiddle = mScreenWidth / 2;
+		int xMiddle = (int) surfaceWidth / 2;
 
-		int yMiddle = mScreenHeight / 2;
-		int yTop = (int) (Utils.getActionbarHeight() + Utils.getStatusbarHeigt(getActivity()));
-		int yBottom = mScreenHeight - ((int) Utils.getActionbarHeight() + 1);
+		int yMiddle = (int) (surfaceHeight / 2 + Utils.getActionbarHeight() + Utils.getStatusbarHeight(getActivity()));
+		int yTop = (int) (Utils.getActionbarHeight() + Utils.getStatusbarHeight(getActivity()));
+		int yBottom = (int) surfaceHeight + yTop -1;
 
 		Point rightMiddle = new Point(xRight, yMiddle);
 		Point leftMiddle = new Point(xLeft, yMiddle);
@@ -76,14 +77,13 @@ public class DrawToolIntegrationTest extends BaseIntegrationTestClass {
 		Point startPointCanvas = new Point(clickPoint.x, clickPoint.y);
 		PaintroidApplication.perspective.convertFromScreenToCanvas(startPointCanvas);
 
-		mSolo.drag(clickPoint.x, clickPoint.x, clickPoint.y, clickPoint.y, LONG_WAIT_TRIES);
-
-		Point endPointCanvas = new Point(clickPoint.x, clickPoint.y);
+		mSolo.drag(clickPoint.x, clickPoint.x, clickPoint.y, clickPoint.y, 200);
+		mSolo.sleep(1000);
+		Point endPointCanvas = new Point(clickPoint.x,
+				(int) (clickPoint.y - Utils.getStatusbarHeight(getActivity()) - Utils.getActionbarHeight()));
 		PaintroidApplication.perspective.convertFromScreenToCanvas(endPointCanvas);
-		// int color = PaintroidApplication.drawingSurface.getPixel(new PointF(endPointCanvas.x, endPointCanvas.y
-		// + Utils.getActionbarHeight() + getStatusBarHeight()));
-		//
-		// assertEquals(Color.BLACK, color);
+		int color = PaintroidApplication.drawingSurface.getPixel(new PointF(endPointCanvas.x, endPointCanvas.y));
+		assertEquals(Color.BLACK, color);
 		assertFalse("scrolling did not work", startPointCanvas.equals(endPointCanvas));
 	}
 

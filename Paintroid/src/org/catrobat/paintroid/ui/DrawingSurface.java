@@ -245,11 +245,11 @@ public class DrawingSurface extends SurfaceView implements
 		}
 	}
 
-	public int getPixel(PointF coordinate) {
+	public int getPixel(PointF canvasPoint) {
 		try {
 			if (mWorkingBitmap != null && mWorkingBitmap.isRecycled() == false) {
-				return mWorkingBitmap.getPixel((int) coordinate.x,
-						(int) coordinate.y);
+				return mWorkingBitmap.getPixel((int) canvasPoint.x,
+						(int) canvasPoint.y);
 			}
 		} catch (IllegalArgumentException e) {
 			Log.w(PaintroidApplication.TAG,

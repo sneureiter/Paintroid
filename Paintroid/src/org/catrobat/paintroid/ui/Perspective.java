@@ -21,7 +21,6 @@ package org.catrobat.paintroid.ui;
 
 import java.io.Serializable;
 
-import org.catrobat.paintroid.MenuFileActivity;
 import org.catrobat.paintroid.PaintroidApplication;
 
 import android.content.Context;
@@ -46,7 +45,6 @@ public class Perspective implements Serializable {
 	public static final float MAX_SCALE = 100f;
 	public static final float SCROLL_BORDER = 50f;
 	private static final float BORDER_ZOOM_FACTOR = 0.95f;
-	private static final float ACTION_BAR_HEIGHT = MenuFileActivity.ACTION_BAR_HEIGHT;
 
 	private float mSurfaceWidth;
 	private float mSurfaceHeight;
@@ -57,7 +55,6 @@ public class Perspective implements Serializable {
 	private float mSurfaceTranslationY;
 	private float mBitmapWidth;
 	private float mBitmapHeight;
-	private float mScreenDensity;
 	private boolean mIsFullscreen;
 	private float mInitialTranslationX;
 	private float mInitialTranslationY;
@@ -69,7 +66,6 @@ public class Perspective implements Serializable {
 		Display display = ((WindowManager) PaintroidApplication.applicationContext
 				.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		display.getMetrics(metrics);
-		mScreenDensity = metrics.density;
 		mIsFullscreen = false;
 	}
 
@@ -77,15 +73,13 @@ public class Perspective implements Serializable {
 		Rect surfaceFrame = holder.getSurfaceFrame();
 		mSurfaceWidth = surfaceFrame.right;
 		mSurfaceCenterX = surfaceFrame.exactCenterX();
-		mSurfaceHeight = surfaceFrame.bottom;// - ACTION_BAR_HEIGHT *
-												// mScreenDensity;
+		mSurfaceHeight = surfaceFrame.bottom;
 		mSurfaceCenterY = mSurfaceHeight / 2;
 		resetScaleAndTranslation();
 	}
 
 	public synchronized void resetScaleAndTranslation() {
 
-		float actionbarHeight = ACTION_BAR_HEIGHT * mScreenDensity;
 		mBitmapWidth = PaintroidApplication.drawingSurface.getBitmapWidth();
 		mBitmapHeight = PaintroidApplication.drawingSurface.getBitmapHeight();
 		mSurfaceScale = 1f;
@@ -146,13 +140,7 @@ public class Perspective implements Serializable {
 		}
 	}
 
-	// public synchronized void convertFromScreenToCanvas(Point p) {
-	// p.x = (int) ((p.x - mSurfaceCenterX) / mSurfaceScale + mSurfaceCenterX -
-	// mSurfaceTranslationX);
-	// p.y = (int) ((p.y - mSurfaceCenterY) / mSurfaceScale + mSurfaceCenterY -
-	// mSurfaceTranslationY);
-	// }
-
+	@Deprecated
 	public synchronized void convertFromSurfaceToCanvas(PointF p) {
 		p.x = (p.x - mSurfaceCenterX) / mSurfaceScale + mSurfaceCenterX
 				- mSurfaceTranslationX;
@@ -160,21 +148,32 @@ public class Perspective implements Serializable {
 				- mSurfaceTranslationY;
 	}
 
+	public synchronized PointF getCanvasPointFromSurfacePoint(
+			PointF surfacePoint) {
+
+		float canvasX = (surfacePoint.x - mSurfaceCenterX) / mSurfaceScale
+				+ mSurfaceCenterX - mSurfaceTranslationX;
+		float canvasY = (surfacePoint.y - mSurfaceCenterY) / mSurfaceScale
+				+ mSurfaceCenterY - mSurfaceTranslationY;
+
+		return new PointF(canvasX, canvasY);
+	}
+
+	@Deprecated
 	public synchronized void convertFromCanvasToSurface(PointF p) {
 		p.x = ((p.x + mSurfaceTranslationX - mSurfaceCenterX) * mSurfaceScale + mSurfaceCenterX);
 		p.y = ((p.y + mSurfaceTranslationY - mSurfaceCenterY) * mSurfaceScale + mSurfaceCenterY);
 
 	}
 
-	public synchronized PointF calculateFromCanvasToSurface(PointF p) {
+	public synchronized PointF getSurfacePointFromCanvasPoint(PointF canvasPoint) {
 
-		PointF calculatetP = new PointF(p.x, p.y);
-		calculatetP.x = ((p.x + mSurfaceTranslationX - mSurfaceCenterX)
-				* mSurfaceScale + mSurfaceCenterX);
-		calculatetP.y = ((p.y + mSurfaceTranslationY - mSurfaceCenterY)
-				* mSurfaceScale + mSurfaceCenterY);
+		float surfaceX = (canvasPoint.x + mSurfaceTranslationX - mSurfaceCenterX)
+				* mSurfaceScale + mSurfaceCenterX;
+		float surfaceY = (canvasPoint.y + mSurfaceTranslationY - mSurfaceCenterY)
+				* mSurfaceScale + mSurfaceCenterY;
 
-		return calculatetP;
+		return new PointF(surfaceX, surfaceY);
 	}
 
 	public synchronized void applyToCanvas(Canvas canvas) {

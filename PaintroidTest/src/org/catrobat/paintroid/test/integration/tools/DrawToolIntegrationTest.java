@@ -71,20 +71,70 @@ public class DrawToolIntegrationTest extends BaseIntegrationTestClass {
 		longpressOnPointAndCheckIfCanvasPointHasChanged(topRight);
 	}
 
+	// public void testClickInBordersAndCornersZoomedOut() throws SecurityException,
+	// IllegalArgumentException, NoSuchFieldException, IllegalAccessException {
+	//
+	// PaintroidApplication.perspective.setScale(0.5f);
+	// float surfaceWidth = (Float) PrivateAccess.getMemberValue(Perspective.class, PaintroidApplication.perspective,
+	// "mSurfaceWidth");
+	// float surfaceHeight = (Float) PrivateAccess.getMemberValue(Perspective.class, PaintroidApplication.perspective,
+	// "mSurfaceHeight");
+	// float xRight = surfaceWidth - 1;
+	// float xLeft = 1;
+	// float xMiddle = surfaceWidth / 2;
+	//
+	// float yMiddle = (surfaceHeight / 2 + Utils.getActionbarHeight() + Utils.getStatusbarHeight());
+	// float yTop = (Utils.getActionbarHeight() + Utils.getStatusbarHeight());
+	// float yBottom = surfaceHeight + yTop - 1;
+	//
+	// PointF rightMiddle = new PointF(xRight, yMiddle);
+	// PointF leftMiddle = new PointF(xLeft, yMiddle);
+	// PointF topMiddle = new PointF(xMiddle, yTop);
+	// PointF bottomMiddle = new PointF(xMiddle, yBottom);
+	// PointF topLeft = new PointF(xLeft, yTop);
+	// PointF bottomRight = new PointF(xRight, yBottom);
+	// PointF bottomLeft = new PointF(xLeft, yBottom);
+	// PointF topRight = new PointF(xRight, yTop);
+	//
+	// longpressOnPointAndCheckIfCanvasPointHasNotChanged(rightMiddle);
+	// mSolo.sleep(100);
+	// longpressOnPointAndCheckIfCanvasPointHasNotChanged(leftMiddle);
+	// mSolo.sleep(100);
+	// longpressOnPointAndCheckIfCanvasPointHasNotChanged(topMiddle);
+	// mSolo.sleep(100);
+	// longpressOnPointAndCheckIfCanvasPointHasNotChanged(bottomMiddle);
+	// mSolo.sleep(100);
+	// longpressOnPointAndCheckIfCanvasPointHasNotChanged(bottomRight);
+	// mSolo.sleep(100);
+	// longpressOnPointAndCheckIfCanvasPointHasNotChanged(topLeft);
+	// mSolo.sleep(100);
+	// longpressOnPointAndCheckIfCanvasPointHasNotChanged(bottomLeft);
+	// mSolo.sleep(100);
+	// longpressOnPointAndCheckIfCanvasPointHasNotChanged(topRight);
+	// }
+
 	public void longpressOnPointAndCheckIfCanvasPointHasChanged(PointF clickPoint) {
-		PointF startPointCanvas = Utils.convertFromScreenToSurface(clickPoint);
-		PaintroidApplication.perspective.convertFromSurfaceToCanvas(startPointCanvas);
+		PointF startPointSurface = Utils.convertFromScreenToSurface(clickPoint);
 
+		PointF startPointCanvas = PaintroidApplication.perspective.getCanvasPointFromSurfacePoint(startPointSurface);
 		mSolo.clickLongOnScreen(clickPoint.x, clickPoint.y, 2000);
-
-		PointF endPointCanvas = Utils.convertFromScreenToSurface(clickPoint);
-		PaintroidApplication.perspective.convertFromSurfaceToCanvas(endPointCanvas);
+		PointF endPointCanvas = PaintroidApplication.perspective.getCanvasPointFromSurfacePoint(startPointSurface);
 
 		int startPointColor = PaintroidApplication.drawingSurface.getPixel(startPointCanvas);
 		int endPointColor = PaintroidApplication.drawingSurface.getPixel(endPointCanvas);
 		assertEquals("start", Color.BLACK, startPointColor);
 		assertEquals("end", Color.BLACK, endPointColor);
 		assertFalse("scrolling did not work", startPointCanvas.equals(endPointCanvas));
+	}
+
+	public void longpressOnPointAndCheckIfCanvasPointHasNotChanged(PointF clickPoint) {
+		PointF startPointSurface = Utils.convertFromScreenToSurface(clickPoint);
+
+		PointF startPointCanvas = PaintroidApplication.perspective.getCanvasPointFromSurfacePoint(startPointSurface);
+		mSolo.clickLongOnScreen(clickPoint.x, clickPoint.y, 2000);
+		PointF endPointCanvas = PaintroidApplication.perspective.getCanvasPointFromSurfacePoint(startPointSurface);
+
+		assertTrue("view should not scroll", startPointCanvas.equals(endPointCanvas));
 	}
 
 }

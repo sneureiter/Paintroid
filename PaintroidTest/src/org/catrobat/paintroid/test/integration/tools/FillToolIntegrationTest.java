@@ -57,7 +57,7 @@ public class FillToolIntegrationTest extends BaseIntegrationTestClass {
 		PointF pointOnBitmap = new PointF(xCoord, yCoord);
 
 		PointF pointOnScreen = new PointF(pointOnBitmap.x, pointOnBitmap.y);
-		PaintroidApplication.perspective.convertFromScreenToCanvas(pointOnScreen);
+		PaintroidApplication.perspective.convertFromSurfaceToCanvas(pointOnScreen);
 
 		mSolo.clickOnScreen(pointOnScreen.x, pointOnScreen.y); // to fill the bitmap
 		assertTrue("Fill timed out", hasProgressDialogFinished(SHORT_WAIT_TRIES));
@@ -77,7 +77,7 @@ public class FillToolIntegrationTest extends BaseIntegrationTestClass {
 		PointF pointOnBitmap = new PointF(xCoord, yCoord);
 
 		PointF pointOnScreen = new PointF(pointOnBitmap.x, pointOnBitmap.y);
-		PaintroidApplication.perspective.convertFromScreenToCanvas(pointOnScreen);
+		PaintroidApplication.perspective.convertFromSurfaceToCanvas(pointOnScreen);
 
 		mSolo.clickOnScreen(pointOnScreen.x, pointOnScreen.y); // to fill the bitmap
 		assertTrue("Fill timed out", hasProgressDialogFinished(LONG_WAIT_TRIES));
@@ -97,7 +97,7 @@ public class FillToolIntegrationTest extends BaseIntegrationTestClass {
 		PointF pointOnBitmap = new PointF(xCoord, yCoord);
 
 		PointF pointOnScreen = new PointF(pointOnBitmap.x, pointOnBitmap.y);
-		PaintroidApplication.perspective.convertFromScreenToCanvas(pointOnScreen);
+		PaintroidApplication.perspective.convertFromSurfaceToCanvas(pointOnScreen);
 
 		mSolo.clickOnScreen(pointOnScreen.x, pointOnScreen.y); // to fill the bitmap
 		assertTrue("Fill timed out", hasProgressDialogFinished(LONG_WAIT_TRIES));
@@ -109,7 +109,7 @@ public class FillToolIntegrationTest extends BaseIntegrationTestClass {
 		pointOnBitmap = new PointF(xCoord, yCoord);
 
 		pointOnScreen = new PointF(pointOnBitmap.x, pointOnBitmap.y);
-		PaintroidApplication.perspective.convertFromScreenToCanvas(pointOnScreen);
+		PaintroidApplication.perspective.convertFromSurfaceToCanvas(pointOnScreen);
 
 		mSolo.clickOnScreen(pointOnScreen.x, pointOnScreen.y); // to fill the bitmap
 		assertTrue("Fill timed out", hasProgressDialogFinished(LONG_WAIT_TRIES));
@@ -134,7 +134,7 @@ public class FillToolIntegrationTest extends BaseIntegrationTestClass {
 		assertFalse(colorToDrawBorder == checkPointStartColor);
 
 		PointF pointOnScreen = new PointF(pointOnBitmap.x, pointOnBitmap.y);
-		PaintroidApplication.perspective.convertFromScreenToCanvas(pointOnScreen);
+		PaintroidApplication.perspective.convertFromSurfaceToCanvas(pointOnScreen);
 
 		PointF leftPointOnBitmap = new PointF(checkPointXCoord - 150, checkPointYCoord);
 		PointF leftPointOnScreen = new PointF(leftPointOnBitmap.x, leftPointOnBitmap.y);
@@ -142,10 +142,10 @@ public class FillToolIntegrationTest extends BaseIntegrationTestClass {
 		PointF rightPointOnScreen = new PointF(checkPointXCoord + 150, checkPointYCoord);
 		PointF bottomPointOnScreen = new PointF(checkPointXCoord, checkPointYCoord + 150);
 
-		PaintroidApplication.perspective.convertFromScreenToCanvas(leftPointOnScreen);
-		PaintroidApplication.perspective.convertFromScreenToCanvas(upperPointOnScreen);
-		PaintroidApplication.perspective.convertFromScreenToCanvas(rightPointOnScreen);
-		PaintroidApplication.perspective.convertFromScreenToCanvas(bottomPointOnScreen);
+		PaintroidApplication.perspective.convertFromSurfaceToCanvas(leftPointOnScreen);
+		PaintroidApplication.perspective.convertFromSurfaceToCanvas(upperPointOnScreen);
+		PaintroidApplication.perspective.convertFromSurfaceToCanvas(rightPointOnScreen);
+		PaintroidApplication.perspective.convertFromSurfaceToCanvas(bottomPointOnScreen);
 
 		mSolo.drag(leftPointOnScreen.x, upperPointOnScreen.x, leftPointOnScreen.y, upperPointOnScreen.y, 1);
 		mSolo.sleep(250);

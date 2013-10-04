@@ -261,9 +261,9 @@ public class CropToolIntegrationTest extends BaseIntegrationTestClass {
 		Point topleftCanvasPoint = new Point(0, 0);
 		Point bottomrightCanvasPoint = new Point(mCurrentDrawingSurfaceBitmap.getWidth() - 1,
 				mCurrentDrawingSurfaceBitmap.getHeight() - 1);
-		Point originalTopleftScreenPoint = Utils.convertFromCanvasToScreen(topleftCanvasPoint,
+		Point originalTopleftScreenPoint = Utils.convertFromCanvasToSurface(topleftCanvasPoint,
 				PaintroidApplication.perspective);
-		Point originalBottomrightScreenPoint = Utils.convertFromCanvasToScreen(bottomrightCanvasPoint,
+		Point originalBottomrightScreenPoint = Utils.convertFromCanvasToSurface(bottomrightCanvasPoint,
 				PaintroidApplication.perspective);
 
 		assertEquals("Canvas and screen bottomright coordinates are not the same ", bottomrightCanvasPoint,
@@ -281,10 +281,10 @@ public class CropToolIntegrationTest extends BaseIntegrationTestClass {
 		bottomrightCanvasPoint = new Point(mCurrentDrawingSurfaceBitmap.getWidth() - 1,
 				mCurrentDrawingSurfaceBitmap.getHeight() - 1);
 
-		Point topleftScreenPoint = org.catrobat.paintroid.test.utils.Utils.convertFromCanvasToScreen(
+		Point topleftScreenPoint = org.catrobat.paintroid.test.utils.Utils.convertFromCanvasToSurface(
 				topleftCanvasPoint, PaintroidApplication.perspective);
 
-		Point bottomrightScreenPoint = org.catrobat.paintroid.test.utils.Utils.convertFromCanvasToScreen(
+		Point bottomrightScreenPoint = org.catrobat.paintroid.test.utils.Utils.convertFromCanvasToSurface(
 				bottomrightCanvasPoint, PaintroidApplication.perspective);
 
 		assertTrue("Wrong width after cropping", originalWidth > mCurrentDrawingSurfaceBitmap.getWidth());
@@ -307,7 +307,7 @@ public class CropToolIntegrationTest extends BaseIntegrationTestClass {
 
 		bottomrightCanvasPoint = new Point(mCurrentDrawingSurfaceBitmap.getWidth() - 1,
 				mCurrentDrawingSurfaceBitmap.getHeight() - 1);
-		originalBottomrightScreenPoint = Utils.convertFromCanvasToScreen(bottomrightCanvasPoint,
+		originalBottomrightScreenPoint = Utils.convertFromCanvasToSurface(bottomrightCanvasPoint,
 				PaintroidApplication.perspective);
 
 		assertEquals("Canvas and screen bottomright coordinates are not the same after undo", bottomrightCanvasPoint,
@@ -323,9 +323,9 @@ public class CropToolIntegrationTest extends BaseIntegrationTestClass {
 		Point topleftCanvasPoint = new Point(0, 0);
 		Point bottomrightCanvasPoint = new Point(mCurrentDrawingSurfaceBitmap.getWidth(),
 				mCurrentDrawingSurfaceBitmap.getHeight());
-		Point originalTopleftScreenPoint = Utils.convertFromCanvasToScreen(topleftCanvasPoint,
+		Point originalTopleftScreenPoint = Utils.convertFromCanvasToSurface(topleftCanvasPoint,
 				PaintroidApplication.perspective);
-		Point originalBottomrightScreenPoint = Utils.convertFromCanvasToScreen(bottomrightCanvasPoint,
+		Point originalBottomrightScreenPoint = Utils.convertFromCanvasToSurface(bottomrightCanvasPoint,
 				PaintroidApplication.perspective);
 
 		int lineWidth = 10;
@@ -353,9 +353,9 @@ public class CropToolIntegrationTest extends BaseIntegrationTestClass {
 		Point centerOfScreen = new Point(originalBottomrightScreenPoint.x / 2, originalBottomrightScreenPoint.y / 2);
 
 		Point topleftScreenPoint = Utils
-				.convertFromCanvasToScreen(topleftCanvasPoint, PaintroidApplication.perspective);
+				.convertFromCanvasToSurface(topleftCanvasPoint, PaintroidApplication.perspective);
 
-		Point bottomrightScreenPoint = Utils.convertFromCanvasToScreen(bottomrightCanvasPoint,
+		Point bottomrightScreenPoint = Utils.convertFromCanvasToSurface(bottomrightCanvasPoint,
 				PaintroidApplication.perspective);
 
 		assertTrue("Wrong width after cropping", originalWidth > PaintroidApplication.drawingSurface.getBitmapWidth());

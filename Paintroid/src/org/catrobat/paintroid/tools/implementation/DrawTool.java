@@ -112,7 +112,7 @@ public class DrawTool extends BaseTool {
 		int deltaY = 0;
 
 		PointF calcPoint = PaintroidApplication.perspective
-				.calculateFromCanvasToScreen(new PointF(coordinate.x,
+				.calculateFromCanvasToSurface(new PointF(coordinate.x,
 						coordinate.y));
 
 		if (calcPoint.x > (PaintroidApplication.drawingSurface.getWidth() - mScrollTolerance)) {

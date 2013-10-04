@@ -51,10 +51,10 @@ public class FullscreenIntegrationTest extends BaseIntegrationTestClass {
 		switchToFullscreen();
 
 		int clickPointX = mScreenWidth / 2;
-		int clickPointY = mScreenHeight / 2 - (int) Utils.getStatusbarHeight(getActivity());
+		int clickPointY = mScreenHeight / 2 - (int) Utils.getStatusbarHeight();
 		Point bitmapPixelPosition = new Point();
 		try {
-			bitmapPixelPosition = Utils.convertFromCanvasToScreen(new Point(clickPointX, clickPointY),
+			bitmapPixelPosition = Utils.convertFromCanvasToSurface(new Point(clickPointX, clickPointY),
 					PaintroidApplication.perspective);
 		} catch (Exception whatever) {
 			// TODO Auto-generated catch block
@@ -62,7 +62,7 @@ public class FullscreenIntegrationTest extends BaseIntegrationTestClass {
 		}
 		mSolo.clickOnScreen(clickPointX, clickPointY);
 		int pixelColor = PaintroidApplication.drawingSurface.getPixel(new PointF(bitmapPixelPosition.x,
-				bitmapPixelPosition.y - (int) Utils.getStatusbarHeight(getActivity()) * 2));
+				bitmapPixelPosition.y - (int) Utils.getStatusbarHeight() * 2));
 		assertEquals("pixel should be black", Color.BLACK, pixelColor);
 	}
 
@@ -76,7 +76,7 @@ public class FullscreenIntegrationTest extends BaseIntegrationTestClass {
 		mSolo.clickOnScreen(clickPointX, clickPointY);
 		Point bitmapPixelPosition = new Point();
 		try {
-			bitmapPixelPosition = Utils.convertFromCanvasToScreen(new Point(clickPointX, clickPointY),
+			bitmapPixelPosition = Utils.convertFromCanvasToSurface(new Point(clickPointX, clickPointY),
 					PaintroidApplication.perspective);
 		} catch (Exception whatever) {
 			// TODO Auto-generated catch block
@@ -98,7 +98,7 @@ public class FullscreenIntegrationTest extends BaseIntegrationTestClass {
 		mSolo.clickOnScreen(clickPointX, clickPointY);
 		mSolo.sleep(1000);
 		int pixel = PaintroidApplication.drawingSurface.getPixel(new PointF(clickPointX, clickPointY
-				- (int) Utils.getStatusbarHeight(getActivity()) * 2));
+				- (int) Utils.getStatusbarHeight() * 2));
 		assertEquals("pixel should be transparent", Color.TRANSPARENT, pixel);
 		mSolo.goBack();
 	}

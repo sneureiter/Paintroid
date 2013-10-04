@@ -63,7 +63,7 @@ public class DrawingSurfaceListener implements OnTouchListener {
 	public boolean onTouch(View view, MotionEvent event) {
 
 		PointF touchPoint = new PointF(event.getX(), event.getY());
-		mPerspective.convertFromScreenToCanvas(touchPoint);
+		mPerspective.convertFromSurfaceToCanvas(touchPoint);
 
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:

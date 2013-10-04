@@ -111,7 +111,7 @@ public class UndoRedoIntegrationTest extends BaseIntegrationTestClass {
 		selectTool(ToolType.FILL);
 
 		PointF pointOnScreen = new PointF(pointOnBitmap.x, pointOnBitmap.y);
-		PaintroidApplication.perspective.convertFromScreenToCanvas(pointOnScreen);
+		PaintroidApplication.perspective.convertFromSurfaceToCanvas(pointOnScreen);
 		mSolo.clickOnScreen(pointOnScreen.x, pointOnScreen.y);
 		mSolo.sleep(4000);
 
@@ -161,7 +161,7 @@ public class UndoRedoIntegrationTest extends BaseIntegrationTestClass {
 		int colorToFill = PaintroidApplication.currentTool.getDrawPaint().getColor();
 
 		PointF pointOnScreen = new PointF(pointOnBitmap.x, pointOnBitmap.y);
-		PaintroidApplication.perspective.convertFromScreenToCanvas(pointOnScreen);
+		PaintroidApplication.perspective.convertFromSurfaceToCanvas(pointOnScreen);
 		mSolo.clickOnScreen(pointOnScreen.x, pointOnScreen.y);
 		mSolo.waitForDialogToClose(TIMEOUT);
 

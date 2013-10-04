@@ -443,7 +443,7 @@ public class MenuFileActivityIntegrationTest extends BaseIntegrationTestClass {
 		PointF pointOnBitmap = new PointF(xCoord, yCoord);
 
 		PointF pointOnScreen = new PointF(pointOnBitmap.x, pointOnBitmap.y);
-		PaintroidApplication.perspective.convertFromScreenToCanvas(pointOnScreen);
+		PaintroidApplication.perspective.convertFromSurfaceToCanvas(pointOnScreen);
 
 		mSolo.clickOnScreen(pointOnScreen.x, pointOnScreen.y);
 		mSolo.sleep(1000);

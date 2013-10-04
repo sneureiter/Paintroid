@@ -81,7 +81,7 @@ public class EraserToolIntegrationTest extends BaseIntegrationTestClass {
 
 		((Bitmap) PrivateAccess.getMemberValue(DrawingSurface.class, PaintroidApplication.drawingSurface,
 				"mWorkingBitmap")).eraseColor(Color.BLACK);
-		PointF pointOnBitmap = new PointF(org.catrobat.paintroid.test.utils.Utils.convertFromCanvasToScreen(new Point(
+		PointF pointOnBitmap = new PointF(org.catrobat.paintroid.test.utils.Utils.convertFromCanvasToSurface(new Point(
 				clickCoordinateX, clickCoordinateY), PaintroidApplication.perspective));
 		int colorBeforeErase = PaintroidApplication.drawingSurface.getPixel(pointOnBitmap);
 		assertEquals("After painting black, pixel should be black", Color.BLACK, colorBeforeErase);
@@ -124,7 +124,7 @@ public class EraserToolIntegrationTest extends BaseIntegrationTestClass {
 
 		((Bitmap) PrivateAccess.getMemberValue(DrawingSurface.class, PaintroidApplication.drawingSurface,
 				"mWorkingBitmap")).eraseColor(Color.BLACK);
-		PointF pointOnBitmap = new PointF(org.catrobat.paintroid.test.utils.Utils.convertFromCanvasToScreen(new Point(
+		PointF pointOnBitmap = new PointF(org.catrobat.paintroid.test.utils.Utils.convertFromCanvasToSurface(new Point(
 				clickCoordinateX, clickCoordinateY), PaintroidApplication.perspective));
 		int colorBeforeErase = PaintroidApplication.drawingSurface.getPixel(pointOnBitmap);
 		assertEquals("After painting black, pixel should be black", Color.BLACK, colorBeforeErase);
@@ -159,7 +159,7 @@ public class EraserToolIntegrationTest extends BaseIntegrationTestClass {
 
 		((Bitmap) PrivateAccess.getMemberValue(DrawingSurface.class, PaintroidApplication.drawingSurface,
 				"mWorkingBitmap")).eraseColor(Color.BLACK);
-		PointF pointOnBitmap = new PointF(org.catrobat.paintroid.test.utils.Utils.convertFromCanvasToScreen(new Point(
+		PointF pointOnBitmap = new PointF(org.catrobat.paintroid.test.utils.Utils.convertFromCanvasToSurface(new Point(
 				clickCoordinateX, clickCoordinateY), PaintroidApplication.perspective));
 		int colorBeforeErase = PaintroidApplication.drawingSurface.getPixel(pointOnBitmap);
 		assertEquals("After painting black, pixel should be black", Color.BLACK, colorBeforeErase);
@@ -208,7 +208,7 @@ public class EraserToolIntegrationTest extends BaseIntegrationTestClass {
 		((Bitmap) PrivateAccess.getMemberValue(DrawingSurface.class, PaintroidApplication.drawingSurface,
 				"mWorkingBitmap")).eraseColor(Color.BLACK);
 		PointF pointOnBitmap = new PointF(clickCoordinateX, clickCoordinateY);
-		PaintroidApplication.perspective.convertFromScreenToCanvas(pointOnBitmap);
+		PaintroidApplication.perspective.convertFromSurfaceToCanvas(pointOnBitmap);
 		int colorBeforeErase = PaintroidApplication.drawingSurface.getPixel(pointOnBitmap);
 		assertEquals("After painting black, pixel should be black", Color.BLACK, colorBeforeErase);
 

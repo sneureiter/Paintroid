@@ -9,7 +9,6 @@ import org.junit.After;
 import org.junit.Before;
 
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.PointF;
 
 public class DrawToolIntegrationTest extends BaseIntegrationTestClass {
@@ -30,31 +29,30 @@ public class DrawToolIntegrationTest extends BaseIntegrationTestClass {
 		super();
 	}
 
-	public void testScrollingViewByClickInBordersAndCorners() throws SecurityException, IllegalArgumentException,
-			NoSuchFieldException, IllegalAccessException {
+	public void testScrollingViewByClickInBordersAndCornersZoomedIn() throws SecurityException,
+			IllegalArgumentException, NoSuchFieldException, IllegalAccessException {
 
-		// zoom in
 		PaintroidApplication.perspective.setScale(5);
 		float surfaceWidth = (Float) PrivateAccess.getMemberValue(Perspective.class, PaintroidApplication.perspective,
 				"mSurfaceWidth");
 		float surfaceHeight = (Float) PrivateAccess.getMemberValue(Perspective.class, PaintroidApplication.perspective,
 				"mSurfaceHeight");
-		int xRight = (int) surfaceWidth - 1;
-		int xLeft = 1;
-		int xMiddle = (int) surfaceWidth / 2;
+		float xRight = surfaceWidth - 1;
+		float xLeft = 1;
+		float xMiddle = surfaceWidth / 2;
 
-		int yMiddle = (int) (surfaceHeight / 2 + Utils.getActionbarHeight() + Utils.getStatusbarHeight(getActivity()));
-		int yTop = (int) (Utils.getActionbarHeight() + Utils.getStatusbarHeight(getActivity()));
-		int yBottom = (int) surfaceHeight + yTop -1;
+		float yMiddle = (surfaceHeight / 2 + Utils.getActionbarHeight() + Utils.getStatusbarHeight());
+		float yTop = (Utils.getActionbarHeight() + Utils.getStatusbarHeight());
+		float yBottom = surfaceHeight + yTop - 1;
 
-		Point rightMiddle = new Point(xRight, yMiddle);
-		Point leftMiddle = new Point(xLeft, yMiddle);
-		Point topMiddle = new Point(xMiddle, yTop);
-		Point bottomMiddle = new Point(xMiddle, yBottom);
-		Point bottomRight = new Point(xRight, yBottom);
-		Point topLeft = new Point(xLeft, yTop);
-		Point bottomLeft = new Point(xLeft, yBottom);
-		Point topRight = new Point(xRight, yTop);
+		PointF rightMiddle = new PointF(xRight, yMiddle);
+		PointF leftMiddle = new PointF(xLeft, yMiddle);
+		PointF topMiddle = new PointF(xMiddle, yTop);
+		PointF bottomMiddle = new PointF(xMiddle, yBottom);
+		PointF topLeft = new PointF(xLeft, yTop);
+		PointF bottomRight = new PointF(xRight, yBottom);
+		PointF bottomLeft = new PointF(xLeft, yBottom);
+		PointF topRight = new PointF(xRight, yTop);
 
 		longpressOnPointAndCheckIfCanvasPointHasChanged(rightMiddle);
 		mSolo.sleep(100);
@@ -73,17 +71,19 @@ public class DrawToolIntegrationTest extends BaseIntegrationTestClass {
 		longpressOnPointAndCheckIfCanvasPointHasChanged(topRight);
 	}
 
-	public void longpressOnPointAndCheckIfCanvasPointHasChanged(Point clickPoint) {
-		Point startPointCanvas = new Point(clickPoint.x, clickPoint.y);
-		PaintroidApplication.perspective.convertFromScreenToCanvas(startPointCanvas);
+	public void longpressOnPointAndCheckIfCanvasPointHasChanged(PointF clickPoint) {
+		PointF startPointCanvas = Utils.convertFromScreenToSurface(clickPoint);
+		PaintroidApplication.perspective.convertFromSurfaceToCanvas(startPointCanvas);
 
-		mSolo.drag(clickPoint.x, clickPoint.x, clickPoint.y, clickPoint.y, 200);
-		mSolo.sleep(1000);
-		Point endPointCanvas = new Point(clickPoint.x,
-				(int) (clickPoint.y - Utils.getStatusbarHeight(getActivity()) - Utils.getActionbarHeight()));
-		PaintroidApplication.perspective.convertFromScreenToCanvas(endPointCanvas);
-		int color = PaintroidApplication.drawingSurface.getPixel(new PointF(endPointCanvas.x, endPointCanvas.y));
-		assertEquals(Color.BLACK, color);
+		mSolo.clickLongOnScreen(clickPoint.x, clickPoint.y, 2000);
+
+		PointF endPointCanvas = Utils.convertFromScreenToSurface(clickPoint);
+		PaintroidApplication.perspective.convertFromSurfaceToCanvas(endPointCanvas);
+
+		int startPointColor = PaintroidApplication.drawingSurface.getPixel(startPointCanvas);
+		int endPointColor = PaintroidApplication.drawingSurface.getPixel(endPointCanvas);
+		assertEquals("start", Color.BLACK, startPointColor);
+		assertEquals("end", Color.BLACK, endPointColor);
 		assertFalse("scrolling did not work", startPointCanvas.equals(endPointCanvas));
 	}
 

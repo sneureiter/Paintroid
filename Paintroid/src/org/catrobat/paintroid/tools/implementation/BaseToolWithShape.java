@@ -54,7 +54,7 @@ public abstract class BaseToolWithShape extends BaseTool implements
 		mToolPosition = new PointF(display.getWidth() / 2f, display.getHeight()
 				/ 2f - actionBarHeight);
 		PaintroidApplication.perspective
-				.convertFromScreenToCanvas(mToolPosition);
+				.convertFromSurfaceToCanvas(mToolPosition);
 		mLinePaint = new Paint();
 		mLinePaint.setColor(mPrimaryShapeColor);
 	}

@@ -23,11 +23,11 @@ import org.catrobat.paintroid.MenuFileActivity;
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.ui.Perspective;
 
-import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
@@ -37,12 +37,13 @@ public class Utils {
 
 	protected static final float ACTION_BAR_HEIGHT = 50.0f;
 
-	public static float getStatusbarHeight(Activity activity) {
+	public static float getStatusbarHeight() {
 
 		int statusbarheight = 0;
-		int resourceId = activity.getResources().getIdentifier("status_bar_height", "dimen", "android");
+		int resourceId = PaintroidApplication.applicationContext.getResources().getIdentifier("status_bar_height",
+				"dimen", "android");
 		if (resourceId > 0) {
-			statusbarheight = activity.getResources().getDimensionPixelSize(resourceId);
+			statusbarheight = PaintroidApplication.applicationContext.getResources().getDimensionPixelSize(resourceId);
 		}
 		return statusbarheight;
 
@@ -56,7 +57,7 @@ public class Utils {
 		return pixelArray;
 	}
 
-	public static synchronized Point convertFromCanvasToScreen(Point canvasPoint, Perspective currentPerspective)
+	public static synchronized Point convertFromCanvasToSurface(Point canvasPoint, Perspective currentPerspective)
 			throws SecurityException, IllegalArgumentException, NoSuchFieldException, IllegalAccessException {
 		Float surfaceCenterX = (Float) PrivateAccess.getMemberValue(Perspective.class, currentPerspective,
 				"mSurfaceCenterX");
@@ -92,5 +93,10 @@ public class Utils {
 		display.getMetrics(metrics);
 		float density = metrics.density;
 		return (MenuFileActivity.ACTION_BAR_HEIGHT * density);
+	}
+
+	public static PointF convertFromScreenToSurface(PointF screenPoint) {
+
+		return new PointF(screenPoint.x, screenPoint.y - getActionbarHeight() - getStatusbarHeight());
 	}
 }

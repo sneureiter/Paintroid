@@ -26,7 +26,6 @@ import org.catrobat.paintroid.PaintroidApplication;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
@@ -93,7 +92,7 @@ public class Perspective implements Serializable {
 
 		if (mSurfaceWidth == 0 || mSurfaceHeight == 0) {
 			mSurfaceTranslationX = 0f;
-			mSurfaceTranslationY = -actionbarHeight;
+			mSurfaceTranslationY = 0f;
 		}
 
 		else {
@@ -147,25 +146,27 @@ public class Perspective implements Serializable {
 		}
 	}
 
-	public synchronized void convertFromScreenToCanvas(Point p) {
-		p.x = (int) ((p.x - mSurfaceCenterX) / mSurfaceScale + mSurfaceCenterX - mSurfaceTranslationX);
-		p.y = (int) ((p.y - mSurfaceCenterY) / mSurfaceScale + mSurfaceCenterY - mSurfaceTranslationY);
-	}
+	// public synchronized void convertFromScreenToCanvas(Point p) {
+	// p.x = (int) ((p.x - mSurfaceCenterX) / mSurfaceScale + mSurfaceCenterX -
+	// mSurfaceTranslationX);
+	// p.y = (int) ((p.y - mSurfaceCenterY) / mSurfaceScale + mSurfaceCenterY -
+	// mSurfaceTranslationY);
+	// }
 
-	public synchronized void convertFromScreenToCanvas(PointF p) {
+	public synchronized void convertFromSurfaceToCanvas(PointF p) {
 		p.x = (p.x - mSurfaceCenterX) / mSurfaceScale + mSurfaceCenterX
 				- mSurfaceTranslationX;
 		p.y = (p.y - mSurfaceCenterY) / mSurfaceScale + mSurfaceCenterY
 				- mSurfaceTranslationY;
 	}
 
-	public synchronized void convertFromCanvasToScreen(PointF p) {
+	public synchronized void convertFromCanvasToSurface(PointF p) {
 		p.x = ((p.x + mSurfaceTranslationX - mSurfaceCenterX) * mSurfaceScale + mSurfaceCenterX);
 		p.y = ((p.y + mSurfaceTranslationY - mSurfaceCenterY) * mSurfaceScale + mSurfaceCenterY);
 
 	}
 
-	public synchronized PointF calculateFromCanvasToScreen(PointF p) {
+	public synchronized PointF calculateFromCanvasToSurface(PointF p) {
 
 		PointF calculatetP = new PointF(p.x, p.y);
 		calculatetP.x = ((p.x + mSurfaceTranslationX - mSurfaceCenterX)

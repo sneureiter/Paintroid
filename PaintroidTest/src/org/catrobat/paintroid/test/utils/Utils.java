@@ -38,8 +38,14 @@ public class Utils {
 	protected static final float ACTION_BAR_HEIGHT = 50.0f;
 
 	public static float getStatusbarHeigt(Activity activity) {
-		float actionbarHeight = ACTION_BAR_HEIGHT * activity.getResources().getDisplayMetrics().density;
-		return actionbarHeight;
+
+		int statusbarheight = 0;
+		int resourceId = activity.getResources().getIdentifier("status_bar_height", "dimen", "android");
+		if (resourceId > 0) {
+			statusbarheight = activity.getResources().getDimensionPixelSize(resourceId);
+		}
+		return statusbarheight;
+
 	}
 
 	public static int[] bitmapToPixelArray(Bitmap bitmap) {

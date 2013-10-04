@@ -43,11 +43,8 @@ public class DrawToolIntegrationTest extends BaseIntegrationTestClass {
 		int xMiddle = mScreenWidth / 2;
 
 		int yMiddle = mScreenHeight / 2;
-		int yTop = (int) (Utils.getActionbarHeight() + getStatusBarHeight() + 1) /*
-																				 * Utils.getStatusbarHeigt(getActivity())
-																				 * + 1) was not the correct height
-																				 */;
-		int yBottom = mScreenHeight - ((int) Utils.getStatusbarHeigt(getActivity()) + 1);
+		int yTop = (int) (Utils.getActionbarHeight() + Utils.getStatusbarHeigt(getActivity()));
+		int yBottom = mScreenHeight - ((int) Utils.getActionbarHeight() + 1);
 
 		Point rightMiddle = new Point(xRight, yMiddle);
 		Point leftMiddle = new Point(xLeft, yMiddle);
@@ -83,16 +80,11 @@ public class DrawToolIntegrationTest extends BaseIntegrationTestClass {
 
 		Point endPointCanvas = new Point(clickPoint.x, clickPoint.y);
 		PaintroidApplication.perspective.convertFromScreenToCanvas(endPointCanvas);
-
+		// int color = PaintroidApplication.drawingSurface.getPixel(new PointF(endPointCanvas.x, endPointCanvas.y
+		// + Utils.getActionbarHeight() + getStatusBarHeight()));
+		//
+		// assertEquals(Color.BLACK, color);
 		assertFalse("scrolling did not work", startPointCanvas.equals(endPointCanvas));
 	}
 
-	public int getStatusBarHeight() {
-		int result = 0;
-		int resourceId = getActivity().getResources().getIdentifier("status_bar_height", "dimen", "android");
-		if (resourceId > 0) {
-			result = getActivity().getResources().getDimensionPixelSize(resourceId);
-		}
-		return result;
-	}
 }

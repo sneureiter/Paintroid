@@ -369,14 +369,11 @@ public final class LayerChooserDialog extends DialogFragment implements
 	}
 
 	private static void setSelected(int position, View a, View b) {
+
 		for (int i = 0; i < layer_data.size(); i++) {
 			layer_data.get(i).selected = false;
 		}
 		layer_data.get(position).selected = true;
-
-		if (layer_data.get(position).selected == true
-				&& layer_data.get(position).visible == false) {
-		}
 
 		mSelectedLayerIndex = position;
 		adapter.notifyDataSetChanged();
@@ -398,7 +395,6 @@ public final class LayerChooserDialog extends DialogFragment implements
 
 			dismiss();
 			break;
-
 		}
 	}
 }

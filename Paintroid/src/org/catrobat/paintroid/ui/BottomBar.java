@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -25,12 +26,15 @@ public class BottomBar implements View.OnTouchListener {
 
 	private MainActivity mMainActivity;
 	private int mCurrentLayer;
+	private Point screenSize;
 
 	public BottomBar(MainActivity mainActivity) {
 		mMainActivity = mainActivity;
 
 		mCurrentLayer = 0;
 		PaintroidApplication.currentLayer = mCurrentLayer;
+		screenSize = PaintroidApplication.getScreenSize(mMainActivity
+				.getApplicationContext());
 
 		mAttributeButton1 = (ImageButton) mainActivity
 				.findViewById(R.id.btn_bottom_attribute1);
@@ -123,9 +127,13 @@ public class BottomBar implements View.OnTouchListener {
 			}
 			c.drawBitmap(b, new Matrix(), null);
 		}
-		PaintroidApplication.commandManager.getAllCommandList()
+
+		PaintroidApplication.commandManager
+				.getAllCommandList()
 				.get(PaintroidApplication.currentLayer)
-				.setThumbnail(Bitmap.createScaledBitmap(b, 48, 64, true));
+				.setThumbnail(
+						Bitmap.createScaledBitmap(b, screenSize.x / 10,
+								screenSize.y / 10, true));
 
 	}
 

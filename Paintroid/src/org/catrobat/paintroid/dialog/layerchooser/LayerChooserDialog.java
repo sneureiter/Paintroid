@@ -53,6 +53,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Paint;
@@ -302,11 +303,19 @@ public final class LayerChooserDialog extends DialogFragment implements
 		if (layer_data.size() < 30) {
 			layer_data.add(
 					mSelectedLayerIndex + 1,
-					new LayerRow(R.drawable.arrow, mContext
+					new LayerRow(mContext
 							.getString(R.string.layer_new_layer_name), true,
 							false));
 			PaintroidApplication.commandManager
 					.addEmptyCommandList(mSelectedLayerIndex + 1);
+
+			Bitmap emptyBitmap = Bitmap.createBitmap(
+					PaintroidApplication.getScreenSize(mContext).x / 10,
+					PaintroidApplication.getScreenSize(mContext).y / 10,
+					Config.ALPHA_8);
+
+			PaintroidApplication.commandManager.getAllCommandList()
+					.get(mSelectedLayerIndex + 1).setThumbnail(emptyBitmap);
 			setSelected(mSelectedLayerIndex + 1, null, null);
 			adapter.notifyDataSetChanged();
 		} else {
@@ -353,7 +362,7 @@ public final class LayerChooserDialog extends DialogFragment implements
 			layer_data = new ArrayList<LayerRow>();
 			layer_data.add(
 					0,
-					new LayerRow(R.drawable.arrow, mContext
+					new LayerRow(mContext
 							.getString(R.string.layer_new_layer_name), true,
 							true));
 		}

@@ -28,6 +28,7 @@ import org.catrobat.paintroid.tools.ToolWithShape;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -51,8 +52,11 @@ public abstract class BaseToolWithShape extends BaseTool implements
 		display.getMetrics(metrics);
 		float actionBarHeight = MenuFileActivity.ACTION_BAR_HEIGHT
 				* metrics.density;
-		mToolPosition = new PointF(display.getWidth() / 2f, display.getHeight()
-				/ 2f - actionBarHeight);
+
+		Point screenSize = PaintroidApplication.getScreenSize(context);
+
+		mToolPosition = new PointF(screenSize.x / 2f, screenSize.y / 2f
+				- actionBarHeight);
 		PaintroidApplication.perspective
 				.convertFromScreenToCanvas(mToolPosition);
 		mLinePaint = new Paint();

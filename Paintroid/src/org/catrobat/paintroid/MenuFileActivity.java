@@ -38,11 +38,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Display;
 import android.widget.ImageButton;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -445,9 +445,11 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 		PaintroidApplication.commandManager.setmBitmapAbove(null);
 		PaintroidApplication.commandManager.setmBitmapBelow(null);
 
-		Display display = getWindowManager().getDefaultDisplay();
-		float width = display.getWidth();
-		float height = display.getHeight();
+		Point screenSize = PaintroidApplication
+				.getScreenSize(getApplicationContext());
+		float width = screenSize.x;
+		float height = screenSize.y;
+
 		Log.d("PAINTROID - MFA", "init new bitmap with: w: " + width + " h:"
 				+ height);
 		Bitmap bitmap = Bitmap.createBitmap((int) width, (int) height,

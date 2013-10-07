@@ -27,12 +27,17 @@ import org.catrobat.paintroid.tools.Tool;
 import org.catrobat.paintroid.ui.DrawingSurface;
 import org.catrobat.paintroid.ui.Perspective;
 
+import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Point;
+import android.os.Build;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 
 public class PaintroidApplication extends Application {
 	public static final String TAG = "PAINTROID";
@@ -69,4 +74,25 @@ public class PaintroidApplication extends Application {
 		}
 		return versionName;
 	}
+
+	@TargetApi(13)
+	public static Point getScreenSize(Context con) {
+		int Measuredwidth = 0;
+		int Measuredheight = 0;
+		Point size = new Point();
+		WindowManager w = (WindowManager) con
+				.getSystemService(Context.WINDOW_SERVICE);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+			w.getDefaultDisplay().getSize(size);
+			Measuredwidth = size.x;
+			Measuredheight = size.y;
+		} else {
+			Display d = w.getDefaultDisplay();
+			Measuredwidth = d.getWidth();
+			Measuredheight = d.getHeight();
+		}
+		return new Point(Measuredwidth, Measuredheight);
+	}
+
 }

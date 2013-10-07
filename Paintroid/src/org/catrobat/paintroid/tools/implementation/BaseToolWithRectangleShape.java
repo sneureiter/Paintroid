@@ -31,13 +31,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Cap;
 import android.graphics.Paint.Style;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.Region.Op;
-import android.view.Display;
-import android.view.WindowManager;
 
 public abstract class BaseToolWithRectangleShape extends BaseToolWithShape {
 
@@ -105,10 +104,9 @@ public abstract class BaseToolWithRectangleShape extends BaseToolWithShape {
 	public BaseToolWithRectangleShape(Context context, ToolType toolType) {
 		super(context, toolType);
 		mToolType = toolType;
-		Display display = ((WindowManager) context
-				.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-		mBoxWidth = display.getWidth()
-				/ PaintroidApplication.perspective.getScale()
+
+		Point screenSize = PaintroidApplication.getScreenSize(context);
+		mBoxWidth = screenSize.x / PaintroidApplication.perspective.getScale()
 				- getInverselyProportionalSizeForZoom(DEFAULT_RECTANGLE_MARGIN)
 				* 2;
 		mBoxHeight = mBoxWidth;

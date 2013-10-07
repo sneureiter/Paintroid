@@ -99,7 +99,10 @@ public class BottomBar implements View.OnTouchListener {
 
 	private void generateThumbnail() {
 
-		Bitmap b = Bitmap.createBitmap(480, 800, Config.ARGB_8888);
+		Bitmap b = Bitmap.createBitmap(
+				PaintroidApplication.getScreenSize(mMainActivity).x,
+				PaintroidApplication.getScreenSize(mMainActivity).y,
+				Config.ARGB_8888);
 		Canvas c = new Canvas();
 		c.setBitmap(b);
 

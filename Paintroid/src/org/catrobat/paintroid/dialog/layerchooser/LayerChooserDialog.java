@@ -302,12 +302,12 @@ public final class LayerChooserDialog extends DialogFragment implements
 	protected void addLayer() {
 		if (layer_data.size() < 30) {
 			layer_data.add(
-					mSelectedLayerIndex + 1,
+					mSelectedLayerIndex,
 					new LayerRow(mContext
 							.getString(R.string.layer_new_layer_name), true,
 							false));
 			PaintroidApplication.commandManager
-					.addEmptyCommandList(mSelectedLayerIndex + 1);
+					.addEmptyCommandList(mSelectedLayerIndex);
 
 			Bitmap emptyBitmap = Bitmap.createBitmap(
 					PaintroidApplication.getScreenSize(mContext).x / 10,
@@ -315,8 +315,8 @@ public final class LayerChooserDialog extends DialogFragment implements
 					Config.ALPHA_8);
 
 			PaintroidApplication.commandManager.getAllCommandList()
-					.get(mSelectedLayerIndex + 1).setThumbnail(emptyBitmap);
-			setSelected(mSelectedLayerIndex + 1, null, null);
+					.get(mSelectedLayerIndex).setThumbnail(emptyBitmap);
+			setSelected(mSelectedLayerIndex, null, null);
 			adapter.notifyDataSetChanged();
 		} else {
 			return;
@@ -373,6 +373,11 @@ public final class LayerChooserDialog extends DialogFragment implements
 			layer_data.get(i).selected = false;
 		}
 		layer_data.get(position).selected = true;
+
+		if (layer_data.get(position).selected == true
+				&& layer_data.get(position).visible == false) {
+		}
+
 		mSelectedLayerIndex = position;
 		adapter.notifyDataSetChanged();
 	}

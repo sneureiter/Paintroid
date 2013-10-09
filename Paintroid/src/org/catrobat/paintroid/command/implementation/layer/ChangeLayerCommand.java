@@ -57,19 +57,28 @@ public class ChangeLayerCommand extends BaseCommand {
 							&& !((mList.getCommands().get(k) instanceof BitmapCommand) && k == 0)) {
 
 						if (mList.getCommands().get(k) instanceof FlipCommand) {
-							tmp = ((FlipCommand) mList.getCommands().get(k))
-									.runLayer(ctmp, tmp);
+							Bitmap mtmp = ((FlipCommand) mList.getCommands()
+									.get(k)).runLayer(ctmp, tmp);
+							if (mtmp != null) {
+								tmp = mtmp;
+							}
 						} else if ((mList.getCommands().get(k) instanceof CropCommand)) {
-							tmp = ((CropCommand) mList.getCommands().get(k))
-									.runLayer(ctmp, tmp);
+							Bitmap mtmp = ((CropCommand) mList.getCommands()
+									.get(k)).runLayer(ctmp, tmp);
+							if (mtmp != null) {
+								tmp = mtmp;
+							}
 						} else {
 							mList.getCommands().get(k).run(ctmp, tmp);
 						}
 					}
 				}
-				c.drawBitmap(tmp, new Matrix(), null);
-				tmp.recycle();
-				tmp = null;
+				if (tmp != null) {
+					c.drawBitmap(tmp, new Matrix(), null);
+					tmp.recycle();
+					tmp = null;
+					ctmp = null;
+				}
 			}
 			return b;
 		}
@@ -101,20 +110,29 @@ public class ChangeLayerCommand extends BaseCommand {
 							&& !((mList.getCommands().get(k) instanceof BitmapCommand) && k == 0)) {
 
 						if (mList.getCommands().get(k) instanceof FlipCommand) {
-							tmp = ((FlipCommand) mList.getCommands().get(k))
-									.runLayer(ctmp, tmp);
+							Bitmap mtmp = ((FlipCommand) mList.getCommands()
+									.get(k)).runLayer(ctmp, tmp);
+							if (mtmp != null) {
+								tmp = mtmp;
+							}
 						} else if ((mList.getCommands().get(k) instanceof CropCommand)) {
-							tmp = ((CropCommand) mList.getCommands().get(k))
-									.runLayer(ctmp, tmp);
+							Bitmap mtmp = ((CropCommand) mList.getCommands()
+									.get(k)).runLayer(ctmp, tmp);
+							if (mtmp != null) {
+								tmp = mtmp;
+							}
 						} else {
 							mList.getCommands().get(k).run(ctmp, tmp);
 						}
 					}
 				}
-				c.drawBitmap(tmp, new Matrix(), null);
-				tmp.recycle();
-				tmp = null;
-				ctmp = null;
+				if (tmp != null) {
+					c.drawBitmap(tmp, new Matrix(), null);
+					tmp.recycle();
+					tmp = null;
+
+					ctmp = null;
+				}
 			}
 			return b;
 		}

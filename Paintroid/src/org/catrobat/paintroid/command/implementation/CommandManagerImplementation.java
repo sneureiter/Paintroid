@@ -310,13 +310,14 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 	@Override
 	public void addEmptyCommandList(int index) {
-		LinkedList<Command> firstCommand = new LinkedList<Command>();
+		LinkedList<Command> mFirstCommandList = new LinkedList<Command>();
 
-		firstCommand.add(new BitmapCommand(mOriginalBitmap, false));
+		mFirstCommandList.add(new BitmapCommand(mOriginalBitmap, false));
+		mFirstCommandList.add(getLastCropCommand());
 
-		CommandList mCommandList = new CommandList(firstCommand);
-		mCommandList.setLastCommandCount(1);
-		mCommandList.setLastCommandIndex(1);
+		CommandList mCommandList = new CommandList(mFirstCommandList);
+		mCommandList.setLastCommandCount(2);
+		mCommandList.setLastCommandIndex(2);
 		mCommandList.setThumbnail(null);
 
 		mAllCommandLists.add(index, mCommandList);

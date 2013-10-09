@@ -4,6 +4,8 @@ import org.catrobat.paintroid.MainActivity;
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.command.implementation.BitmapCommand;
+import org.catrobat.paintroid.command.implementation.CommandList;
+import org.catrobat.paintroid.command.implementation.CropCommand;
 import org.catrobat.paintroid.command.implementation.FlipCommand;
 import org.catrobat.paintroid.dialog.ToolsDialog;
 import org.catrobat.paintroid.dialog.layerchooser.LayerChooserDialog;
@@ -102,38 +104,34 @@ public class BottomBar implements View.OnTouchListener {
 				PaintroidApplication.getScreenSize().y, Config.ARGB_8888);
 		Canvas c = new Canvas();
 		c.setBitmap(b);
+		CommandList mList = PaintroidApplication.commandManager
+				.getAllCommandList().get(PaintroidApplication.currentLayer);
 
-		for (int i = 0; i < PaintroidApplication.commandManager
-				.getAllCommandList().get(PaintroidApplication.currentLayer)
-				.getLastCommandCount(); i++) {
+		for (int i = 0; i < mList.getLastCommandCount(); i++) {
 
-			if (!((PaintroidApplication.commandManager.getAllCommandList()
-					.get(PaintroidApplication.currentLayer).getCommands()
-					.get(i) instanceof BitmapCommand) && i == 0)) {
+			if (!((mList.getCommands().get(i) instanceof BitmapCommand) && i == 0)) {
 
-				if (PaintroidApplication.commandManager.getAllCommandList()
-						.get(PaintroidApplication.currentLayer).getCommands()
-						.get(i) instanceof FlipCommand) {
-					b = ((FlipCommand) PaintroidApplication.commandManager
-							.getAllCommandList()
-							.get(PaintroidApplication.currentLayer)
-							.getCommands().get(i)).runLayer(c, b);
+				if (mList.getCommands().get(i) instanceof FlipCommand) {
+					Bitmap mtmp = ((FlipCommand) mList.getCommands().get(i))
+							.runLayer(c, b);
+					if (mtmp != null) {
+						b = mtmp;
+					}
+				} else if ((mList.getCommands().get(i) instanceof CropCommand)) {
+					Bitmap mtmp = ((CropCommand) mList.getCommands().get(i))
+							.runLayer(c, b);
+					if (mtmp != null) {
+						b = mtmp;
+					}
 				} else {
-
-					PaintroidApplication.commandManager.getAllCommandList()
-							.get(PaintroidApplication.currentLayer)
-							.getCommands().get(i).run(c, b);
+					mList.getCommands().get(i).run(c, b);
 				}
 			}
 			c.drawBitmap(b, new Matrix(), null);
 		}
 
-		PaintroidApplication.commandManager
-				.getAllCommandList()
-				.get(PaintroidApplication.currentLayer)
-				.setThumbnail(
-						Bitmap.createScaledBitmap(b, screenSize.x / 10,
-								screenSize.y / 10, true));
+		mList.setThumbnail(Bitmap.createScaledBitmap(b, screenSize.x / 10,
+				screenSize.y / 10, true));
 
 	}
 

@@ -134,8 +134,6 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	@Override
 	public synchronized boolean commitCommand(Command command) {
 
-		UndoRedoManager.getInstance().update(StatusMode.DISABLE_REDO);
-
 		// Switch-Layer-Command & Hide-/Show-Layer-Command & Change-Layer-
 		// Command shall not be saved and just run once
 		if (command instanceof SwitchLayerCommand
@@ -145,14 +143,6 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 				|| command instanceof DeleteLayerCommand) {
 
 			command.run(null, null);
-
-			if (mCurrentCommandList.size() > mCommandCounter) {
-				UndoRedoManager.getInstance().update(
-						UndoRedoManager.StatusMode.ENABLE_REDO);
-			} else {
-				UndoRedoManager.getInstance().update(
-						UndoRedoManager.StatusMode.DISABLE_REDO);
-			}
 
 			if (mCommandCounter > 1) {
 				UndoRedoManager.getInstance().update(
@@ -164,6 +154,16 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 			this.resetIndex();
 			return mCurrentCommandList != null;
+		}
+		// First remove any previously undone commands from the top of the
+		// queue.
+		if (mCurrentCommandList.size() > mCommandCounter) {
+
+			for (int i = mCurrentCommandList.size(); i > mCommandCounter; i--) {
+				mCurrentCommandList.removeLast().freeResources();
+			}
+			UndoRedoManager.getInstance().update(
+					UndoRedoManager.StatusMode.DISABLE_REDO);
 		}
 
 		if (mCommandCounter == MAX_COMMANDS) {
@@ -181,6 +181,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 		if (command instanceof CropCommand) {
 			saveCurrentCommandListPointer();
+			setLastCropCommand((CropCommand) command);
 			cropAllLayers(command);
 			ChangeLayerCommand
 					.generateImageOfAboveLayers(PaintroidApplication.currentLayer);
@@ -203,7 +204,8 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 			mAllCommandLists
 					.get(i)
 					.getCommands()
-					.add(mAllCommandLists.get(i).getLastCommandIndex(), command);
+					.add(mAllCommandLists.get(i).getLastCommandCount() - 1,
+							command);
 			mAllCommandLists.get(i).setLastCommandCount(
 					mAllCommandLists.get(i).getLastCommandCount() + 1);
 		}
@@ -317,7 +319,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 		CommandList mCommandList = new CommandList(mFirstCommandList);
 		mCommandList.setLastCommandCount(2);
-		mCommandList.setLastCommandIndex(2);
+		mCommandList.setLastCommandIndex(1);
 		mCommandList.setThumbnail(null);
 
 		mAllCommandLists.add(index, mCommandList);

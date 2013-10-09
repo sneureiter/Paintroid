@@ -105,7 +105,7 @@ public abstract class BaseToolWithRectangleShape extends BaseToolWithShape {
 		super(context, toolType);
 		mToolType = toolType;
 
-		Point screenSize = PaintroidApplication.getScreenSize(context);
+		Point screenSize = PaintroidApplication.getScreenSize();
 		mBoxWidth = screenSize.x / PaintroidApplication.perspective.getScale()
 				- getInverselyProportionalSizeForZoom(DEFAULT_RECTANGLE_MARGIN)
 				* 2;

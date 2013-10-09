@@ -309,10 +309,10 @@ public final class LayerChooserDialog extends DialogFragment implements
 			PaintroidApplication.commandManager
 					.addEmptyCommandList(mSelectedLayerIndex);
 
-			Bitmap emptyBitmap = Bitmap.createBitmap(
-					PaintroidApplication.getScreenSize(mContext).x / 10,
-					PaintroidApplication.getScreenSize(mContext).y / 10,
-					Config.ALPHA_8);
+			Bitmap emptyBitmap = Bitmap
+					.createBitmap(PaintroidApplication.getScreenSize().x / 10,
+							PaintroidApplication.getScreenSize().y / 10,
+							Config.ALPHA_8);
 
 			PaintroidApplication.commandManager.getAllCommandList()
 					.get(mSelectedLayerIndex).setThumbnail(emptyBitmap);

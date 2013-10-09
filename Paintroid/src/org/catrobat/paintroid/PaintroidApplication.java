@@ -76,11 +76,11 @@ public class PaintroidApplication extends Application {
 	}
 
 	@TargetApi(13)
-	public static Point getScreenSize(Context con) {
+	public static Point getScreenSize() {
 		int Measuredwidth = 0;
 		int Measuredheight = 0;
 		Point size = new Point();
-		WindowManager w = (WindowManager) con
+		WindowManager w = (WindowManager) applicationContext
 				.getSystemService(Context.WINDOW_SERVICE);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {

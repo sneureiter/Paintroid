@@ -22,6 +22,7 @@ package org.catrobat.paintroid.command;
 import java.util.LinkedList;
 
 import org.catrobat.paintroid.command.implementation.CommandList;
+import org.catrobat.paintroid.command.implementation.CropCommand;
 
 import android.graphics.Bitmap;
 
@@ -68,4 +69,6 @@ public interface CommandManager {
 	Bitmap getmBitmapBelow();
 
 	Command getLastCropCommand();
+
+	void setLastCropCommand(CropCommand cc);
 }

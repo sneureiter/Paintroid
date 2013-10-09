@@ -11,8 +11,10 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Point;
 
 public class ChangeLayerCommand extends BaseCommand {
+	static Point originalSize = PaintroidApplication.getScreenSize();
 
 	@Override
 	public void run(Canvas canvas, Bitmap bitmap) {
@@ -32,16 +34,18 @@ public class ChangeLayerCommand extends BaseCommand {
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
 	}
 
-	private Bitmap generateImageOfAboveLayers(int currentLayer) {
+	public static Bitmap generateImageOfAboveLayers(int currentLayer) {
 
 		if (currentLayer > 0) {
-			Bitmap b = Bitmap.createBitmap(480, 800, Config.ARGB_8888);
+			Bitmap b = Bitmap.createBitmap(originalSize.x, originalSize.y,
+					Config.ARGB_8888);
 			Canvas c = new Canvas();
 			c.setBitmap(b);
 
 			for (int i = currentLayer - 1; i >= 0; i--) {
 
-				Bitmap tmp = Bitmap.createBitmap(480, 800, Config.ARGB_8888);
+				Bitmap tmp = Bitmap.createBitmap(originalSize.x,
+						originalSize.y, Config.ARGB_8888);
 				Canvas ctmp = new Canvas(tmp);
 
 				CommandList mList = PaintroidApplication.commandManager
@@ -72,18 +76,20 @@ public class ChangeLayerCommand extends BaseCommand {
 		return null;
 	}
 
-	private Bitmap generateImageOfBelowLayers(int currentLayer) {
+	public static Bitmap generateImageOfBelowLayers(int currentLayer) {
 
 		if (currentLayer < PaintroidApplication.commandManager
 				.getAllCommandList().size() - 1) {
-			Bitmap b = Bitmap.createBitmap(480, 800, Config.ARGB_8888);
+			Bitmap b = Bitmap.createBitmap(originalSize.x, originalSize.y,
+					Config.ARGB_8888);
 			Canvas c = new Canvas();
 			c.setBitmap(b);
 
 			for (int i = PaintroidApplication.commandManager
 					.getAllCommandList().size() - 1; i > currentLayer; i--) {
 
-				Bitmap tmp = Bitmap.createBitmap(480, 800, Config.ARGB_8888);
+				Bitmap tmp = Bitmap.createBitmap(originalSize.x,
+						originalSize.y, Config.ARGB_8888);
 				Canvas ctmp = new Canvas(tmp);
 
 				CommandList mList = PaintroidApplication.commandManager

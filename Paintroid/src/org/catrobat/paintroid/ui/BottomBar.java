@@ -33,8 +33,7 @@ public class BottomBar implements View.OnTouchListener {
 
 		mCurrentLayer = 0;
 		PaintroidApplication.currentLayer = mCurrentLayer;
-		screenSize = PaintroidApplication.getScreenSize(mMainActivity
-				.getApplicationContext());
+		screenSize = PaintroidApplication.getScreenSize();
 
 		mAttributeButton1 = (ImageButton) mainActivity
 				.findViewById(R.id.btn_bottom_attribute1);
@@ -99,10 +98,8 @@ public class BottomBar implements View.OnTouchListener {
 
 	private void generateThumbnail() {
 
-		Bitmap b = Bitmap.createBitmap(
-				PaintroidApplication.getScreenSize(mMainActivity).x,
-				PaintroidApplication.getScreenSize(mMainActivity).y,
-				Config.ARGB_8888);
+		Bitmap b = Bitmap.createBitmap(PaintroidApplication.getScreenSize().x,
+				PaintroidApplication.getScreenSize().y, Config.ARGB_8888);
 		Canvas c = new Canvas();
 		c.setBitmap(b);
 

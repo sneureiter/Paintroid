@@ -53,7 +53,7 @@ public abstract class BaseToolWithShape extends BaseTool implements
 		float actionBarHeight = MenuFileActivity.ACTION_BAR_HEIGHT
 				* metrics.density;
 
-		Point screenSize = PaintroidApplication.getScreenSize(context);
+		Point screenSize = PaintroidApplication.getScreenSize();
 
 		mToolPosition = new PointF(screenSize.x / 2f, screenSize.y / 2f
 				- actionBarHeight);

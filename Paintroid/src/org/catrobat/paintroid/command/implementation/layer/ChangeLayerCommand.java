@@ -44,9 +44,9 @@ public class ChangeLayerCommand extends BaseCommand {
 
 			for (int i = currentLayer - 1; i >= 0; i--) {
 
-				Bitmap tmp = Bitmap.createBitmap(originalSize.x,
+				Bitmap tmpBitmap = Bitmap.createBitmap(originalSize.x,
 						originalSize.y, Config.ARGB_8888);
-				Canvas ctmp = new Canvas(tmp);
+				Canvas ctmp = new Canvas(tmpBitmap);
 
 				CommandList mList = PaintroidApplication.commandManager
 						.getAllCommandList().get(i);
@@ -58,25 +58,25 @@ public class ChangeLayerCommand extends BaseCommand {
 
 						if (mList.getCommands().get(k) instanceof FlipCommand) {
 							Bitmap mtmp = ((FlipCommand) mList.getCommands()
-									.get(k)).runLayer(ctmp, tmp);
+									.get(k)).runLayer(ctmp, tmpBitmap);
 							if (mtmp != null) {
-								tmp = mtmp;
+								tmpBitmap = mtmp;
 							}
 						} else if ((mList.getCommands().get(k) instanceof CropCommand)) {
 							Bitmap mtmp = ((CropCommand) mList.getCommands()
-									.get(k)).runLayer(ctmp, tmp);
+									.get(k)).runLayer(ctmp, tmpBitmap);
 							if (mtmp != null) {
-								tmp = mtmp;
+								tmpBitmap = mtmp;
 							}
 						} else {
-							mList.getCommands().get(k).run(ctmp, tmp);
+							mList.getCommands().get(k).run(ctmp, tmpBitmap);
 						}
 					}
 				}
-				if (tmp != null) {
-					c.drawBitmap(tmp, new Matrix(), null);
-					tmp.recycle();
-					tmp = null;
+				if (tmpBitmap != null) {
+					c.drawBitmap(tmpBitmap, new Matrix(), null);
+					tmpBitmap.recycle();
+					tmpBitmap = null;
 					ctmp = null;
 				}
 			}

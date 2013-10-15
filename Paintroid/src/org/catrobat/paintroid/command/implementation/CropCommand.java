@@ -181,7 +181,7 @@ public class CropCommand extends BaseCommand {
 
 			// PaintroidApplication.drawingSurface.setBitmap(croppedBitmap);
 			bitmap = croppedBitmap.copy(bitmap.getConfig(), true);
-			mBitmap = croppedBitmap.copy(bitmap.getConfig(), true);
+			// mBitmap = croppedBitmap.copy(bitmap.getConfig(), true);
 
 			if (mFileToStoredBitmap == null) {
 				mBitmap = croppedBitmap.copy(Config.ARGB_8888, true);

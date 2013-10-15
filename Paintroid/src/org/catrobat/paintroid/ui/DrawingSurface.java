@@ -222,7 +222,9 @@ public class DrawingSurface extends SurfaceView implements
 	}
 
 	public synchronized Bitmap getFullBitmapCopy() {
-		Bitmap result = Bitmap.createBitmap(480, 800, Config.ARGB_8888);
+		Bitmap result = Bitmap.createBitmap(
+				PaintroidApplication.getScreenSize().x,
+				PaintroidApplication.getScreenSize().y, Config.ARGB_8888);
 		Canvas surfaceViewCanvas = new Canvas(result);
 
 		if (mWorkingBitmap != null && !mWorkingBitmap.isRecycled()) {

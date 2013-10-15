@@ -36,6 +36,7 @@ import org.catrobat.paintroid.command.implementation.layer.SwitchLayerCommand;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.util.Log;
 
 public class CommandManagerImplementation implements CommandManager, Observer {
 	private static final int MAX_COMMANDS = 512;
@@ -134,6 +135,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	@Override
 	public synchronized boolean commitCommand(Command command) {
 
+		printAllLists();
 		// Switch-Layer-Command & Hide-/Show-Layer-Command & Change-Layer-
 		// Command shall not be saved and just run once
 		if (command instanceof SwitchLayerCommand
@@ -183,10 +185,10 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 			saveCurrentCommandListPointer();
 			setLastCropCommand((CropCommand) command);
 			cropAllLayers(command);
-			ChangeLayerCommand
-					.generateImageOfAboveLayers(PaintroidApplication.currentLayer);
-			ChangeLayerCommand
-					.generateImageOfBelowLayers(PaintroidApplication.currentLayer);
+			setmBitmapAbove(ChangeLayerCommand
+					.generateImageOfAboveLayers(PaintroidApplication.currentLayer));
+			setmBitmapBelow(ChangeLayerCommand
+					.generateImageOfBelowLayers(PaintroidApplication.currentLayer));
 		} else {
 			mCurrentCommandList.add(command);
 		}
@@ -196,6 +198,16 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		}
 
 		return mCurrentCommandList.get(mCommandIndex) != null;
+	}
+
+	private void printAllLists() {
+		for (int i = 0; i < mAllCommandLists.size(); i++) {
+			Log.i("my", i + " - ");
+			for (int j = 0; j < mAllCommandLists.get(i).getCommands().size(); j++) {
+				Log.i("my", "" + mAllCommandLists.get(i).getCommands().get(j));
+			}
+		}
+
 	}
 
 	private void cropAllLayers(Command command) {
@@ -312,12 +324,12 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 	@Override
 	public void addEmptyCommandList(int index) {
-		LinkedList<Command> mFirstCommandList = new LinkedList<Command>();
+		LinkedList<Command> tmpCommandList = new LinkedList<Command>();
 
-		mFirstCommandList.add(new BitmapCommand(mOriginalBitmap, false));
-		mFirstCommandList.add(getLastCropCommand());
+		tmpCommandList.add(new BitmapCommand(mOriginalBitmap, false));
+		tmpCommandList.add(getLastCropCommand());
 
-		CommandList mCommandList = new CommandList(mFirstCommandList);
+		CommandList mCommandList = new CommandList(tmpCommandList);
 		mCommandList.setLastCommandCount(2);
 		mCommandList.setLastCommandIndex(1);
 		mCommandList.setThumbnail(null);

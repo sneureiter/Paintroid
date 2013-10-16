@@ -54,6 +54,7 @@ public class DrawingSurface extends SurfaceView implements
 	private Paint mFramePaint;
 	private Paint mClearPaint;
 	protected boolean mSurfaceCanBeUsed;
+	private Bitmap mFullBitmapCopy;
 
 	// private final static Paint mCheckeredPattern =
 	// BaseTool.CHECKERED_PATTERN;
@@ -222,28 +223,35 @@ public class DrawingSurface extends SurfaceView implements
 	}
 
 	public synchronized Bitmap getFullBitmapCopy() {
-		Bitmap result = Bitmap.createBitmap(
-				PaintroidApplication.getScreenSize().x,
-				PaintroidApplication.getScreenSize().y, Config.ARGB_8888);
-		Canvas surfaceViewCanvas = new Canvas(result);
 
-		if (mWorkingBitmap != null && !mWorkingBitmap.isRecycled()) {
-			if (PaintroidApplication.commandManager.getmBitmapBelow() != null) {
-				surfaceViewCanvas.drawBitmap(
-						PaintroidApplication.commandManager.getmBitmapBelow(),
-						0, 0, null);
-			}
-			surfaceViewCanvas.drawBitmap(mWorkingBitmap, 0, 0, null);
-
-			if (PaintroidApplication.commandManager.getmBitmapAbove() != null) {
-				surfaceViewCanvas.drawBitmap(
-						PaintroidApplication.commandManager.getmBitmapAbove(),
-						0, 0, null);
-			}
-
-			return result;
+		if (PaintroidApplication.hasChanged == false) {
+			return mFullBitmapCopy;
 		} else {
-			return null;
+			Bitmap result = Bitmap.createBitmap(
+					PaintroidApplication.getScreenSize().x,
+					PaintroidApplication.getScreenSize().y, Config.ARGB_8888);
+			Canvas surfaceViewCanvas = new Canvas(result);
+
+			if (mWorkingBitmap != null && !mWorkingBitmap.isRecycled()) {
+				if (PaintroidApplication.commandManager.getmBitmapBelow() != null) {
+					surfaceViewCanvas.drawBitmap(
+							PaintroidApplication.commandManager
+									.getmBitmapBelow(), 0, 0, null);
+				}
+				surfaceViewCanvas.drawBitmap(mWorkingBitmap, 0, 0, null);
+
+				if (PaintroidApplication.commandManager.getmBitmapAbove() != null) {
+					surfaceViewCanvas.drawBitmap(
+							PaintroidApplication.commandManager
+									.getmBitmapAbove(), 0, 0, null);
+				}
+
+				mFullBitmapCopy = result;
+				PaintroidApplication.hasChanged = false;
+				return result;
+			} else {
+				return null;
+			}
 		}
 	}
 

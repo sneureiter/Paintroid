@@ -54,6 +54,8 @@ public class PaintroidApplication extends Application {
 	public static boolean overrideFile = false;
 	public static int currentLayer;
 
+	public static boolean hasChanged = false;
+
 	@Override
 	public void onCreate() {
 		super.onCreate();

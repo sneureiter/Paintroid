@@ -135,6 +135,8 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	@Override
 	public synchronized boolean commitCommand(Command command) {
 
+		PaintroidApplication.hasChanged = true;
+
 		printAllLists();
 		// Switch-Layer-Command & Hide-/Show-Layer-Command & Change-Layer-
 		// Command shall not be saved and just run once
@@ -236,6 +238,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 				UndoRedoManager.getInstance().update(
 						UndoRedoManager.StatusMode.DISABLE_UNDO);
 			}
+			PaintroidApplication.hasChanged = true;
 		}
 	}
 
@@ -251,6 +254,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 				UndoRedoManager.getInstance().update(
 						UndoRedoManager.StatusMode.DISABLE_REDO);
 			}
+			PaintroidApplication.hasChanged = true;
 		}
 	}
 

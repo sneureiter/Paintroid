@@ -123,13 +123,7 @@ public class CropCommand extends BaseCommand {
 	public Bitmap runLayer(Canvas canvas, Bitmap bitmap) {
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_STARTED);
-		if (mFileToStoredBitmap != null) {
-			PaintroidApplication.drawingSurface.setBitmap(FileIO
-					.getBitmapFromFile(mFileToStoredBitmap));
-			setChanged();
-			notifyStatus(NOTIFY_STATES.COMMAND_DONE);
-			return null;
-		}
+
 		try {
 
 			if (mCropCoordinateXRight < mCropCoordinateXLeft) {
@@ -179,9 +173,8 @@ public class CropCommand extends BaseCommand {
 					mCropCoordinateXRight - mCropCoordinateXLeft,
 					mCropCoordinateYBottom - mCropCoordinateYTop);
 
-			// PaintroidApplication.drawingSurface.setBitmap(croppedBitmap);
-			bitmap = croppedBitmap.copy(bitmap.getConfig(), true);
-			// mBitmap = croppedBitmap.copy(bitmap.getConfig(), true);
+			bitmap = croppedBitmap;
+			canvas.setBitmap(bitmap);
 
 			if (mFileToStoredBitmap == null) {
 				mBitmap = croppedBitmap.copy(Config.ARGB_8888, true);

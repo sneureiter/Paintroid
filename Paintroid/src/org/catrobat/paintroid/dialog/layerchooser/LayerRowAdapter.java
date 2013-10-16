@@ -14,7 +14,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -114,8 +113,6 @@ public class LayerRowAdapter extends ArrayAdapter<LayerRow> {
 
 		if (scaled != null) {
 			holder.thumbnail.setImageBitmap(scaled);
-		} else {
-			Log.i("my", "scaled null");
 		}
 
 		holder.eyeIcon.setClickable(true);

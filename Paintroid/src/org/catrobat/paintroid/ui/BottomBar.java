@@ -3,6 +3,7 @@ package org.catrobat.paintroid.ui;
 import org.catrobat.paintroid.MainActivity;
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.command.Command;
 import org.catrobat.paintroid.command.implementation.BitmapCommand;
 import org.catrobat.paintroid.command.implementation.CommandList;
 import org.catrobat.paintroid.command.implementation.CropCommand;
@@ -102,36 +103,62 @@ public class BottomBar implements View.OnTouchListener {
 
 		Bitmap b = Bitmap.createBitmap(PaintroidApplication.getScreenSize().x,
 				PaintroidApplication.getScreenSize().y, Config.ARGB_8888);
-		Canvas c = new Canvas();
-		c.setBitmap(b);
+		Canvas c = new Canvas(b);
+
 		CommandList mList = PaintroidApplication.commandManager
 				.getAllCommandList().get(PaintroidApplication.currentLayer);
 
 		for (int i = 0; i < mList.getLastCommandCount(); i++) {
+			Command command = mList.getCommands().get(i);
 
-			if (!((mList.getCommands().get(i) instanceof BitmapCommand) && i == 0)) {
+			if (!((command instanceof BitmapCommand) && i == 0)) {
 
-				if (mList.getCommands().get(i) instanceof FlipCommand) {
-					Bitmap mtmp = ((FlipCommand) mList.getCommands().get(i))
-							.runLayer(c, b);
+				if (command instanceof FlipCommand) {
+					Bitmap mtmp = ((FlipCommand) command).runLayer(c, b);
+
 					if (mtmp != null) {
 						b = mtmp;
 					}
-				} else if ((mList.getCommands().get(i) instanceof CropCommand)) {
-					Bitmap mtmp = ((CropCommand) mList.getCommands().get(i))
-							.runLayer(c, b);
+				} else if (command instanceof CropCommand) {
+					Bitmap mtmp = ((CropCommand) command).runLayer(c, b);
+
 					if (mtmp != null) {
 						b = mtmp;
 					}
 				} else {
-					mList.getCommands().get(i).run(c, b);
+					command.run(c, b);
 				}
 			}
 			c.drawBitmap(b, new Matrix(), null);
 		}
 
-		mList.setThumbnail(Bitmap.createScaledBitmap(b, screenSize.x / 10,
-				screenSize.y / 10, true));
+		double ratioOriginal = (double) screenSize.x / (double) screenSize.y;
+		double ratioNew = (double) b.getWidth() / (double) b.getHeight();
+
+		double newWidth = 0;
+		double newHeight = 0;
+
+		// full width -> minimum scaling
+		if (screenSize.x == b.getWidth()) {
+			newWidth = screenSize.x / 10;
+			newHeight = screenSize.y / 10;
+		}
+		// not full horizontal width
+		else if (screenSize.x > b.getWidth()) {
+
+			// if cropped image is like a "I" the width can not reach the
+			// maximum, but the height can
+			if (ratioNew < ratioOriginal) {
+				newHeight = screenSize.y / 10;
+				newWidth = newHeight * ratioNew;
+			} else {
+				newWidth = screenSize.x / 10;
+				newHeight = newWidth / ratioNew;
+			}
+		}
+
+		mList.setThumbnail(Bitmap.createScaledBitmap(b, (int) newWidth,
+				(int) newHeight, true));
 
 	}
 

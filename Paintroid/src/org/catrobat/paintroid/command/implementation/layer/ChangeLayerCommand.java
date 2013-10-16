@@ -1,6 +1,7 @@
 package org.catrobat.paintroid.command.implementation.layer;
 
 import org.catrobat.paintroid.PaintroidApplication;
+import org.catrobat.paintroid.command.Command;
 import org.catrobat.paintroid.command.implementation.BaseCommand;
 import org.catrobat.paintroid.command.implementation.BitmapCommand;
 import org.catrobat.paintroid.command.implementation.CommandList;
@@ -52,19 +53,20 @@ public class ChangeLayerCommand extends BaseCommand {
 						.getAllCommandList().get(i);
 
 				for (int k = 0; k < mList.getLastCommandCount(); k++) {
+					Command command = mList.getCommands().get(k);
 
 					if (!mList.isHidden()
-							&& !((mList.getCommands().get(k) instanceof BitmapCommand) && k == 0)) {
+							&& !((command instanceof BitmapCommand) && k == 0)) {
 
-						if (mList.getCommands().get(k) instanceof FlipCommand) {
-							Bitmap mtmp = ((FlipCommand) mList.getCommands()
-									.get(k)).runLayer(ctmp, tmpBitmap);
+						if (command instanceof FlipCommand) {
+							Bitmap mtmp = ((FlipCommand) command).runLayer(
+									ctmp, tmpBitmap);
 							if (mtmp != null) {
 								tmpBitmap = mtmp;
 							}
-						} else if ((mList.getCommands().get(k) instanceof CropCommand)) {
-							Bitmap mtmp = ((CropCommand) mList.getCommands()
-									.get(k)).runLayer(ctmp, tmpBitmap);
+						} else if (command instanceof CropCommand) {
+							Bitmap mtmp = ((CropCommand) command).runLayer(
+									ctmp, tmpBitmap);
 							if (mtmp != null) {
 								tmpBitmap = mtmp;
 							}

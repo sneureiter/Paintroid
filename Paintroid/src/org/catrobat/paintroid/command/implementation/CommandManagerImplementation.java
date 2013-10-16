@@ -36,7 +36,6 @@ import org.catrobat.paintroid.command.implementation.layer.SwitchLayerCommand;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
-import android.util.Log;
 
 public class CommandManagerImplementation implements CommandManager, Observer {
 	private static final int MAX_COMMANDS = 512;
@@ -134,10 +133,8 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 	@Override
 	public synchronized boolean commitCommand(Command command) {
-
 		PaintroidApplication.hasChanged = true;
 
-		printAllLists();
 		// Switch-Layer-Command & Hide-/Show-Layer-Command & Change-Layer-
 		// Command shall not be saved and just run once
 		if (command instanceof SwitchLayerCommand
@@ -200,16 +197,6 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		}
 
 		return mCurrentCommandList.get(mCommandIndex) != null;
-	}
-
-	private void printAllLists() {
-		for (int i = 0; i < mAllCommandLists.size(); i++) {
-			Log.i("my", i + " - ");
-			for (int j = 0; j < mAllCommandLists.get(i).getCommands().size(); j++) {
-				Log.i("my", "" + mAllCommandLists.get(i).getCommands().get(j));
-			}
-		}
-
 	}
 
 	private void cropAllLayers(Command command) {

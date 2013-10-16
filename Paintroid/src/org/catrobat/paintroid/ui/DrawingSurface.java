@@ -222,7 +222,7 @@ public class DrawingSurface extends SurfaceView implements
 		}
 	}
 
-	public synchronized Bitmap getFullBitmapCopy() {
+	public Bitmap getFullBitmapCopy() {
 
 		if (PaintroidApplication.hasChanged == false) {
 			return mFullBitmapCopy;

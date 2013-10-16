@@ -256,6 +256,7 @@ public class DrawTool extends BaseTool {
 				// TODO mPreviousEventCoordinate check shouldn't be necessary if
 				// issue #156 is resolved
 				while (!isCancelled() && mPreviousEventCoordinate != null) {
+
 					PointF bottomRightBitmapPoint = PaintroidApplication.perspective
 							.getSurfacePointFromCanvasPoint(new PointF(
 									PaintroidApplication.drawingSurface
@@ -267,13 +268,14 @@ public class DrawTool extends BaseTool {
 					if ((mPreviousEventCoordinate.x - mScrollTolerance) > bottomRightBitmapPoint.x) {
 						coordinateDeltas[0].x = 0;
 					}
-					if ((mPreviousEventCoordinate.y - mScrollTolerance) > bottomRightBitmapPoint.y) {
+					// TODO: maybe you have to subtract the navigation bar
+					// height
+					if ((mPreviousEventCoordinate.y - mScrollTolerance - 250) > bottomRightBitmapPoint.y) {
 						coordinateDeltas[0].y = 0;
 					}
 					if ((mPreviousEventCoordinate.x + mScrollTolerance) < topLeftBitmapPoint.x) {
 						coordinateDeltas[0].x = 0;
 					}
-					// TODO: maybe you have to substrct the navigationbar hight
 					if ((mPreviousEventCoordinate.y + mScrollTolerance) < topLeftBitmapPoint.y) {
 						coordinateDeltas[0].y = 0;
 					}

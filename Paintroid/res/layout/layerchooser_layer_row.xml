@@ -16,13 +16,13 @@
 
     <TextView
         android:id="@+id/layerTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/dialog_edittext_color"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
         android:layout_weight="1"
-        android:textCursorDrawable="@color/dialog_edittext_color"/>
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:textColor="@color/dialog_edittext_color"
+        android:textCursorDrawable="@color/dialog_edittext_color" />
 
         <ImageView
         android:id="@+id/eyeIcon"
@@ -35,5 +35,5 @@
             android:id="@+id/space"
             android:layout_weight="1"
             android:layout_width="50dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="10dp" />
 </LinearLayout>

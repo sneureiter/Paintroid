@@ -21,6 +21,7 @@ package org.catrobat.paintroid.ui;
 
 import java.io.Serializable;
 
+import org.catrobat.paintroid.MenuFileActivity;
 import org.catrobat.paintroid.PaintroidApplication;
 
 import android.content.Context;
@@ -211,6 +212,18 @@ public class Perspective implements Serializable {
 	public void setFullscreen(boolean isFullscreen) {
 		mIsFullscreen = isFullscreen;
 		resetScaleAndTranslation();
+	}
+
+	public float getActionbarHeight() {
+		if (mIsFullscreen) {
+			return 0;
+		}
+		DisplayMetrics metrics = new DisplayMetrics();
+		Display display = ((WindowManager) PaintroidApplication.applicationContext
+				.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		display.getMetrics(metrics);
+		float density = metrics.density;
+		return (MenuFileActivity.ACTION_BAR_HEIGHT * density);
 	}
 
 }

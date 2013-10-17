@@ -268,9 +268,11 @@ public class DrawTool extends BaseTool {
 					if ((mPreviousEventCoordinate.x - mScrollTolerance) > bottomRightBitmapPoint.x) {
 						coordinateDeltas[0].x = 0;
 					}
-					// TODO: maybe you have to subtract the navigation bar
-					// height
-					if ((mPreviousEventCoordinate.y - mScrollTolerance - 250) > bottomRightBitmapPoint.y) {
+					// just a approximate calculation
+					float actionbarHeight = 2 * PaintroidApplication.perspective
+							.getActionbarHeight();
+
+					if ((mPreviousEventCoordinate.y - mScrollTolerance - actionbarHeight) > bottomRightBitmapPoint.y) {
 						coordinateDeltas[0].y = 0;
 					}
 					if ((mPreviousEventCoordinate.x + mScrollTolerance) < topLeftBitmapPoint.x) {

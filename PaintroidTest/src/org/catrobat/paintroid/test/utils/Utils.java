@@ -86,6 +86,7 @@ public class Utils {
 		return keyguardManager.inKeyguardRestrictedInputMode();
 	}
 
+	// also used in perspective!!
 	public static float getActionbarHeight() {
 		DisplayMetrics metrics = new DisplayMetrics();
 		Display display = ((WindowManager) PaintroidApplication.applicationContext

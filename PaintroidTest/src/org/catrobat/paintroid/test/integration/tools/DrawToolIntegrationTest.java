@@ -74,7 +74,7 @@ public class DrawToolIntegrationTest extends BaseIntegrationTestClass {
 	public void testClickInBordersAndCornersZoomedOut() throws SecurityException, IllegalArgumentException,
 			NoSuchFieldException, IllegalAccessException {
 
-		PaintroidApplication.perspective.setScale(0.5f);
+		PaintroidApplication.perspective.setScale(0.3f);
 		float surfaceWidth = (Float) PrivateAccess.getMemberValue(Perspective.class, PaintroidApplication.perspective,
 				"mSurfaceWidth");
 		float surfaceHeight = (Float) PrivateAccess.getMemberValue(Perspective.class, PaintroidApplication.perspective,

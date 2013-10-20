@@ -99,13 +99,13 @@ public class DrawingSurfaceListener implements OnTouchListener {
 			break;
 		case MotionEvent.ACTION_UP:
 		case MotionEvent.ACTION_CANCEL:
-			if (mTouchMode == TouchMode.DRAW) {
+			if (mTouchMode != TouchMode.PINCH) {
 				PaintroidApplication.currentTool.handleUp(touchPoint);
-				mTouchMode = TouchMode.STANDBY;
 			} else {
 				PaintroidApplication.currentTool
 						.resetInternalState(StateChange.MOVE_CANCELED);
 			}
+			mTouchMode = TouchMode.STANDBY;
 			mPointerDistance = 0;
 			mPointerMean.set(0, 0);
 			break;

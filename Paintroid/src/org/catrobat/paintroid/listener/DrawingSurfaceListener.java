@@ -30,7 +30,7 @@ import android.view.View.OnTouchListener;
 
 public class DrawingSurfaceListener implements OnTouchListener {
 	static enum TouchMode {
-		DRAW, PINCH
+		DRAW, PINCH, STANDBY
 	};
 
 	private final int BLOCKING_TIME = 250 * 1000 * 1000;
@@ -44,7 +44,7 @@ public class DrawingSurfaceListener implements OnTouchListener {
 	public DrawingSurfaceListener() {
 		mPerspective = PaintroidApplication.perspective;
 		mPointerMean = new PointF(0, 0);
-		mTouchMode = TouchMode.DRAW;
+		mTouchMode = TouchMode.STANDBY;
 	}
 
 	private float calculatePointerDistance(MotionEvent event) {
@@ -77,7 +77,7 @@ public class DrawingSurfaceListener implements OnTouchListener {
 				mTouchMode = TouchMode.DRAW;
 				PaintroidApplication.currentTool.handleMove(touchPoint);
 
-			} else {
+			} else if (mTouchMode != TouchMode.DRAW) {
 				mTouchMode = TouchMode.PINCH;
 
 				float pointerDistanceOld = mPointerDistance;
@@ -101,6 +101,7 @@ public class DrawingSurfaceListener implements OnTouchListener {
 		case MotionEvent.ACTION_CANCEL:
 			if (mTouchMode == TouchMode.DRAW) {
 				PaintroidApplication.currentTool.handleUp(touchPoint);
+				mTouchMode = TouchMode.STANDBY;
 			} else {
 				PaintroidApplication.currentTool
 						.resetInternalState(StateChange.MOVE_CANCELED);

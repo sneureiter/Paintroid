@@ -136,7 +136,8 @@ public class DrawToolIntegrationTest extends BaseIntegrationTestClass {
 		mSolo.clickLongOnScreen(clickPoint.x, clickPoint.y, 2000);
 		PointF endPointCanvas = PaintroidApplication.perspective.getCanvasPointFromSurfacePoint(startPointSurface);
 
-		assertEquals("view should not scroll", startPointCanvas, endPointCanvas);
+		assertEquals("view should not scroll", startPointCanvas.x, endPointCanvas.x);
+		assertEquals("view should not scroll", startPointCanvas.y, endPointCanvas.y);
 	}
 
 }

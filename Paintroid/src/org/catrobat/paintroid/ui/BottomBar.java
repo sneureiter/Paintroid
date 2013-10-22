@@ -3,11 +3,19 @@ package org.catrobat.paintroid.ui;
 import org.catrobat.paintroid.MainActivity;
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.command.Command;
+import org.catrobat.paintroid.command.implementation.BitmapCommand;
+import org.catrobat.paintroid.command.implementation.CommandList;
+import org.catrobat.paintroid.command.implementation.CropCommand;
+import org.catrobat.paintroid.command.implementation.FlipCommand;
 import org.catrobat.paintroid.dialog.ToolsDialog;
 import org.catrobat.paintroid.dialog.layerchooser.LayerChooserDialog;
 import org.catrobat.paintroid.tools.Tool;
 
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.View;
@@ -83,7 +91,7 @@ public class BottomBar implements View.OnTouchListener {
 		if (event.getAction() == MotionEvent.ACTION_UP) {
 
 			PaintroidApplication.commandManager.saveCurrentCommandListPointer();
-			generateThumbnail();
+			generateThumbnail(PaintroidApplication.currentLayer);
 			LayerChooserDialog.getInstance().show(
 					mMainActivity.getSupportFragmentManager(), "layerchooser");
 			LayerChooserDialog.getInstance().setInitialLayer(
@@ -91,9 +99,43 @@ public class BottomBar implements View.OnTouchListener {
 		}
 	}
 
-	private void generateThumbnail() {
+	private void generateThumbnail(int layer) {
 
 		Bitmap b = PaintroidApplication.drawingSurface.getBitmapCopy();
+
+		if (layer != PaintroidApplication.currentLayer) {
+
+			b = Bitmap.createBitmap(PaintroidApplication.getScreenSize().x,
+					PaintroidApplication.getScreenSize().y, Config.ARGB_8888);
+			Canvas c = new Canvas(b);
+
+			CommandList mList = PaintroidApplication.commandManager
+					.getAllCommandList().get(PaintroidApplication.currentLayer);
+
+			for (int i = 0; i < mList.getLastCommandCount(); i++) {
+				Command command = mList.getCommands().get(i);
+
+				if (!((command instanceof BitmapCommand) && i == 0)) {
+
+					if (command instanceof FlipCommand) {
+						Bitmap mTmp = ((FlipCommand) command).runLayer(c, b);
+
+						if (mTmp != null) {
+							b = mTmp;
+						}
+					} else if (command instanceof CropCommand) {
+						Bitmap mTmp = ((CropCommand) command).runLayer(c, b);
+
+						if (mTmp != null) {
+							b = mTmp;
+						}
+					} else {
+						command.run(c, b);
+					}
+				}
+				c.drawBitmap(b, new Matrix(), null);
+			}
+		}
 
 		double ratioOriginal = (double) screenSize.x / (double) screenSize.y;
 		double ratioNew = (double) b.getWidth() / (double) b.getHeight();
@@ -120,10 +162,10 @@ public class BottomBar implements View.OnTouchListener {
 			}
 		}
 
-		PaintroidApplication.commandManager.getCommandListByIndex(
-				PaintroidApplication.currentLayer).setThumbnail(
-				Bitmap.createScaledBitmap(b, (int) newWidth, (int) newHeight,
-						true));
+		PaintroidApplication.commandManager.getCommandListByIndex(layer)
+				.setThumbnail(
+						Bitmap.createScaledBitmap(b, (int) newWidth,
+								(int) newHeight, true));
 
 	}
 

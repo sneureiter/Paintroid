@@ -265,30 +265,37 @@ public class DrawTool extends BaseTool {
 											.getBitmapHeight()));
 					PointF topLeftBitmapPoint = PaintroidApplication.perspective
 							.getSurfacePointFromCanvasPoint(new PointF(0, 0));
-					if ((mPreviousEventCoordinate.x - mScrollTolerance) > bottomRightBitmapPoint.x) {
-						coordinateDeltas[0].x = 0;
-					}
-					// just a approximate calculation
-					float actionbarHeight = 2 * PaintroidApplication.perspective
-							.getActionbarHeight();
+					try {
+						if ((mPreviousEventCoordinate.x - mScrollTolerance) > bottomRightBitmapPoint.x) {
+							coordinateDeltas[0].x = 0;
+						}
+						// just a approximate calculation
+						float actionbarHeight = 2 * PaintroidApplication.perspective
+								.getActionbarHeight();
 
-					if ((mPreviousEventCoordinate.y - mScrollTolerance - actionbarHeight) > bottomRightBitmapPoint.y) {
-						coordinateDeltas[0].y = 0;
-					}
-					if ((mPreviousEventCoordinate.x + mScrollTolerance) < topLeftBitmapPoint.x) {
-						coordinateDeltas[0].x = 0;
-					}
-					if ((mPreviousEventCoordinate.y + mScrollTolerance) < topLeftBitmapPoint.y) {
-						coordinateDeltas[0].y = 0;
-					}
+						if ((mPreviousEventCoordinate.y - mScrollTolerance - actionbarHeight) > bottomRightBitmapPoint.y) {
+							coordinateDeltas[0].y = 0;
+						}
+						if ((mPreviousEventCoordinate.x + mScrollTolerance) < topLeftBitmapPoint.x) {
+							coordinateDeltas[0].x = 0;
+						}
+						if ((mPreviousEventCoordinate.y + mScrollTolerance) < topLeftBitmapPoint.y) {
+							coordinateDeltas[0].y = 0;
+						}
 
-					PaintroidApplication.perspective.translate(
-							coordinateDeltas[0].x, coordinateDeltas[0].y);
-					PointF coordinate = new PointF(mPreviousEventCoordinate.x
-							- coordinateDeltas[0].x / scale,
-							mPreviousEventCoordinate.y - coordinateDeltas[0].y
-									/ scale);
-					addToPath(coordinate);
+						PaintroidApplication.perspective.translate(
+								coordinateDeltas[0].x, coordinateDeltas[0].y);
+						PointF coordinate = new PointF(
+								mPreviousEventCoordinate.x
+										- coordinateDeltas[0].x / scale,
+								mPreviousEventCoordinate.y
+										- coordinateDeltas[0].y / scale);
+						addToPath(coordinate);
+					} catch (NullPointerException e) {
+						// mPreviousEventCoordinate was null maybe pinch and
+						// draw at same time
+						this.cancel(true);
+					}
 
 					try {
 						Thread.sleep(scrollInterval);

@@ -444,6 +444,7 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 		mLayerButton.invalidate();
 		PaintroidApplication.commandManager.setmBitmapAbove(null);
 		PaintroidApplication.commandManager.setmBitmapBelow(null);
+		PaintroidApplication.commandManager.resetAndClear();
 
 		Point screenSize = PaintroidApplication.getScreenSize();
 		float width = screenSize.x;

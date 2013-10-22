@@ -13,6 +13,8 @@ import android.graphics.PointF;
 
 public class DrawToolIntegrationTest extends BaseIntegrationTestClass {
 
+	private final static int SLEEP_TIME = 500;
+
 	@Override
 	@Before
 	protected void setUp() {
@@ -55,19 +57,19 @@ public class DrawToolIntegrationTest extends BaseIntegrationTestClass {
 		PointF topRight = new PointF(xRight, yTop);
 
 		longpressOnPointAndCheckIfCanvasPointHasChanged(rightMiddle);
-		mSolo.sleep(100);
+		mSolo.sleep(SLEEP_TIME);
 		longpressOnPointAndCheckIfCanvasPointHasChanged(leftMiddle);
-		mSolo.sleep(100);
+		mSolo.sleep(SLEEP_TIME);
 		longpressOnPointAndCheckIfCanvasPointHasChanged(topMiddle);
-		mSolo.sleep(100);
+		mSolo.sleep(SLEEP_TIME);
 		longpressOnPointAndCheckIfCanvasPointHasChanged(bottomMiddle);
-		mSolo.sleep(100);
+		mSolo.sleep(SLEEP_TIME);
 		longpressOnPointAndCheckIfCanvasPointHasChanged(bottomRight);
-		mSolo.sleep(100);
+		mSolo.sleep(SLEEP_TIME);
 		longpressOnPointAndCheckIfCanvasPointHasChanged(topLeft);
-		mSolo.sleep(100);
+		mSolo.sleep(SLEEP_TIME);
 		longpressOnPointAndCheckIfCanvasPointHasChanged(bottomLeft);
-		mSolo.sleep(100);
+		mSolo.sleep(SLEEP_TIME);
 		longpressOnPointAndCheckIfCanvasPointHasChanged(topRight);
 	}
 
@@ -97,19 +99,19 @@ public class DrawToolIntegrationTest extends BaseIntegrationTestClass {
 		PointF topRight = new PointF(xRight, yTop);
 
 		longpressOnPointAndCheckIfCanvasPointHasNotChanged(rightMiddle);
-		mSolo.sleep(100);
+		mSolo.sleep(SLEEP_TIME);
 		longpressOnPointAndCheckIfCanvasPointHasNotChanged(leftMiddle);
-		mSolo.sleep(100);
+		mSolo.sleep(SLEEP_TIME);
 		longpressOnPointAndCheckIfCanvasPointHasNotChanged(topMiddle);
-		mSolo.sleep(100);
+		mSolo.sleep(SLEEP_TIME);
 		longpressOnPointAndCheckIfCanvasPointHasNotChanged(bottomMiddle);
-		mSolo.sleep(100);
+		mSolo.sleep(SLEEP_TIME);
 		longpressOnPointAndCheckIfCanvasPointHasNotChanged(bottomRight);
-		mSolo.sleep(100);
+		mSolo.sleep(SLEEP_TIME);
 		longpressOnPointAndCheckIfCanvasPointHasNotChanged(topLeft);
-		mSolo.sleep(100);
+		mSolo.sleep(SLEEP_TIME);
 		longpressOnPointAndCheckIfCanvasPointHasNotChanged(bottomLeft);
-		mSolo.sleep(100);
+		mSolo.sleep(SLEEP_TIME);
 		longpressOnPointAndCheckIfCanvasPointHasNotChanged(topRight);
 	}
 

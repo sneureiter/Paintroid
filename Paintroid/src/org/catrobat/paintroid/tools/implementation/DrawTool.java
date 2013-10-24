@@ -95,7 +95,8 @@ public class DrawTool extends BaseTool {
 
 		if (mMoveAsync.getStatus() == AsyncTask.Status.PENDING) {
 			mMoveAsync.execute(coordinateDelta);
-		} else if (mMoveAsync.getStatus() == AsyncTask.Status.FINISHED) {
+		} else if (mMoveAsync.isCancelled()
+				|| mMoveAsync.getStatus() == AsyncTask.Status.FINISHED) {
 			mMoveAsync = new MoveOnZoomAsyncTask();
 			mMoveAsync.execute(coordinateDelta);
 		}
@@ -133,7 +134,7 @@ public class DrawTool extends BaseTool {
 				|| deltaY != mPreviousDeltaY;
 		if (directionHasChanged
 				&& mMoveAsync.getStatus() == AsyncTask.Status.RUNNING) {
-			mMoveAsync.cancel(true);
+			mMoveAsync.cancel(false);
 
 		}
 
@@ -168,7 +169,8 @@ public class DrawTool extends BaseTool {
 
 	@Override
 	public boolean handleUp(PointF coordinate) {
-		mMoveAsync.cancel(true);
+
+		mMoveAsync.cancel(false);
 		if (mInitialEventCoordinate == null || mPreviousEventCoordinate == null
 				|| coordinate == null) {
 			return false;
@@ -253,9 +255,7 @@ public class DrawTool extends BaseTool {
 
 			if (coordinateDeltas.length > 0) {
 
-				// TODO mPreviousEventCoordinate check shouldn't be necessary if
-				// issue #156 is resolved
-				while (!isCancelled() && mPreviousEventCoordinate != null) {
+				while (!isCancelled()) {
 
 					PointF bottomRightBitmapPoint = PaintroidApplication.perspective
 							.getSurfacePointFromCanvasPoint(new PointF(
@@ -265,43 +265,48 @@ public class DrawTool extends BaseTool {
 											.getBitmapHeight()));
 					PointF topLeftBitmapPoint = PaintroidApplication.perspective
 							.getSurfacePointFromCanvasPoint(new PointF(0, 0));
-					try {
-						if ((mPreviousEventCoordinate.x - mScrollTolerance) > bottomRightBitmapPoint.x) {
+					float previousX;
+					float previousY;
+
+					synchronized (mPreviousEventCoordinate) {
+						if (mPreviousEventCoordinate == null) {
+							break;
+						}
+						previousX = mPreviousEventCoordinate.x;
+						previousY = mPreviousEventCoordinate.y;
+
+						if ((previousX - mScrollTolerance) > bottomRightBitmapPoint.x) {
 							coordinateDeltas[0].x = 0;
 						}
 						// just a approximate calculation
 						float actionbarHeight = 2 * PaintroidApplication.perspective
 								.getActionbarHeight();
 
-						if ((mPreviousEventCoordinate.y - mScrollTolerance - actionbarHeight) > bottomRightBitmapPoint.y) {
+						if ((previousY - mScrollTolerance - actionbarHeight) > bottomRightBitmapPoint.y) {
 							coordinateDeltas[0].y = 0;
 						}
-						if ((mPreviousEventCoordinate.x + mScrollTolerance) < topLeftBitmapPoint.x) {
+						if ((previousX + mScrollTolerance) < topLeftBitmapPoint.x) {
 							coordinateDeltas[0].x = 0;
 						}
-						if ((mPreviousEventCoordinate.y + mScrollTolerance) < topLeftBitmapPoint.y) {
+						if ((previousY + mScrollTolerance) < topLeftBitmapPoint.y) {
 							coordinateDeltas[0].y = 0;
 						}
 
 						PaintroidApplication.perspective.translate(
 								coordinateDeltas[0].x, coordinateDeltas[0].y);
-						PointF coordinate = new PointF(
-								mPreviousEventCoordinate.x
-										- coordinateDeltas[0].x / scale,
-								mPreviousEventCoordinate.y
-										- coordinateDeltas[0].y / scale);
+						PointF coordinate = new PointF(previousX
+								- coordinateDeltas[0].x / scale, previousY
+								- coordinateDeltas[0].y / scale);
 						addToPath(coordinate);
-					} catch (NullPointerException e) {
-						// mPreviousEventCoordinate was null maybe pinch and
-						// draw at same time
-						this.cancel(true);
 					}
 
 					try {
+
 						Thread.sleep(scrollInterval);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+
 				}
 			}
 			return null;
@@ -309,6 +314,7 @@ public class DrawTool extends BaseTool {
 
 		@Override
 		protected void onPostExecute(Void nothing) {
+
 		}
 
 	}

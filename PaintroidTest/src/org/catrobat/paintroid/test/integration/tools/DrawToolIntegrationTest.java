@@ -126,7 +126,8 @@ public class DrawToolIntegrationTest extends BaseIntegrationTestClass {
 		int endPointColor = PaintroidApplication.drawingSurface.getPixel(endPointCanvas);
 		assertEquals("start", Color.BLACK, startPointColor);
 		assertEquals("end", Color.BLACK, endPointColor);
-		assertFalse("scrolling did not work", startPointCanvas.equals(endPointCanvas));
+		assertTrue("scrolling did not work", (startPointCanvas.x != endPointCanvas.x)
+				|| (startPointCanvas.y != endPointCanvas.y));
 	}
 
 	public void longpressOnPointAndCheckIfCanvasPointHasNotChanged(PointF clickPoint) {

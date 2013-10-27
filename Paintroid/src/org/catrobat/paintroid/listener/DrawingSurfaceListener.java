@@ -33,13 +33,15 @@ public class DrawingSurfaceListener implements OnTouchListener {
 		DRAW, PINCH
 	};
 
-	private final int BLOCKING_TIME = 250 * 1000 * 1000;
+	private final int BLOCKING_TIME_AFTER_ZOOM = 250 * 1000 * 1000;
+	private final int BLOCKING_TIME_BEFORE_DRAW = 1000 * 1000;
 
 	private final Perspective mPerspective;
 	private float mPointerDistance;
 	private PointF mPointerMean;
 	private TouchMode mTouchMode;
 	private long mZoomTimeStamp;
+	private long mDownTimeStamp;
 
 	public DrawingSurfaceListener() {
 		mPerspective = PaintroidApplication.perspective;
@@ -63,21 +65,23 @@ public class DrawingSurfaceListener implements OnTouchListener {
 	public boolean onTouch(View view, MotionEvent event) {
 
 		PointF touchPoint = new PointF(event.getX(), event.getY());
-		mPerspective.convertFromSurfaceToCanvas(touchPoint);
+		touchPoint = mPerspective.getCanvasPointFromSurfacePoint(touchPoint);
 
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			PaintroidApplication.currentTool.handleDown(touchPoint);
+			mDownTimeStamp = System.nanoTime();
 			break;
 		case MotionEvent.ACTION_MOVE:
 			if (event.getPointerCount() == 1) {
-				if (System.nanoTime() < (mZoomTimeStamp + BLOCKING_TIME)) {
+				if (System.nanoTime() < (mZoomTimeStamp + BLOCKING_TIME_AFTER_ZOOM)
+						|| System.nanoTime() < (mDownTimeStamp + BLOCKING_TIME_BEFORE_DRAW)) {
 					break;
 				}
 				mTouchMode = TouchMode.DRAW;
 				PaintroidApplication.currentTool.handleMove(touchPoint);
 
-			} else if (mTouchMode != TouchMode.DRAW){
+			} else if (mTouchMode != TouchMode.DRAW) {
 				mTouchMode = TouchMode.PINCH;
 
 				float pointerDistanceOld = mPointerDistance;

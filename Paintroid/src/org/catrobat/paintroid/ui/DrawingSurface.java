@@ -225,7 +225,7 @@ public class DrawingSurface extends SurfaceView implements
 	public Bitmap getFullBitmapCopy() {
 
 		if (PaintroidApplication.hasChanged == false
-				|| !PaintroidApplication.commandManager.getCommandListByIndex(
+				|| PaintroidApplication.commandManager.getCommandListByIndex(
 						PaintroidApplication.currentLayer).isHidden()) {
 			return mFullBitmapCopy;
 		} else {

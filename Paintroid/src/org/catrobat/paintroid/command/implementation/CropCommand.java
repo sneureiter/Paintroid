@@ -42,7 +42,7 @@ public class CropCommand extends BaseCommand {
 		mCropCoordinateYBottom = cropCoordinateYBottom;
 	}
 
-	public static Boolean areEqual(CropCommand a, CropCommand b) {
+	public static boolean areEqual(CropCommand a, CropCommand b) {
 		if (a.mCropCoordinateXLeft == b.mCropCoordinateXLeft
 				&& a.mCropCoordinateXRight == b.mCropCoordinateXRight
 				&& a.mCropCoordinateYBottom == b.mCropCoordinateYBottom

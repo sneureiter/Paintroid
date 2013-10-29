@@ -31,6 +31,7 @@ public class ChangeLayerCommand extends BaseCommand {
 		PaintroidApplication.commandManager
 				.setmBitmapBelow(generateImageOfBelowLayers(PaintroidApplication.currentLayer));
 
+		PaintroidApplication.perspective.resetScaleAndTranslation();
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
 	}

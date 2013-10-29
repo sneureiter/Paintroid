@@ -47,6 +47,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	private int mCommandIndex;
 	private Bitmap mOriginalBitmap;
 	private CropCommand mlastCropCommand;
+	private CropCommand mOriginalCropCommand;
 
 	private Bitmap mBitmapAbove = null;
 	private Bitmap mBitmapBelow = null;
@@ -56,9 +57,11 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 		mCurrentCommandList = new LinkedList<Command>();
 
-		mlastCropCommand = new CropCommand(0, 0,
+		mOriginalCropCommand = new CropCommand(0, 0,
 				PaintroidApplication.getScreenSize().x,
 				PaintroidApplication.getScreenSize().y);
+
+		mlastCropCommand = mOriginalCropCommand;
 		// The first command in the list is needed to clear the image when
 		// rolling back commands.
 		mCurrentCommandList.add(new ClearCommand());
@@ -325,15 +328,20 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	@Override
 	public void addEmptyCommandList(int index) {
 		LinkedList<Command> tmpCommandList = new LinkedList<Command>();
+		CommandList mCommandList = new CommandList(tmpCommandList);
 
 		tmpCommandList.add(new BitmapCommand(mOriginalBitmap, false));
-		tmpCommandList.add(getLastCropCommand());
 
-		CommandList mCommandList = new CommandList(tmpCommandList);
-		mCommandList.setLastCommandCount(2);
-		mCommandList.setLastCommandIndex(1);
+		if (!CropCommand.areEqual((CropCommand) getLastCropCommand(),
+				mOriginalCropCommand)) {
+			tmpCommandList.add(getLastCropCommand());
+			mCommandList.setLastCommandCount(2);
+			mCommandList.setLastCommandIndex(2);
+		} else {
+			mCommandList.setLastCommandCount(1);
+			mCommandList.setLastCommandIndex(1);
+		}
 		mCommandList.setThumbnail(null);
-
 		mAllCommandLists.add(index, mCommandList);
 
 	}

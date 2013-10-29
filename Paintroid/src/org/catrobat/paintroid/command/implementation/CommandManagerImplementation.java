@@ -41,7 +41,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	private static final int MAX_COMMANDS = 512;
 
 	private LinkedList<Command> mCurrentCommandList;
-	private final LinkedList<CommandList> mAllCommandLists;
+	private LinkedList<CommandList> mAllCommandLists;
 
 	private int mCommandCounter;
 	private int mCommandIndex;
@@ -98,6 +98,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 			mAllCommandLists.get(z).clear();
 		}
 		mAllCommandLists.clear();
+		mAllCommandLists = new LinkedList<CommandList>();
 
 		mCurrentCommandList.clear();
 		mCurrentCommandList.add(new ClearCommand());
@@ -151,6 +152,14 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 			} else {
 				UndoRedoManager.getInstance().update(
 						UndoRedoManager.StatusMode.DISABLE_UNDO);
+			}
+
+			if (mCommandCounter < mCurrentCommandList.size()) {
+				UndoRedoManager.getInstance().update(
+						UndoRedoManager.StatusMode.ENABLE_REDO);
+			} else if (mCommandCounter == mCurrentCommandList.size()) {
+				UndoRedoManager.getInstance().update(
+						UndoRedoManager.StatusMode.DISABLE_REDO);
 			}
 
 			this.resetIndex();
@@ -341,6 +350,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		mCurrentCommandList = mCommandList.getCommands();
 		mCommandCounter = mCommandList.getLastCommandCount();
 		mCommandIndex = mCommandList.getLastCommandIndex();
+
 	}
 
 	@Override

@@ -46,7 +46,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	private int mCommandCounter;
 	private int mCommandIndex;
 	private Bitmap mOriginalBitmap;
-	private CropCommand mlastCropCommand;
+	private LinkedList<CropCommand> mCropCommandList;
 	private CropCommand mOriginalCropCommand;
 
 	private Bitmap mBitmapAbove = null;
@@ -54,14 +54,14 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 	public CommandManagerImplementation() {
 		mAllCommandLists = new LinkedList<CommandList>();
-
 		mCurrentCommandList = new LinkedList<Command>();
+		mCropCommandList = new LinkedList<CropCommand>();
 
 		mOriginalCropCommand = new CropCommand(0, 0,
 				PaintroidApplication.getScreenSize().x,
 				PaintroidApplication.getScreenSize().y);
 
-		mlastCropCommand = mOriginalCropCommand;
+		mCropCommandList.add(mOriginalCropCommand);
 		// The first command in the list is needed to clear the image when
 		// rolling back commands.
 		mCurrentCommandList.add(new ClearCommand());
@@ -113,7 +113,8 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		UndoRedoManager.getInstance().update(StatusMode.DISABLE_REDO);
 		UndoRedoManager.getInstance().update(StatusMode.DISABLE_UNDO);
 
-		mlastCropCommand = mOriginalCropCommand;
+		mCropCommandList.clear();
+		mCropCommandList.add(mOriginalCropCommand);
 	}
 
 	@Override
@@ -121,9 +122,9 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 		if (mCommandIndex < mCommandCounter) {
 
-			if (PaintroidApplication.commandManager.getCommandListByIndex(
-					PaintroidApplication.currentLayer).isHidden()
-					&& mCommandIndex != 0) {
+			if ((PaintroidApplication.commandManager.getCommandListByIndex(
+					PaintroidApplication.currentLayer).isHidden() && mCommandIndex != 0)
+					|| mCurrentCommandList.get(mCommandIndex) instanceof CropCommand) {
 				mCommandIndex++;
 
 				return getNextCommand();
@@ -132,7 +133,10 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 			return mCurrentCommandList.get(mCommandIndex++);
 
 		} else {
-
+			if (PaintroidApplication.isCropped == true) {
+				PaintroidApplication.isCropped = false;
+				return getLastCropCommand();
+			}
 			return null;
 		}
 	}
@@ -195,16 +199,18 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		PaintroidApplication.isSaved = false;
 
 		if (command instanceof CropCommand) {
-			saveCurrentCommandListPointer();
-			setLastCropCommand((CropCommand) command);
-			cropAllLayers(command);
+			// saveCurrentCommandListPointer();
+			// setLastCropCommand((CropCommand) command);
+			mCropCommandList.add((CropCommand) command);
+			// cropAllLayers(command);
 			setmBitmapAbove(ChangeLayerCommand
 					.generateImageOfAboveLayers(PaintroidApplication.currentLayer));
 			setmBitmapBelow(ChangeLayerCommand
 					.generateImageOfBelowLayers(PaintroidApplication.currentLayer));
-		} else {
-			mCurrentCommandList.add(command);
+			PaintroidApplication.isCropped = true;
 		}
+
+		mCurrentCommandList.add(command);
 
 		if (mAllCommandLists.get(PaintroidApplication.currentLayer).isHidden()) {
 			this.resetIndex();
@@ -334,15 +340,9 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 		tmpCommandList.add(new BitmapCommand(mOriginalBitmap, false));
 
-		if (!CropCommand.areEqual((CropCommand) getLastCropCommand(),
-				mOriginalCropCommand)) {
-			tmpCommandList.add(getLastCropCommand());
-			mCommandList.setLastCommandCount(2);
-			mCommandList.setLastCommandIndex(2);
-		} else {
-			mCommandList.setLastCommandCount(1);
-			mCommandList.setLastCommandIndex(1);
-		}
+		mCommandList.setLastCommandCount(1);
+		mCommandList.setLastCommandIndex(1);
+
 		mCommandList.setThumbnail(null);
 		mAllCommandLists.add(index, mCommandList);
 
@@ -373,15 +373,12 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	}
 
 	@Override
-	public Command getLastCropCommand() {
-		return mlastCropCommand;
+	public CropCommand getLastCropCommand() {
+		return mCropCommandList.getLast();
 	}
 
 	@Override
-	public void setLastCropCommand(CropCommand cc) {
-		if (cc != null) {
-			this.mlastCropCommand = cc;
-		}
-
+	public CropCommand getOriginalCropCommand() {
+		return mOriginalCropCommand;
 	}
 }

@@ -55,6 +55,7 @@ public class PaintroidApplication extends Application {
 	public static int currentLayer;
 
 	public static boolean hasChanged = false;
+	public static boolean isCropped = false;
 
 	@Override
 	public void onCreate() {

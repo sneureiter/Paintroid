@@ -32,6 +32,7 @@ public class ChangeLayerCommand extends BaseCommand {
 				.setmBitmapBelow(generateImageOfBelowLayers(PaintroidApplication.currentLayer));
 
 		PaintroidApplication.perspective.resetScaleAndTranslation();
+
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
 	}
@@ -66,11 +67,7 @@ public class ChangeLayerCommand extends BaseCommand {
 								tmpBitmap = mtmp;
 							}
 						} else if (command instanceof CropCommand) {
-							Bitmap mtmp = ((CropCommand) command).runLayer(
-									ctmp, tmpBitmap);
-							if (mtmp != null) {
-								tmpBitmap = mtmp;
-							}
+							continue;
 						} else {
 							mList.getCommands().get(k).run(ctmp, tmpBitmap);
 						}
@@ -83,6 +80,11 @@ public class ChangeLayerCommand extends BaseCommand {
 					ctmp = null;
 				}
 			}
+			if (!CropCommand.isOriginal()) {
+				b = PaintroidApplication.commandManager.getLastCropCommand()
+						.runLayer(c, b);
+			}
+
 			return b;
 		}
 		return null;
@@ -119,11 +121,7 @@ public class ChangeLayerCommand extends BaseCommand {
 								tmp = mtmp;
 							}
 						} else if ((mList.getCommands().get(k) instanceof CropCommand)) {
-							Bitmap mtmp = ((CropCommand) mList.getCommands()
-									.get(k)).runLayer(ctmp, tmp);
-							if (mtmp != null) {
-								tmp = mtmp;
-							}
+							continue;
 						} else {
 							mList.getCommands().get(k).run(ctmp, tmp);
 						}
@@ -137,6 +135,12 @@ public class ChangeLayerCommand extends BaseCommand {
 					ctmp = null;
 				}
 			}
+
+			if (!CropCommand.isOriginal()) {
+				b = PaintroidApplication.commandManager.getLastCropCommand()
+						.runLayer(c, b);
+			}
+
 			return b;
 		}
 		return null;

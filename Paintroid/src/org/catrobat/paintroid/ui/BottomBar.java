@@ -123,11 +123,7 @@ public class BottomBar implements View.OnTouchListener {
 							b = mTmp;
 						}
 					} else if (command instanceof CropCommand) {
-						Bitmap mTmp = ((CropCommand) command).runLayer(c, b);
-
-						if (mTmp != null) {
-							b = mTmp;
-						}
+						continue;
 					} else {
 						command.run(c, b);
 					}

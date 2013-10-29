@@ -68,7 +68,7 @@ public interface CommandManager {
 
 	Bitmap getmBitmapBelow();
 
-	Command getLastCropCommand();
+	CropCommand getLastCropCommand();
 
-	void setLastCropCommand(CropCommand cc);
+	CropCommand getOriginalCropCommand();
 }

@@ -140,8 +140,8 @@ public class CropCommand extends BaseCommand {
 				Log.e(PaintroidApplication.TAG,
 						"coordinate X left is larger than coordinate X right");
 				setChanged();
-				notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
-				return null;
+				notifyStatus(NOTIFY_STATES.COMMAND_DONE);
+				return bitmap;
 			}
 			if (mCropCoordinateXRight < 0 || mCropCoordinateXLeft < 0
 					|| mCropCoordinateXRight > bitmap.getWidth()
@@ -149,15 +149,15 @@ public class CropCommand extends BaseCommand {
 				Log.e(PaintroidApplication.TAG,
 						"coordinate X is out of bitmap scope");
 				setChanged();
-				notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
-				return null;
+				notifyStatus(NOTIFY_STATES.COMMAND_DONE);
+				return bitmap;
 			}
 			if (mCropCoordinateYBottom < mCropCoordinateYTop) {
 				Log.e(PaintroidApplication.TAG,
 						"coordinate Y bottom is smaller than coordinate Y top");
 				setChanged();
-				notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
-				return null;
+				notifyStatus(NOTIFY_STATES.COMMAND_DONE);
+				return bitmap;
 			}
 			if (mCropCoordinateYBottom < 0 || mCropCoordinateYTop < 0
 					|| mCropCoordinateYBottom > bitmap.getHeight()
@@ -165,8 +165,8 @@ public class CropCommand extends BaseCommand {
 				Log.e(PaintroidApplication.TAG,
 						"coordinate Y is out of bitmap scope");
 				setChanged();
-				notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
-				return null;
+				notifyStatus(NOTIFY_STATES.COMMAND_DONE);
+				return bitmap;
 			}
 			if (mCropCoordinateXLeft <= 0
 					&& mCropCoordinateXRight == bitmap.getWidth()
@@ -174,8 +174,8 @@ public class CropCommand extends BaseCommand {
 					&& mCropCoordinateYTop <= 0) {
 				Log.e(PaintroidApplication.TAG, " no need to crop ");
 				setChanged();
-				notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
-				return null;
+				notifyStatus(NOTIFY_STATES.COMMAND_DONE);
+				return bitmap;
 			}
 
 			Bitmap croppedBitmap = Bitmap.createBitmap(bitmap,
@@ -185,6 +185,7 @@ public class CropCommand extends BaseCommand {
 
 			bitmap = croppedBitmap;
 			canvas.setBitmap(bitmap);
+			// PaintroidApplication.drawingSurface.setBitmap(croppedBitmap);
 
 			if (mFileToStoredBitmap == null) {
 				mBitmap = croppedBitmap.copy(Config.ARGB_8888, true);
@@ -195,11 +196,19 @@ public class CropCommand extends BaseCommand {
 			Log.e(PaintroidApplication.TAG,
 					"failed to crop bitmap:" + e.getMessage());
 			setChanged();
-			notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
+			notifyStatus(NOTIFY_STATES.COMMAND_DONE);
 		}
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
 
 		return bitmap;
+	}
+
+	public static boolean isOriginal() {
+		if (areEqual(PaintroidApplication.commandManager.getLastCropCommand(),
+				PaintroidApplication.commandManager.getOriginalCropCommand())) {
+			return true;
+		}
+		return false;
 	}
 }

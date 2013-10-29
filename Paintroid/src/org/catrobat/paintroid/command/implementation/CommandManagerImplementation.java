@@ -112,6 +112,8 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 		UndoRedoManager.getInstance().update(StatusMode.DISABLE_REDO);
 		UndoRedoManager.getInstance().update(StatusMode.DISABLE_UNDO);
+
+		mlastCropCommand = mOriginalCropCommand;
 	}
 
 	@Override

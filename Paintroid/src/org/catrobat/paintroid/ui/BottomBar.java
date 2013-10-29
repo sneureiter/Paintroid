@@ -103,10 +103,7 @@ public class BottomBar implements View.OnTouchListener {
 
 		Bitmap b = PaintroidApplication.drawingSurface.getBitmapCopy();
 
-		if (layer != PaintroidApplication.currentLayer
-				|| PaintroidApplication.commandManager.getCommandListByIndex(
-						layer).isHidden()) {
-
+		if (PaintroidApplication.commandManager.getAllCommandList().size() > 1) {
 			b = Bitmap.createBitmap(PaintroidApplication.getScreenSize().x,
 					PaintroidApplication.getScreenSize().y, Config.ARGB_8888);
 			Canvas c = new Canvas(b);

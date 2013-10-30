@@ -296,6 +296,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	@Override
 	public void resetIndex() {
 		mCommandIndex = 0;
+		PaintroidApplication.isCropped = true;
 	}
 
 	@Override

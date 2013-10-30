@@ -130,6 +130,10 @@ public class BottomBar implements View.OnTouchListener {
 				}
 				c.drawBitmap(b, new Matrix(), null);
 			}
+			if (!CropCommand.isOriginal()) {
+				b = PaintroidApplication.commandManager.getLastCropCommand()
+						.runLayer(c, b);
+			}
 		}
 
 		double ratioOriginal = (double) screenSize.x / (double) screenSize.y;

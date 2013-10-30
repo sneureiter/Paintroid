@@ -65,7 +65,13 @@ public class ChangeLayerCommand extends BaseCommand {
 								tmpBitmap = mtmp;
 							}
 						} else if (command instanceof CropCommand) {
-							continue;
+							if (!CropCommand.isOriginal()) {
+								Bitmap mtmp = ((CropCommand) command).runLayer(
+										c, b);
+								if (mtmp != null) {
+									tmpBitmap = mtmp;
+								}
+							}
 						} else {
 							mList.getCommands().get(k).run(ctmp, tmpBitmap);
 						}
@@ -77,10 +83,6 @@ public class ChangeLayerCommand extends BaseCommand {
 					tmpBitmap = null;
 					ctmp = null;
 				}
-			}
-			if (!CropCommand.isOriginal()) {
-				b = PaintroidApplication.commandManager.getLastCropCommand()
-						.runLayer(c, b);
 			}
 
 			return b;
@@ -100,43 +102,44 @@ public class ChangeLayerCommand extends BaseCommand {
 			for (int i = PaintroidApplication.commandManager
 					.getAllCommandList().size() - 1; i > currentLayer; i--) {
 
-				Bitmap tmp = Bitmap.createBitmap(originalSize.x,
+				Bitmap tmpBitmap = Bitmap.createBitmap(originalSize.x,
 						originalSize.y, Config.ARGB_8888);
-				Canvas ctmp = new Canvas(tmp);
+				Canvas ctmp = new Canvas(tmpBitmap);
 
 				CommandList mList = PaintroidApplication.commandManager
 						.getAllCommandList().get(i);
 
 				for (int k = 0; k < mList.getLastCommandCount(); k++) {
 
+					Command command = mList.getCommands().get(k);
 					if (!mList.isHidden()
-							&& !((mList.getCommands().get(k) instanceof BitmapCommand) && k == 0)) {
+							&& !((command instanceof BitmapCommand) && k == 0)) {
 
-						if (mList.getCommands().get(k) instanceof FlipCommand) {
-							Bitmap mtmp = ((FlipCommand) mList.getCommands()
-									.get(k)).runLayer(ctmp, tmp);
+						if (command instanceof FlipCommand) {
+							Bitmap mtmp = ((FlipCommand) command).runLayer(
+									ctmp, tmpBitmap);
 							if (mtmp != null) {
-								tmp = mtmp;
+								tmpBitmap = mtmp;
 							}
-						} else if ((mList.getCommands().get(k) instanceof CropCommand)) {
-							continue;
+						} else if ((command instanceof CropCommand)) {
+							if (!CropCommand.isOriginal()) {
+								Bitmap mtmp = ((CropCommand) command).runLayer(
+										ctmp, tmpBitmap);
+								if (mtmp != null) {
+									tmpBitmap = mtmp;
+								}
+							}
 						} else {
-							mList.getCommands().get(k).run(ctmp, tmp);
+							command.run(ctmp, tmpBitmap);
 						}
 					}
 				}
-				if (tmp != null) {
-					c.drawBitmap(tmp, new Matrix(), null);
-					tmp.recycle();
-					tmp = null;
-
+				if (tmpBitmap != null) {
+					c.drawBitmap(tmpBitmap, new Matrix(), null);
+					tmpBitmap.recycle();
+					tmpBitmap = null;
 					ctmp = null;
 				}
-			}
-
-			if (!CropCommand.isOriginal()) {
-				b = PaintroidApplication.commandManager.getLastCropCommand()
-						.runLayer(c, b);
 			}
 
 			return b;

@@ -123,26 +123,14 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		if (mCommandIndex < mCommandCounter) {
 
 			if ((PaintroidApplication.commandManager.getCommandListByIndex(
-					PaintroidApplication.currentLayer).isHidden() && mCommandIndex != 0)) { // ||
-																							// mCurrentCommandList.get(mCommandIndex)
-																							// instanceof
-																							// CropCommand
+					PaintroidApplication.currentLayer).isHidden() && mCommandIndex != 0)) {
 				mCommandIndex++;
-
 				return getNextCommand();
 
 			}
 			return mCurrentCommandList.get(mCommandIndex++);
 
 		} else {
-			if (PaintroidApplication.isCropped == true
-					&& mCropCommandList.size() > 1) {
-				if (!CropCommand.areEqual(mCropCommandList.getLast(),
-						mCropCommandList.get(mCropCommandList.size() - 2))) {
-					PaintroidApplication.isCropped = false;
-					return getLastCropCommand();
-				}
-			}
 			return null;
 		}
 	}
@@ -205,10 +193,12 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		PaintroidApplication.isSaved = false;
 
 		if (command instanceof CropCommand) {
-			// saveCurrentCommandListPointer();
-			// setLastCropCommand((CropCommand) command);
+			saveCurrentCommandListPointer();
+			// this.resetIndex();
+
 			mCropCommandList.add((CropCommand) command);
-			// cropAllLayers(command);
+			cropAllOtherLayers(command);
+
 			setmBitmapAbove(ChangeLayerCommand
 					.generateImageOfAboveLayers(PaintroidApplication.currentLayer));
 			setmBitmapBelow(ChangeLayerCommand
@@ -225,16 +215,17 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		return mCurrentCommandList.get(mCommandIndex) != null;
 	}
 
-	private void cropAllLayers(Command command) {
+	private void cropAllOtherLayers(Command command) {
 		for (int i = 0; i < mAllCommandLists.size(); i++) {
-
-			mAllCommandLists
-					.get(i)
-					.getCommands()
-					.add(mAllCommandLists.get(i).getLastCommandCount() - 1,
-							command);
-			mAllCommandLists.get(i).setLastCommandCount(
-					mAllCommandLists.get(i).getLastCommandCount() + 1);
+			if (i != PaintroidApplication.currentLayer) {
+				mAllCommandLists
+						.get(i)
+						.getCommands()
+						.add(mAllCommandLists.get(i).getLastCommandCount(),
+								command);
+				mAllCommandLists.get(i).setLastCommandCount(
+						mAllCommandLists.get(i).getLastCommandCount() + 1);
+			}
 		}
 
 	}
@@ -357,7 +348,12 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 		tmpCommandList.add(new BitmapCommand(mOriginalBitmap, false));
 
-		mCommandList.setLastCommandCount(1);
+		if (!CropCommand.isOriginal()) {
+			tmpCommandList.add(getLastCropCommand());
+			mCommandList.setLastCommandCount(2);
+		} else {
+			mCommandList.setLastCommandCount(1);
+		}
 		mCommandList.setLastCommandIndex(1);
 
 		mCommandList.setThumbnail(null);
@@ -386,7 +382,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 				.get(PaintroidApplication.currentLayer);
 
 		mCommandList.setLastCommandCount(mCommandCounter);
-		mCommandList.setLastCommandIndex(mCommandIndex);
+		mCommandList.setLastCommandIndex(mCommandIndex + 1);
 	}
 
 	@Override

@@ -123,8 +123,10 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		if (mCommandIndex < mCommandCounter) {
 
 			if ((PaintroidApplication.commandManager.getCommandListByIndex(
-					PaintroidApplication.currentLayer).isHidden() && mCommandIndex != 0)
-					|| mCurrentCommandList.get(mCommandIndex) instanceof CropCommand) {
+					PaintroidApplication.currentLayer).isHidden() && mCommandIndex != 0)) { // ||
+																							// mCurrentCommandList.get(mCommandIndex)
+																							// instanceof
+																							// CropCommand
 				mCommandIndex++;
 
 				return getNextCommand();
@@ -133,9 +135,13 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 			return mCurrentCommandList.get(mCommandIndex++);
 
 		} else {
-			if (PaintroidApplication.isCropped == true) {
-				PaintroidApplication.isCropped = false;
-				return getLastCropCommand();
+			if (PaintroidApplication.isCropped == true
+					&& mCropCommandList.size() > 1) {
+				if (!CropCommand.areEqual(mCropCommandList.getLast(),
+						mCropCommandList.get(mCropCommandList.size() - 2))) {
+					PaintroidApplication.isCropped = false;
+					return getLastCropCommand();
+				}
 			}
 			return null;
 		}
@@ -237,6 +243,10 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	public synchronized void undo() {
 		if (mCommandCounter > 1) {
 			mCommandCounter--;
+
+			if (mCurrentCommandList.get(mCommandCounter) instanceof CropCommand) {
+				mCropCommandList.removeLast();
+			}
 			resetIndex();
 
 			UndoRedoManager.getInstance().update(
@@ -255,6 +265,12 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 			mCommandIndex = mCommandCounter;
 			mCommandCounter++;
+
+			if (mCurrentCommandList.get(mCommandCounter - 1) instanceof CropCommand) {
+				mCropCommandList.add((CropCommand) mCurrentCommandList
+						.get(mCommandCounter - 1));
+			}
+
 			UndoRedoManager.getInstance().update(
 					UndoRedoManager.StatusMode.ENABLE_UNDO);
 			if (mCommandCounter == mCurrentCommandList.size()) {
@@ -262,6 +278,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 						UndoRedoManager.StatusMode.DISABLE_REDO);
 			}
 			PaintroidApplication.hasChanged = true;
+			// PaintroidApplication.isCropped = true;
 		}
 	}
 
@@ -296,7 +313,6 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	@Override
 	public void resetIndex() {
 		mCommandIndex = 0;
-		PaintroidApplication.isCropped = true;
 	}
 
 	@Override

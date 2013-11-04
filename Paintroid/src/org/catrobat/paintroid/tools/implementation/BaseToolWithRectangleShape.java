@@ -121,17 +121,6 @@ public abstract class BaseToolWithRectangleShape extends BaseToolWithShape {
 		return value * density / baseDensity;
 	}
 
-	private static float getDensitySpecificValue(float value) {
-		DisplayMetrics metrics = PaintroidApplication.applicationContext
-				.getResources().getDisplayMetrics();
-		float baseDensity = DisplayMetrics.DENSITY_MEDIUM;
-		float density = metrics.densityDpi;
-		if (density < DisplayMetrics.DENSITY_MEDIUM) {
-			density = DisplayMetrics.DENSITY_MEDIUM;
-		}
-		return value * density / baseDensity;
-	}
-
 	public BaseToolWithRectangleShape(Context context, ToolType toolType) {
 		super(context, toolType);
 		mToolType = toolType;

@@ -96,9 +96,11 @@ public class GeometricFillTool extends BaseToolWithRectangleShape {
 		Bitmap bitmap = Bitmap.createBitmap((int) mBoxWidth, (int) mBoxHeight,
 				Bitmap.Config.ARGB_8888);
 		Canvas drawCanvas = new Canvas(bitmap);
-
-		RectF shapeRect = new RectF(SHAPE_OFFSET, SHAPE_OFFSET, mBoxWidth
-				- SHAPE_OFFSET, mBoxHeight - SHAPE_OFFSET);
+		float scale = PaintroidApplication.perspective.getScale(); // 100 - 1 ,
+																	// 0 - 10
+		float calc = (float) (15 - (SHAPE_OFFSET - Math.sqrt(scale)));
+		RectF shapeRect = new RectF(calc, calc, mBoxWidth - calc, mBoxHeight
+				- calc);
 		Paint drawPaint = new Paint();
 
 		drawPaint.setColor(mCanvasPaint.getColor());
@@ -111,10 +113,9 @@ public class GeometricFillTool extends BaseToolWithRectangleShape {
 		case OUTLINE:
 			drawPaint.setStyle(Style.STROKE);
 			float strokeWidth = mBitmapPaint.getStrokeWidth();
-			shapeRect = new RectF(SHAPE_OFFSET + (strokeWidth / 2),
-					SHAPE_OFFSET + (strokeWidth / 2), mBoxWidth - SHAPE_OFFSET
-							- (strokeWidth / 2), mBoxHeight - SHAPE_OFFSET
-							- (strokeWidth / 2));
+			shapeRect = new RectF(calc + (strokeWidth / 2), calc
+					+ (strokeWidth / 2), mBoxWidth - calc - (strokeWidth / 2),
+					mBoxHeight - calc - (strokeWidth / 2));
 			drawPaint.setStrokeWidth(strokeWidth);
 			drawPaint.setStrokeCap(Paint.Cap.BUTT);
 			break;

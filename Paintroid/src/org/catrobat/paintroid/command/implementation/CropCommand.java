@@ -207,8 +207,10 @@ public class CropCommand extends BaseCommand {
 	public static boolean isOriginal() {
 		if (areEqual(PaintroidApplication.commandManager.getLastCropCommand(),
 				PaintroidApplication.commandManager.getOriginalCropCommand())) {
+			Log.i("my", "original");
 			return true;
 		}
+		Log.i("my", "fälschung");
 		return false;
 	}
 }

@@ -122,17 +122,19 @@ public class BottomBar implements View.OnTouchListener {
 						if (mTmp != null) {
 							b = mTmp;
 						}
-					} else if (command instanceof CropCommand) {
-						continue;
+					} else if ((command instanceof CropCommand)) {
+						if (!CropCommand.isOriginal()) {
+							Bitmap mTmp = ((CropCommand) command)
+									.runLayer(c, b);
+							if (mTmp != null) {
+								b = mTmp;
+							}
+						}
 					} else {
 						command.run(c, b);
 					}
 				}
 				c.drawBitmap(b, new Matrix(), null);
-			}
-			if (!CropCommand.isOriginal()) {
-				b = PaintroidApplication.commandManager.getLastCropCommand()
-						.runLayer(c, b);
 			}
 		}
 

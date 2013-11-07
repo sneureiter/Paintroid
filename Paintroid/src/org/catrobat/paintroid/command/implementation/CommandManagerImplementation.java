@@ -227,7 +227,16 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 						mAllCommandLists.get(i).getLastCommandCount() + 1);
 			}
 		}
+	}
 
+	private void removeCropFromAllOtherLayers(Command command) {
+		for (int i = 0; i < mAllCommandLists.size(); i++) {
+			if (i != PaintroidApplication.currentLayer) {
+				mAllCommandLists.get(i).getCommands().remove(command);
+				mAllCommandLists.get(i).setLastCommandCount(
+						mAllCommandLists.get(i).getLastCommandCount() - 1);
+			}
+		}
 	}
 
 	@Override
@@ -237,6 +246,12 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 			if (mCurrentCommandList.get(mCommandCounter) instanceof CropCommand) {
 				mCropCommandList.removeLast();
+				removeCropFromAllOtherLayers(mCurrentCommandList
+						.get(mCommandCounter));
+				ChangeLayerCommand
+						.generateImageOfAboveLayers(PaintroidApplication.currentLayer);
+				ChangeLayerCommand
+						.generateImageOfBelowLayers(PaintroidApplication.currentLayer);
 			}
 			resetIndex();
 
@@ -258,8 +273,13 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 			mCommandCounter++;
 
 			if (mCurrentCommandList.get(mCommandCounter - 1) instanceof CropCommand) {
-				mCropCommandList.add((CropCommand) mCurrentCommandList
+				mCropCommandList.addLast((CropCommand) mCurrentCommandList
 						.get(mCommandCounter - 1));
+				cropAllOtherLayers(mCurrentCommandList.get(mCommandCounter - 1));
+				ChangeLayerCommand
+						.generateImageOfAboveLayers(PaintroidApplication.currentLayer);
+				ChangeLayerCommand
+						.generateImageOfBelowLayers(PaintroidApplication.currentLayer);
 			}
 
 			UndoRedoManager.getInstance().update(

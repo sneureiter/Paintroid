@@ -35,6 +35,61 @@ public class ChangeLayerCommand extends BaseCommand {
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
 	}
 
+	// public static Bitmap generateImageOfAboveLayers(int currentLayer) {
+	//
+	// if (currentLayer > 0) {
+	// Bitmap b = Bitmap.createBitmap(originalSize.x, originalSize.y,
+	// Config.ARGB_8888);
+	// Canvas c = new Canvas();
+	// c.setBitmap(b);
+	//
+	// for (int i = currentLayer - 1; i >= 0; i--) {
+	//
+	// Bitmap tmpBitmap = Bitmap.createBitmap(originalSize.x,
+	// originalSize.y, Config.ARGB_8888);
+	// Canvas ctmp = new Canvas(tmpBitmap);
+	//
+	// CommandList mList = PaintroidApplication.commandManager
+	// .getAllCommandList().get(i);
+	//
+	// for (int k = 0; k < mList.getLastCommandCount(); k++) {
+	// Command command = mList.getCommands().get(k);
+	//
+	// if (!mList.isHidden()
+	// && !((command instanceof BitmapCommand) && k == 0)) {
+	//
+	// if (command instanceof FlipCommand) {
+	// Bitmap mtmp = ((FlipCommand) command).runLayer(
+	// ctmp, tmpBitmap);
+	// if (mtmp != null) {
+	// tmpBitmap = mtmp;
+	// }
+	// } else if (command instanceof CropCommand) {
+	// if (!CropCommand.isOriginal()) {
+	// Bitmap mtmp = ((CropCommand) command).runLayer(
+	// c, b);
+	// if (mtmp != null) {
+	// tmpBitmap = mtmp;
+	// }
+	// }
+	// } else {
+	// mList.getCommands().get(k).run(ctmp, tmpBitmap);
+	// }
+	// }
+	// }
+	// if (tmpBitmap != null) {
+	// c.drawBitmap(tmpBitmap, new Matrix(), null);
+	// tmpBitmap.recycle();
+	// tmpBitmap = null;
+	// ctmp = null;
+	// }
+	// }
+	//
+	// return b;
+	// }
+	// return null;
+	// }
+
 	public static Bitmap generateImageOfAboveLayers(int currentLayer) {
 
 		if (currentLayer > 0) {
@@ -53,10 +108,10 @@ public class ChangeLayerCommand extends BaseCommand {
 						.getAllCommandList().get(i);
 
 				for (int k = 0; k < mList.getLastCommandCount(); k++) {
-					Command command = mList.getCommands().get(k);
 
-					if (!mList.isHidden()
-							&& !((command instanceof BitmapCommand) && k == 0)) {
+					Command command = mList.getCommands().get(k);
+					if ((!mList.isHidden() && !((command instanceof BitmapCommand) && k == 0))
+							|| (mList.isHidden() && (command instanceof CropCommand))) {
 
 						if (command instanceof FlipCommand) {
 							Bitmap mtmp = ((FlipCommand) command).runLayer(
@@ -64,16 +119,18 @@ public class ChangeLayerCommand extends BaseCommand {
 							if (mtmp != null) {
 								tmpBitmap = mtmp;
 							}
-						} else if (command instanceof CropCommand) {
+						} else if ((command instanceof CropCommand)) {
 							if (!CropCommand.isOriginal()) {
 								Bitmap mtmp = ((CropCommand) command).runLayer(
-										c, b);
+										ctmp, tmpBitmap);
 								if (mtmp != null) {
 									tmpBitmap = mtmp;
 								}
+							} else {
+								continue;
 							}
 						} else {
-							mList.getCommands().get(k).run(ctmp, tmpBitmap);
+							command.run(ctmp, tmpBitmap);
 						}
 					}
 				}
@@ -92,7 +149,7 @@ public class ChangeLayerCommand extends BaseCommand {
 
 	public static Bitmap generateImageOfBelowLayers(int currentLayer) {
 
-		if (currentLayer < PaintroidApplication.commandManager
+		if (currentLayer <= PaintroidApplication.commandManager
 				.getAllCommandList().size() - 1) {
 			Bitmap b = Bitmap.createBitmap(originalSize.x, originalSize.y,
 					Config.ARGB_8888);
@@ -112,8 +169,8 @@ public class ChangeLayerCommand extends BaseCommand {
 				for (int k = 0; k < mList.getLastCommandCount(); k++) {
 
 					Command command = mList.getCommands().get(k);
-					if (!mList.isHidden()
-							&& !((command instanceof BitmapCommand) && k == 0)) {
+					if ((!mList.isHidden() && !((command instanceof BitmapCommand) && k == 0))
+							|| (mList.isHidden() && (command instanceof CropCommand))) {
 
 						if (command instanceof FlipCommand) {
 							Bitmap mtmp = ((FlipCommand) command).runLayer(
@@ -128,6 +185,8 @@ public class ChangeLayerCommand extends BaseCommand {
 								if (mtmp != null) {
 									tmpBitmap = mtmp;
 								}
+							} else {
+								continue;
 							}
 						} else {
 							command.run(ctmp, tmpBitmap);

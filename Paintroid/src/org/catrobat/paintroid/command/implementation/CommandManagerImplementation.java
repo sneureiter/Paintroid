@@ -280,6 +280,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 						.generateImageOfAboveLayers(PaintroidApplication.currentLayer);
 				ChangeLayerCommand
 						.generateImageOfBelowLayers(PaintroidApplication.currentLayer);
+				this.resetIndex();
 			}
 
 			UndoRedoManager.getInstance().update(
@@ -402,7 +403,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 				.get(PaintroidApplication.currentLayer);
 
 		mCommandList.setLastCommandCount(mCommandCounter);
-		mCommandList.setLastCommandIndex(mCommandIndex + 1);
+		mCommandList.setLastCommandIndex(mCommandIndex);
 	}
 
 	@Override

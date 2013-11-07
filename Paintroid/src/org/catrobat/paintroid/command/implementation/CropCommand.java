@@ -112,8 +112,9 @@ public class CropCommand extends BaseCommand {
 					mCropCoordinateXRight - mCropCoordinateXLeft,
 					mCropCoordinateYBottom - mCropCoordinateYTop);
 
-			PaintroidApplication.drawingSurface.setBitmap(croppedBitmap);
+			// PaintroidApplication.drawingSurface.setBitmap(croppedBitmap);
 			bitmap = croppedBitmap.copy(bitmap.getConfig(), true);
+			canvas.setBitmap(bitmap);
 
 			if (mFileToStoredBitmap == null) {
 				mBitmap = croppedBitmap.copy(Config.ARGB_8888, true);
@@ -207,10 +208,8 @@ public class CropCommand extends BaseCommand {
 	public static boolean isOriginal() {
 		if (areEqual(PaintroidApplication.commandManager.getLastCropCommand(),
 				PaintroidApplication.commandManager.getOriginalCropCommand())) {
-			Log.i("my", "original");
 			return true;
 		}
-		Log.i("my", "fälschung");
 		return false;
 	}
 }

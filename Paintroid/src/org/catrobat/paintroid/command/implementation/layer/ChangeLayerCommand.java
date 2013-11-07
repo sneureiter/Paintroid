@@ -126,8 +126,6 @@ public class ChangeLayerCommand extends BaseCommand {
 								if (mtmp != null) {
 									tmpBitmap = mtmp;
 								}
-							} else {
-								continue;
 							}
 						} else {
 							command.run(ctmp, tmpBitmap);
@@ -141,7 +139,6 @@ public class ChangeLayerCommand extends BaseCommand {
 					ctmp = null;
 				}
 			}
-
 			return b;
 		}
 		return null;
@@ -185,8 +182,6 @@ public class ChangeLayerCommand extends BaseCommand {
 								if (mtmp != null) {
 									tmpBitmap = mtmp;
 								}
-							} else {
-								continue;
 							}
 						} else {
 							command.run(ctmp, tmpBitmap);

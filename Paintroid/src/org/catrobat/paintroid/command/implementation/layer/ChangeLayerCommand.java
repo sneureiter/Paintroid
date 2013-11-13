@@ -13,6 +13,7 @@ import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Point;
+import android.util.Log;
 
 public class ChangeLayerCommand extends BaseCommand {
 	static Point originalSize = PaintroidApplication.getScreenSize();
@@ -21,6 +22,7 @@ public class ChangeLayerCommand extends BaseCommand {
 	public void run(Canvas canvas, Bitmap bitmap) {
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_STARTED);
+		Log.i("my", "start changing layers");
 
 		PaintroidApplication.commandManager
 				.changeCurrentCommandList(PaintroidApplication.currentLayer);
@@ -33,6 +35,7 @@ public class ChangeLayerCommand extends BaseCommand {
 
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
+		Log.i("my", "finished changing layers");
 	}
 
 	// public static Bitmap generateImageOfAboveLayers(int currentLayer) {

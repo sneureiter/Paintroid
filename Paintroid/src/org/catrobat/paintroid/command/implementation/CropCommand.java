@@ -19,7 +19,6 @@
 
 package org.catrobat.paintroid.command.implementation;
 
-import org.catrobat.paintroid.FileIO;
 import org.catrobat.paintroid.PaintroidApplication;
 
 import android.graphics.Bitmap;
@@ -56,13 +55,7 @@ public class CropCommand extends BaseCommand {
 	public void run(Canvas canvas, Bitmap bitmap) {
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_STARTED);
-		if (mFileToStoredBitmap != null) {
-			PaintroidApplication.drawingSurface.setBitmap(FileIO
-					.getBitmapFromFile(mFileToStoredBitmap));
-			setChanged();
-			notifyStatus(NOTIFY_STATES.COMMAND_DONE);
-			return;
-		}
+
 		try {
 
 			if (mCropCoordinateXRight < mCropCoordinateXLeft) {
@@ -114,7 +107,6 @@ public class CropCommand extends BaseCommand {
 
 			PaintroidApplication.drawingSurface.setBitmap(croppedBitmap);
 			bitmap = croppedBitmap.copy(bitmap.getConfig(), true);
-			canvas.setBitmap(bitmap);
 
 			if (mFileToStoredBitmap == null) {
 				mBitmap = croppedBitmap.copy(Config.ARGB_8888, true);
@@ -134,7 +126,6 @@ public class CropCommand extends BaseCommand {
 	public Bitmap runLayer(Canvas canvas, Bitmap bitmap) {
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_STARTED);
-
 		try {
 
 			if (mCropCoordinateXRight < mCropCoordinateXLeft) {
@@ -186,7 +177,6 @@ public class CropCommand extends BaseCommand {
 
 			bitmap = croppedBitmap.copy(bitmap.getConfig(), true);
 			canvas.setBitmap(bitmap);
-			// PaintroidApplication.drawingSurface.setBitmap(croppedBitmap);
 
 			if (mFileToStoredBitmap == null) {
 				mBitmap = croppedBitmap.copy(Config.ARGB_8888, true);

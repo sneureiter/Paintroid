@@ -194,7 +194,6 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 		if (command instanceof CropCommand) {
 			saveCurrentCommandListPointer();
-			// this.resetIndex();
 
 			mCropCommandList.add((CropCommand) command);
 			cropAllOtherLayers(command);
@@ -204,6 +203,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 			setmBitmapBelow(ChangeLayerCommand
 					.generateImageOfBelowLayers(PaintroidApplication.currentLayer));
 			PaintroidApplication.isCropped = true;
+			this.resetIndex();
 		}
 
 		mCurrentCommandList.add(command);

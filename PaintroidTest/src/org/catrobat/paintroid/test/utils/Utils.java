@@ -19,7 +19,7 @@
 
 package org.catrobat.paintroid.test.utils;
 
-import org.catrobat.paintroid.MenuFileActivity;
+import org.catrobat.paintroid.OptionsMenuActivity;
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.ui.Perspective;
 
@@ -28,6 +28,7 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
@@ -85,6 +86,23 @@ public class Utils {
 				.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		display.getMetrics(metrics);
 		float density = metrics.density;
-		return (MenuFileActivity.ACTION_BAR_HEIGHT * density);
+		return (OptionsMenuActivity.ACTION_BAR_HEIGHT * density);
+	}
+
+	public static float getStatusbarHeight() {
+
+		int statusbarheight = 0;
+		int resourceId = PaintroidApplication.applicationContext.getResources().getIdentifier("status_bar_height",
+				"dimen", "android");
+		if (resourceId > 0) {
+			statusbarheight = PaintroidApplication.applicationContext.getResources().getDimensionPixelSize(resourceId);
+		}
+		return statusbarheight;
+
+	}
+
+	public static PointF convertFromScreenToSurface(PointF screenPoint) {
+
+		return new PointF(screenPoint.x, screenPoint.y - getActionbarHeight() - getStatusbarHeight());
 	}
 }

@@ -19,7 +19,7 @@
 
 package org.catrobat.paintroid.tools.implementation;
 
-import org.catrobat.paintroid.MenuFileActivity;
+import org.catrobat.paintroid.OptionsMenuActivity;
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.tools.ToolType;
@@ -50,7 +50,7 @@ public abstract class BaseToolWithShape extends BaseTool implements
 				.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		DisplayMetrics metrics = new DisplayMetrics();
 		display.getMetrics(metrics);
-		float actionBarHeight = MenuFileActivity.ACTION_BAR_HEIGHT
+		float actionBarHeight = OptionsMenuActivity.ACTION_BAR_HEIGHT
 				* metrics.density;
 
 		Point screenSize = PaintroidApplication.getScreenSize();
@@ -83,6 +83,34 @@ public abstract class BaseToolWithShape extends BaseTool implements
 		float displayScale = mContext.getResources().getDisplayMetrics().density;
 		float applicationScale = PaintroidApplication.perspective.getScale();
 		return (defaultSize * displayScale) / applicationScale;
+	}
+
+	@Override
+	public Point getAutoScrollDirection(float pointX, float pointY,
+			int viewWidth, int viewHeight) {
+
+		int deltaX = 0;
+		int deltaY = 0;
+		PointF surfaceToolPosition = PaintroidApplication.perspective
+				.getSurfacePointFromCanvasPoint(new PointF(mToolPosition.x,
+						mToolPosition.y));
+
+		if (surfaceToolPosition.x < mScrollTolerance) {
+			deltaX = 1;
+		}
+		if (surfaceToolPosition.x > viewWidth - mScrollTolerance) {
+			deltaX = -1;
+		}
+
+		if (surfaceToolPosition.y < mScrollTolerance) {
+			deltaY = 1;
+		}
+
+		if (surfaceToolPosition.y > viewHeight - mScrollTolerance) {
+			deltaY = -1;
+		}
+
+		return new Point(deltaX, deltaY);
 	}
 
 }

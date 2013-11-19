@@ -33,6 +33,7 @@ import org.catrobat.paintroid.command.implementation.layer.DeleteLayerCommand;
 import org.catrobat.paintroid.command.implementation.layer.HideLayerCommand;
 import org.catrobat.paintroid.command.implementation.layer.ShowLayerCommand;
 import org.catrobat.paintroid.command.implementation.layer.SwitchLayerCommand;
+import org.catrobat.paintroid.dialog.ProgressIntermediateDialog;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -119,7 +120,6 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 	@Override
 	public synchronized Command getNextCommand() {
-
 		if (mCommandIndex < mCommandCounter) {
 
 			if ((PaintroidApplication.commandManager.getCommandListByIndex(
@@ -239,6 +239,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	@Override
 	public synchronized void undo() {
 		if (mCommandCounter > 1) {
+			ProgressIntermediateDialog.getInstance().show();
 			mCommandCounter--;
 
 			if (mCurrentCommandList.get(mCommandCounter) instanceof CropCommand) {
@@ -267,7 +268,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	@Override
 	public synchronized void redo() {
 		if (mCommandCounter < mCurrentCommandList.size()) {
-
+			ProgressIntermediateDialog.getInstance().show();
 			mCommandIndex = mCommandCounter;
 			mCommandCounter++;
 
@@ -414,5 +415,11 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	@Override
 	public CropCommand getOriginalCropCommand() {
 		return mOriginalCropCommand;
+	}
+
+	@Override
+	public boolean hasNextCommand() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

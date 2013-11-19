@@ -23,13 +23,16 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import org.catrobat.paintroid.dialog.DialogSaveFile;
 import org.catrobat.paintroid.dialog.InfoDialog;
 import org.catrobat.paintroid.dialog.InfoDialog.DialogType;
+import org.catrobat.paintroid.dialog.ProgressIntermediateDialog;
 import org.catrobat.paintroid.dialog.layerchooser.LayerChooserDialog;
 import org.catrobat.paintroid.tools.Tool.StateChange;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -40,15 +43,16 @@ import android.graphics.Bitmap.Config;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.net.Uri;
-import android.os.Bundle;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public abstract class MenuFileActivity extends SherlockFragmentActivity {
+public abstract class OptionsMenuActivity extends SherlockFragmentActivity {
 
 	protected static final int REQUEST_CODE_IMPORTPNG = 1;
 	protected static final int REQUEST_CODE_LOAD_PICTURE = 2;
@@ -60,6 +64,7 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 	protected static final String URI_NORMAL = "com.google.android.gallery3d";
 	protected static final String URI_ALTERNATIVE_DEVICES = "com.android.gallery3d";
 	protected static final String TEMPORARY_BITMAP_NAME = "temporary.bmp";
+	private static final String DEFAULT_FILENAME_TIME_FORMAT = "yyyy_mm_dd_hhmmss";
 
 	public static final float ACTION_BAR_HEIGHT = 50.0f;
 
@@ -80,18 +85,18 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 
 		switch (item.getItemId()) {
 		case R.id.menu_item_save_image:
-			final Bundle bundle = new Bundle();
-			DialogSaveFile saveDialog = new DialogSaveFile(this, bundle);
-
-			// Log.d(PaintroidApplication.TAG, "file loaded from: "
-			// + PaintroidApplication.savedBitmapFile.getAbsolutePath());
-
-			if (PaintroidApplication.savedBitmapFile != null) {
-				saveDialog.replaceLoadedFile();
+			SaveTask saveTask = new SaveTask(this);
+			if (PaintroidApplication.savedBitmapFile == null) {
+				saveTask.execute(getDefaultFileName());
 			} else {
-				saveDialog.show(getSupportFragmentManager(),
-						"SaveDialogFragment");
+				saveTask.execute(PaintroidApplication.savedBitmapFile.getName());
 			}
+			break;
+		case R.id.menu_item_save_copy:
+			PaintroidApplication.saveCopy = true;
+			String name = getDefaultFileName();
+			SaveTask saveCopyTask = new SaveTask(this);
+			saveCopyTask.execute(name);
 			break;
 		case R.id.menu_item_new_image:
 			chooseNewImage();
@@ -111,7 +116,11 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 		if (!PaintroidApplication.commandManager.hasCommands()
 				&& PaintroidApplication.isPlainImage) {
 			startLoadImageIntent();
+		} else if (PaintroidApplication.isSaved) {
+			startLoadImageIntent();
 		} else {
+
+			final SaveTask saveTask = new SaveTask(this);
 
 			AlertDialog.Builder alertLoadDialogBuilder = new AlertDialog.Builder(
 					this);
@@ -119,20 +128,27 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 					.setTitle(R.string.menu_load_image)
 					.setMessage(R.string.dialog_warning_new_image)
 					.setCancelable(true)
-					.setPositiveButton(R.string.yes,
+					.setPositiveButton(R.string.save_button_text,
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int id) {
+									if (PaintroidApplication.savedBitmapFile == null) {
+
+										saveTask.execute(getDefaultFileName());
+									} else {
+										saveTask.execute(PaintroidApplication.savedBitmapFile
+												.getName());
+									}
+									startLoadImageIntent();
+								}
+							})
+					.setNegativeButton(R.string.discard_button_text,
 							new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog,
 										int id) {
 									startLoadImageIntent();
-								}
-							})
-					.setNegativeButton(R.string.no,
-							new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int id) {
-									dialog.cancel();
 								}
 							});
 			AlertDialog alertLoadImage = alertLoadDialogBuilder.create();
@@ -176,7 +192,11 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 				&& PaintroidApplication.isPlainImage
 				&& !PaintroidApplication.openedFromCatroid) {
 			initialiseNewBitmap();
+		} else if (PaintroidApplication.isSaved) {
+			initialiseNewBitmap();
 		} else {
+
+			final SaveTask saveTask = new SaveTask(this);
 
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 					this);
@@ -184,21 +204,27 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 					.setTitle(R.string.menu_new_image)
 					.setMessage(R.string.dialog_warning_new_image)
 					.setCancelable(true)
-					.setPositiveButton(R.string.yes,
+					.setPositiveButton(R.string.save_button_text,
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int id) {
+									if (PaintroidApplication.savedBitmapFile == null) {
+										saveTask.execute(getDefaultFileName());
+									} else {
+										saveTask.execute(PaintroidApplication.savedBitmapFile
+												.getName());
+									}
+									initialiseNewBitmap();
+
+								}
+							})
+					.setNegativeButton(R.string.discard_button_text,
 							new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog,
 										int id) {
 									initialiseNewBitmap();
-
-								}
-							})
-					.setNegativeButton(R.string.no,
-							new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int id) {
-									dialog.cancel();
 								}
 							});
 			AlertDialog alertNewImage = alertDialogBuilder.create();
@@ -211,7 +237,11 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 				&& PaintroidApplication.isPlainImage
 				&& !PaintroidApplication.openedFromCatroid) {
 			takePhoto();
+		} else if (PaintroidApplication.isSaved) {
+			takePhoto();
 		} else {
+
+			final SaveTask saveTask = new SaveTask(this);
 
 			AlertDialog.Builder newCameraImageAlertDialogBuilder = new AlertDialog.Builder(
 					this);
@@ -219,20 +249,26 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 					.setTitle(R.string.menu_new_image_from_camera)
 					.setMessage(R.string.dialog_warning_new_image)
 					.setCancelable(true)
-					.setPositiveButton(R.string.yes,
+					.setPositiveButton(R.string.save_button_text,
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int id) {
+									if (PaintroidApplication.savedBitmapFile == null) {
+										saveTask.execute(getDefaultFileName());
+									} else {
+										saveTask.execute(PaintroidApplication.savedBitmapFile
+												.getName());
+									}
+									takePhoto();
+								}
+							})
+					.setNegativeButton(R.string.discard_button_text,
 							new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog,
 										int id) {
 									takePhoto();
-								}
-							})
-					.setNegativeButton(R.string.no,
-							new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int id) {
-									dialog.cancel();
 								}
 							});
 			AlertDialog alertNewCameraImage = newCameraImageAlertDialogBuilder
@@ -250,10 +286,14 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 			case REQUEST_CODE_LOAD_PICTURE:
 				loadBitmapFromUri(data.getData());
 				PaintroidApplication.isPlainImage = false;
+				PaintroidApplication.isSaved = false;
+				PaintroidApplication.savedBitmapFile = null;
 				break;
 			case REQUEST_CODE_TAKE_PICTURE:
 				loadBitmapFromUri(mCameraImageUri);
 				PaintroidApplication.isPlainImage = false;
+				PaintroidApplication.isSaved = false;
+				PaintroidApplication.savedBitmapFile = null;
 				break;
 			}
 
@@ -261,8 +301,8 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 	}
 
 	protected void takePhoto() {
-		File tempFile = FileIO.createNewEmptyPictureFile(MenuFileActivity.this,
-				getString(R.string.temp_picture_name) + ".png");
+		File tempFile = FileIO.createNewEmptyPictureFile(
+				OptionsMenuActivity.this, getDefaultFileName());
 		if (tempFile != null) {
 			mCameraImageUri = Uri.fromFile(tempFile);
 		}
@@ -283,7 +323,7 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 			final RunnableWithBitmap runnable) {
 		String loadMessge = getResources().getString(R.string.dialog_load);
 		final ProgressDialog dialog = ProgressDialog.show(
-				MenuFileActivity.this, "", loadMessge, true);
+				OptionsMenuActivity.this, "", loadMessge, true);
 
 		Thread thread = new Thread("loadBitmapFromFileAndRun") {
 			@Override
@@ -316,16 +356,25 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 		thread.start();
 	}
 
+	// if needed use Async Task
 	public void saveFile(String fileName) {
+
 		if (FileIO.saveBitmap(this,
-				PaintroidApplication.drawingSurface.getFullBitmapCopy(),
-				fileName) == null) {
+				PaintroidApplication.drawingSurface.getBitmapCopy(), fileName) == null) {
 			new InfoDialog(DialogType.WARNING,
 					R.string.dialog_error_sdcard_text,
 					R.string.dialog_error_save_title).show(
 					getSupportFragmentManager(), "savedialogerror");
 		}
+
 		PaintroidApplication.isSaved = true;
+	}
+
+	@SuppressLint("SimpleDateFormat")
+	protected String getDefaultFileName() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+				DEFAULT_FILENAME_TIME_FORMAT);
+		return simpleDateFormat.format(new Date());
 	}
 
 	public boolean isPicasaUri(Uri uri) {
@@ -397,7 +446,7 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 
 				File cacheDirectory;
 
-				cacheDirectory = MenuFileActivity.this.getCacheDir();
+				cacheDirectory = OptionsMenuActivity.this.getCacheDir();
 
 				if (!cacheDirectory.exists()) {
 					cacheDirectory.mkdirs();
@@ -460,5 +509,44 @@ public abstract class MenuFileActivity extends SherlockFragmentActivity {
 		PaintroidApplication.currentTool
 				.resetInternalState(StateChange.NEW_IMAGE_LOADED);
 		PaintroidApplication.isPlainImage = true;
+		PaintroidApplication.isSaved = false;
+		PaintroidApplication.savedBitmapFile = null;
+	}
+
+	protected class SaveTask extends AsyncTask<String, Void, Void> {
+
+		private OptionsMenuActivity context;
+
+		public SaveTask(OptionsMenuActivity context) {
+			this.context = context;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			ProgressIntermediateDialog.getInstance().show(); // TODO solve
+																// progressDialog
+																// issue
+			Log.d(PaintroidApplication.TAG, "async tast prgDialog isShowing"
+					+ ProgressIntermediateDialog.getInstance().isShowing());
+		}
+
+		@Override
+		protected Void doInBackground(String... arg0) {
+			saveFile(arg0[0]);
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void Result) {
+			ProgressIntermediateDialog.getInstance().dismiss();
+			if (!PaintroidApplication.saveCopy) {
+				Toast.makeText(context, R.string.saved, Toast.LENGTH_LONG)
+						.show();
+			} else {
+				Toast.makeText(context, R.string.copy, Toast.LENGTH_LONG)
+						.show();
+				PaintroidApplication.saveCopy = false;
+			}
+		}
 	}
 }

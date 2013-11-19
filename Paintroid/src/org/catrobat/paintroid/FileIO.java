@@ -37,7 +37,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public abstract class FileIO {
@@ -61,9 +60,8 @@ public abstract class FileIO {
 				|| name.length() < 1) {
 			Log.e(PaintroidApplication.TAG, "ERROR saving bitmap " + name);
 		} else if (PaintroidApplication.savedBitmapFile != null
-				&& PaintroidApplication.overrideFile) {
+				&& !PaintroidApplication.saveCopy) {
 			file = getFileFromPath(name);
-			PaintroidApplication.overrideFile = false;
 		} else {
 			file = createNewEmptyPictureFile(context, name + ENDING);
 		}
@@ -76,14 +74,11 @@ public abstract class FileIO {
 				bitmap.compress(FORMAT, QUALITY, new FileOutputStream(file));
 				String[] paths = new String[] { file.getAbsolutePath() };
 				MediaScannerConnection.scanFile(context, paths, null, null);
-				Toast.makeText(context,
-						"saved file to: " + file.getAbsolutePath(),
-						Toast.LENGTH_LONG).show();
 			} catch (Exception e) {
 				Log.e(PaintroidApplication.TAG, "ERROR writing " + file, e);
 			}
 		}
-
+		PaintroidApplication.savedBitmapFile = file;
 		return file;
 	}
 
@@ -155,7 +150,10 @@ public abstract class FileIO {
 		int tmpHeight = options.outHeight;
 		int sampleSize = 1;
 
-		while (tmpWidth / 2 > 640 || tmpHeight / 2 > 640) {
+		int maxWidth = PaintroidApplication.getScreenSize().x;
+		int maxHeight = PaintroidApplication.getScreenSize().y;
+
+		while (tmpWidth > maxWidth || tmpHeight > maxHeight) {
 			tmpWidth /= 2;
 			tmpHeight /= 2;
 			sampleSize *= 2;
@@ -166,6 +164,7 @@ public abstract class FileIO {
 
 		Bitmap unmutableBitmap = BitmapFactory.decodeFile(
 				bitmapFile.getAbsolutePath(), options);
+
 		tmpWidth = unmutableBitmap.getWidth();
 		tmpHeight = unmutableBitmap.getHeight();
 		int[] tmpPixels = new int[tmpWidth * tmpHeight];

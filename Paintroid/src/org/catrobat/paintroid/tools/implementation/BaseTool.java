@@ -28,14 +28,13 @@ import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.command.implementation.BaseCommand;
 import org.catrobat.paintroid.dialog.BrushPickerDialog;
 import org.catrobat.paintroid.dialog.BrushPickerDialog.OnBrushChangedListener;
-import org.catrobat.paintroid.dialog.DialogProgressIntermediate;
+import org.catrobat.paintroid.dialog.ProgressIntermediateDialog;
 import org.catrobat.paintroid.dialog.colorpicker.ColorPickerDialog;
 import org.catrobat.paintroid.dialog.colorpicker.ColorPickerDialog.OnColorPickedListener;
 import org.catrobat.paintroid.tools.Tool;
 import org.catrobat.paintroid.tools.ToolType;
 import org.catrobat.paintroid.ui.TopBar.ToolButtonIDs;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -44,6 +43,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Cap;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -54,6 +54,7 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 	public static final Paint CHECKERED_PATTERN = new Paint();
 	protected static final int NO_BUTTON_RESOURCE = R.drawable.icon_menu_no_icon;
 	public static final float MOVE_TOLERANCE = 5;
+	public static final int SCROLL_TOLERANCE_PERCENTAGE = 10;
 
 	protected static Paint mBitmapPaint;
 	protected static Paint mCanvasPaint;
@@ -61,7 +62,7 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 	protected Context mContext;
 	protected PointF mMovedDistance;
 	protected PointF mPreviousEventCoordinate;
-	protected static Dialog mProgressDialog;
+	protected static int mScrollTolerance;
 
 	private OnBrushChangedListener mStroke;
 	protected OnColorPickedListener mColor;
@@ -85,6 +86,8 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 		BitmapShader shader = new BitmapShader(checkerboard,
 				Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 		CHECKERED_PATTERN.setShader(shader);
+		mScrollTolerance = PaintroidApplication.getScreenSize().x
+				* SCROLL_TOLERANCE_PERCENTAGE / 100;
 	}
 
 	public BaseTool(Context context, ToolType toolType) {
@@ -116,7 +119,6 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 
 		mMovedDistance = new PointF(0f, 0f);
 		mPreviousEventCoordinate = new PointF(0f, 0f);
-		mProgressDialog = new DialogProgressIntermediate(context);
 
 	}
 
@@ -265,7 +267,7 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 		if (data instanceof BaseCommand.NOTIFY_STATES) {
 			if (BaseCommand.NOTIFY_STATES.COMMAND_DONE == data
 					|| BaseCommand.NOTIFY_STATES.COMMAND_FAILED == data) {
-				mProgressDialog.dismiss();
+				ProgressIntermediateDialog.getInstance().dismiss();
 				observable.deleteObserver(this);
 			}
 		}
@@ -278,5 +280,30 @@ public abstract class BaseTool extends Observable implements Tool, Observer {
 		if (getToolType().shouldReactToStateChange(stateChange)) {
 			resetInternalState();
 		}
+	}
+
+	@Override
+	public Point getAutoScrollDirection(float pointX, float pointY,
+			int viewWidth, int viewHeight) {
+
+		int deltaX = 0;
+		int deltaY = 0;
+
+		if (pointX < mScrollTolerance) {
+			deltaX = 1;
+		}
+		if (pointX > viewWidth - mScrollTolerance) {
+			deltaX = -1;
+		}
+
+		if (pointY < mScrollTolerance) {
+			deltaY = 1;
+		}
+
+		if (pointY > viewHeight - mScrollTolerance) {
+			deltaY = -1;
+		}
+
+		return new Point(deltaX, deltaY);
 	}
 }

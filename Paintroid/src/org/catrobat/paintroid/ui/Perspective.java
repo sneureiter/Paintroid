@@ -21,12 +21,11 @@ package org.catrobat.paintroid.ui;
 
 import java.io.Serializable;
 
-import org.catrobat.paintroid.MenuFileActivity;
+import org.catrobat.paintroid.OptionsMenuActivity;
 import org.catrobat.paintroid.PaintroidApplication;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
@@ -47,7 +46,7 @@ public class Perspective implements Serializable {
 	public static final float MAX_SCALE = 100f;
 	public static final float SCROLL_BORDER = 50f;
 	private static final float BORDER_ZOOM_FACTOR = 0.95f;
-	private static final float ACTION_BAR_HEIGHT = MenuFileActivity.ACTION_BAR_HEIGHT;
+	private static final float ACTION_BAR_HEIGHT = OptionsMenuActivity.ACTION_BAR_HEIGHT;
 
 	private float mSurfaceWidth;
 	private float mSurfaceHeight;
@@ -78,7 +77,8 @@ public class Perspective implements Serializable {
 		Rect surfaceFrame = holder.getSurfaceFrame();
 		mSurfaceWidth = surfaceFrame.right;
 		mSurfaceCenterX = surfaceFrame.exactCenterX();
-		mSurfaceHeight = surfaceFrame.bottom;// - ACTION_BAR_HEIGHT * mScreenDensity;
+		mSurfaceHeight = surfaceFrame.bottom;// - ACTION_BAR_HEIGHT *
+												// mScreenDensity;
 		mSurfaceCenterY = mSurfaceHeight / 2;
 		resetScaleAndTranslation();
 	}
@@ -146,11 +146,7 @@ public class Perspective implements Serializable {
 		}
 	}
 
-	public synchronized void convertFromScreenToCanvas(Point p) {
-		p.x = (int) ((p.x - mSurfaceCenterX) / mSurfaceScale + mSurfaceCenterX - mSurfaceTranslationX);
-		p.y = (int) ((p.y - mSurfaceCenterY) / mSurfaceScale + mSurfaceCenterY - mSurfaceTranslationY);
-	}
-
+	@Deprecated
 	public synchronized void convertFromScreenToCanvas(PointF p) {
 		p.x = (p.x - mSurfaceCenterX) / mSurfaceScale + mSurfaceCenterX
 				- mSurfaceTranslationX;
@@ -158,10 +154,32 @@ public class Perspective implements Serializable {
 				- mSurfaceTranslationY;
 	}
 
+	public synchronized PointF getCanvasPointFromSurfacePoint(
+			PointF surfacePoint) {
+
+		float canvasX = (surfacePoint.x - mSurfaceCenterX) / mSurfaceScale
+				+ mSurfaceCenterX - mSurfaceTranslationX;
+		float canvasY = (surfacePoint.y - mSurfaceCenterY) / mSurfaceScale
+				+ mSurfaceCenterY - mSurfaceTranslationY;
+
+		return new PointF(canvasX, canvasY);
+	}
+
+	@Deprecated
 	public synchronized void convertFromCanvasToScreen(PointF p) {
 		p.x = ((p.x + mSurfaceTranslationX - mSurfaceCenterX) * mSurfaceScale + mSurfaceCenterX);
 		p.y = ((p.y + mSurfaceTranslationY - mSurfaceCenterY) * mSurfaceScale + mSurfaceCenterY);
 
+	}
+
+	public synchronized PointF getSurfacePointFromCanvasPoint(PointF canvasPoint) {
+
+		float surfaceX = (canvasPoint.x + mSurfaceTranslationX - mSurfaceCenterX)
+				* mSurfaceScale + mSurfaceCenterX;
+		float surfaceY = (canvasPoint.y + mSurfaceTranslationY - mSurfaceCenterY)
+				* mSurfaceScale + mSurfaceCenterY;
+
+		return new PointF(surfaceX, surfaceY);
 	}
 
 	public synchronized void applyToCanvas(Canvas canvas) {

@@ -51,9 +51,9 @@ public class PaintroidApplication extends Application {
 	public static boolean isPlainImage = true;
 	public static boolean isSaved = true;
 	public static File savedBitmapFile = null;
-	public static boolean overrideFile = false;
-	public static int currentLayer;
+	public static boolean saveCopy = false;
 
+	public static int currentLayer;
 	public static boolean hasChanged = false;
 
 	@Override
@@ -77,6 +77,7 @@ public class PaintroidApplication extends Application {
 		return versionName;
 	}
 
+	@SuppressWarnings("deprecation")
 	@TargetApi(13)
 	public static Point getScreenSize() {
 		int Measuredwidth = 0;

@@ -3,20 +3,10 @@ package org.catrobat.paintroid.ui;
 import org.catrobat.paintroid.MainActivity;
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
-import org.catrobat.paintroid.command.Command;
-import org.catrobat.paintroid.command.implementation.BitmapCommand;
-import org.catrobat.paintroid.command.implementation.CommandList;
-import org.catrobat.paintroid.command.implementation.CropCommand;
-import org.catrobat.paintroid.command.implementation.FlipCommand;
 import org.catrobat.paintroid.dialog.ToolsDialog;
 import org.catrobat.paintroid.dialog.layerchooser.LayerChooserDialog;
 import org.catrobat.paintroid.tools.Tool;
 
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -28,15 +18,11 @@ public class BottomBar implements View.OnTouchListener {
 	private ImageButton mLayerButton;
 
 	private MainActivity mMainActivity;
-	private int mCurrentLayer;
-	private Point screenSize;
 
 	public BottomBar(MainActivity mainActivity) {
 		mMainActivity = mainActivity;
 
-		mCurrentLayer = 0;
-		PaintroidApplication.currentLayer = mCurrentLayer;
-		screenSize = PaintroidApplication.getScreenSize();
+		PaintroidApplication.currentLayer = 0;
 
 		mAttributeButton1 = (ImageButton) mainActivity
 				.findViewById(R.id.btn_bottom_attribute1);
@@ -91,83 +77,13 @@ public class BottomBar implements View.OnTouchListener {
 		if (event.getAction() == MotionEvent.ACTION_UP) {
 
 			PaintroidApplication.commandManager.saveCurrentCommandListPointer();
-			generateThumbnail(PaintroidApplication.currentLayer);
+			PaintroidApplication.commandManager.getAllCommandList()
+					.get(PaintroidApplication.currentLayer).generateThumbnail();
 			LayerChooserDialog.getInstance().show(
 					mMainActivity.getSupportFragmentManager(), "layerchooser");
 			LayerChooserDialog.getInstance().setInitialLayer(
 					PaintroidApplication.currentLayer);
 		}
-	}
-
-	private void generateThumbnail(int layer) {
-
-		Bitmap b = PaintroidApplication.drawingSurface.getBitmapCopy();
-
-		if (PaintroidApplication.commandManager.getAllCommandList().size() > 1) {
-			b = Bitmap.createBitmap(PaintroidApplication.getScreenSize().x,
-					PaintroidApplication.getScreenSize().y, Config.ARGB_8888);
-			Canvas c = new Canvas(b);
-
-			CommandList mList = PaintroidApplication.commandManager
-					.getAllCommandList().get(PaintroidApplication.currentLayer);
-
-			for (int i = 0; i < mList.getLastCommandCount(); i++) {
-				Command command = mList.getCommands().get(i);
-
-				if (!((command instanceof BitmapCommand) && i == 0)) {
-
-					if (command instanceof FlipCommand) {
-						Bitmap mTmp = ((FlipCommand) command).runLayer(c, b);
-
-						if (mTmp != null) {
-							b = mTmp;
-						}
-					} else if ((command instanceof CropCommand)) {
-						if (!CropCommand.isOriginal()) {
-							Bitmap mTmp = ((CropCommand) command)
-									.runLayer(c, b);
-							if (mTmp != null) {
-								b = mTmp;
-							}
-						}
-					} else {
-						command.run(c, b);
-					}
-				}
-				c.drawBitmap(b, new Matrix(), null);
-			}
-		}
-
-		double ratioOriginal = (double) screenSize.x / (double) screenSize.y;
-		double ratioNew = (double) b.getWidth() / (double) b.getHeight();
-
-		double newWidth = 0;
-		double newHeight = 0;
-
-		// full width -> minimum scaling
-		if (screenSize.x == b.getWidth()) {
-			newWidth = screenSize.x / 10;
-			newHeight = screenSize.y / 10;
-		}
-		// not full horizontal width
-		else if (screenSize.x > b.getWidth()) {
-
-			// if cropped image is like a "I" the width can not reach the
-			// maximum, but the height can
-			if (ratioNew < ratioOriginal) {
-				newHeight = screenSize.y / 10;
-				newWidth = newHeight * ratioNew;
-			} else {
-				newWidth = screenSize.x / 10;
-				newHeight = newWidth / ratioNew;
-			}
-		}
-
-		PaintroidApplication.commandManager.getCommandListByIndex(layer)
-				.setThumbnail(
-						Bitmap.createScaledBitmap(b, (int) newWidth,
-								(int) newHeight, true));
-
 	}
 
 	public void setTool(Tool tool) {

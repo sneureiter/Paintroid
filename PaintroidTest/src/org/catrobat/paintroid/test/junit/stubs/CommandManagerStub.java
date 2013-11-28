@@ -26,6 +26,7 @@ import java.util.List;
 import org.catrobat.paintroid.command.Command;
 import org.catrobat.paintroid.command.CommandManager;
 import org.catrobat.paintroid.command.implementation.CommandList;
+import org.catrobat.paintroid.command.implementation.CropCommand;
 
 import android.graphics.Bitmap;
 
@@ -152,6 +153,24 @@ public class CommandManagerStub extends BaseStub implements CommandManager {
 
 	@Override
 	public Bitmap getmBitmapBelow() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean hasNextCommand() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public CropCommand getLastCropCommand() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CropCommand getOriginalCropCommand() {
 		// TODO Auto-generated method stub
 		return null;
 	}

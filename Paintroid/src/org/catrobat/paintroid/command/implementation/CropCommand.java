@@ -116,6 +116,11 @@ public class CropCommand extends BaseCommand {
 			PaintroidApplication.drawingSurface.setBitmap(croppedBitmap);
 			bitmap = croppedBitmap.copy(bitmap.getConfig(), true);
 
+			PaintroidApplication.perspective.resetScaleAndTranslation();
+			float zoomFactor = PaintroidApplication.perspective
+					.getScaleForCenterBitmap() * 0.95f;
+			PaintroidApplication.perspective.setScale(zoomFactor);
+
 			if (mFileToStoredBitmap == null) {
 				mBitmap = croppedBitmap.copy(Config.ARGB_8888, true);
 				storeBitmap();

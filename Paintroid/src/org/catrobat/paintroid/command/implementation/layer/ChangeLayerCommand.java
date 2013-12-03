@@ -13,7 +13,6 @@ import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Point;
-import android.util.Log;
 
 public class ChangeLayerCommand extends BaseCommand {
 	static Point originalSize = PaintroidApplication.getScreenSize();
@@ -22,7 +21,6 @@ public class ChangeLayerCommand extends BaseCommand {
 	public void run(Canvas canvas, Bitmap bitmap) {
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_STARTED);
-		Log.i("my", "start changing layers");
 
 		PaintroidApplication.commandManager
 				.changeCurrentCommandList(PaintroidApplication.currentLayer);
@@ -35,63 +33,7 @@ public class ChangeLayerCommand extends BaseCommand {
 
 		setChanged();
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
-		Log.i("my", "finished changing layers");
 	}
-
-	// public static Bitmap generateImageOfAboveLayers(int currentLayer) {
-	//
-	// if (currentLayer > 0) {
-	// Bitmap b = Bitmap.createBitmap(originalSize.x, originalSize.y,
-	// Config.ARGB_8888);
-	// Canvas c = new Canvas();
-	// c.setBitmap(b);
-	//
-	// for (int i = currentLayer - 1; i >= 0; i--) {
-	//
-	// Bitmap tmpBitmap = Bitmap.createBitmap(originalSize.x,
-	// originalSize.y, Config.ARGB_8888);
-	// Canvas ctmp = new Canvas(tmpBitmap);
-	//
-	// CommandList mList = PaintroidApplication.commandManager
-	// .getAllCommandList().get(i);
-	//
-	// for (int k = 0; k < mList.getLastCommandCount(); k++) {
-	// Command command = mList.getCommands().get(k);
-	//
-	// if (!mList.isHidden()
-	// && !((command instanceof BitmapCommand) && k == 0)) {
-	//
-	// if (command instanceof FlipCommand) {
-	// Bitmap mtmp = ((FlipCommand) command).runLayer(
-	// ctmp, tmpBitmap);
-	// if (mtmp != null) {
-	// tmpBitmap = mtmp;
-	// }
-	// } else if (command instanceof CropCommand) {
-	// if (!CropCommand.isOriginal()) {
-	// Bitmap mtmp = ((CropCommand) command).runLayer(
-	// c, b);
-	// if (mtmp != null) {
-	// tmpBitmap = mtmp;
-	// }
-	// }
-	// } else {
-	// mList.getCommands().get(k).run(ctmp, tmpBitmap);
-	// }
-	// }
-	// }
-	// if (tmpBitmap != null) {
-	// c.drawBitmap(tmpBitmap, new Matrix(), null);
-	// tmpBitmap.recycle();
-	// tmpBitmap = null;
-	// ctmp = null;
-	// }
-	// }
-	//
-	// return b;
-	// }
-	// return null;
-	// }
 
 	public static Bitmap generateImageOfAboveLayers(int currentLayer) {
 

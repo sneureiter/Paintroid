@@ -371,8 +371,8 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		tmpCommandList.add(new BitmapCommand(mOriginalBitmap, false));
 
 		if (!CropCommand.isOriginal()) {
-			tmpCommandList.add(getLastCropCommand());
-			mCommandList.setLastCommandCount(2);
+			tmpCommandList.addAll(mCropCommandList);
+			mCommandList.setLastCommandCount(1 + mCropCommandList.size());
 		} else {
 			mCommandList.setLastCommandCount(1);
 		}

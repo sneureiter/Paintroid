@@ -47,13 +47,13 @@ import org.catrobat.paintroid.command.implementation.layer.ChangeLayerCommand;
 import org.catrobat.paintroid.command.implementation.layer.DeleteLayerCommand;
 import org.catrobat.paintroid.command.implementation.layer.SwitchLayerCommand;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Paint;
@@ -68,6 +68,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+@SuppressLint("ValidFragment")
 public final class LayerChooserDialog extends DialogFragment implements
 		DialogInterface.OnClickListener {
 
@@ -129,7 +130,7 @@ public final class LayerChooserDialog extends DialogFragment implements
 		}
 	}
 
-	@TargetApi(11)
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -309,13 +310,6 @@ public final class LayerChooserDialog extends DialogFragment implements
 			PaintroidApplication.commandManager
 					.addEmptyCommandList(mSelectedLayerIndex);
 
-			Bitmap emptyBitmap = Bitmap
-					.createBitmap(PaintroidApplication.getScreenSize().x / 10,
-							PaintroidApplication.getScreenSize().y / 10,
-							Config.ALPHA_8);
-
-			PaintroidApplication.commandManager.getAllCommandList()
-					.get(mSelectedLayerIndex).setThumbnail(emptyBitmap);
 			setSelected(mSelectedLayerIndex, null, null);
 			adapter.notifyDataSetChanged();
 		} else {

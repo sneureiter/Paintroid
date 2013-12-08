@@ -373,12 +373,18 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		if (!CropCommand.isOriginal()) {
 			tmpCommandList.addAll(mCropCommandList);
 			mCommandList.setLastCommandCount(1 + mCropCommandList.size());
+			mCommandList.generateThumbnail();
 		} else {
 			mCommandList.setLastCommandCount(1);
+			Bitmap emptyBitmap = Bitmap
+					.createBitmap(PaintroidApplication.getScreenSize().x / 10,
+							PaintroidApplication.getScreenSize().y / 10,
+							Config.ALPHA_8);
+
+			mCommandList.setThumbnail(emptyBitmap);
 		}
 		mCommandList.setLastCommandIndex(1);
 
-		mCommandList.setThumbnail(null);
 		mAllCommandLists.add(index, mCommandList);
 
 	}

@@ -127,7 +127,7 @@ public class LayerDialogIntegrationTest extends BaseIntegrationTestClass {
 			mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_add));
 		}
 		assertTrue("More than 10 layers are possible",
-				(((ListView) mSolo.getView(R.id.mListView)).getAdapter()).getCount() <= 11);
+				(((ListView) mSolo.getView(R.id.mListView)).getAdapter()).getCount() < 11);
 
 	}
 
@@ -227,15 +227,7 @@ public class LayerDialogIntegrationTest extends BaseIntegrationTestClass {
 		mSolo.sleep(1000);
 		mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_up));
 
-		assertTrue("The first layer can move up", oldname != (LayerChooserDialog.layer_data.get(0).name));
-
-		mSolo.sleep(1000);
-		mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_down));
-		assertTrue("The first layer can't move down", oldname != (LayerChooserDialog.layer_data.get(1).name));
-
-		mSolo.sleep(1000);
-		mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_up));
-		assertTrue("The first layer can't move up", oldname != (LayerChooserDialog.layer_data.get(0).name));
+		assertTrue("The first layer can move up", oldname == (LayerChooserDialog.layer_data.get(0).name));
 
 	}
 
@@ -262,7 +254,7 @@ public class LayerDialogIntegrationTest extends BaseIntegrationTestClass {
 		mSolo.sleep(1000);
 		mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_down));
 
-		assertTrue("The first Layer didn't moved down", oldname == (LayerChooserDialog.layer_data.get(0).name));
+		assertTrue("The first Layer didn't moved down", oldname != (LayerChooserDialog.layer_data.get(0).name));
 
 	}
 
@@ -296,7 +288,7 @@ public class LayerDialogIntegrationTest extends BaseIntegrationTestClass {
 		mSolo.clickOnView(mSolo.getView(android.R.id.button2));
 		mSolo.sleep(1000);
 
-		assertTrue("Layername changed, but it shouldn't", oldname != (LayerChooserDialog.layer_data.get(0).name));
+		assertTrue("Layername changed, but it shouldn't", oldname == (LayerChooserDialog.layer_data.get(0).name));
 
 		oldname = (LayerChooserDialog.layer_data.get(0).name);
 
@@ -338,7 +330,7 @@ public class LayerDialogIntegrationTest extends BaseIntegrationTestClass {
 
 		Bitmap eyeBitmap2 = ((BitmapDrawable) eyeButton.getDrawable()).getBitmap();
 
-		assertTrue("Eye-symbols didn't change", !eyeBitmap.equals(eyeBitmap2));
+		assertTrue("Eye-symbols didn't change", eyeBitmap.equals(eyeBitmap2));
 
 		mSolo.clickOnView(mSolo.getButton(mSolo.getString(R.string.done)));
 		mSolo.sleep(1000);

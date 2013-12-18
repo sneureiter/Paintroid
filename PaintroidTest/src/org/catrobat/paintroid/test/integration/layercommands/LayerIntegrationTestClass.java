@@ -21,7 +21,11 @@ public class LayerIntegrationTestClass extends BaseIntegrationTestClass {
 	}
 
 	public int getNumOfCommandsOfLayer(int i) {
-		return PaintroidApplication.commandManager.getAllCommandList().get(i).getCommands().size();
+		try {
+			return PaintroidApplication.commandManager.getAllCommandList().get(i).getCommands().size();
+		} catch (NullPointerException e) {
+			return 0;
+		}
 	}
 
 }

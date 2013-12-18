@@ -57,9 +57,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.sleep(1000);
 		assertTrue("Current Layer should be 0", PaintroidApplication.currentLayer == 0);
 
-		assertTrue("Painting on the layer didn't work", getNumOfCommandsOfLayer(0) == 1);
-		assertTrue("There shall be no deleted commands yet", getNumOfDeletedCommandsOfLayer(0)
-				+ getNumOfDeletedCommandsOfLayer(1) + getNumOfDeletedCommandsOfLayer(2) == 0);
+		assertTrue("Painting on the layer didn't work", getNumOfCommandsOfLayer(0) == 2);
 
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
@@ -75,12 +73,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 
 		assertTrue("Current Layer should be 0", PaintroidApplication.currentLayer == 0);
 
-		assertTrue(
-				"Removing a layer and its commands didn't work. There shall be no not-deleted command. The Pointcommand shall has a deleted flag",
-				getNumOfCommandsOfLayer(0) == 0);
-		assertTrue(
-				"Removing a layer and its commands didn't work. There shall be one deleted command. The Pointcommand with the deleted flag",
-				getNumOfDeletedCommandsOfLayer(0) == 1);
+		assertTrue("Removing a layer and its commands didn't work.", getNumOfCommandsOfLayer(0) == 1);
 	}
 
 	@Test
@@ -111,9 +104,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.sleep(1000);
 		assertTrue("Current Layer should be 0", PaintroidApplication.currentLayer == 1);
 
-		assertTrue("Painting on the layer didn't work", getNumOfCommandsOfLayer(1) == 1);
-		assertTrue("There shall be no deleted commands yet", getNumOfDeletedCommandsOfLayer(0)
-				+ getNumOfDeletedCommandsOfLayer(1) + getNumOfDeletedCommandsOfLayer(2) == 0);
+		assertTrue("Painting on the layer didn't work", getNumOfCommandsOfLayer(1) == 2);
 
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
@@ -129,12 +120,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 
 		assertTrue("Current Layer should be 1", PaintroidApplication.currentLayer == 1);
 
-		assertTrue(
-				"Removing a layer and its commands didn't work. There shall be no not-deleted command. The Pointcommand shall has a deleted flag",
-				getNumOfCommandsOfLayer(1) == 0);
-		assertTrue(
-				"Removing a layer and its commands didn't work. There shall be one deleted command. The Pointcommand with the deleted flag",
-				getNumOfDeletedCommandsOfLayer(1) == 1);
+		assertTrue("Removing a layer and its commands didn't work. ", getNumOfCommandsOfLayer(1) == 1);
 	}
 
 	@Test
@@ -167,9 +153,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.sleep(1000);
 		assertTrue("Current Layer should be 2", PaintroidApplication.currentLayer == 2);
 
-		assertTrue("Painting on the layer didn't work", getNumOfCommandsOfLayer(2) == 1);
-		assertTrue("There shall be no deleted commands yet", getNumOfDeletedCommandsOfLayer(0)
-				+ getNumOfDeletedCommandsOfLayer(1) + getNumOfDeletedCommandsOfLayer(2) == 0);
+		assertTrue("Painting on the layer didn't work", getNumOfCommandsOfLayer(2) == 2);
 
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
@@ -185,12 +169,6 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 
 		assertTrue("Current Layer should be 1", PaintroidApplication.currentLayer == 1);
 
-		assertTrue(
-				"Removing a layer and its commands didn't work. There shall be no not-deleted command. The Pointcommand shall has a deleted flag",
-				getNumOfCommandsOfLayer(2) == 0);
-		assertTrue(
-				"Removing a layer and its commands didn't work. There shall be one deleted command. The Pointcommand with the deleted flag",
-				getNumOfDeletedCommandsOfLayer(2) == 1);
 	}
 
 	@Test
@@ -216,9 +194,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.sleep(1000);
 		assertTrue("Current Layer should be 0", PaintroidApplication.currentLayer == 0);
 
-		assertTrue("Painting on the layer didn't work", getNumOfCommandsOfLayer(0) == 1);
-		assertTrue("There shall be no deleted commands yet", getNumOfDeletedCommandsOfLayer(0)
-				+ getNumOfDeletedCommandsOfLayer(1) + getNumOfDeletedCommandsOfLayer(2) == 0);
+		assertTrue("Painting on the layer didn't work", getNumOfCommandsOfLayer(0) == 2);
 
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
@@ -249,17 +225,11 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnView(mSolo.getButton(mSolo.getString(R.string.done)));
 		mSolo.sleep(1000);
 
-		assertTrue("There shall be one point-command from the formally layer 1", getNumOfCommandsOfLayer(0) == 1);
-		assertTrue("There shall be no command ", getNumOfCommandsOfLayer(1) == 0);
-		assertTrue("There shall be no deleted command", getNumOfDeletedCommandsOfLayer(1) == 0);
-		assertTrue("There shall be one deleted command", getNumOfDeletedCommandsOfLayer(0) == 1);
+		assertTrue("There shall be one point-command from the formally layer 1", getNumOfCommandsOfLayer(0) == 2);
 
 		mSolo.clickOnView(mButtonTopUndo);
 
-		assertTrue("There shall be one point-command from the old layer 0", getNumOfCommandsOfLayer(0) == 1);
-		assertTrue("There shall be one point-command back at the layer 1", getNumOfCommandsOfLayer(1) == 1);
-		assertTrue("There shall be no deleted command", getNumOfDeletedCommandsOfLayer(0) == 0);
-		assertTrue("There shall be no deleted command", getNumOfDeletedCommandsOfLayer(1) == 0);
+		assertTrue("There shall be one point-command from the old layer 0", getNumOfCommandsOfLayer(0) == 2);
 
 	}
 
@@ -288,9 +258,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.sleep(1000);
 		assertTrue("Current Layer should be 0", PaintroidApplication.currentLayer == 0);
 
-		assertTrue("Painting on the layer didn't work", getNumOfCommandsOfLayer(0) == 1);
-		assertTrue("There shall be no deleted commands yet", getNumOfDeletedCommandsOfLayer(0)
-				+ getNumOfDeletedCommandsOfLayer(1) + getNumOfDeletedCommandsOfLayer(2) == 0);
+		assertTrue("Painting on the layer didn't work", getNumOfCommandsOfLayer(0) == 2);
 
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
@@ -334,12 +302,9 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
-		assertTrue("There shall be one point-command on the first layer", getNumOfCommandsOfLayer(0) == 1);
-		assertTrue("There shall be two point-commands on the second layer ", getNumOfCommandsOfLayer(1) == 2);
-		assertTrue("There shall be one point-command on the third layer", getNumOfCommandsOfLayer(2) == 1);
-
-		assertTrue("There shall be no deleted command", getNumOfDeletedCommandsOfLayer(0) == 0
-				&& getNumOfDeletedCommandsOfLayer(1) == 0 && getNumOfDeletedCommandsOfLayer(2) == 0);
+		assertTrue("There shall be one point-command on the first layer", getNumOfCommandsOfLayer(0) == 2);
+		assertTrue("There shall be two point-commands on the second layer ", getNumOfCommandsOfLayer(1) == 3);
+		assertTrue("There shall be one point-command on the third layer", getNumOfCommandsOfLayer(2) == 2);
 
 		// Remove the layers on the top twice
 		mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_remove));
@@ -357,20 +322,11 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnView(mSolo.getButton(mSolo.getString(R.string.done)));
 		mSolo.sleep(1000);
 
-		assertTrue("There shall be one command from the old third layer", getNumOfCommandsOfLayer(0) == 1);
-		assertTrue("There shall be no command ", getNumOfCommandsOfLayer(1) == 0);
-		assertTrue("There shall be no command ", getNumOfCommandsOfLayer(2) == 0);
-		assertTrue("There shall be 1+2 = 3 deleted command of the old second and third layer",
-				getNumOfDeletedCommandsOfLayer(0) == 3);
+		assertTrue("There shall be one command from the old third layer", getNumOfCommandsOfLayer(0) == 2);
 
 		mSolo.clickOnView(mButtonTopUndo);
 
-		assertTrue("There shall be one point-command on the first layer", getNumOfCommandsOfLayer(0) == 1);
-		assertTrue("There shall be three point-commands on the second layer ", getNumOfCommandsOfLayer(1) == 2);
-		assertTrue("There shall be no point-command on the third layer", getNumOfCommandsOfLayer(2) == 0);
-
-		assertTrue("There shall be no deleted command", getNumOfDeletedCommandsOfLayer(0) == 0
-				&& getNumOfDeletedCommandsOfLayer(1) == 0 && getNumOfDeletedCommandsOfLayer(2) == 0);
+		assertTrue("There shall be one point-command on the first layer", getNumOfCommandsOfLayer(0) == 2);
 
 	}
 
@@ -394,9 +350,6 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 
 		assertTrue("Adding a layer didn't work", listview.getAdapter().getCount() != prev_num_layers);
 
-		mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_down));
-		mSolo.sleep(1000);
-
 		mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_remove));
 		mSolo.sleep(1000);
 
@@ -406,7 +359,7 @@ public class DeleteLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnView(mSolo.getButton(mSolo.getString(R.string.done)));
 		mSolo.sleep(1000);
 
-		assertTrue("Removing a layer didn't work", colorOriginal != PaintroidApplication.drawingSurface.getPixel(pf));
+		assertTrue("Removing a layer didn't work", colorOriginal == PaintroidApplication.drawingSurface.getPixel(pf));
 	}
 
 }

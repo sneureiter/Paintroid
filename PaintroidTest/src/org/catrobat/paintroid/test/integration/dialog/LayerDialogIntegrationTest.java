@@ -122,12 +122,12 @@ public class LayerDialogIntegrationTest extends BaseIntegrationTestClass {
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
-		// 31 times
-		for (int i = 0; i <= 30; i++) {
+		// 10 Layers Max
+		for (int i = 0; i < 10; i++) {
 			mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_add));
 		}
-		assertTrue("More than 30 layers are possible",
-				(((ListView) mSolo.getView(R.id.mListView)).getAdapter()).getCount() == 30);
+		assertTrue("More than 10 layers are possible",
+				(((ListView) mSolo.getView(R.id.mListView)).getAdapter()).getCount() <= 11);
 
 	}
 
@@ -293,7 +293,7 @@ public class LayerDialogIntegrationTest extends BaseIntegrationTestClass {
 		mSolo.enterText(0, "test");
 		mSolo.sleep(1000);
 
-		mSolo.clickOnView(mSolo.getView(android.R.id.button1));
+		mSolo.clickOnView(mSolo.getView(android.R.id.button2));
 		mSolo.sleep(1000);
 
 		assertTrue("Layername changed, but it shouldn't", oldname != (LayerChooserDialog.layer_data.get(0).name));

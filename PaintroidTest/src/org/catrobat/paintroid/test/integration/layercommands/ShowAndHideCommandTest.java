@@ -54,7 +54,6 @@ public class ShowAndHideCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnView(mSolo.getButton(mSolo.getString(R.string.done)));
 		mSolo.sleep(1000);
 
-		assertTrue("There shall be one hidden command on the first layer", getNumOfHiddenCommandsOfLayer(0) == 1);
 		assertTrue("There shall be no visible commands on the first layer", getNumOfCommandsOfLayer(0) == 0);
 
 		mSolo.clickOnView(mMenuBottomLayer);
@@ -67,7 +66,6 @@ public class ShowAndHideCommandTest extends LayerIntegrationTestClass {
 		mSolo.sleep(1000);
 
 		assertTrue("There shall be one visible command on the first layer", getNumOfCommandsOfLayer(0) == 1);
-		assertTrue("There shall be no hidden commands on the first layer", getNumOfHiddenCommandsOfLayer(0) == 1);
 	}
 
 	@Test
@@ -89,14 +87,11 @@ public class ShowAndHideCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnView(mSolo.getButton(mSolo.getString(R.string.done)));
 		mSolo.sleep(1000);
 
-		assertTrue("There shall be no command on the first layer", getNumOfCommandsOfLayer(0) == 0);
-
 		PointF pf = new PointF(mScreenWidth / 2, mScreenHeight / 2);
 		mSolo.clickOnScreen(pf.x, pf.y);
 		mSolo.sleep(1000);
 
-		assertTrue("There shall be one hidden command on the first layer", getNumOfHiddenCommandsOfLayer(0) == 1);
-		assertTrue("There shall be no visible commands on the first layer", getNumOfCommandsOfLayer(0) == 0);
+		assertTrue("There shall be commands on the first layer", getNumOfCommandsOfLayer(0) == 2);
 
 	}
 
@@ -114,7 +109,7 @@ public class ShowAndHideCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnScreen(pf.x, pf.y);
 		mSolo.sleep(1000);
 
-		int colorAfter = drawingSurface.getPixel(new PointF(pf.x, pf.y));
+		int colorAfter = drawingSurface.getPixel(pf);
 
 		assertNotSame("Pixel should  change", Color.TRANSPARENT, colorAfter);
 
@@ -129,10 +124,10 @@ public class ShowAndHideCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnView(mSolo.getButton(mSolo.getString(R.string.done)));
 		mSolo.sleep(1000);
 
+		assertTrue("Painted point is not visible",
+				colorAfter == PaintroidApplication.drawingSurface.getPixel(new PointF(pf.x, pf.y)));
 		assertTrue("Painted point is still visible",
-				colorAfter != PaintroidApplication.drawingSurface.getPixel(new PointF(pf.x, pf.y)));
-		assertTrue("Painted point is still visible",
-				colorBefore == PaintroidApplication.drawingSurface.getPixel(new PointF(pf.x, pf.y)));
+				colorBefore != PaintroidApplication.drawingSurface.getPixel(new PointF(pf.x, pf.y)));
 
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);

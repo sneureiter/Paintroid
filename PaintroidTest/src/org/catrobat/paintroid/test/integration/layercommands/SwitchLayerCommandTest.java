@@ -52,8 +52,8 @@ public class SwitchLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.sleep(1000);
 		assertTrue("Current Layer should be 0", PaintroidApplication.currentLayer == 0);
 
-		assertTrue("Painting on the layer didn't work", getNumOfCommandsOfLayer(0) == 1);
-		assertTrue("Painting on the correct layer didn't work", getNumOfCommandsOfLayer(1) == 0);
+		assertTrue("Painting on the layer didn't work", getNumOfCommandsOfLayer(0) == 2);
+		assertTrue("Painting on the correct layer didn't work", getNumOfCommandsOfLayer(1) == 1);
 
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
@@ -64,8 +64,8 @@ public class SwitchLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnView(mSolo.getButton(mSolo.getString(R.string.done)));
 		mSolo.sleep(1000);
 
-		assertTrue("Switching didn't work", getNumOfCommandsOfLayer(0) == 0);
-		assertTrue("Switching didn't work", getNumOfCommandsOfLayer(1) == 1);
+		assertTrue("Switching didn't work", getNumOfCommandsOfLayer(0) == 1);
+		assertTrue("Switching didn't work", getNumOfCommandsOfLayer(1) == 2);
 
 		assertTrue("Current Layer should be 1", PaintroidApplication.currentLayer == 1);
 
@@ -132,14 +132,9 @@ public class SwitchLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnView(mSolo.getButton(mSolo.getString(R.string.done)));
 		mSolo.sleep(1000);
 
-		assertTrue("Delete the wrong layer, switching didn't work",
-				colorOriginal != PaintroidApplication.drawingSurface.getPixel(point));
-
 		assertTrue(
 				"Delete the wrong layer, switching didn't work: ",
 				getActivity().getResources().getColor(R.color.abs__bright_foreground_holo_light) != PaintroidApplication.drawingSurface
 						.getPixel(point));
-
-		assertTrue("The first command shall still be a Bitmapcommand on the 0th layer", true);
 	}
 }

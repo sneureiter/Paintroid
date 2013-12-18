@@ -61,6 +61,7 @@ public class FullscreenIntegrationTest extends BaseIntegrationTestClass {
 			whatever.printStackTrace();
 		}
 		mSolo.clickOnScreen(clickPointX, clickPointY);
+		mSolo.sleep(1000);
 		int pixelColor = PaintroidApplication.drawingSurface.getPixel(new PointF(bitmapPixelPosition.x,
 				bitmapPixelPosition.y - (int) Utils.getStatusbarHeigt(getActivity()) * 2));
 		assertEquals("pixel should be black", Color.BLACK, pixelColor);

@@ -301,7 +301,7 @@ public final class LayerChooserDialog extends DialogFragment implements
 	}
 
 	protected void addLayer() {
-		if (layer_data.size() < 30) {
+		if (layer_data.size() < 10) {
 			layer_data.add(
 					mSelectedLayerIndex,
 					new LayerRow(mContext

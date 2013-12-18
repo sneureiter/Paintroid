@@ -1,7 +1,6 @@
 package org.catrobat.paintroid.test.integration.layercommands;
 
 import org.catrobat.paintroid.PaintroidApplication;
-import org.catrobat.paintroid.command.implementation.layer.DeleteLayerCommand;
 import org.catrobat.paintroid.test.integration.BaseIntegrationTestClass;
 
 import android.graphics.PointF;
@@ -23,21 +22,6 @@ public class LayerIntegrationTestClass extends BaseIntegrationTestClass {
 
 	public int getNumOfCommandsOfLayer(int i) {
 		return PaintroidApplication.commandManager.getAllCommandList().get(i).getCommands().size();
-	}
-
-	public int getNumOfHiddenCommandsOfLayer(int i) {
-		int counter = 0;
-		return counter;
-	}
-
-	public int getNumOfDeletedCommandsOfLayer(int i) {
-		int counter = 0;
-		for (int j = 1; j < PaintroidApplication.commandManager.getCommands().size(); j++) {
-			if (!(PaintroidApplication.commandManager.getCommands().get(j) instanceof DeleteLayerCommand)) {
-				counter++;
-			}
-		}
-		return counter;
 	}
 
 }

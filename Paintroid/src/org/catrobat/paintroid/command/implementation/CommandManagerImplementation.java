@@ -46,6 +46,8 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 	private int mCommandCounter;
 	private int mCommandIndex;
+	private boolean mCropChangeFlag = false;
+
 	private Bitmap mOriginalBitmap;
 	private LinkedList<CropCommand> mCropCommandList;
 	private CropCommand mOriginalCropCommand;
@@ -130,6 +132,11 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 			}
 			return mCurrentCommandList.get(mCommandIndex++);
 
+		} else if (mCropChangeFlag) {
+			// Reset perspective after undo/redo the cropping the image
+			PaintroidApplication.perspective.resetScaleAndTranslation();
+			mCropChangeFlag = false;
+			return null;
 		} else {
 			return null;
 		}
@@ -252,8 +259,10 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 				PaintroidApplication.commandManager
 						.setmBitmapBelow(ChangeLayerCommand
 								.generateImageOfBelowLayers(PaintroidApplication.currentLayer));
+
+				mCropChangeFlag = true;
 			}
-			resetIndex();
+			this.resetIndex();
 
 			UndoRedoManager.getInstance().update(
 					UndoRedoManager.StatusMode.ENABLE_REDO);
@@ -282,6 +291,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 				PaintroidApplication.commandManager
 						.setmBitmapBelow(ChangeLayerCommand
 								.generateImageOfBelowLayers(PaintroidApplication.currentLayer));
+				mCropChangeFlag = true;
 				this.resetIndex();
 			}
 

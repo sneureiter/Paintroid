@@ -109,12 +109,6 @@ public class LayerDialogIntegrationTest extends BaseIntegrationTestClass {
 		assertTrue("Changing the layer on touch doesn't work", prev_layer - 1 == PaintroidApplication.currentLayer);
 	}
 
-	private int getNumOfCommandsOfLayer(int i) {
-		int counter = 0;
-
-		return counter;
-	}
-
 	@Test
 	public void testMaxLayer() {
 		assertTrue("Waiting for DrawingSurface", mSolo.waitForView(DrawingSurface.class, 1, TIMEOUT));
@@ -184,7 +178,6 @@ public class LayerDialogIntegrationTest extends BaseIntegrationTestClass {
 		mSolo.sleep(1000);
 
 		assertTrue("Removing a layer didn't work", listview.getAdapter().getCount() == prev_num_layers);
-		assertTrue("Removing a layer and its command didn't work", getNumOfCommandsOfLayer(1) == 0);
 	}
 
 	@Test

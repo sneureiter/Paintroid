@@ -32,6 +32,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
@@ -158,16 +159,42 @@ public abstract class FileIO {
 		Display display = ((WindowManager) PaintroidApplication.applicationContext
 				.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		display.getMetrics(metrics);
-		int maxWidth = display.getWidth();
-		int maxHeight = display.getHeight();
+		// int maxWidth = display.getWidth();
+		// int maxHeight = display.getHeight();
 
-		while (tmpWidth > maxWidth || tmpHeight > maxHeight) {
-			tmpWidth /= 2;
-			tmpHeight /= 2;
-			sampleSize *= 2;
+		Point size = new Point();
+		display.getSize(size);
+		int maxWidth = size.x;
+		int maxHeight = size.y;
+
+		// while (tmpWidth > maxWidth || tmpHeight > maxHeight) {
+		// tmpWidth /= 2;
+		// tmpHeight /= 2;
+		// sampleSize *= 2;
+		// }
+
+		if (tmpWidth > maxWidth && tmpHeight > maxHeight) {
+			int tauWidth = tmpWidth - maxWidth;
+			int tauHeight = tmpHeight - maxHeight;
+			Log.e("resizeImage", "orig width: " + tmpWidth + "  orig height: "
+					+ tmpHeight);
+
+			Log.e("resizeImage", "width: " + maxWidth + "  height: "
+					+ maxHeight);
+
+			if (tauWidth < tauHeight) {
+				float factor = (float) maxWidth / tmpWidth;
+				tmpWidth = maxWidth;
+				tmpHeight *= factor;
+			} else {
+				float factor = (float) maxHeight / tmpHeight;
+				tmpHeight = maxHeight;
+				tmpWidth *= factor;
+			}
+
+			Log.e("resizeImage", "new width: " + tmpWidth + "  new height: "
+					+ tmpHeight);
 		}
-
-		Log.e("resizeImage", "width: " + tmpWidth + "  height: " + tmpHeight);
 
 		options.inJustDecodeBounds = false;
 		options.inSampleSize = sampleSize;

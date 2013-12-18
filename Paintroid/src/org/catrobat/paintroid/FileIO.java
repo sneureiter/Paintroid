@@ -32,11 +32,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 
 @SuppressLint("NewApi")
 public abstract class FileIO {
@@ -150,11 +153,21 @@ public abstract class FileIO {
 		int tmpHeight = options.outHeight;
 		int sampleSize = 1;
 
-		while (tmpWidth / 2 > 640 || tmpHeight / 2 > 640) {
-			tmpWidth /= 2;
-			tmpHeight /= 2;
-			sampleSize *= 2;
-		}
+		// while (tmpWidth / 2 > 640 || tmpHeight / 2 > 640) {
+		// tmpWidth /= 2;
+		// tmpHeight /= 2;
+		// sampleSize *= 2;
+		// }
+
+		Display display = ((WindowManager) PaintroidApplication.applicationContext
+				.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		int screenWidth = tmpWidth = size.x;
+		int screenHeight = tmpHeight = size.y;
+
+		Log.e("resizeImage", "width: " + screenWidth + "  height: "
+				+ screenHeight);
 
 		options.inJustDecodeBounds = false;
 		options.inSampleSize = sampleSize;

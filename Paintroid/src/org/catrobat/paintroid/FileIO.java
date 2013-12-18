@@ -159,51 +159,35 @@ public abstract class FileIO {
 		Display display = ((WindowManager) PaintroidApplication.applicationContext
 				.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		display.getMetrics(metrics);
-		// int maxWidth = display.getWidth();
-		// int maxHeight = display.getHeight();
 
 		Point size = new Point();
 		display.getSize(size);
 		int maxWidth = size.x;
 		int maxHeight = size.y;
 
-		// while (tmpWidth > maxWidth || tmpHeight > maxHeight) {
-		// tmpWidth /= 2;
-		// tmpHeight /= 2;
-		// sampleSize *= 2;
-		// }
-
-		if (tmpWidth > maxWidth && tmpHeight > maxHeight) {
-			int tauWidth = tmpWidth - maxWidth;
-			int tauHeight = tmpHeight - maxHeight;
-			Log.e("resizeImage", "orig width: " + tmpWidth + "  orig height: "
-					+ tmpHeight);
-
-			Log.e("resizeImage", "width: " + maxWidth + "  height: "
-					+ maxHeight);
-
-			if (tauWidth < tauHeight) {
-				float factor = (float) maxWidth / tmpWidth;
-				tmpWidth = maxWidth;
-				tmpHeight *= factor;
-			} else {
-				float factor = (float) maxHeight / tmpHeight;
-				tmpHeight = maxHeight;
-				tmpWidth *= factor;
-			}
-
-			Log.e("resizeImage", "new width: " + tmpWidth + "  new height: "
-					+ tmpHeight);
-		}
-
 		options.inJustDecodeBounds = false;
-		options.inSampleSize = sampleSize;
+		sampleSize = options.inSampleSize = (Math.max(tmpWidth / maxWidth,
+				tmpHeight / maxHeight));
 
+		// there is room for optimization cause 2 bitmaps are allocated
+		// use a stream and only allocate one bitmap
+		// http://stackoverflow.com/questions/3331527/android-resize-a-large-bitmap-file-to-scaled-output-file/8497703#8497703
 		Bitmap unmutableBitmap = BitmapFactory.decodeFile(
 				bitmapFile.getAbsolutePath(), options);
 
 		tmpWidth = unmutableBitmap.getWidth();
 		tmpHeight = unmutableBitmap.getHeight();
+		Log.e("resizeImage", "new width: " + tmpWidth + "  new height: "
+				+ tmpHeight + "  sampleSize: " + sampleSize);
+
+		unmutableBitmap = Bitmap.createScaledBitmap(unmutableBitmap, maxWidth,
+				maxHeight, true);
+
+		tmpWidth = unmutableBitmap.getWidth();
+		tmpHeight = unmutableBitmap.getHeight();
+		Log.e("resizeImage", "new width: " + tmpWidth + "  new height: "
+				+ tmpHeight + "  sampleSize: " + sampleSize);
+
 		int[] tmpPixels = new int[tmpWidth * tmpHeight];
 		unmutableBitmap.getPixels(tmpPixels, 0, tmpWidth, 0, 0, tmpWidth,
 				tmpHeight);

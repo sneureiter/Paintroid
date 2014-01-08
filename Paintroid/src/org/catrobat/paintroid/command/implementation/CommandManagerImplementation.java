@@ -124,11 +124,16 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 	public synchronized Command getNextCommand() {
 		if (mCommandIndex < mCommandCounter) {
 
-			if ((PaintroidApplication.commandManager.getCommandListByIndex(
-					PaintroidApplication.currentLayer).isHidden() && mCommandIndex != 0)) {
+			CommandList cl = PaintroidApplication.commandManager
+					.getCommandListByIndex(PaintroidApplication.currentLayer);
+			if ((cl.isHidden() && mCommandIndex != 0)) {
 				mCommandIndex++;
-				return getNextCommand();
 
+				if (mCommandIndex == mCommandCounter) {
+					return getLastCropCommand();
+				}
+
+				return getNextCommand();
 			}
 			return mCurrentCommandList.get(mCommandIndex++);
 

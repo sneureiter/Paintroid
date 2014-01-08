@@ -64,37 +64,32 @@ public class CommandList extends LinkedList<Command> {
 		Bitmap b = Bitmap.createBitmap(PaintroidApplication.getScreenSize().x,
 				PaintroidApplication.getScreenSize().y, Config.ARGB_8888);
 
-		if (PaintroidApplication.commandManager.getAllCommandList().size() > 1) {
-			Canvas c = new Canvas(b);
+		Canvas c = new Canvas(b);
 
-			for (int i = 0; i < this.getLastCommandCount(); i++) {
-				Command command = mCommands.get(i);
+		for (int i = 0; i < this.getLastCommandCount(); i++) {
+			Command command = mCommands.get(i);
 
-				if (!((command instanceof BitmapCommand) && i == 0)) {
+			if (!((command instanceof BitmapCommand) && i == 0)) {
 
-					if (command instanceof FlipCommand) {
-						Bitmap mTmp = ((FlipCommand) command).runLayer(c, b);
+				if (command instanceof FlipCommand) {
+					Bitmap mTmp = ((FlipCommand) command).runLayer(c, b);
+
+					if (mTmp != null) {
+						b = mTmp;
+					}
+				} else if ((command instanceof CropCommand)) {
+					if (!CropCommand.isOriginal()) {
+						Bitmap mTmp = ((CropCommand) command).runLayer(c, b);
 
 						if (mTmp != null) {
 							b = mTmp;
 						}
-					} else if ((command instanceof CropCommand)) {
-						if (!CropCommand.isOriginal()) {
-							Bitmap mTmp = ((CropCommand) command)
-									.runLayer(c, b);
-
-							if (mTmp != null) {
-								b = mTmp;
-							}
-						}
-					} else {
-						command.run(c, b);
 					}
+				} else {
+					command.run(c, b);
 				}
-				c.drawBitmap(b, new Matrix(), null);
 			}
-		} else {
-			b = PaintroidApplication.drawingSurface.getBitmapCopy();
+			c.drawBitmap(b, new Matrix(), null);
 		}
 
 		double ratioOriginal = (double) screenSize.x / (double) screenSize.y;

@@ -129,7 +129,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 			if ((cl.isHidden() && mCommandIndex != 0)) {
 				mCommandIndex++;
 
-				if (mCommandIndex == mCommandCounter) {
+				if (mCommandIndex == mCommandCounter - 1) {
 					return getLastCropCommand();
 				}
 

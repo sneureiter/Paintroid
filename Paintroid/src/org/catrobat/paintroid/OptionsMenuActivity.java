@@ -31,6 +31,7 @@ import org.catrobat.paintroid.dialog.InfoDialog.DialogType;
 import org.catrobat.paintroid.dialog.ProgressIntermediateDialog;
 import org.catrobat.paintroid.dialog.layerchooser.LayerChooserDialog;
 import org.catrobat.paintroid.tools.Tool.StateChange;
+import org.catrobat.paintroid.ui.button.LayerButton;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -488,9 +489,12 @@ public abstract class OptionsMenuActivity extends SherlockFragmentActivity {
 	protected void initialiseNewBitmap() {
 		LayerChooserDialog.layer_data = null;
 		PaintroidApplication.currentLayer = 0;
+
 		ImageButton mLayerButton = (ImageButton) this
 				.findViewById(R.id.btn_bottom_layer);
+		((LayerButton) mLayerButton).reset();
 		mLayerButton.invalidate();
+
 		PaintroidApplication.commandManager.setmBitmapAbove(null);
 		PaintroidApplication.commandManager.setmBitmapBelow(null);
 		PaintroidApplication.commandManager.resetAndClear();

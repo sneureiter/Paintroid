@@ -137,4 +137,8 @@ public class LayerButton extends ImageButton implements OnLayerPickedListener {
 		mWidth = MeasureSpec.getSize(widthMeasureSpec);
 		mHeigth = MeasureSpec.getSize(heightMeasureSpec);
 	}
+
+	public void reset() {
+		this.visible = true;
+	}
 }

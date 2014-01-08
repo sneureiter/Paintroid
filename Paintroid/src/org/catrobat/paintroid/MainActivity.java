@@ -444,7 +444,7 @@ public class MainActivity extends OptionsMenuActivity {
 			}
 		}
 		File file = FileIO.saveBitmap(MainActivity.this,
-				PaintroidApplication.drawingSurface.getBitmapCopy(),
+				PaintroidApplication.drawingSurface.getFullBitmapCopy(),
 				pictureFileName);
 
 		Intent resultIntent = new Intent();

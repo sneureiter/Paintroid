@@ -173,13 +173,8 @@ public class ChangeLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnView(mSolo.getButton(mSolo.getString(R.string.done)));
 		mSolo.sleep(1000);
 
-		bitmap3.recycle();
-		mSolo.sleep(1000);
-		bitmap3 = ((BitmapDrawable) redoButton.getDrawable()).getBitmap();
 		assertTrue("Current Layer should be 0", PaintroidApplication.currentLayer == 0);
 
-		mSolo.sleep(1000);
-		assertTrue("There shall be a redo left", bitmap1 != bitmap3);
 	}
 
 }

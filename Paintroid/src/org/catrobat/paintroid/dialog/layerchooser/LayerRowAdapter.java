@@ -144,8 +144,13 @@ public class LayerRowAdapter extends ArrayAdapter<LayerRow> {
 	}
 
 	private Bitmap getCanvasThumbnail(int pos) {
-		return PaintroidApplication.commandManager.getAllCommandList().get(pos)
-				.getThumbnail();
+		try {
+			return PaintroidApplication.commandManager.getAllCommandList()
+					.get(pos).getThumbnail();
+		} catch (Exception e) {
+			return null;
+		}
+
 	}
 
 	static class LayerRowHolder {

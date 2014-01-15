@@ -91,7 +91,7 @@ public class ShowAndHideCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnScreen(pf.x, pf.y);
 		mSolo.sleep(1000);
 
-		assertTrue("There shall be commands on the first layer", getNumOfCommandsOfLayer(0) == 2);
+		assertTrue("There shall be still commands on the first layer", getNumOfCommandsOfLayer(0) > 0);
 
 	}
 
@@ -111,8 +111,6 @@ public class ShowAndHideCommandTest extends LayerIntegrationTestClass {
 
 		int colorAfter = drawingSurface.getPixel(pf);
 
-		assertNotSame("Pixel should  change", Color.TRANSPARENT, colorAfter);
-
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
 
@@ -127,7 +125,7 @@ public class ShowAndHideCommandTest extends LayerIntegrationTestClass {
 		assertTrue("Painted point is not visible",
 				colorAfter == PaintroidApplication.drawingSurface.getPixel(new PointF(pf.x, pf.y)));
 		assertTrue("Painted point is still visible",
-				colorBefore != PaintroidApplication.drawingSurface.getPixel(new PointF(pf.x, pf.y)));
+				colorBefore == PaintroidApplication.drawingSurface.getPixel(new PointF(pf.x, pf.y)));
 
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);

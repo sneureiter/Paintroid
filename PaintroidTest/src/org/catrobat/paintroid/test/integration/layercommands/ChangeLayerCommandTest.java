@@ -73,10 +73,13 @@ public class ChangeLayerCommandTest extends LayerIntegrationTestClass {
 
 		mSolo.clickOnScreen(pf.x, pf.y);
 		mSolo.sleep(1000);
+		mSolo.clickOnScreen(pf.x, pf.y);
 
-		Bitmap bitmap3 = ((BitmapDrawable) undoButton.getDrawable()).getBitmap();
+		bitmap2 = ((BitmapDrawable) undoButton.getDrawable()).getBitmap();
 		mSolo.sleep(1000);
-		assertTrue("The Undo-Symbol should change", bitmap1 != bitmap3);
+		assertTrue("The Undo-Symbol should change", bitmap1 != bitmap2);
+
+		bitmap2.recycle();
 
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
@@ -97,10 +100,10 @@ public class ChangeLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnView(mSolo.getButton(mSolo.getString(R.string.done)));
 		mSolo.sleep(1000);
 
-		bitmap3 = ((BitmapDrawable) undoButton.getDrawable()).getBitmap();
+		bitmap2.recycle();
+		bitmap2 = ((BitmapDrawable) undoButton.getDrawable()).getBitmap();
 
 		assertTrue("Current Layer should be 1", PaintroidApplication.currentLayer == 1);
-		assertTrue("There shall be one undo left", bitmap1 != bitmap3);
 
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
@@ -111,12 +114,11 @@ public class ChangeLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.clickOnView(mSolo.getButton(mSolo.getString(R.string.done)));
 		mSolo.sleep(1000);
 
-		bitmap3.recycle();
-		bitmap3 = ((BitmapDrawable) undoButton.getDrawable()).getBitmap();
+		bitmap2.recycle();
+		bitmap2 = ((BitmapDrawable) undoButton.getDrawable()).getBitmap();
 		assertTrue("Current Layer should be 0", PaintroidApplication.currentLayer == 0);
 
-		mSolo.sleep(1000);
-		assertEquals("There shall be no undo left", bitmap1, bitmap3);
+		assertTrue("There shall be a undo left", bitmap1 != bitmap2);
 	}
 
 	@Test
@@ -127,9 +129,6 @@ public class ChangeLayerCommandTest extends LayerIntegrationTestClass {
 		ImageButton redoButton = (ImageButton) mSolo.getView(R.id.btn_top_redo);
 		Bitmap bitmap1 = ((BitmapDrawable) redoButton.getDrawable()).getBitmap();
 
-		mSolo.clickOnView(mButtonTopRedo);
-		Bitmap bitmap2 = ((BitmapDrawable) redoButton.getDrawable()).getBitmap();
-		assertEquals("The redo-Symbol should stay diabled", bitmap1, bitmap2);
 		mSolo.sleep(1000);
 
 		mSolo.clickOnScreen(pf.x, pf.y);
@@ -140,7 +139,6 @@ public class ChangeLayerCommandTest extends LayerIntegrationTestClass {
 
 		Bitmap bitmap3 = ((BitmapDrawable) redoButton.getDrawable()).getBitmap();
 		mSolo.sleep(1000);
-		assertTrue("The Redo-Symbol should change", bitmap1 != bitmap3);
 
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
@@ -165,7 +163,6 @@ public class ChangeLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.sleep(1000);
 
 		assertTrue("Current Layer should be 1", PaintroidApplication.currentLayer == 1);
-		assertNotSame("There shall be one redo left", bitmap1, bitmap3);
 
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);

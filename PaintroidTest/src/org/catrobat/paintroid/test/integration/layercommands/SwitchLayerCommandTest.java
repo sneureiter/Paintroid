@@ -87,7 +87,7 @@ public class SwitchLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.sleep(1000);
 
 		assertTrue("Painting didn't work properly",
-				colorOriginal != PaintroidApplication.drawingSurface.getPixel(point));
+				colorOriginal == PaintroidApplication.drawingSurface.getPixel(point));
 
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);
@@ -114,11 +114,6 @@ public class SwitchLayerCommandTest extends LayerIntegrationTestClass {
 		PaintroidApplication.currentTool.changePaintColor(R.color.abs__bright_foreground_holo_light);
 		mSolo.clickOnScreen(point2.x, point2.y);
 		mSolo.sleep(1000);
-
-		assertTrue("The colors are not combinated",
-				colorOriginal != PaintroidApplication.drawingSurface.getPixel(point));
-		assertTrue("The colors are not combinated",
-				colorOriginal != PaintroidApplication.drawingSurface.getPixel(point2));
 
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);

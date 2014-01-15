@@ -121,11 +121,11 @@ public class LayerDialogIntegrationTest extends BaseIntegrationTestClass {
 		mSolo.sleep(1000);
 
 		// 10 Layers Max
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 5; i++) {
 			mSolo.clickOnView(mSolo.getView(R.id.btn_layerchooser_add));
 		}
-		assertTrue("More than 10 layers are possible",
-				(((ListView) mSolo.getView(R.id.mListView)).getAdapter()).getCount() < 11);
+		assertTrue("More than 5 layers are possible",
+				(((ListView) mSolo.getView(R.id.mListView)).getAdapter()).getCount() < 6);
 
 	}
 

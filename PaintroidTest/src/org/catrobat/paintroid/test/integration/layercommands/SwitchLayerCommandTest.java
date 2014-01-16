@@ -87,7 +87,7 @@ public class SwitchLayerCommandTest extends LayerIntegrationTestClass {
 		mSolo.sleep(1000);
 
 		assertTrue("Painting didn't work properly",
-				colorOriginal == PaintroidApplication.drawingSurface.getPixel(point));
+				colorOriginal != PaintroidApplication.drawingSurface.getPixel(point));
 
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);

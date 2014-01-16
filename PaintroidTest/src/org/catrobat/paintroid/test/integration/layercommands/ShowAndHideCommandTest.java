@@ -125,7 +125,7 @@ public class ShowAndHideCommandTest extends LayerIntegrationTestClass {
 		assertTrue("Painted point is not visible",
 				colorAfter == PaintroidApplication.drawingSurface.getPixel(new PointF(pf.x, pf.y)));
 		assertTrue("Painted point is still visible",
-				colorBefore == PaintroidApplication.drawingSurface.getPixel(new PointF(pf.x, pf.y)));
+				colorBefore != PaintroidApplication.drawingSurface.getPixel(new PointF(pf.x, pf.y)));
 
 		mSolo.clickOnView(mMenuBottomLayer);
 		mSolo.sleep(1000);

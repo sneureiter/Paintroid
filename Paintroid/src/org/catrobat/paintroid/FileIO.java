@@ -154,6 +154,8 @@ public abstract class FileIO {
 		int tmpWidth = options.outWidth;
 		int tmpHeight = options.outHeight;
 		int sampleSize = 1;
+		Log.e("resizeImage", "orig width: " + tmpWidth + "  orig height: "
+				+ tmpHeight + "  sampleSize: " + sampleSize);
 
 		DisplayMetrics metrics = new DisplayMetrics();
 		Display display = ((WindowManager) PaintroidApplication.applicationContext
@@ -165,27 +167,31 @@ public abstract class FileIO {
 		int maxWidth = size.x;
 		int maxHeight = size.y;
 
-		options.inJustDecodeBounds = false;
 		sampleSize = options.inSampleSize = (Math.max(tmpWidth / maxWidth,
 				tmpHeight / maxHeight));
+		options.inJustDecodeBounds = false;
 
 		// there is room for optimization cause 2 bitmaps are allocated
 		// use a stream and only allocate one bitmap
+		// TODO solve querformat images!!!!
 		// http://stackoverflow.com/questions/3331527/android-resize-a-large-bitmap-file-to-scaled-output-file/8497703#8497703
 		Bitmap unmutableBitmap = BitmapFactory.decodeFile(
 				bitmapFile.getAbsolutePath(), options);
 
 		tmpWidth = unmutableBitmap.getWidth();
 		tmpHeight = unmutableBitmap.getHeight();
-		Log.e("resizeImage", "new width: " + tmpWidth + "  new height: "
-				+ tmpHeight + "  sampleSize: " + sampleSize);
 
-		unmutableBitmap = Bitmap.createScaledBitmap(unmutableBitmap, maxWidth,
-				maxHeight, true);
+		if (tmpWidth < tmpHeight) {
+			unmutableBitmap = Bitmap.createScaledBitmap(unmutableBitmap,
+					maxWidth, maxHeight, true);
+		} else {
+			unmutableBitmap = Bitmap.createScaledBitmap(unmutableBitmap,
+					maxHeight, maxWidth, true);
+		}
 
 		tmpWidth = unmutableBitmap.getWidth();
 		tmpHeight = unmutableBitmap.getHeight();
-		Log.e("resizeImage", "new width: " + tmpWidth + "  new height: "
+		Log.e("resizeImage", "scaled width: " + tmpWidth + "  scaled height: "
 				+ tmpHeight + "  sampleSize: " + sampleSize);
 
 		int[] tmpPixels = new int[tmpWidth * tmpHeight];

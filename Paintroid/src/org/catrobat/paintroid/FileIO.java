@@ -32,7 +32,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
@@ -163,10 +162,8 @@ public abstract class FileIO {
 		DisplayMetrics metrics = new DisplayMetrics();
 		display.getMetrics(metrics);
 
-		Point size = new Point();
-		display.getSize(size);
-		int maxWidth = size.x;
-		int maxHeight = size.y;
+		int maxWidth = display.getWidth();
+		int maxHeight = display.getHeight();
 
 		Log.d("resizeImage", "maxWidth: " + maxWidth + "  maxHeight: "
 				+ maxHeight);

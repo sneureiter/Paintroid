@@ -58,7 +58,7 @@ public class StampCommand extends BaseCommand {
 
 		notifyStatus(NOTIFY_STATES.COMMAND_STARTED);
 		if (mFileToStoredBitmap != null) {
-			mBitmap = FileIO.getBitmapFromFile(mFileToStoredBitmap);
+			mBitmap = FileIO.getScaledBitmapFromFile(mFileToStoredBitmap);
 		}
 
 		if (mBitmap == null) {

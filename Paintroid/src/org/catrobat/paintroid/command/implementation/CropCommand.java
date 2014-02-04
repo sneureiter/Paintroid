@@ -48,7 +48,7 @@ public class CropCommand extends BaseCommand {
 		notifyStatus(NOTIFY_STATES.COMMAND_STARTED);
 		if (mFileToStoredBitmap != null) {
 			PaintroidApplication.drawingSurface.setBitmap(FileIO
-					.getBitmapFromFile(mFileToStoredBitmap));
+					.getScaledBitmapFromFile(mFileToStoredBitmap));
 
 			notifyStatus(NOTIFY_STATES.COMMAND_DONE);
 			return;

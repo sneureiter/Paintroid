@@ -328,7 +328,7 @@ public abstract class OptionsMenuActivity extends SherlockFragmentActivity {
 			public void run() {
 				Bitmap bitmap = null;
 				try {
-					bitmap = FileIO.getBitmapFromFile(file);
+					bitmap = FileIO.getScaledBitmapFromFile(file);
 				} catch (Exception e) {
 					loadBitmapFailed = true;
 
@@ -462,7 +462,7 @@ public abstract class OptionsMenuActivity extends SherlockFragmentActivity {
 					FileIO.copyStream(inputStream, outputStream);
 					outputStream.close();
 
-					bitmap = FileIO.getBitmapFromFile(cacheFile);
+					bitmap = FileIO.getScaledBitmapFromFile(cacheFile);
 
 					if (bitmap != null) {
 						runnable.run(bitmap);

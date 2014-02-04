@@ -146,7 +146,7 @@ public abstract class FileIO {
 		return true;
 	}
 
-	public static Bitmap getBitmapFromFile(File bitmapFile) {
+	public static Bitmap getScaledBitmapFromFile(File bitmapFile) {
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(bitmapFile.getAbsolutePath(), options);
@@ -158,9 +158,9 @@ public abstract class FileIO {
 				+ "  orig height: " + options.outHeight + "  sampleSize: "
 				+ sampleSize);
 
-		DisplayMetrics metrics = new DisplayMetrics();
 		Display display = ((WindowManager) PaintroidApplication.applicationContext
 				.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		DisplayMetrics metrics = new DisplayMetrics();
 		display.getMetrics(metrics);
 
 		Point size = new Point();

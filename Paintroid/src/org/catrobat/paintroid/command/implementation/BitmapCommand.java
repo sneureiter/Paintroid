@@ -45,7 +45,7 @@ public class BitmapCommand extends BaseCommand {
 	@Override
 	public void run(Canvas canvas, Bitmap bitmap) {
 		if (mBitmap == null && mFileToStoredBitmap != null) {
-			mBitmap = FileIO.getBitmapFromFile(mFileToStoredBitmap);
+			mBitmap = FileIO.getScaledBitmapFromFile(mFileToStoredBitmap);
 		}
 		if (mBitmap != null) {
 			if (bitmap != null) {

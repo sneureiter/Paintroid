@@ -153,8 +153,8 @@ public abstract class FileIO {
 
 		int tmpWidth = options.outWidth;
 		int tmpHeight = options.outHeight;
-		Log.d("resizeImage", "orig width: " + options.outWidth
-				+ "  orig height: " + options.outHeight);
+		Log.d(PaintroidApplication.TAG, "loadscaledImage orig width: "
+				+ options.outWidth + "  orig height: " + options.outHeight);
 
 		Display display = ((WindowManager) PaintroidApplication.applicationContext
 				.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
@@ -164,9 +164,6 @@ public abstract class FileIO {
 		int maxWidth = display.getWidth();
 		int maxHeight = display.getHeight();
 
-		Log.d("resizeImage", "maxWidth: " + maxWidth + "  maxHeight: "
-				+ maxHeight);
-
 		options.inSampleSize = (Math.max(tmpWidth / maxWidth, tmpHeight
 				/ maxHeight));
 		options.inJustDecodeBounds = false;
@@ -174,10 +171,8 @@ public abstract class FileIO {
 		Bitmap immutableBitmap = BitmapFactory.decodeFile(
 				bitmapFile.getAbsolutePath(), options);
 
-		tmpWidth = immutableBitmap.getWidth();// > maxWidth ? maxWidth
-		// : immutableBitmap.getWidth();
-		tmpHeight = immutableBitmap.getHeight();// > maxHeight ? maxHeight
-		// : immutableBitmap.getHeight();
+		tmpWidth = immutableBitmap.getWidth();
+		tmpHeight = immutableBitmap.getHeight();
 
 		int outWidth = 0;
 		int outHeight = 0;
@@ -198,10 +193,9 @@ public abstract class FileIO {
 		immutableBitmap = Bitmap.createScaledBitmap(immutableBitmap, outWidth,
 				outHeight, true);
 
-		tmpWidth = immutableBitmap.getWidth(); // TODO remove
-		tmpHeight = immutableBitmap.getHeight();// TODO remove
-		Log.d("resizeImage", "scaled width: " + outWidth + "  scaled height: "
-				+ outHeight); // TODO remove
+		Log.d(PaintroidApplication.TAG, "loadscaledImage scaled width: "
+				+ immutableBitmap.getWidth() + "  scaled height: "
+				+ immutableBitmap.getHeight());
 
 		PaintroidApplication.savedBitmapFile = bitmapFile;
 

@@ -31,6 +31,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -152,10 +153,8 @@ public abstract class FileIO {
 
 		int tmpWidth = options.outWidth;
 		int tmpHeight = options.outHeight;
-		int sampleSize = 1;
 		Log.d("resizeImage", "orig width: " + options.outWidth
-				+ "  orig height: " + options.outHeight + "  sampleSize: "
-				+ sampleSize);
+				+ "  orig height: " + options.outHeight);
 
 		Display display = ((WindowManager) PaintroidApplication.applicationContext
 				.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
@@ -168,8 +167,8 @@ public abstract class FileIO {
 		Log.d("resizeImage", "maxWidth: " + maxWidth + "  maxHeight: "
 				+ maxHeight);
 
-		sampleSize = options.inSampleSize = (Math.max(tmpWidth / maxWidth,
-				tmpHeight / maxHeight));
+		options.inSampleSize = (Math.max(tmpWidth / maxWidth, tmpHeight
+				/ maxHeight));
 		options.inJustDecodeBounds = false;
 
 		Bitmap immutableBitmap = BitmapFactory.decodeFile(
@@ -182,6 +181,7 @@ public abstract class FileIO {
 
 		int outWidth = 0;
 		int outHeight = 0;
+
 		if (tmpWidth > tmpHeight) {
 			outWidth = maxWidth;
 			outHeight = (tmpHeight * maxWidth) / tmpWidth;
@@ -190,17 +190,22 @@ public abstract class FileIO {
 			outWidth = (tmpWidth * maxHeight) / tmpHeight;
 		}
 
+		if (tmpWidth < maxWidth && tmpHeight < maxHeight) {
+			outWidth = tmpWidth;
+			outHeight = tmpHeight;
+		}
+
 		immutableBitmap = Bitmap.createScaledBitmap(immutableBitmap, outWidth,
 				outHeight, true);
 
-		tmpWidth = immutableBitmap.getWidth();
-		tmpHeight = immutableBitmap.getHeight();
+		tmpWidth = immutableBitmap.getWidth(); // TODO remove
+		tmpHeight = immutableBitmap.getHeight();// TODO remove
 		Log.d("resizeImage", "scaled width: " + outWidth + "  scaled height: "
-				+ outHeight + "  sampleSize: " + sampleSize);
+				+ outHeight); // TODO remove
 
 		PaintroidApplication.savedBitmapFile = bitmapFile;
 
-		return immutableBitmap;
+		return immutableBitmap.copy(Config.ARGB_8888, true);
 	}
 
 	public static String createFilePathFromUri(Activity activity, Uri uri) {

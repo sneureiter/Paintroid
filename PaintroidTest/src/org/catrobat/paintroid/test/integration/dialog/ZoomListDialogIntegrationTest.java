@@ -31,10 +31,10 @@ public class ZoomListDialogIntegrationTest extends BaseIntegrationTestClass {
 		assertNotNull("ZoomListDialog not initialized", ZoomListDialog.instance);
 		selectTool(ToolType.MOVE);
 		mSolo.clickOnView(mMenuBottomParameter1);
-		mSolo.sleep(1000);
+		mSolo.sleep(500);
 		assertTrue("could not find title text", mSolo.searchText(mSolo.getString(R.string.dialog_zoom_list_title)));
 		mSolo.goBack();
-		mSolo.sleep(500);
+		mSolo.sleep(200);
 		assertFalse("Dialog not closed", mSolo.searchText(mSolo.getString(R.string.dialog_zoom_list_title)));
 		assertTrue("Waiting for DrawingSurface to be ready", mSolo.waitForActivity("MainActivity", TIMEOUT));
 	}

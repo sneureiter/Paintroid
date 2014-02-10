@@ -39,7 +39,7 @@ public class ZoomListDialog extends BaseDialog implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.zoom_list);
-		setTitle(R.string.dialog_tools_title); // change to new string
+		setTitle(R.string.dialog_zoom_list_title);
 		setCanceledOnTouchOutside(true);
 
 		zoomSelector = (Spinner) findViewById(R.id.spinner1);

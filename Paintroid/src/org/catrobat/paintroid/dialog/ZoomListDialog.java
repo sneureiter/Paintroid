@@ -72,39 +72,39 @@ public class ZoomListDialog extends BaseDialog implements
 			PaintroidApplication.perspective.setScale(1.5f);
 			break;
 		case 5:
-			PaintroidApplication.perspective.setScale(0.95f);
+			PaintroidApplication.perspective.setScale(0.85f);
 			dismiss();
 			break;
 		case 6:
-			PaintroidApplication.perspective.setScale(0.855f);
-			dismiss();
-			break;
-		case 7:
 			PaintroidApplication.perspective.setScale(0.76f);
 			dismiss();
 			break;
+		case 7:
+			PaintroidApplication.perspective.setScale(0.67f);
+			dismiss();
+			break;
 		case 8:
-			PaintroidApplication.perspective.setScale(0.665f);
+			PaintroidApplication.perspective.setScale(0.58f);
 			dismiss();
 			break;
 		case 9:
-			PaintroidApplication.perspective.setScale(0.57f);
+			PaintroidApplication.perspective.setScale(0.49f);
 			dismiss();
 			break;
 		case 10:
-			PaintroidApplication.perspective.setScale(0.475f);
+			PaintroidApplication.perspective.setScale(0.4f);
 			dismiss();
 			break;
 		case 11:
-			PaintroidApplication.perspective.setScale(0.38f);
+			PaintroidApplication.perspective.setScale(0.31f);
 			dismiss();
 			break;
 		case 12:
-			PaintroidApplication.perspective.setScale(0.285f);
+			PaintroidApplication.perspective.setScale(0.22f);
 			dismiss();
 			break;
 		case 13:
-			PaintroidApplication.perspective.setScale(0.19f);
+			PaintroidApplication.perspective.setScale(0.15f);
 			dismiss();
 			break;
 		case 14:

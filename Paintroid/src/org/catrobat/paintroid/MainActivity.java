@@ -28,6 +28,7 @@ import org.catrobat.paintroid.dialog.InfoDialog;
 import org.catrobat.paintroid.dialog.InfoDialog.DialogType;
 import org.catrobat.paintroid.dialog.ProgressIntermediateDialog;
 import org.catrobat.paintroid.dialog.ToolsDialog;
+import org.catrobat.paintroid.dialog.ZoomListDialog;
 import org.catrobat.paintroid.dialog.colorpicker.ColorPickerDialog;
 import org.catrobat.paintroid.listener.DrawingSurfaceListener;
 import org.catrobat.paintroid.tools.Tool;
@@ -81,6 +82,7 @@ public class MainActivity extends OptionsMenuActivity {
 		BrushPickerDialog.init(this);
 		ToolsDialog.init(this);
 		ProgressIntermediateDialog.init(this);
+		ZoomListDialog.init(this);
 
 		/**
 		 * EXCLUDED PREFERENCES FOR RELEASE /*SharedPreferences

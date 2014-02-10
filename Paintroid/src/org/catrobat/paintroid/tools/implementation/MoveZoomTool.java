@@ -21,6 +21,7 @@ package org.catrobat.paintroid.tools.implementation;
 
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
+import org.catrobat.paintroid.dialog.ZoomListDialog;
 import org.catrobat.paintroid.tools.ToolType;
 import org.catrobat.paintroid.ui.TopBar.ToolButtonIDs;
 
@@ -39,7 +40,8 @@ public class MoveZoomTool extends BaseTool {
 	public void attributeButtonClick(ToolButtonIDs buttonNumber) {
 		switch (buttonNumber) {
 		case BUTTON_ID_PARAMETER_BOTTOM_1:
-			zoomOut();
+			// zoomOut();
+			ZoomListDialog.instance.show();
 			break;
 		case BUTTON_ID_PARAMETER_BOTTOM_2:
 			zoomIn();

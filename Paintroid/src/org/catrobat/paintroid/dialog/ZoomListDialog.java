@@ -6,6 +6,7 @@ import org.catrobat.paintroid.R;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -21,6 +22,7 @@ public class ZoomListDialog extends BaseDialog {
 	private int selection = 5;
 	private Spinner zoomSelector;
 	private ZoomControls zoomControls;
+	private boolean applyZoomOnChangeControl;
 
 	public ZoomListDialog(Context context) {
 		super(context);
@@ -48,6 +50,9 @@ public class ZoomListDialog extends BaseDialog {
 		zoomSelector = (Spinner) findViewById(R.id.zoomSelector);
 		zoomSelector.setSelection(selection);
 
+		applyZoomOnChangeControl = true;
+		Log.d("zoomLevel", "apply selection: " + applyZoomOnChangeControl);
+
 		zoomControls = (ZoomControls) findViewById(R.id.zoomControls);
 		zoomControls.setOnZoomInClickListener(new View.OnClickListener() {
 
@@ -74,7 +79,14 @@ public class ZoomListDialog extends BaseDialog {
 		});
 	}
 
+	@Override
+	public void show() {
+		applyZoomOnChangeControl = true;
+		super.show();
+	}
+
 	private void zoomOut() {
+		applyZoomOnChangeControl = false;
 		float scale = 1 / ZOOM_IN_SCALE;
 		PaintroidApplication.perspective.multiplyScale(scale);
 		PaintroidApplication.perspective.translate(0, 0);
@@ -82,6 +94,7 @@ public class ZoomListDialog extends BaseDialog {
 	}
 
 	private void zoomIn() {
+		applyZoomOnChangeControl = false;
 		float scale = ZOOM_IN_SCALE;
 		PaintroidApplication.perspective.multiplyScale(scale);
 		PaintroidApplication.perspective.translate(0, 0);
@@ -89,6 +102,11 @@ public class ZoomListDialog extends BaseDialog {
 
 	public void changeZoomLevel(View v) {
 		int itemPosition = zoomSelector.getSelectedItemPosition();
+		if (!applyZoomOnChangeControl) {
+			dismiss();
+			return;
+		}
+
 		switch (itemPosition) {
 		case 0:
 			PaintroidApplication.perspective.setScale(5f);

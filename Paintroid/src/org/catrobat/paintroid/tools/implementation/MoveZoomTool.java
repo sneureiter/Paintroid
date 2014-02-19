@@ -68,7 +68,7 @@ public class MoveZoomTool extends BaseTool {
 		case BUTTON_ID_PARAMETER_TOP:
 			return NO_BUTTON_RESOURCE;
 		case BUTTON_ID_PARAMETER_BOTTOM_1:
-			return R.drawable.icon_zoom_out;
+			return R.drawable.icon_menu_strokes;
 			// case BUTTON_ID_PARAMETER_BOTTOM_2:
 			// return R.drawable.icon_zoom_in;
 		default:

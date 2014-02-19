@@ -9,15 +9,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.ZoomControls;
 
-public class ZoomListDialog extends BaseDialog implements
-		android.view.View.OnClickListener {
+public class ZoomListDialog extends BaseDialog {
 
 	public static ZoomListDialog instance;
 
 	private static final String NOT_INITIALIZED_ERROR_MESSAGE = "ZoomListDialog has not been initialized. Call init() first!";
 	private MainActivity mParent;
-	Spinner zoomSelector;
+	private final static float ZOOM_IN_SCALE = 1.75f;
+	private int selection = 5;
+	private Spinner zoomSelector;
+	private ZoomControls zoomControls;
 
 	public ZoomListDialog(Context context) {
 		super(context);
@@ -42,14 +45,49 @@ public class ZoomListDialog extends BaseDialog implements
 		setTitle(R.string.dialog_zoom_list_title);
 		setCanceledOnTouchOutside(true);
 
-		zoomSelector = (Spinner) findViewById(R.id.spinner1);
-		zoomSelector.setSelection(5);
+		zoomSelector = (Spinner) findViewById(R.id.zoomSelector);
+		zoomSelector.setSelection(selection);
+
+		zoomControls = (ZoomControls) findViewById(R.id.zoomControls);
+		zoomControls.setOnZoomInClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				zoomIn();
+			}
+		});
+		zoomControls.setOnZoomOutClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				zoomOut();
+			}
+		});
+
 		Button submitBtn = (Button) findViewById(R.id.acceptBtn);
-		submitBtn.setOnClickListener(this);
+		submitBtn.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				changeZoomLevel(v);
+			}
+		});
 	}
 
-	@Override
-	public void onClick(View v) {
+	private void zoomOut() {
+		float scale = 1 / ZOOM_IN_SCALE;
+		PaintroidApplication.perspective.multiplyScale(scale);
+		PaintroidApplication.perspective.translate(0, 0);
+
+	}
+
+	private void zoomIn() {
+		float scale = ZOOM_IN_SCALE;
+		PaintroidApplication.perspective.multiplyScale(scale);
+		PaintroidApplication.perspective.translate(0, 0);
+	}
+
+	public void changeZoomLevel(View v) {
 		int itemPosition = zoomSelector.getSelectedItemPosition();
 		switch (itemPosition) {
 		case 0:
@@ -70,45 +108,48 @@ public class ZoomListDialog extends BaseDialog implements
 			break;
 		case 4:
 			PaintroidApplication.perspective.setScale(1.5f);
+			dismiss();
 			break;
 		case 5:
-			PaintroidApplication.perspective.setScale(0.85f);
+			PaintroidApplication.perspective.setScale(1f);// (0.85f);
 			dismiss();
 			break;
 		case 6:
-			PaintroidApplication.perspective.setScale(0.76f);
+			PaintroidApplication.perspective.setScale(0.9f);
 			dismiss();
 			break;
 		case 7:
-			PaintroidApplication.perspective.setScale(0.67f);
+			PaintroidApplication.perspective.setScale(0.8f);
 			dismiss();
 			break;
 		case 8:
-			PaintroidApplication.perspective.setScale(0.58f);
+			PaintroidApplication.perspective.setScale(0.7f);
 			dismiss();
 			break;
 		case 9:
-			PaintroidApplication.perspective.setScale(0.49f);
+			PaintroidApplication.perspective.setScale(0.6f);
 			dismiss();
 			break;
 		case 10:
-			PaintroidApplication.perspective.setScale(0.4f);
+			PaintroidApplication.perspective.setScale(0.5f);
 			dismiss();
 			break;
 		case 11:
-			PaintroidApplication.perspective.setScale(0.31f);
+			PaintroidApplication.perspective.setScale(0.4f);
 			dismiss();
 			break;
 		case 12:
-			PaintroidApplication.perspective.setScale(0.22f);
+			PaintroidApplication.perspective.setScale(0.3f);
 			dismiss();
 			break;
 		case 13:
-			PaintroidApplication.perspective.setScale(0.15f);
+			PaintroidApplication.perspective.setScale(0.2f);
+			selection = 13;
 			dismiss();
 			break;
 		case 14:
 			PaintroidApplication.perspective.setScale(0.1f);
+			selection = 14;
 			dismiss();
 			break;
 		}

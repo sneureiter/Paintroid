@@ -32,6 +32,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 public class PaintroidApplication extends Application {
@@ -47,6 +48,7 @@ public class PaintroidApplication extends Application {
 	public static boolean isSaved = true;
 	public static File savedBitmapFile = null;
 	public static boolean saveCopy = false;
+	public static Bitmap mLoadedFileBitmap = null; // maybe change this
 
 	@Override
 	public void onCreate() {

@@ -36,6 +36,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -152,6 +153,39 @@ public abstract class OptionsMenuActivity extends SherlockFragmentActivity {
 			AlertDialog alertLoadImage = alertLoadDialogBuilder.create();
 			alertLoadImage.show();
 		}
+	}
+
+	synchronized public void selectLoadingMethode(final Intent data) { // look
+																		// for
+		// a better
+		// place for
+		// this
+		// function
+		AlertDialog.Builder loadScaledBitmapDialogBuilder = new AlertDialog.Builder(
+				this);
+		loadScaledBitmapDialogBuilder.setTitle("Loading Image");
+		loadScaledBitmapDialogBuilder
+				.setMessage("Should the loaded image be scaled to Display resolution?");
+		loadScaledBitmapDialogBuilder.setPositiveButton(R.string.yes,
+				new OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						PaintroidApplication.loadScaledImage = true;
+						loadBitmapFromUri(data.getData());
+					}
+				});
+		loadScaledBitmapDialogBuilder.setNegativeButton(R.string.no,
+				new OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						PaintroidApplication.loadScaledImage = false;
+						loadBitmapFromUri(data.getData());
+					}
+				});
+		AlertDialog alertLoadImage = loadScaledBitmapDialogBuilder.create();
+		alertLoadImage.show();
 	}
 
 	private void startLoadImageIntent() {
@@ -282,7 +316,8 @@ public abstract class OptionsMenuActivity extends SherlockFragmentActivity {
 		if (resultCode == Activity.RESULT_OK) {
 			switch (requestCode) {
 			case REQUEST_CODE_LOAD_PICTURE:
-				loadBitmapFromUri(data.getData());
+				// loadBitmapFromUri(data.getData());
+				selectLoadingMethode(data);
 				PaintroidApplication.isPlainImage = false;
 				PaintroidApplication.isSaved = false;
 				PaintroidApplication.savedBitmapFile = null;
@@ -328,7 +363,11 @@ public abstract class OptionsMenuActivity extends SherlockFragmentActivity {
 			public void run() {
 				Bitmap bitmap = null;
 				try {
-					bitmap = FileIO.getScaledBitmapFromFile(file);
+					if (PaintroidApplication.loadScaledImage) {
+						bitmap = FileIO.getScaledBitmapFromFile(file);
+					} else {
+						bitmap = FileIO.getRealSizeBitmapFromFile(file);
+					}
 				} catch (Exception e) {
 					loadBitmapFailed = true;
 
@@ -462,7 +501,11 @@ public abstract class OptionsMenuActivity extends SherlockFragmentActivity {
 					FileIO.copyStream(inputStream, outputStream);
 					outputStream.close();
 
-					bitmap = FileIO.getScaledBitmapFromFile(cacheFile);
+					if (PaintroidApplication.loadScaledImage) {
+						bitmap = FileIO.getScaledBitmapFromFile(cacheFile);
+					} else {
+						bitmap = FileIO.getRealSizeBitmapFromFile(cacheFile);
+					}
 
 					if (bitmap != null) {
 						runnable.run(bitmap);

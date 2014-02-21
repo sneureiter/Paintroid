@@ -42,7 +42,6 @@ import org.catrobat.paintroid.ui.TopBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -160,37 +159,6 @@ public class MainActivity extends OptionsMenuActivity {
 					R.string.dialog_loading_image_failed_text).show(
 					getSupportFragmentManager(), "loadbitmapdialogerror");
 		}
-	}
-
-	public static Bitmap getBitmapFromFile(final File bitmapFile) { // look for
-																	// a better
-																	// place for
-																	// this
-																	// function
-		AlertDialog.Builder loadScaledBitmapDialogBuilder = new AlertDialog.Builder(
-				PaintroidApplication.applicationContext);
-		loadScaledBitmapDialogBuilder.setTitle("Loading Image");
-		loadScaledBitmapDialogBuilder
-				.setMessage("Should the loaded image be scaled to Display resolution?");
-		loadScaledBitmapDialogBuilder.setPositiveButton(R.string.yes,
-				new OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						PaintroidApplication.mLoadedFileBitmap = FileIO
-								.getScaledBitmapFromFile(bitmapFile);
-					}
-				});
-		loadScaledBitmapDialogBuilder.setNegativeButton(R.string.no,
-				new OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						PaintroidApplication.mLoadedFileBitmap = FileIO
-								.getRealSizeBitmapFromFile(bitmapFile);
-					}
-				});
-		return PaintroidApplication.mLoadedFileBitmap;
 	}
 
 	private void initActionBar() {

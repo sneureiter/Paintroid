@@ -152,8 +152,6 @@ public abstract class FileIO {
 		Bitmap immutablebitmap = BitmapFactory.decodeFile(
 				bitmapFile.getAbsolutePath(), options);
 
-		Log.d(PaintroidApplication.TAG, "loadscaledImage orig width: "
-				+ options.outWidth + "  orig height: " + options.outHeight);
 		PaintroidApplication.savedBitmapFile = bitmapFile;
 
 		return immutablebitmap.copy(Config.ARGB_8888, true);
@@ -167,14 +165,11 @@ public abstract class FileIO {
 
 		int tmpWidth = options.outWidth;
 		int tmpHeight = options.outHeight;
-		Log.d(PaintroidApplication.TAG, "loadscaledImage orig width: "
-				+ options.outWidth + "  orig height: " + options.outHeight);
 
+		DisplayMetrics metrics = new DisplayMetrics();
 		Display display = ((WindowManager) PaintroidApplication.applicationContext
 				.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-		DisplayMetrics metrics = new DisplayMetrics();
 		display.getMetrics(metrics);
-
 		int maxWidth = display.getWidth();
 		int maxHeight = display.getHeight();
 

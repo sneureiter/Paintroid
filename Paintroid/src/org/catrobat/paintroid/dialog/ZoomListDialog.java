@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.ZoomControls;
@@ -49,8 +50,20 @@ public class ZoomListDialog extends BaseDialog {
 
 		zoomSelector = (Spinner) findViewById(R.id.zoomSelector);
 		zoomSelector.setSelection(selection);
+		zoomSelector
+				.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+					@Override
+					public void onItemSelected(AdapterView<?> adapterView,
+							View view, int i, long l) {
+						applyZoomOnChangeControl = true;
+					}
 
-		applyZoomOnChangeControl = true;
+					@Override
+					public void onNothingSelected(AdapterView<?> arg0) {
+						// TODO Auto-generated method stub
+					}
+				});
+
 		Log.d("zoomLevel", "apply selection: " + applyZoomOnChangeControl);
 
 		zoomControls = (ZoomControls) findViewById(R.id.zoomControls);
@@ -129,7 +142,7 @@ public class ZoomListDialog extends BaseDialog {
 			dismiss();
 			break;
 		case 5:
-			PaintroidApplication.perspective.setScale(1f);// (0.85f);
+			PaintroidApplication.perspective.setScale(1f);
 			dismiss();
 			break;
 		case 6:

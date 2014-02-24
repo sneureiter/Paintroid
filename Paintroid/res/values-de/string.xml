@@ -68,6 +68,7 @@
     <string name="dialog_brush_width_text">Strichstärke:</string>
     <string name="dialog_warning_new_image">Änderungen speichern?</string>
     <string name="dialog_shape_text">Gestalt</string>
+    <string name="dialog_zoom_level_list_title">Zoom Level wählen</string>
     <string name="help_title">Hilfe</string>
     <string name="help_content_ellipse">Bewege und verändere den Kreis oder forme ihn in eine Ellipse. Klicke um das Ergebnis auf das Bild zu zeichnen.</string>
     <string name="help_content_flip">Klicke auf die Symbole auf der unteren Leiste um das ganze Bild zu spiegeln.</string>

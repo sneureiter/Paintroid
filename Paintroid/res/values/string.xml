@@ -69,6 +69,8 @@
     <string name="dialog_error_sdcard_text">Check Image or SD-Card!</string>
     <string name="dialog_brush_width_text">Stroke Width</string>
     <string name="dialog_warning_new_image">Save Changes?</string>
+    <string name="dialog_zoom_level_list_title">Select Zoom Level</string>
+    <string name="dialog_zoom_levle_zoomInOut_title">Zoom Out / Zoom In</string>
     <string name="help_title">Help</string>
     <string name="help_content_ellipse">Move and resize the circle or transform it to an ellipse. Click to paint the shape on the image</string>
     <string name="help_content_flip">Click on the symbols on the bottom bar to flip the image.</string>
@@ -142,7 +144,7 @@
     <string name="dialog_shape_text">Shape</string>
     <string name="dialog_loading_image_failed_title">Error on loading image</string>
     <string name="dialog_loading_image_failed_text">Not a valid image file</string>
-    <string name="dialog_zoom_list_title">Select Zoom Level</string>
+    <string name="dialog_zoom_list_title">Zoom In/Out options</string>
     <string-array name="zoom_level_list">
         <item >500%</item>
         <item >400%</item>

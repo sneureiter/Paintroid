@@ -43,9 +43,6 @@ public class MoveZoomTool extends BaseTool {
 			// zoomOut();
 			ZoomListDialog.instance.show();
 			break;
-		case BUTTON_ID_PARAMETER_BOTTOM_2:
-			zoomIn();
-			break;
 		default:
 			super.attributeButtonClick(buttonNumber);
 		}

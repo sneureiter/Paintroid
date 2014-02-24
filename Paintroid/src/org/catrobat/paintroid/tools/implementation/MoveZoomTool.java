@@ -48,17 +48,6 @@ public class MoveZoomTool extends BaseTool {
 		}
 	}
 
-	private void zoomOut() {
-		float scale = 1 / ZOOM_IN_SCALE;
-		PaintroidApplication.perspective.multiplyScale(scale);
-	}
-
-	private void zoomIn() {
-		float scale = ZOOM_IN_SCALE;
-		PaintroidApplication.perspective.multiplyScale(scale);
-		PaintroidApplication.perspective.translate(0, 0);
-	}
-
 	@Override
 	public int getAttributeButtonResource(ToolButtonIDs buttonNumber) {
 		switch (buttonNumber) {

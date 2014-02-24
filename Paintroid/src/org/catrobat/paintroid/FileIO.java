@@ -149,9 +149,14 @@ public abstract class FileIO {
 	public static Bitmap getRealSizeBitmapFromFile(File bitmapFile) {
 		BitmapFactory.Options options = new BitmapFactory.Options();
 
+		Bitmap immutablebitmap = BitmapFactory.decodeFile(
+				bitmapFile.getAbsolutePath(), options);
+
+		Log.d(PaintroidApplication.TAG, "loadscaledImage orig width: "
+				+ options.outWidth + "  orig height: " + options.outHeight);
 		PaintroidApplication.savedBitmapFile = bitmapFile;
 
-		return BitmapFactory.decodeFile(bitmapFile.getAbsolutePath(), options);
+		return immutablebitmap.copy(Config.ARGB_8888, true);
 	}
 
 	// getScaledBitmap

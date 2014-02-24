@@ -316,7 +316,6 @@ public abstract class OptionsMenuActivity extends SherlockFragmentActivity {
 		if (resultCode == Activity.RESULT_OK) {
 			switch (requestCode) {
 			case REQUEST_CODE_LOAD_PICTURE:
-				// loadBitmapFromUri(data.getData());
 				selectLoadingMethode(data);
 				PaintroidApplication.isPlainImage = false;
 				PaintroidApplication.isSaved = false;

@@ -1,6 +1,6 @@
 /**
  *  Paintroid: An image manipulation application for Android.
- *  Copyright (C) 2010-2013 The Catrobat Team
+ *  Copyright (C) 2010-2014 The Catrobat Team
  *  (<http://developer.catrobat.org/credits>)
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -24,6 +24,7 @@ import java.io.File;
 import org.catrobat.paintroid.dialog.BrushPickerDialog;
 import org.catrobat.paintroid.dialog.CustomAlertDialogBuilder;
 import org.catrobat.paintroid.dialog.DialogAbout;
+import org.catrobat.paintroid.dialog.DialogTermsOfUseAndService;
 import org.catrobat.paintroid.dialog.InfoDialog;
 import org.catrobat.paintroid.dialog.InfoDialog.DialogType;
 import org.catrobat.paintroid.dialog.ProgressIntermediateDialog;
@@ -72,6 +73,7 @@ public class MainActivity extends OptionsMenuActivity {
 	protected BottomBar mBottomBar;
 
 	protected boolean mToolbarIsVisible = true;
+	private Menu mMenu = null;
 	private static final int ANDROID_VERSION_ICE_CREAM_SANDWICH = 14;
 
 	@Override
@@ -202,6 +204,8 @@ public class MainActivity extends OptionsMenuActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
+		mMenu = menu;
+		PaintroidApplication.menu = mMenu;
 		MenuInflater inflater = getSupportMenuInflater();
 		if (PaintroidApplication.openedFromCatroid) {
 			inflater.inflate(R.menu.main_menu_opened_from_catroid, menu);
@@ -221,6 +225,11 @@ public class MainActivity extends OptionsMenuActivity {
 		// return true;
 		case R.id.menu_item_back_to_catroid:
 			showSecurityQuestionBeforeExit();
+			return true;
+		case R.id.menu_item_terms_of_use_and_service:
+			DialogTermsOfUseAndService termsOfUseAndService = new DialogTermsOfUseAndService();
+			termsOfUseAndService.show(getSupportFragmentManager(),
+					"termsofuseandservicedialogfragment");
 			return true;
 		case R.id.menu_item_about:
 			DialogAbout about = new DialogAbout();
@@ -480,8 +489,8 @@ public class MainActivity extends OptionsMenuActivity {
 					WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
-
 	}
+
 	/* EXCLUDE PREFERENCES FOR RELEASE */
 	// private void setDefaultPreferences() {
 	// PreferenceManager

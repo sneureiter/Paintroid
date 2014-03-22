@@ -1,4 +1,4 @@
-Paintroid_test
+Paintroid
 =========
 
 **Paintroid** is associated to [Catroid](https://github.com/Catrobat/Catroid) and a graphical paint editor program for the Android platform that, among others, allows setting parts of pictures to transparent.

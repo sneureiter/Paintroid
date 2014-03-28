@@ -33,6 +33,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
@@ -48,7 +49,11 @@ public abstract class FileIO {
 	private static File PAINTROID_MEDIA_FILE = null;
 	private static final int BUFFER_SIZE = 1024;
 
-	private FileIO() {
+    public enum ResizeType {
+        STRETCH_TO_RECTANGLE, STAY_IN_RECTANGLE_WITH_SAME_ASPECT_RATIO, FILL_RECTANGLE_WITH_SAME_ASPECT_RATIO, NO_RESIZE
+    }
+
+        private FileIO() {
 	}
 
 	public static File saveBitmap(Context context, Bitmap bitmap, String name) {
@@ -92,6 +97,91 @@ public abstract class FileIO {
 				.getAbsolutePath();
 		return new File(filePathAndName);
 	}
+
+    //copied from Pocket Code
+    private static Bitmap scaleBitmap(Bitmap bitmap, int xSize, int ySize) {
+        if (bitmap == null) {
+            return null;
+        }
+        Matrix matrix = new Matrix();
+        float scaleWidth = (((float) xSize) / bitmap.getWidth());
+        float scaleHeight = (((float) ySize) / bitmap.getHeight());
+        matrix.postScale(scaleWidth, scaleHeight);
+        Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        return newBitmap;
+    }
+
+    //copied from Pocket Code
+    public static Bitmap getScaledBitmapFromFile(File imageFile, ResizeType resizeType, boolean justScaleDown) {
+        if (imageFile.getAbsolutePath() == null) {
+            return null;
+        }
+
+        int[] imageDimensions = getImageDimensions(imageFile.getAbsolutePath());
+        int[] displayDimensions = getDisplayDimensions();
+
+        int originalWidth = imageDimensions[0];
+        int originalHeight = imageDimensions[1];
+        int displayWidth = displayDimensions[0];
+        int displayHeight = displayDimensions[1];
+        int newWidth = originalHeight;
+        int newHeight = originalWidth;
+        int loadingSampleSize = 1;
+
+        double sampleSizeWidth = ((double) originalWidth) / (double) displayWidth;
+        double sampleSizeHeight = ((double) originalHeight) / (double) displayHeight;
+        double sampleSizeMinimum = Math.min(sampleSizeWidth, sampleSizeHeight);
+        double sampleSizeMaximum = Math.max(sampleSizeWidth, sampleSizeHeight);
+
+        if (resizeType == ResizeType.NO_RESIZE) {
+            newWidth = originalWidth;
+            newHeight = originalHeight;
+        } else if (resizeType == ResizeType.STRETCH_TO_RECTANGLE) {
+            newWidth = displayWidth;
+            newHeight = displayHeight;
+            loadingSampleSize = (int) Math.floor(sampleSizeMinimum);
+        } else if (resizeType == ResizeType.STAY_IN_RECTANGLE_WITH_SAME_ASPECT_RATIO) {
+            newWidth = (int) Math.floor(originalWidth / sampleSizeMaximum);
+            newHeight = (int) Math.floor(originalHeight / sampleSizeMaximum);
+        } else if (resizeType == ResizeType.FILL_RECTANGLE_WITH_SAME_ASPECT_RATIO) {
+            newWidth = (int) Math.floor(originalWidth / sampleSizeMinimum);
+            newHeight = (int) Math.floor(originalHeight / sampleSizeMinimum);
+        }
+
+        BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+        bitmapOptions.inSampleSize = loadingSampleSize;
+
+        Bitmap tempBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath(), bitmapOptions);
+
+        return scaleBitmap(tempBitmap, newWidth, newHeight);
+    }
+
+    public static int[] getDisplayDimensions() {
+        int[] displayDimenstions = new int[2];
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        Display display = ((WindowManager) PaintroidApplication.applicationContext
+                .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        display.getMetrics(metrics);
+        displayDimenstions[0] = display.getWidth();
+        displayDimenstions[1] = display.getHeight();
+
+        return displayDimenstions;
+    }
+
+    //copied from Pocket Code
+    public static int[] getImageDimensions(String imagePath) {
+        int[] imageDimensions = new int[2];
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(imagePath, options);
+
+        imageDimensions[0] = options.outWidth;
+        imageDimensions[1] = options.outHeight;
+
+        return imageDimensions;
+    }
 
 	public static File createNewEmptyPictureFile(Context context,
 			String filename) {
@@ -149,12 +239,12 @@ public abstract class FileIO {
 	public static Bitmap getRealSizeBitmapFromFile(File bitmapFile) {
 		BitmapFactory.Options options = new BitmapFactory.Options();
 
-		Bitmap immutablebitmap = BitmapFactory.decodeFile(
+		Bitmap immutableBitmap = BitmapFactory.decodeFile(
 				bitmapFile.getAbsolutePath(), options);
 
 		PaintroidApplication.savedBitmapFile = bitmapFile;
 
-		return immutablebitmap.copy(Config.ARGB_8888, true);
+		return immutableBitmap.copy(Config.ARGB_8888, true);
 	}
 
 	// getScaledBitmap

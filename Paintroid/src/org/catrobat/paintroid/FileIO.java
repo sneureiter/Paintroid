@@ -49,7 +49,7 @@ public abstract class FileIO {
 	private static File PAINTROID_MEDIA_FILE = null;
 	private static final int BUFFER_SIZE = 1024;
 
-    public enum ResizeType {
+    public static enum ResizeType {
         STRETCH_TO_RECTANGLE, STAY_IN_RECTANGLE_WITH_SAME_ASPECT_RATIO, FILL_RECTANGLE_WITH_SAME_ASPECT_RATIO, NO_RESIZE
     }
 
@@ -108,11 +108,15 @@ public abstract class FileIO {
         float scaleHeight = (((float) ySize) / bitmap.getHeight());
         matrix.postScale(scaleWidth, scaleHeight);
         Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        return newBitmap;
+        if (newBitmap.isMutable()) {
+            return newBitmap;
+        } else {
+            return newBitmap.copy(Config.ARGB_8888, true);
+        }
     }
 
     //copied from Pocket Code
-    public static Bitmap getScaledBitmapFromFile(File imageFile, ResizeType resizeType, boolean justScaleDown) {
+    public static Bitmap getScaledBitmapFromFile(File imageFile, ResizeType resizeType) {
         if (imageFile.getAbsolutePath() == null) {
             return null;
         }

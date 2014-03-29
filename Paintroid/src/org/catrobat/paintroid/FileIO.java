@@ -196,6 +196,28 @@ public abstract class FileIO {
 		}
 	}
 
+    private static boolean initialisePaintroidMediaDirectory() {
+        if (Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {
+            PAINTROID_MEDIA_FILE = new File(
+                    Environment.getExternalStorageDirectory(),
+                    "/"
+                            + PaintroidApplication.applicationContext
+                            .getString(R.string.app_name) + "/");
+        } else {
+            return false;
+        }
+        if (PAINTROID_MEDIA_FILE != null) {
+            if (PAINTROID_MEDIA_FILE.isDirectory() == false) {
+
+                return PAINTROID_MEDIA_FILE.mkdirs();
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+
 	public static String getRealPathFromURI(Context context, Uri imageUri) {
 		String path = null;
 		String[] filePathColumn = { MediaStore.Images.Media.DATA };
@@ -218,29 +240,7 @@ public abstract class FileIO {
 		return path;
 	}
 
-	private static boolean initialisePaintroidMediaDirectory() {
-		if (Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED)) {
-			PAINTROID_MEDIA_FILE = new File(
-					Environment.getExternalStorageDirectory(),
-					"/"
-							+ PaintroidApplication.applicationContext
-									.getString(R.string.app_name) + "/");
-		} else {
-			return false;
-		}
-		if (PAINTROID_MEDIA_FILE != null) {
-			if (PAINTROID_MEDIA_FILE.isDirectory() == false) {
-
-				return PAINTROID_MEDIA_FILE.mkdirs();
-			}
-		} else {
-			return false;
-		}
-		return true;
-	}
-
-	public static Bitmap getRealSizeBitmapFromFile(File bitmapFile) {
+	/*public static Bitmap getRealSizeBitmapFromFile(File bitmapFile) {
 		BitmapFactory.Options options = new BitmapFactory.Options();
 
 		Bitmap immutableBitmap = BitmapFactory.decodeFile(
@@ -297,7 +297,7 @@ public abstract class FileIO {
 		PaintroidApplication.savedBitmapFile = bitmapFile;
 
 		return immutableBitmap.copy(Config.ARGB_8888, true);
-	}
+	}*/
 
 	public static String createFilePathFromUri(Activity activity, Uri uri) {
 		// Problem here

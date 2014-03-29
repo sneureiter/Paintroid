@@ -503,9 +503,11 @@ public abstract class OptionsMenuActivity extends SherlockFragmentActivity {
 					outputStream.close();
 
 					if (PaintroidApplication.loadScaledImage) {
-						bitmap = FileIO.getScaledBitmapFromFile(cacheFile);
+					    //bitmap = FileIO.getScaledBitmapFromFile(cacheFile);
+                        bitmap = FileIO.getScaledBitmapFromFile(cacheFile, FileIO.ResizeType.FILL_RECTANGLE_WITH_SAME_ASPECT_RATIO);
 					} else {
-						bitmap = FileIO.getRealSizeBitmapFromFile(cacheFile);
+						//bitmap = FileIO.getRealSizeBitmapFromFile(cacheFile);
+                        bitmap = FileIO.getScaledBitmapFromFile(cacheFile, FileIO.ResizeType.NO_RESIZE);
 					}
 
 					if (bitmap != null) {

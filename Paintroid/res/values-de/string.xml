@@ -15,7 +15,9 @@
  *  GNU Affero General Public License for more details.
  *
  *  You should have received a copy of the GNU Affero General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
 -->
 <resources>
 
@@ -40,6 +42,7 @@
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
     <string name="done">Fertig</string>
+    <string name="loadingImage">Bild wird geladen</string>
         
     <string name="terms_of_use_and_service_title">Nutzungsbedingungen</string>
     <string name="terms_of_use_and_service_content">Um Pocket Paint und andere Software, die vom Catrobat Projekt angeboten werden, nutzen zu dürfen, müssen Sie / musst Du mit unseren Nutzungsbedingungen einverstanden sein und sie während Ihrer / Deiner Benutzung genau einhalten. Die exakte englische Formulierung unserer Nutzungsbedingungen steht unter dem folgenden "Terms of Use and Service" Link zur Verfügung.</string>
@@ -84,6 +87,7 @@
     <string name="help_content_stamp">Bewege und verändere das Rechteck bis es über dem Bereich liegt den du gerne aufnehmen würdest. Klicke in das Rechteck um den Bereich auszuwählen. Bewege das Rechteck und klicke um zu stemplen.</string>
     <string name="help_content_rectangle">Bewege und verändere das Rechteck. Klicke um das Rechteck auf das Bild zu zeichnen.</string>
     <string name="help_content_import_png">Wähle ein Bild aus der Galerie aus und importiere es in das Stempel Werkzeug.</string>
+    <string name="loadImageScalingQuestion">Soll das geladene Bild auf Display-Auflösung skalliert werden?</string>
     <string name="closing_security_question_title">Beenden</string>
     <string name="closing_security_question">Änderungen speichern?</string>
     <string name="closing_catroid_security_question_title">Zurück zu Pocket Code</string>
@@ -116,7 +120,10 @@
     <string name="preference_button_undo_summary">Ist nur wirksam wenn von Pocket Code gestartet.</string>
     <string name="preferences_language">Sprache ändern</string>
     <string name="preferences_language_summary">Neustart der App erforderlich.</string>
-    <string name="preferences_language_dialog_reboot_warning_text">App neustart erforderlich.</string>
+    <string name="preferences_language_dialog_reboot_warning_text">App neustart erforderlich.</string>
+
+
+
     -->
 
     <string name="crop_algorithm_finish_text">zum Zuschneiden klicke</string>

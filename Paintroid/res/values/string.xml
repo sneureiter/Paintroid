@@ -40,6 +40,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="done">Done</string>
+    <string name="loadingImage">Loading Image</string>
     
     <string name="terms_of_use_and_service_title">Terms of Use and Service</string>
      <string name="terms_of_use_and_service_content">In order to be allowed to use Pocket Paint and other executables offered by the Catrobat project, you must agree to our Terms of Use and Service and strictly follow them when you use Pocket Code and our other executables. Please see the link below for their precise formulation.\n\n</string>
@@ -85,6 +86,7 @@
     <string name="help_content_stamp">Move and resize the rectangle to cover the area you want to stamp. Click to select the area. Move and click again to stamp.</string>
     <string name="help_content_rectangle">Move and resize the Rectangle. Click to paint the rectangle on the image.</string>
     <string name="help_content_import_png">Import an image from the gallery to the stamp tool.</string>
+    <string name="loadImageScalingQuestion">Should the loaded image be scaled to Display resolution?</string>
     <string name="closing_security_question_title">Quit</string>
     <string name="closing_security_question">Save Changes?</string>
     <string name="closing_catroid_security_question_title">Back to Pocket Code</string>
@@ -92,7 +94,6 @@
     <string name="menu_load_image">Load image</string>
     <string name="menu_save_image">Save image</string>
     <string name="menu_save_copy">Save copy</string>
-    <string name="menu_new_image_from_camera">Image from Camera</string>
     <string name="menu_new_image_empty_image">Empty Image</string>
     <string name="menu_item_tools">Tools menu</string>
     <string name="menu_hide_menu">Fullscreen</string>
@@ -119,7 +120,10 @@
     <string name="preferences_language">Change Display Language</string>
     <string name="preferences_language_summary">Requires app restart.</string>
     <string name="preferences_language_key">preferences_language_key</string>
-    <string name="preferences_language_dialog_reboot_warning_text">App restart required.</string>
+    <string name="preferences_language_dialog_reboot_warning_text">App restart required.</string>
+
+
+
     -->
     <string name="crop_algorithm_finish_text">to crop click</string>
     <string name="crop_nothing_to_corp">nothing to crop</string>

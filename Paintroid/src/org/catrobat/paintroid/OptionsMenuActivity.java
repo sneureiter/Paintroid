@@ -163,9 +163,9 @@ public abstract class OptionsMenuActivity extends SherlockFragmentActivity {
 		// function
 		AlertDialog.Builder loadScaledBitmapDialogBuilder = new AlertDialog.Builder(
 				this);
-		loadScaledBitmapDialogBuilder.setTitle("Loading Image");
+		loadScaledBitmapDialogBuilder.setTitle(R.string.loadingImage);
 		loadScaledBitmapDialogBuilder
-				.setMessage("Should the loaded image be scaled to Display resolution?");
+				.setMessage(R.string.loadImageScalingQuestion);
 		loadScaledBitmapDialogBuilder.setPositiveButton(R.string.yes,
 				new OnClickListener() {
 

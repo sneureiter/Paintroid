@@ -21,7 +21,6 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
   <string name="app_name">ポケット\nペイント</string>
-  <string name="app_folder_name">ポケットペイント</string>
   <string name="button_brush">ブラシ</string>
   <string name="button_cursor">カーソル</string>
   <string name="button_ellipse">円/楕円</string>
@@ -31,9 +30,9 @@
   <string name="button_redo">リドゥー</string>
   <string name="button_stamp">スタンプ</string>
   <string name="button_rectangle">四角形</string>
-  <string name="button_import_image">イメージのインポート</string>
+  <string name="button_import_image">イメージの\nインポート</string>
   <string name="button_eraser">消しゴム</string>
-  <string name="button_crop">イメージのトリミング</string>
+  <string name="button_crop">イメージの\nトリミング</string>
   <string name="button_flip">フリップ</string>
   <string name="button_fill">塗りつぶし</string>
   <string name="button_move">移動</string>
@@ -47,10 +46,10 @@
   <string name="terms_of_use_and_service_title">使用条件</string>
   <string name="terms_of_use_and_service_content">In order to be allowed to use Pocket Paint and other executables offered by the Catrobat project, you must agree to our Terms of Use and Service and strictly follow them when you use Pocket Code and our other executables. Please see the link below for their precise formulation.\n\n</string>
   <string name="terms_of_use_and_service_url_text">使用条件</string>
-  <string name="about_title">ポケットペイントについて.</string>
+  <string name="about_title">ポケットペイントについて</string>
   <string name="about_content">ポケットペイントは、キャットロバット プロジェクトの画像エディターのひとつです。\n\nカットロバットは、視覚的なプログラミング言語とスマート フォン、タブレット、および携帯電話のブラウザーのための創造のツールのセットです。\n\nポケットペイントのソース コードは主に、%sの下でライセンスされています。\nライセンスの正確な詳細は下のリンクを参照してください。\n\n</string>
   <string name="about_license_url_text">ポケットペイント ソースコード ライセンス</string>
-  <string name="about_catroid_url_text">キャトロバットについて</string>
+  <string name="about_catroid_url_text">キャットロバットについて</string>
   <string name="about_version">バージョン：</string>
   <string name="stroke_title">"ツールの設定"</string>
   <string name="color_chooser_title">色を選択</string>
@@ -101,7 +100,7 @@
   <string name="menu_new_image_from_camera">カメラからの画像</string>
   <string name="menu_terms_of_use_and_service">利用規約</string>
   <string name="more">もっと</string>
-  <string name="menu_about">について</string>
+  <string name="menu_about">アプリについて</string>
   <string name="menu_back">@string/closing_catroid_security_question_title</string>
   <string name="menu_export">エクスポート</string>
   <string name="saved">画像を保存しました。</string>

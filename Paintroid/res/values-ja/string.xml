@@ -20,7 +20,8 @@
 
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="app_name">ポケットペイント</string>
+  <string name="app_name">ポケット\nペイント</string>
+  <string name="app_folder_name">ポケットペイント</string>
   <string name="button_brush">ブラシ</string>
   <string name="button_cursor">カーソル</string>
   <string name="button_ellipse">円/楕円</string>

@@ -21,6 +21,7 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
   <string name="app_name">Pocket Paint</string>
+  <string name="app_folder_name">Pocket Paint</string>
   <string name="button_brush">Brush</string>
   <string name="button_cursor">Cursor</string>
   <string name="button_ellipse">Circle/Ellipse</string>
@@ -97,7 +98,6 @@
   <string name="menu_new_image_empty_image">Empty image</string>
   <string name="menu_item_tools">Tools menu</string>
   <string name="menu_hide_menu">Fullscreen</string>
-  <string name="menu_new_image_from_camera">Image from Camera</string>
   <string name="menu_terms_of_use_and_service">Terms of Use</string>
   <string name="more">More</string>
   <string name="menu_about">About</string>
@@ -115,4 +115,16 @@
   <string name="dialog_shape_text">Shape</string>
   <string name="dialog_loading_image_failed_title">Error on loading image</string>
   <string name="dialog_loading_image_failed_text">Not a valid image file</string>
+  <!--Extras-->
+  <string name="extra_picture_path_catroid" translatable="false">org.catrobat.extra.PAINTROID_PICTURE_PATH</string>
+  <string name="extra_picture_name_catroid" translatable="false">org.catrobat.extra.PAINTROID_PICTURE_NAME</string>
+  <string name="extra_x_value" translatable="false" tools:ignore="UnusedResources">org.catrobat.extra.PAINTROID_X</string>
+  <string name="extra_y_value" translatable="false" tools:ignore="UnusedResources">org.catrobat.extra.PAINTROID_Y</string>
+  <string name="temp_picture_name" translatable="false">catroidTemp</string>
+  <string name="license_url" translatable="false">http://developer.catrobat.org/licenses</string>
+  <string name="terms_of_use_and_service_url" translatable="false">http://developer.catrobat.org/terms_of_use_and_service</string>
+  <string name="catroid_url" translatable="false">http://catrobat.org/</string>
+  <string name="license_type_paintroid" translatable="false">GNU Affero General Public License, v3</string>
+  <string name="about_link_template" translatable="false">&lt;a href=\"%1$s\">%2$s&lt;/a></string>
+  <string name="terms_of_use_and_service_link_template" translatable="false">&lt;a href=\"%1$s\">%2$s&lt;/a></string>
 </resources>

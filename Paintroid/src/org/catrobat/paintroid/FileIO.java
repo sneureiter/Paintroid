@@ -144,12 +144,9 @@ public abstract class FileIO {
             newWidth = displayWidth;
             newHeight = displayHeight;
             loadingSampleSize = (int) Math.floor(sampleSizeMinimum);
-        } else if (resizeType == ResizeType.STAY_IN_RECTANGLE_WITH_SAME_ASPECT_RATIO) {
+        } else if (originalWidth > originalHeight || originalHeight > originalWidth) {
             newWidth = (int) Math.floor(originalWidth / sampleSizeMaximum);
             newHeight = (int) Math.floor(originalHeight / sampleSizeMaximum);
-        } else if (resizeType == ResizeType.FILL_RECTANGLE_WITH_SAME_ASPECT_RATIO) {
-            newWidth = (int) Math.floor(originalWidth / sampleSizeMinimum);
-            newHeight = (int) Math.floor(originalHeight / sampleSizeMinimum);
         }
 
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();

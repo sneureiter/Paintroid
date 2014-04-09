@@ -132,8 +132,8 @@ public abstract class FileIO {
         int newHeight = originalWidth;
         int loadingSampleSize = 1;
 
-        double sampleSizeWidth = ((double) originalWidth) / (double) displayWidth;
-        double sampleSizeHeight = ((double) originalHeight) / (double) displayHeight;
+        double sampleSizeWidth = originalWidth > displayWidth ? ((double) originalWidth) / (double) displayWidth : 1;
+        double sampleSizeHeight = originalHeight > displayHeight ? ((double) originalHeight) / (double) displayHeight: 1;
         double sampleSizeMinimum = Math.min(sampleSizeWidth, sampleSizeHeight);
         double sampleSizeMaximum = Math.max(sampleSizeWidth, sampleSizeHeight);
 
@@ -145,11 +145,11 @@ public abstract class FileIO {
             newWidth = displayWidth;
             newHeight = displayHeight;
             loadingSampleSize = (int) Math.floor(sampleSizeMinimum);
-        } else if (originalWidth > originalHeight || originalHeight > originalWidth) {
+        } else if (originalWidth > displayWidth || originalHeight > displayHeight) {
             newWidth = (int) Math.floor(originalWidth / sampleSizeMinimum);
-            newHeight = (int) Math.floor(originalHeight / sampleSizeMaximum);
-            Log.d("ScaleImageTag", "newWidth = " + newWidth +  "  newHeight = " + newHeight);
+            newHeight = (int) Math.floor(originalHeight / sampleSizeMinimum);
         }
+            Log.d("ScaleImageTag", "newWidth = " + newWidth +  "  newHeight = " + newHeight);
 
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
         bitmapOptions.inSampleSize = loadingSampleSize;

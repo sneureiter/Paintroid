@@ -140,13 +140,15 @@ public abstract class FileIO {
         if (resizeType == ResizeType.NO_RESIZE) {
             newWidth = originalWidth;
             newHeight = originalHeight;
+            Log.d("ScaleImageTag", "originalWidth = " + originalWidth + "  originalHeight = " + originalHeight);
         } else if (resizeType == ResizeType.STRETCH_TO_RECTANGLE) {
             newWidth = displayWidth;
             newHeight = displayHeight;
             loadingSampleSize = (int) Math.floor(sampleSizeMinimum);
         } else if (originalWidth > originalHeight || originalHeight > originalWidth) {
-            newWidth = (int) Math.floor(originalWidth / sampleSizeMaximum);
+            newWidth = (int) Math.floor(originalWidth / sampleSizeMinimum);
             newHeight = (int) Math.floor(originalHeight / sampleSizeMaximum);
+            Log.d("ScaleImageTag", "newWidth = " + newWidth +  "  newHeight = " + newHeight);
         }
 
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
@@ -186,7 +188,7 @@ public abstract class FileIO {
 
 	public static File createNewEmptyPictureFile(Context context,
 			String filename) {
-		if (initialisePaintroidMediaDirectory() == true) {
+		if (initialisePaintroidMediaDirectory()) {
 			return new File(PAINTROID_MEDIA_FILE, filename);
 		} else {
 			return null;
@@ -205,7 +207,7 @@ public abstract class FileIO {
             return false;
         }
         if (PAINTROID_MEDIA_FILE != null) {
-            if (PAINTROID_MEDIA_FILE.isDirectory() == false) {
+            if (!PAINTROID_MEDIA_FILE.isDirectory()) {
 
                 return PAINTROID_MEDIA_FILE.mkdirs();
             }
@@ -311,7 +313,14 @@ public abstract class FileIO {
 
 		if (filepath == null
 				&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			String id = uri.getLastPathSegment().split(":")[1];
+			String id = null;
+            try {
+                id = uri.getLastPathSegment();
+            } catch (NullPointerException e)
+            {
+                //TODO catch nullPointerException
+            }
+            id = id.split(":")[1];
 			final String[] imageColumns = { MediaStore.Images.Media.DATA };
 			final String imageOrderBy = null;
 

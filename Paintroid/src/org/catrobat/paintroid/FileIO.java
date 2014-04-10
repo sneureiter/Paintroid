@@ -239,65 +239,6 @@ public abstract class FileIO {
 		return path;
 	}
 
-	/*public static Bitmap getRealSizeBitmapFromFile(File bitmapFile) {
-		BitmapFactory.Options options = new BitmapFactory.Options();
-
-		Bitmap immutableBitmap = BitmapFactory.decodeFile(
-				bitmapFile.getAbsolutePath(), options);
-
-		PaintroidApplication.savedBitmapFile = bitmapFile;
-
-		return immutableBitmap.copy(Config.ARGB_8888, true);
-	}
-
-	// getScaledBitmap
-	public static Bitmap getScaledBitmapFromFile(File bitmapFile) {
-		BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inJustDecodeBounds = true;
-		BitmapFactory.decodeFile(bitmapFile.getAbsolutePath(), options);
-
-		int tmpWidth = options.outWidth;
-		int tmpHeight = options.outHeight;
-
-		DisplayMetrics metrics = new DisplayMetrics();
-		Display display = ((WindowManager) PaintroidApplication.applicationContext
-				.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-		display.getMetrics(metrics);
-		int maxWidth = display.getWidth();
-		int maxHeight = display.getHeight();
-
-		options.inSampleSize = (Math.max(tmpWidth / maxWidth, tmpHeight
-				/ maxHeight));
-		options.inJustDecodeBounds = false;
-
-		Bitmap immutableBitmap = BitmapFactory.decodeFile(
-				bitmapFile.getAbsolutePath(), options);
-
-		tmpWidth = immutableBitmap.getWidth();
-		tmpHeight = immutableBitmap.getHeight();
-
-		int outWidth = 0;
-		int outHeight = 0;
-
-		if (tmpWidth < maxWidth && tmpHeight < maxHeight) {
-			outWidth = tmpWidth;
-			outHeight = tmpHeight;
-		} else if (tmpWidth > tmpHeight) {
-			outWidth = maxWidth;
-			outHeight = (tmpHeight * maxWidth) / tmpWidth;
-		} else {
-			outHeight = maxHeight;
-			outWidth = (tmpWidth * maxHeight) / tmpHeight;
-		}
-
-		immutableBitmap = Bitmap.createScaledBitmap(immutableBitmap, outWidth,
-				outHeight, true);
-
-		PaintroidApplication.savedBitmapFile = bitmapFile;
-
-		return immutableBitmap.copy(Config.ARGB_8888, true);
-	}*/
-
 	public static String createFilePathFromUri(Activity activity, Uri uri) {
 		// Problem here
         String filepath = null;

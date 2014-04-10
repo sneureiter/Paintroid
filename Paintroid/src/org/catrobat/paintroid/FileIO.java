@@ -300,9 +300,9 @@ public abstract class FileIO {
 
 	public static String createFilePathFromUri(Activity activity, Uri uri) {
 		// Problem here
-		String filepath = null;
-		String[] projection = { MediaStore.Images.Media.DATA };
-		Cursor cursor = activity
+        String filepath = null;
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = activity
 				.managedQuery(uri, projection, null, null, null);
 		if (cursor != null) {
 			int columnIndex = cursor

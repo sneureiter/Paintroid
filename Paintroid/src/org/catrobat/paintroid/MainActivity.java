@@ -30,6 +30,7 @@ import org.catrobat.paintroid.dialog.InfoDialog.DialogType;
 import org.catrobat.paintroid.dialog.ProgressIntermediateDialog;
 import org.catrobat.paintroid.dialog.ToolsDialog;
 import org.catrobat.paintroid.dialog.colorpicker.ColorPickerDialog;
+import org.catrobat.paintroid.fx.Blur;
 import org.catrobat.paintroid.listener.DrawingSurfaceListener;
 import org.catrobat.paintroid.tools.Tool;
 import org.catrobat.paintroid.tools.ToolFactory;
@@ -54,10 +55,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -70,6 +73,12 @@ public class MainActivity extends OptionsMenuActivity {
 	protected DrawingSurfaceListener mDrawingSurfaceListener;
 	protected TopBar mTopBar;
 	protected BottomBar mBottomBar;
+
+	enum FX {
+		NONE, GLOW, SHADOW, BLUR
+	}
+
+	protected FX currentEffect;
 
 	protected boolean mToolbarIsVisible = true;
 	private Menu mMenu = null;
@@ -126,6 +135,8 @@ public class MainActivity extends OptionsMenuActivity {
 		mTopBar = new TopBar(this, PaintroidApplication.openedFromCatroid);
 		mBottomBar = new BottomBar(this);
 
+		initEffects();
+
 		PaintroidApplication.drawingSurface
 				.setOnTouchListener(mDrawingSurfaceListener);
 
@@ -144,6 +155,55 @@ public class MainActivity extends OptionsMenuActivity {
 			initialiseNewBitmap();
 		}
 
+	}
+
+	private void initEffects() {
+		currentEffect = FX.NONE;
+	}
+
+	private void doEffect() {
+		if (currentEffect == FX.SHADOW) {
+
+		} else if (currentEffect == FX.BLUR) {
+			PaintroidApplication.drawingSurface.setBitmap(Blur
+					.doMagic(PaintroidApplication.drawingSurface
+							.getBitmapCopy()));
+		} else if (currentEffect == FX.GLOW) {
+
+		}
+	}
+
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		int action = event.getAction();
+		int keyCode = event.getKeyCode();
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_VOLUME_UP:
+			if (action == KeyEvent.ACTION_DOWN) {
+				int tmp = (currentEffect.ordinal() + 1) % FX.values().length;
+				currentEffect = FX.values()[tmp];
+				Toast.makeText(getApplicationContext(),
+						currentEffect.toString() + " + ", Toast.LENGTH_SHORT)
+						.show();
+				doEffect();
+			}
+			return true;
+		case KeyEvent.KEYCODE_VOLUME_DOWN:
+			if (action == KeyEvent.ACTION_DOWN) {
+				int tmp = (currentEffect.ordinal() - 1) % FX.values().length;
+				if (currentEffect.ordinal() == 0) {
+					tmp = FX.values().length - 1;
+				}
+				currentEffect = FX.values()[tmp];
+				Toast.makeText(getApplicationContext(),
+						currentEffect.toString() + " - ", Toast.LENGTH_SHORT)
+						.show();
+				doEffect();
+			}
+			return true;
+		default:
+			return super.dispatchKeyEvent(event);
+		}
 	}
 
 	@Override

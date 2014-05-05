@@ -30,7 +30,6 @@ import org.catrobat.paintroid.dialog.InfoDialog.DialogType;
 import org.catrobat.paintroid.dialog.ProgressIntermediateDialog;
 import org.catrobat.paintroid.dialog.ToolsDialog;
 import org.catrobat.paintroid.dialog.colorpicker.ColorPickerDialog;
-import org.catrobat.paintroid.fx.Shadow;
 import org.catrobat.paintroid.listener.DrawingSurfaceListener;
 import org.catrobat.paintroid.tools.Tool;
 import org.catrobat.paintroid.tools.ToolFactory;
@@ -74,11 +73,11 @@ public class MainActivity extends OptionsMenuActivity {
 	protected TopBar mTopBar;
 	protected BottomBar mBottomBar;
 
-	enum FX {
-		NONE, GLOW, SHADOW, BLUR
+	public enum FX {
+		NONE, SYMETRIE, SHADOW, BLUR, RADIAL
 	}
 
-	protected FX currentEffect;
+	public static FX currentEffect;
 
 	protected boolean mToolbarIsVisible = true;
 	private Menu mMenu = null;
@@ -163,17 +162,22 @@ public class MainActivity extends OptionsMenuActivity {
 
 	private void doEffect() {
 		Log.i("my", currentEffect.toString());
-		if (currentEffect == FX.SHADOW) {
-			PaintroidApplication.drawingSurface
-					.setBitmap(Shadow.doMagic(
-							PaintroidApplication.drawingSurface.getBitmapCopy(),
-							15, 15));
-			// } else if (currentEffect == FX.BLUR) {
-			// PaintroidApplication.drawingSurface.setBitmap(Blur.doMagic(
-			// PaintroidApplication.drawingSurface.getBitmapCopy(), 30));
-		} else if (currentEffect == FX.GLOW) {
+		// if (currentEffect == FX.SHADOW) {
+		// PaintroidApplication.drawingSurface
+		// .setBitmap(Shadow.doMagic(
+		// PaintroidApplication.drawingSurface.getBitmapCopy(),
+		// 15, 15));
+		// } else if (currentEffect == FX.BLUR) {
+		// PaintroidApplication.drawingSurface.setBitmap(Blur.doMagic(
+		// PaintroidApplication.drawingSurface.getBitmapCopy(), 30));
+		// } else
+
+		if (currentEffect == FX.SYMETRIE) {
+
+		} else if (currentEffect == FX.RADIAL) {
 
 		}
+
 	}
 
 	@Override

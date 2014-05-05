@@ -19,6 +19,7 @@
 
 package org.catrobat.paintroid.tools.implementation;
 
+import org.catrobat.paintroid.MainActivity;
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.command.Command;
@@ -30,6 +31,7 @@ import org.catrobat.paintroid.ui.TopBar.ToolButtonIDs;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.PointF;
 
@@ -59,7 +61,31 @@ public class DrawTool extends BaseTool {
 			mCanvasPaint.setColor(Color.BLACK);
 			canvas.drawPath(pathToDraw, mCanvasPaint);
 			mCanvasPaint.setColor(Color.TRANSPARENT);
+
+			if (MainActivity.currentEffect == MainActivity.FX.SYMETRIE) {
+				Path tmp = new Path();
+				Matrix matrix = new Matrix();
+
+				matrix.setScale(-1f, 1f,
+						PaintroidApplication.drawingSurface.getWidth() / 2,
+						PaintroidApplication.drawingSurface.getHeight() / 2);
+				pathToDraw.transform(matrix, tmp);
+				mCanvasPaint.setColor(Color.BLACK);
+				canvas.drawPath(tmp, mBitmapPaint);
+				mCanvasPaint.setColor(Color.TRANSPARENT);
+			}
+
 		} else {
+			if (MainActivity.currentEffect == MainActivity.FX.SYMETRIE) {
+				Path tmp = new Path();
+				Matrix matrix = new Matrix();
+
+				matrix.setScale(-1f, 1f,
+						PaintroidApplication.drawingSurface.getWidth() / 2,
+						PaintroidApplication.drawingSurface.getHeight() / 2);
+				pathToDraw.transform(matrix, tmp);
+				canvas.drawPath(tmp, mBitmapPaint);
+			}
 			canvas.drawPath(pathToDraw, mBitmapPaint);
 		}
 	}
@@ -120,12 +146,34 @@ public class DrawTool extends BaseTool {
 		pathToDraw.lineTo(coordinate.x, coordinate.y);
 		Command command = new PathCommand(mBitmapPaint, pathToDraw);
 		PaintroidApplication.commandManager.commitCommand(command);
+
+		if (MainActivity.currentEffect == MainActivity.FX.SYMETRIE) {
+			Path tmp = new Path();
+			Matrix matrix = new Matrix();
+
+			matrix.setScale(-1f, 1f,
+					PaintroidApplication.drawingSurface.getWidth() / 2,
+					PaintroidApplication.drawingSurface.getHeight() / 2);
+			pathToDraw.transform(matrix, tmp);
+			tmp.lineTo(PaintroidApplication.drawingSurface.getWidth()
+					- coordinate.x, coordinate.y);
+			Command command_copy = new PathCommand(mBitmapPaint, tmp);
+			PaintroidApplication.commandManager.commitCommand(command_copy);
+		}
+
 		return true;
 	}
 
 	protected boolean addPointCommand(PointF coordinate) {
 		Command command = new PointCommand(mBitmapPaint, coordinate);
 		PaintroidApplication.commandManager.commitCommand(command);
+
+		if (MainActivity.currentEffect == MainActivity.FX.SYMETRIE) {
+			coordinate.x = PaintroidApplication.drawingSurface.getWidth()
+					- coordinate.x;
+			Command command_copy = new PointCommand(mBitmapPaint, coordinate);
+			PaintroidApplication.commandManager.commitCommand(command_copy);
+		}
 		return true;
 	}
 

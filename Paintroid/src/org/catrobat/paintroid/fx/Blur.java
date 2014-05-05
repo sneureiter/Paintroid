@@ -5,12 +5,10 @@ import android.util.Log;
 
 public class Blur {
 
-	public static Bitmap doMagic(Bitmap bitmap) {
+	public static Bitmap doMagic(Bitmap bitmap, int radius) {
 
 		int w = bitmap.getWidth();
 		int h = bitmap.getHeight();
-
-		int radius = 30;
 
 		int[] pix = new int[w * h];
 		bitmap.getPixels(pix, 0, w, 0, 0, w, h);
@@ -198,7 +196,7 @@ public class Blur {
 				yi += w;
 			}
 		}
-		Log.e("pix", w + " " + h + " " + pix.length);
+		Log.e("Blur", w + " " + h + " " + pix.length);
 		bitmap.setPixels(pix, 0, w, 0, 0, w, h);
 		return bitmap;
 	}

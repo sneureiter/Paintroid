@@ -30,7 +30,7 @@ import org.catrobat.paintroid.dialog.InfoDialog.DialogType;
 import org.catrobat.paintroid.dialog.ProgressIntermediateDialog;
 import org.catrobat.paintroid.dialog.ToolsDialog;
 import org.catrobat.paintroid.dialog.colorpicker.ColorPickerDialog;
-import org.catrobat.paintroid.fx.Blur;
+import org.catrobat.paintroid.fx.Shadow;
 import org.catrobat.paintroid.listener.DrawingSurfaceListener;
 import org.catrobat.paintroid.tools.Tool;
 import org.catrobat.paintroid.tools.ToolFactory;
@@ -162,12 +162,15 @@ public class MainActivity extends OptionsMenuActivity {
 	}
 
 	private void doEffect() {
+		Log.i("my", currentEffect.toString());
 		if (currentEffect == FX.SHADOW) {
-
-		} else if (currentEffect == FX.BLUR) {
-			PaintroidApplication.drawingSurface.setBitmap(Blur
-					.doMagic(PaintroidApplication.drawingSurface
-							.getBitmapCopy()));
+			PaintroidApplication.drawingSurface
+					.setBitmap(Shadow.doMagic(
+							PaintroidApplication.drawingSurface.getBitmapCopy(),
+							15, 15));
+			// } else if (currentEffect == FX.BLUR) {
+			// PaintroidApplication.drawingSurface.setBitmap(Blur.doMagic(
+			// PaintroidApplication.drawingSurface.getBitmapCopy(), 30));
 		} else if (currentEffect == FX.GLOW) {
 
 		}

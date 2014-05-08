@@ -36,32 +36,6 @@
         android:layout_height="wrap_content"
         android:entries="@array/zoom_level_list"
         android:layout_weight="1" />
-    
-  <TextView
-        android:id="@+id/zoom_in_out_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="24dip"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="28dp"
-        android:text="@string/dialog_zoom_levle_zoomInOut_title"
-        android:textAllCaps="true"
-        android:textColor="@color/dialog_subtitle"
-        android:textStyle="bold" />
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@color/dialog_subtitle_border" />
-    <ZoomControls
-        android:id="@+id/zoomControls"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="1" />
 
     <Button
         android:id="@+id/acceptBtn"

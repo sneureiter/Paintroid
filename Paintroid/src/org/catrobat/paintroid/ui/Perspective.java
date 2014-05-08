@@ -19,11 +19,6 @@
 
 package org.catrobat.paintroid.ui;
 
-import java.io.Serializable;
-
-import org.catrobat.paintroid.OptionsMenuActivity;
-import org.catrobat.paintroid.PaintroidApplication;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.PointF;
@@ -32,6 +27,12 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
+import android.widget.Toast;
+
+import org.catrobat.paintroid.OptionsMenuActivity;
+import org.catrobat.paintroid.PaintroidApplication;
+
+import java.io.Serializable;
 
 /**
  * The purpose of this class is to provide an independent interface to
@@ -61,8 +62,9 @@ public class Perspective implements Serializable {
 	private boolean mIsFullscreen;
 	private float mInitialTranslationX;
 	private float mInitialTranslationY;
+    Toast scaleInfoToast;
 
-	public Perspective(SurfaceHolder holder) {
+    public Perspective(SurfaceHolder holder) {
 		setSurfaceHolder(holder);
 		mSurfaceScale = 1f;
 		DisplayMetrics metrics = new DisplayMetrics();
@@ -114,6 +116,7 @@ public class Perspective implements Serializable {
 		} else {
 			mSurfaceScale = MIN_SCALE;
 		}
+        showScaleToast();
 	}
 
 	public synchronized void multiplyScale(float factor) {
@@ -123,6 +126,7 @@ public class Perspective implements Serializable {
 		} else if (mSurfaceScale > MAX_SCALE) {
 			mSurfaceScale = MAX_SCALE;
 		}
+        showScaleToast();
 	}
 
 	public synchronized void translate(float dx, float dy) {
@@ -218,5 +222,10 @@ public class Perspective implements Serializable {
 		mIsFullscreen = isFullscreen;
 		resetScaleAndTranslation();
 	}
+
+    private void showScaleToast() {
+        scaleInfoToast = Toast.makeText(PaintroidApplication.applicationContext, "" + (int)(mSurfaceScale * 100) + "%", Toast.LENGTH_SHORT);
+        scaleInfoToast.show();
+    }
 
 }

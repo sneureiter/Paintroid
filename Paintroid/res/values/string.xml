@@ -121,7 +121,10 @@
     <string name="preferences_language">Change Display Language</string>
     <string name="preferences_language_summary">Requires app restart.</string>
     <string name="preferences_language_key">preferences_language_key</string>
-    <string name="preferences_language_dialog_reboot_warning_text">App restart required.</string>
+    <string name="preferences_language_dialog_reboot_warning_text">App restart required.</string>
+
+
+
     -->
     <string name="crop_algorithm_finish_text">to crop click</string>
     <string name="crop_nothing_to_corp">nothing to crop</string>
@@ -146,21 +149,24 @@
     <string name="dialog_loading_image_failed_text">Not a valid image file</string>
     <string name="dialog_zoom_list_title">Zoom In/Out options</string>
     <string-array name="zoom_level_list">
-        <item >500%</item>
-        <item >400%</item>
-        <item >300%</item>
-        <item >200%</item>
-        <item >150%</item>
-        <item>100%</item><item>90%</item>
-        <item >80%</item>
-        <item >70%</item>
-        <item >60%</item>
-        <item >50%</item>
-        <item >40%</item>
-        <item >30%</item>
-        <item >20%</item>
         <item >10%</item>
-        
+        <item >20%</item>
+        <item >30%</item>
+        <item >40%</item>
+        <item >50%</item>
+        <item >60%</item>
+        <item >70%</item>
+        <item >80%</item>
+        <item >90%</item>
+        <item >100%</item>
+        <item >200%</item>
+        <item >300%</item>
+        <item >400%</item>
+        <item >500%</item>
+        <item >600%</item>
+        <item >700%</item>
+        <item >800%</item>
+        <item >900%</item>
     </string-array>
 
 </resources>

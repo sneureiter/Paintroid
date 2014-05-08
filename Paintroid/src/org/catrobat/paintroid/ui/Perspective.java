@@ -27,7 +27,6 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import org.catrobat.paintroid.OptionsMenuActivity;
 import org.catrobat.paintroid.PaintroidApplication;
@@ -62,7 +61,6 @@ public class Perspective implements Serializable {
 	private boolean mIsFullscreen;
 	private float mInitialTranslationX;
 	private float mInitialTranslationY;
-    Toast scaleInfoToast;
 
     public Perspective(SurfaceHolder holder) {
 		setSurfaceHolder(holder);
@@ -116,7 +114,6 @@ public class Perspective implements Serializable {
 		} else {
 			mSurfaceScale = MIN_SCALE;
 		}
-        showScaleToast();
 	}
 
 	public synchronized void multiplyScale(float factor) {
@@ -126,7 +123,6 @@ public class Perspective implements Serializable {
 		} else if (mSurfaceScale > MAX_SCALE) {
 			mSurfaceScale = MAX_SCALE;
 		}
-        showScaleToast();
 	}
 
 	public synchronized void translate(float dx, float dy) {
@@ -222,10 +218,5 @@ public class Perspective implements Serializable {
 		mIsFullscreen = isFullscreen;
 		resetScaleAndTranslation();
 	}
-
-    private void showScaleToast() {
-        scaleInfoToast = Toast.makeText(PaintroidApplication.applicationContext, "" + (int)(mSurfaceScale * 100) + "%", Toast.LENGTH_SHORT);
-        scaleInfoToast.show();
-    }
 
 }

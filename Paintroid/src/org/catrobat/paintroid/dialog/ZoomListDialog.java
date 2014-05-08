@@ -103,72 +103,14 @@ public class ZoomListDialog extends BaseDialog {
 			return;
 		}
 
-		switch (itemPosition) {
-		case 0:
-           PaintroidApplication.perspective.setScale(5f);
-			dismiss();
-			break;
-		case 1:
-			PaintroidApplication.perspective.setScale(4f);
-			dismiss();
-			break;
-		case 2:
-			PaintroidApplication.perspective.setScale(3f);
-			dismiss();
-			break;
-		case 3:
-			PaintroidApplication.perspective.setScale(2f);
-			dismiss();
-			break;
-		case 4:
-			PaintroidApplication.perspective.setScale(1.5f);
-			dismiss();
-			break;
-		case 5:
-			PaintroidApplication.perspective.setScale(1f);
-			dismiss();
-			break;
-		case 6:
-			PaintroidApplication.perspective.setScale(0.9f);
-			dismiss();
-			break;
-		case 7:
-			PaintroidApplication.perspective.setScale(0.8f);
-			dismiss();
-			break;
-		case 8:
-			PaintroidApplication.perspective.setScale(0.7f);
-			dismiss();
-			break;
-		case 9:
-			PaintroidApplication.perspective.setScale(0.6f);
-			dismiss();
-			break;
-		case 10:
-			PaintroidApplication.perspective.setScale(0.5f);
-			dismiss();
-			break;
-		case 11:
-			PaintroidApplication.perspective.setScale(0.4f);
-			dismiss();
-			break;
-		case 12:
-			PaintroidApplication.perspective.setScale(0.3f);
-			dismiss();
-			break;
-		case 13:
-			PaintroidApplication.perspective.setScale(0.2f);
-			selection = 13;
-			dismiss();
-			break;
-		case 14:
-			PaintroidApplication.perspective.setScale(0.1f);
-			selection = 14;
-			dismiss();
-			break;
-		}
-
-
+        if(itemPosition < 11) {
+            PaintroidApplication.perspective.setScale((itemPosition / 10f));
+            dismiss();
+        }
+        else {
+            PaintroidApplication.perspective.setScale(itemPosition - 9f);
+            dismiss();
+        }
 
 	}
 }

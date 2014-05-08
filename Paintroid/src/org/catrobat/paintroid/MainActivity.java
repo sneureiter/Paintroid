@@ -19,7 +19,30 @@
 
 package org.catrobat.paintroid;
 
-import java.io.File;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.Paint;
+import android.graphics.Paint.Cap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.SurfaceView;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 import org.catrobat.paintroid.dialog.BrushPickerDialog;
 import org.catrobat.paintroid.dialog.CustomAlertDialogBuilder;
@@ -41,28 +64,7 @@ import org.catrobat.paintroid.ui.DrawingSurface;
 import org.catrobat.paintroid.ui.Perspective;
 import org.catrobat.paintroid.ui.TopBar;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.graphics.Paint;
-import android.graphics.Paint.Cap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.SurfaceView;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
+import java.io.File;
 
 public class MainActivity extends OptionsMenuActivity {
 
@@ -71,6 +73,9 @@ public class MainActivity extends OptionsMenuActivity {
 	protected DrawingSurfaceListener mDrawingSurfaceListener;
 	protected TopBar mTopBar;
 	protected BottomBar mBottomBar;
+    public Toast toast;
+    public TextView toast_text;
+
 
 	protected boolean mToolbarIsVisible = true;
 	private Menu mMenu = null;
@@ -127,6 +132,8 @@ public class MainActivity extends OptionsMenuActivity {
 		mDrawingSurfaceListener = new DrawingSurfaceListener();
 		mTopBar = new TopBar(this, PaintroidApplication.openedFromCatroid);
 		mBottomBar = new BottomBar(this);
+        toast = new Toast(PaintroidApplication.applicationContext);
+        toast_text = (TextView) findViewById(R.id.toast_text);
 
 		((View) PaintroidApplication.drawingSurface)
 				.setOnTouchListener(mDrawingSurfaceListener);

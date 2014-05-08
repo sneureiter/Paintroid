@@ -19,7 +19,7 @@ public class ZoomListDialog extends BaseDialog {
 	private static final String NOT_INITIALIZED_ERROR_MESSAGE = "ZoomListDialog has not been initialized. Call init() first!";
 	private MainActivity mParent;
 	private final static float ZOOM_IN_SCALE = 1.75f;
-	private int selection = 5;
+	private int selection = 9;
 	private Spinner zoomSelector;
 	private boolean applyZoomOnChangeControl;
 
@@ -81,20 +81,6 @@ public class ZoomListDialog extends BaseDialog {
 		super.show();
 	}
 
-	private void zoomOut() {
-		applyZoomOnChangeControl = false;
-		float scale = 1 / ZOOM_IN_SCALE;
-		PaintroidApplication.perspective.multiplyScale(scale);
-		PaintroidApplication.perspective.translate(0, 0);
-
-	}
-
-	private void zoomIn() {
-		applyZoomOnChangeControl = false;
-		float scale = ZOOM_IN_SCALE;
- 		PaintroidApplication.perspective.multiplyScale(scale);
-		PaintroidApplication.perspective.translate(0, 0);
-	}
 
 	public void changeZoomLevel(View v) {
 		int itemPosition = zoomSelector.getSelectedItemPosition();
@@ -103,7 +89,7 @@ public class ZoomListDialog extends BaseDialog {
 			return;
 		}
 
-        if(itemPosition < 11) {
+        if(itemPosition < 10) {
             PaintroidApplication.perspective.setScale((itemPosition / 10f));
             dismiss();
         }

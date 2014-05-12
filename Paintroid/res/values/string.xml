@@ -149,24 +149,17 @@
     <string name="dialog_loading_image_failed_text">Not a valid image file</string>
     <string name="dialog_zoom_list_title">Zoom In/Out options</string>
     <string-array name="zoom_level_list">
-        <item >10%</item>
-        <item >20%</item>
-        <item >30%</item>
-        <item >40%</item>
+        <item >Fit Height</item>
+        <item >Fit Width</item>
         <item >50%</item>
-        <item >60%</item>
-        <item >70%</item>
-        <item >80%</item>
-        <item >90%</item>
         <item >100%</item>
-        <item >200%</item>
-        <item >300%</item>
-        <item >400%</item>
-        <item >500%</item>
-        <item >600%</item>
-        <item >700%</item>
-        <item >800%</item>
-        <item >900%</item>
+        <item >00%</item>
+        <item >00%</item>
+        <item >00%</item>
+        <item >00%</item>
+        <item >00%</item>
+        <item >00%</item>
+        <item >00%</item>
     </string-array>
 
 </resources>

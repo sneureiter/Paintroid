@@ -37,6 +37,7 @@
     <string name="button_move">Move</string>
     <string name="button_rotate">Rotate</string>    
     <string name="button_line">Line</string>
+    <string name="button_cut">Cut</string>
     <string name="cancel">Cancel</string>
     <string name="ok" tools:ignore="Typos">@android:string/ok</string>
     <string name="yes">Yes</string>
@@ -83,8 +84,9 @@
     <string name="help_content_redo">Click to redo an undone action.</string>
     <string name="help_content_fill">Click on the image to fill an area with the selected color.</string>
     <string name="help_content_cursor">Position the cursor where you want to draw. Click to activate the cursor. Move your finger to draw. Click again to deactivate.</string>
-    <string name="help_content_crop">Use to crop the the image.</string>
+    <string name="help_content_crop">Use to crop the image.</string>
     <string name="help_content_stamp">Move and resize the rectangle to cover the area you want to stamp. Click to select the area. Move and click again to stamp.</string>
+    <string name="help_content_cut">Move and resize the rectangle to cover the area you want to cut out. Click to select the area. Move and click again to stamp.</string>
     <string name="help_content_rectangle">Move and resize the Rectangle. Click to paint the rectangle on the image.</string>
     <string name="help_content_import_png">Import an image from the gallery to the stamp tool.</string>
     <string name="help_content_rotate">Click on the buttons to rotate the image left or right.</string>
@@ -100,8 +102,6 @@
     <string name="menu_new_image_empty_image">Empty Image</string>
     <string name="menu_item_tools">Tools menu</string>
     <string name="menu_hide_menu">Fullscreen</string>
-    <string name="menu_new_image_from_camera">New image from camera</string>
-
     <string name="menu_terms_of_use_and_service">Terms of Use</string>
     <string name="more">More</string>
 

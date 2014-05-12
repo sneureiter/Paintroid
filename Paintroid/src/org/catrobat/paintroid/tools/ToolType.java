@@ -62,7 +62,9 @@ public enum ToolType {
 			R.string.button_move, R.drawable.icon_menu_move,
 			R.string.help_content_move, false, EnumSet.of(StateChange.ALL)), ROTATE(
 			R.string.button_rotate, R.drawable.icon_menu_rotate_left,
-			R.string.help_content_rotate, false, EnumSet.of(StateChange.ALL));
+			R.string.help_content_rotate, false, EnumSet.of(StateChange.ALL)), CUT(
+			R.string.button_cut, R.drawable.icon_menu_clear,
+			R.string.help_content_cut, false, EnumSet.of(StateChange.ALL));
 
 	private int mNameResource;
 	private int mImageResouce;

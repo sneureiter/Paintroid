@@ -21,6 +21,7 @@ package org.catrobat.paintroid.tools;
 
 import org.catrobat.paintroid.tools.implementation.CropTool;
 import org.catrobat.paintroid.tools.implementation.CursorTool;
+import org.catrobat.paintroid.tools.implementation.CutTool;
 import org.catrobat.paintroid.tools.implementation.DrawTool;
 import org.catrobat.paintroid.tools.implementation.EraserTool;
 import org.catrobat.paintroid.tools.implementation.FillTool;
@@ -66,6 +67,8 @@ public class ToolFactory {
 			return new MoveZoomTool(context, toolType);
 		case ROTATE:
 			return new RotationTool(context, toolType);
+		case CUT:
+			return new CutTool(context, toolType);
 		default:
 			break;
 		}

@@ -19,12 +19,13 @@
 
 package org.catrobat.paintroid.command.implementation;
 
-import org.catrobat.paintroid.FileIO;
-
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 
 public class CutCommand extends BaseCommand {
@@ -34,8 +35,8 @@ public class CutCommand extends BaseCommand {
 	protected final float mBoxRotation;
 	protected final RectF mBoxRect;
 
-	public CutCommand(Bitmap bitmap, Point position, float width,
-			float height, float rotation) {
+	public CutCommand(Bitmap bitmap, Point position, float width, float height,
+			float rotation) {
 		super(new Paint(Paint.DITHER_FLAG));
 
 		if (position != null) {
@@ -57,29 +58,19 @@ public class CutCommand extends BaseCommand {
 	public void run(Canvas canvas, Bitmap bitmap) {
 
 		notifyStatus(NOTIFY_STATES.COMMAND_STARTED);
-		if (mFileToStoredBitmap != null) {
-			mBitmap = FileIO.getBitmapFromFile(mFileToStoredBitmap);
-		}
 
-		if (mBitmap == null) {
-			setChanged();
-			notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
-			return;
-		}
+		Paint oldPaint = mPaint;
+
+		mPaint.setColor(Color.TRANSPARENT);
+		mPaint.setXfermode(new PorterDuffXfermode(Mode.CLEAR));
 
 		canvas.save();
 		canvas.translate(mCoordinates.x, mCoordinates.y);
 		canvas.rotate(mBoxRotation);
-		canvas.drawBitmap(mBitmap, null, mBoxRect, mPaint);
+		canvas.drawRect(mBoxRect, mPaint);
 
 		canvas.restore();
-
-		if (mFileToStoredBitmap == null) {
-			storeBitmap();
-		} else {
-			mBitmap.recycle();
-			mBitmap = null;
-		}
+		mPaint = oldPaint;
 
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
 	}

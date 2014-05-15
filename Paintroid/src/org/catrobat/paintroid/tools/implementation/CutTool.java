@@ -49,6 +49,8 @@ public class CutTool extends BaseToolWithRectangleShape {
 	private ImageButton mAttributeButton1;
 	private ImageButton mAttributeButton2;
 
+	private Bitmap copyOfCurrentDrawingSurfaceBitmap;
+
 	public CutTool(Activity activity, ToolType toolType) {
 		super(activity, toolType);
 		mAttributeButton1 = (ImageButton) activity
@@ -179,8 +181,6 @@ public class CutTool extends BaseToolWithRectangleShape {
 		tmpCanvas.rotate(-mBoxRotation, (float) (distanceToMassCentre),
 				(float) (distanceToMassCentre));
 
-		Bitmap copyOfCurrentDrawingSurfaceBitmap = PaintroidApplication.drawingSurface
-				.getBitmapCopy();
 		if (copyOfCurrentDrawingSurfaceBitmap == null
 				|| copyOfCurrentDrawingSurfaceBitmap.isRecycled()) {
 			return;
@@ -248,8 +248,6 @@ public class CutTool extends BaseToolWithRectangleShape {
 					right_bottom_box_bitmapcoordinates.y
 							- left_top_box_bitmapcoordinates.y);
 
-			Bitmap copyOfCurrentDrawingSurfaceBitmap = PaintroidApplication.drawingSurface
-					.getBitmapCopy();
 			if (copyOfCurrentDrawingSurfaceBitmap == null
 					|| copyOfCurrentDrawingSurfaceBitmap.isRecycled()) {
 				copyOfCurrentDrawingSurfaceBitmap = null;
@@ -295,23 +293,16 @@ public class CutTool extends BaseToolWithRectangleShape {
 		}
 		mAttributeButton2.setImageResource(R.drawable.icon_menu_stamp_clear);
 
+		// Saving current canvas
+		copyOfCurrentDrawingSurfaceBitmap = PaintroidApplication.drawingSurface
+				.getBitmapCopy();
+
 		// Cutting
-		Point left_top_box_bitmapcoordinates = new Point((int) mToolPosition.x
-				- (int) mBoxWidth / 2, (int) mToolPosition.y - (int) mBoxHeight
-				/ 2);
-		Point right_bottom_box_bitmapcoordinates = new Point(
-				(int) mToolPosition.x + (int) mBoxWidth / 2,
-				(int) mToolPosition.y + (int) mBoxHeight / 2);
-
-		Rect rectSource = new Rect(left_top_box_bitmapcoordinates.x,
-				left_top_box_bitmapcoordinates.y,
-				left_top_box_bitmapcoordinates.x + (int) mBoxWidth,
-				left_top_box_bitmapcoordinates.y + (int) mBoxHeight);
-
 		Point intPosition = new Point((int) mToolPosition.x,
 				(int) mToolPosition.y);
 		Command command = new CutCommand(mDrawingBitmap, intPosition,
 				mBoxWidth, mBoxHeight, mBoxRotation);
+
 		((CutCommand) command).addObserver(this);
 		ProgressIntermediateDialog.getInstance().show();
 		PaintroidApplication.commandManager.commitCommand(command);

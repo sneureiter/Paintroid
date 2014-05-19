@@ -371,8 +371,8 @@ public abstract class OptionsMenuActivity extends SherlockFragmentActivity {
 					}
 				} catch (Exception e) {
 					loadBitmapFailed = true;
-
 				}
+
 				if (bitmap != null) {
 					runnable.run(bitmap);
 				} else {

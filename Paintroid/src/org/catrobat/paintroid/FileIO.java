@@ -239,6 +239,84 @@ public abstract class FileIO {
 		return path;
 	}
 
+<<<<<<< HEAD
+=======
+	private static boolean initialisePaintroidMediaDirectory() {
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
+			PAINTROID_MEDIA_FILE = new File(
+					Environment.getExternalStorageDirectory(),
+					"/"
+							+ PaintroidApplication.applicationContext
+									.getString(R.string.app_name) + "/");
+		} else {
+			return false;
+		}
+		if (PAINTROID_MEDIA_FILE != null) {
+			if (PAINTROID_MEDIA_FILE.isDirectory() == false) {
+
+				return PAINTROID_MEDIA_FILE.mkdirs();
+			}
+		} else {
+			return false;
+		}
+		return true;
+	}
+
+	public static Bitmap getBitmapFromFile(File bitmapFile) {
+		BitmapFactory.Options options = new BitmapFactory.Options();
+
+		if (PaintroidApplication.openedFromCatroid) {
+			options.inJustDecodeBounds = false;
+			PaintroidApplication.savedBitmapFile = bitmapFile;
+			Bitmap immutableBitmap = BitmapFactory.decodeFile(
+					bitmapFile.getAbsolutePath(), options);
+			return immutableBitmap.copy(Bitmap.Config.ARGB_8888, true);
+		}
+
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeFile(bitmapFile.getAbsolutePath(), options);
+
+		int tmpWidth = options.outWidth;
+		int tmpHeight = options.outHeight;
+		int sampleSize = 1;
+
+		DisplayMetrics metrics = new DisplayMetrics();
+		Display display = ((WindowManager) PaintroidApplication.applicationContext
+				.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		display.getMetrics(metrics);
+		int maxWidth = display.getWidth();
+		int maxHeight = display.getHeight();
+
+		while (tmpWidth > maxWidth || tmpHeight > maxHeight) {
+			tmpWidth /= 2;
+			tmpHeight /= 2;
+			sampleSize *= 2;
+		}
+
+		options.inJustDecodeBounds = false;
+		options.inSampleSize = sampleSize;
+
+		Bitmap unmutableBitmap = BitmapFactory.decodeFile(
+				bitmapFile.getAbsolutePath(), options);
+
+		tmpWidth = unmutableBitmap.getWidth();
+		tmpHeight = unmutableBitmap.getHeight();
+		int[] tmpPixels = new int[tmpWidth * tmpHeight];
+		unmutableBitmap.getPixels(tmpPixels, 0, tmpWidth, 0, 0, tmpWidth,
+				tmpHeight);
+
+		Bitmap mutableBitmap = Bitmap.createBitmap(tmpWidth, tmpHeight,
+				Bitmap.Config.ARGB_8888);
+		mutableBitmap.setPixels(tmpPixels, 0, tmpWidth, 0, 0, tmpWidth,
+				tmpHeight);
+
+		PaintroidApplication.savedBitmapFile = bitmapFile;
+
+		return mutableBitmap;
+	}
+
+>>>>>>> master
 	public static String createFilePathFromUri(Activity activity, Uri uri) {
 		// Problem here
         String filepath = null;

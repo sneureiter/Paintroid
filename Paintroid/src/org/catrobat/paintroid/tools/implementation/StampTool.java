@@ -355,7 +355,6 @@ public class StampTool extends BaseToolWithRectangleShape {
 
 		@Override
 		protected void onPostExecute(Void nothing) {
-			Log.e(PaintroidApplication.TAG, "------------doInBackground2");
 			ProgressIntermediateDialog.getInstance().dismiss();
 			super.onPostExecute(nothing);
 		}

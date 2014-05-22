@@ -72,6 +72,13 @@ public class CutCommand extends BaseCommand {
 		canvas.restore();
 		mPaint = oldPaint;
 
+		if (mFileToStoredBitmap == null) {
+			storeBitmap();
+		} else {
+			mBitmap.recycle();
+			mBitmap = null;
+		}
+
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
 	}
 }

@@ -28,6 +28,7 @@ import org.catrobat.paintroid.dialog.ProgressIntermediateDialog;
 import org.catrobat.paintroid.tools.ToolType;
 import org.catrobat.paintroid.ui.TopBar.ToolButtonIDs;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -36,6 +37,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 import android.widget.ImageButton;
 
@@ -282,30 +284,29 @@ public class CutTool extends BaseToolWithRectangleShape {
 		}
 	}
 
+	@SuppressLint("NewApi")
 	private void cut() {
+		// Saving current canvas
+		copyOfCurrentDrawingSurfaceBitmap = PaintroidApplication.drawingSurface
+				.getBitmapCopy();
+
 		if (mCreateAndSetBitmapAsync.getStatus() != AsyncTask.Status.RUNNING) {
+
 			mCreateAndSetBitmapAsync = new CreateAndSetBitmapAsyncTask();
-			mCreateAndSetBitmapAsync.execute();
+
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+				mCreateAndSetBitmapAsync.executeOnExecutor(
+						AsyncTask.THREAD_POOL_EXECUTOR, (Void[]) null);
+			} else {
+				mCreateAndSetBitmapAsync.execute((Void[]) null);
+			}
+
 		}
 		mAttributeButton1.setImageResource(R.drawable.icon_menu_stamp_paste);
 		if (!mAttributeButton2.isEnabled()) {
 			mAttributeButton2.setEnabled(true);
 		}
 		mAttributeButton2.setImageResource(R.drawable.icon_menu_stamp_clear);
-
-		// Saving current canvas
-		copyOfCurrentDrawingSurfaceBitmap = PaintroidApplication.drawingSurface
-				.getBitmapCopy();
-
-		// Cutting
-		Point intPosition = new Point((int) mToolPosition.x,
-				(int) mToolPosition.y);
-		Command command = new CutCommand(mDrawingBitmap, intPosition,
-				mBoxWidth, mBoxHeight, mBoxRotation);
-
-		((CutCommand) command).addObserver(this);
-		ProgressIntermediateDialog.getInstance().show();
-		PaintroidApplication.commandManager.commitCommand(command);
 
 	}
 
@@ -338,8 +339,21 @@ public class CutTool extends BaseToolWithRectangleShape {
 		return true;
 	}
 
+	protected void sendCutCommand() {
+		// Cutting
+		Point intPosition = new Point((int) mToolPosition.x,
+				(int) mToolPosition.y);
+		Command command = new CutCommand(mDrawingBitmap, intPosition,
+				mBoxWidth, mBoxHeight, mBoxRotation);
+
+		((CutCommand) command).addObserver(this);
+		ProgressIntermediateDialog.getInstance().show();
+		PaintroidApplication.commandManager.commitCommand(command);
+
+	}
+
 	protected class CreateAndSetBitmapAsyncTask extends
-			AsyncTask<Void, Integer, Void> {
+			AsyncTask<Void, Void, Void> {
 
 		@Override
 		protected void onPreExecute() {
@@ -359,8 +373,11 @@ public class CutTool extends BaseToolWithRectangleShape {
 		}
 
 		@Override
-		protected void onPostExecute(Void nothing) {
+		protected void onPostExecute(Void result) {
+
+			sendCutCommand();
 			ProgressIntermediateDialog.getInstance().dismiss();
+			super.onPostExecute(result);
 		}
 
 	}

@@ -20,7 +20,6 @@
 package org.catrobat.paintroid.test.integration.tools;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
@@ -158,7 +157,9 @@ public class CutToolIntegrationTest extends BaseIntegrationTestClass {
 		selectTool(ToolType.CUT);
 		CutTool cutTool = (CutTool) PaintroidApplication.currentTool;
 		mSolo.clickOnScreen(surfaceCenterPoint.x, surfaceCenterPoint.y);
+		mSolo.sleep(500);
 		mSolo.clickOnScreen(surfaceCenterPoint.x, surfaceCenterPoint.y);
+		mSolo.sleep(500);
 		assertEquals("Wrong icon for parameter button 1", R.drawable.icon_menu_stamp_paste,
 				cutTool.getAttributeButtonResource(ToolButtonIDs.BUTTON_ID_PARAMETER_BOTTOM_1));
 		assertEquals("Wrong icon for parameter button 2", R.drawable.icon_menu_stamp_clear,
@@ -266,16 +267,6 @@ public class CutToolIntegrationTest extends BaseIntegrationTestClass {
 		drawingBitmap.recycle();
 		drawingBitmap = null;
 
-	}
-
-	private void invokeCreateAndSetBitmap(Object object, Object parameter) throws NoSuchMethodException,
-			IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-
-		Method method = object.getClass().getDeclaredMethod("createAndSetBitmap");
-		method.setAccessible(true);
-
-		Object[] parameters = new Object[0];
-		method.invoke(object, parameters);
 	}
 
 }

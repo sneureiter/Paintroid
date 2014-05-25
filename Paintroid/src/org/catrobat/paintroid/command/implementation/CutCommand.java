@@ -19,6 +19,8 @@
 
 package org.catrobat.paintroid.command.implementation;
 
+import org.catrobat.paintroid.FileIO;
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -58,6 +60,16 @@ public class CutCommand extends BaseCommand {
 	public void run(Canvas canvas, Bitmap bitmap) {
 
 		notifyStatus(NOTIFY_STATES.COMMAND_STARTED);
+
+		if (mFileToStoredBitmap != null) {
+			mBitmap = FileIO.getBitmapFromFile(mFileToStoredBitmap);
+		}
+
+		if (mBitmap == null) {
+			setChanged();
+			notifyStatus(NOTIFY_STATES.COMMAND_FAILED);
+			return;
+		}
 
 		Paint oldPaint = mPaint;
 

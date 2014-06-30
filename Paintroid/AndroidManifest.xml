@@ -45,6 +45,22 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     -->
+    
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+	  <!-- Permissions for Cobub Razor analytics -->
+    
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>           
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>           
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>           
+	<uses-permission android:name="android.permission.GET_TASKS"/>           
+	<uses-permission android:name="android.permission.READ_LOGS"/>           
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	<uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name=".PaintroidApplication"
@@ -83,6 +99,7 @@
         <!-- <intent-filter > -->
         <!-- </intent-filter> -->
         <!-- </activity> -->
+        <meta-data android:name="UMS_APPKEY" android:value="c27e45d7bbd8cad1ca1c8058df93c8d2"/>
     </application>
 
 </manifest>

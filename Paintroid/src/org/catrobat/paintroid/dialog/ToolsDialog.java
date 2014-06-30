@@ -34,6 +34,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
 
+import com.wbtech.ums.UmsAgent;
+
 public class ToolsDialog extends BaseDialog implements OnItemClickListener,
 		OnItemLongClickListener {
 
@@ -80,6 +82,8 @@ public class ToolsDialog extends BaseDialog implements OnItemClickListener,
 			int position, long id) {
 		ToolType toolType = mToolButtonAdapter.getToolType(position);
 		mParent.switchTool(toolType);
+		UmsAgent.onEvent(getContext(), "ToolsDialog" + toolType.name()
+				+ "Selected");
 		dismiss();
 	}
 

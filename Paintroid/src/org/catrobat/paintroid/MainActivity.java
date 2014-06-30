@@ -62,6 +62,8 @@ import android.widget.LinearLayout;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.wbtech.ums.UmsAgent;
+import com.wbtech.ums.common.OwnerInfo;
 
 public class MainActivity extends OptionsMenuActivity {
 
@@ -77,6 +79,16 @@ public class MainActivity extends OptionsMenuActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+
+		UmsAgent.setBaseURL("http://logger.catrob.at/index.php?");
+		// UmsAgent.setBaseURL("http://razor.dev:8088/index.php?");
+		UmsAgent.update(this);
+		UmsAgent.setUpdateOnlyWifi(false);
+		UmsAgent.onError(this);
+		UmsAgent.setDefaultReportPolicy(this, 1);
+		String email = new OwnerInfo(this).email;
+		UmsAgent.bindUserIdentifier(this, email);
+		UmsAgent.postClientData(this);
 
 		ColorPickerDialog.init(this);
 		BrushPickerDialog.init(this);
@@ -149,6 +161,7 @@ public class MainActivity extends OptionsMenuActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		UmsAgent.onResume(this);
 		checkIfLoadBitmapFailed();
 	}
 
